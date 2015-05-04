@@ -1,0 +1,186 @@
+.main-background-color {
+    /*background-color: rgb(245, 245, 245);*/
+    background: #f4f4f4; /* Old browsers */
+    background: -moz-linear-gradient(top,  #f4f4f4 0%, #cecece 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f4f4), color-stop(100%,#cecece)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #f4f4f4 0%,#cecece 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #f4f4f4 0%,#cecece 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #f4f4f4 0%,#cecece 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #f4f4f4 0%,#cecece 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#cecece',GradientType=0 ); /* IE6-9 */
+}
+.widget-header-color {
+    background-color: rgb(48, 48, 48);
+}
+/* Chat Sidebar Start */
+.chat-sidebar {
+    border-right: 1px solid #E8E8E8;
+}
+.one-chat-person .chat-availability {
+    background-color: #DEDEDE;
+}
+.one-chat-person .chat-avatar {
+    background-color: white;
+}
+.chat-sidebar .online .chat-availability {
+    background-color: #437D4E;
+    border-bottom: 1px solid #386B16;
+}
+.chat-sidebar .online.busy .chat-availability {
+    background-color: #FA5A5A;
+    border-bottom: 1px solid #DE474A;
+}
+.chat-sidebar .online.away .chat-availability {
+    background-color: #FF9D4D;
+    border-bottom: 1px solid #ED823B;
+}
+.chat-sidebar .offline .chat-availability {
+    border-bottom: 1px solid #CCCCCC;
+}
+.chat-sidebar .chat-person-name {
+    border-bottom: 1px solid #E8E8E8;
+}
+.chat-search {
+    border-bottom: 1px solid #E8E8E8;
+}
+.chat-search .fa {
+    color: #E8E8E8;
+}
+.chat-search input[type=text] {
+    border:  1px solid white;
+}
+.chat-search input[type=text]:focus {
+    border: 1px solid #CFCFCF;
+}
+/* Chat Sidebar End */
+
+/* Widgets Start */
+.widget-area {
+    border-right: 1px solid #E8E8E8;
+}
+#right-widget-area {
+    border-left: 1px solid #E8E8E8;
+}
+.one-widget {
+    border-bottom: 1px solid black;
+}
+.widget-header {
+    border-bottom: 1px solid #E8E8E8;
+    color: white;
+}
+.widget-sport-type-logo {
+    border-right: 1px solid #E8E8E8;   
+}
+.widget-content.best-scorers .league-title {
+    border-bottom: 1px solid #E8E8E8;
+}
+/* Widgets End */
+/* Header Start */
+header {
+    border-bottom: 1px solid black;
+}
+header a {
+    color: white;
+}
+header li {
+    border-left: 1px solid #545454;
+    color: white;
+}
+header li:last-of-type {
+    border-right: 1px solid #545454;
+}
+header .sublink-ul li:last-of-type {
+    border-right: 0;
+}
+.sublink-ul li {
+    border-left: 1px solid #E8E8E8;;
+    border-right: 1px solid #E8E8E8;;
+    border-bottom: 1px solid #E8E8E8;
+    color: black;
+}
+.sublink-ul li a {
+    color: black;   
+}
+/* Header End */
+/* One Post Start */
+.post-header {
+    border: 1px solid #E8E8E8;
+    color: white;
+}
+.post-actions {
+    background-color: #B8E8B8;
+}
+.post-body {
+    border-left: 1px solid #E8E8E8;
+    border-right: 1px solid #E8E8E8;
+    border-bottom: 1px solid #E8E8E8;
+}
+.post-body p {
+    border-top: 1px solid #E8E8E8;
+}
+.post-footer {
+    border-left: 1px solid #E8E8E8;
+    border-right: 1px solid #E8E8E8;
+    border-bottom: 1px solid #E8E8E8;
+}
+.one-post-actions-holder {
+    background-color: grey;
+}
+.one-post-comment-text {
+    border-bottom: 1px solid #E8E8E8;
+}
+.post-count-and-date p:first-of-type {
+    border-right: 1px solid #E8E8E8;
+}
+.one-post-comment:nth-child(even) {
+    background-color: #E2E2E2;
+}
+.one-post-comment:nth-child(odd) {
+    background-color: #F9F9F9;
+}
+.show-more-post-comments {
+    background-color: black;
+    line-height: 30px;
+    text-align: center;
+}
+.show-more-post-comments .fa {
+    color: white;
+}
+.submit-comment {
+    width: 80px;
+    height: 25px;
+    border: 0;
+    color: white;
+}
+/* One Post End */
+
+/* Modal Start */
+.modal-content {
+    background-color: white;
+}
+.modal-header {
+    border-bottom: 1px solid black;
+}
+.modal-footer .btn {
+    border: 0;
+}
+.modal-footer .btn:focus {
+    outline: none;
+}
+.upcoming-games-modal .match-details {
+    border-top: 1px solid #E8E8E8;
+}
+.remove-section {
+    color: red;
+}
+.add-list-option {
+    color: green;
+}
+/* Modal End */
+
+/* Main Content My Posts Start */
+ .styled-button {
+    border: 1px solid rgb(48,48,48);
+    background-color: white;
+ }
+/* Main Content My Posts End */

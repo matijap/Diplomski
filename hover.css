@@ -1,0 +1,67 @@
+/* Header Start */
+.main-link-li:hover > .sublink-ul:first-of-type {
+    display: block;
+}
+.sublink-li-1:hover > .sublink-ul:first-of-type {
+    display: block;
+    top: 0px;
+    left: 277px;
+}
+header li:hover {
+    cursor: pointer;
+    background-color: black;
+}
+.sublink-li-1:hover,
+.sublink-li-2:hover {
+    background: rgb(48, 48, 48);
+}
+.sublink-li-1:hover > a:first-of-type,
+.sublink-li-1:hover > p a,
+.sublink-li-2:hover > a:first-of-type,
+.sublink-li-2:hover > p a {
+    color: white;
+}
+.new-post:hover {
+    background-color: rgb(48, 48, 48);
+    color: white;
+}
+/* Header End */
+/* Chat Sidebar Start */
+.chat-search .fa-times:hover {
+    cursor: pointer;
+    color: black;
+}
+/* Chat Sidebar End */
+/* Widgets Start */
+.widget-header-title:hover {
+    cursor: move;
+}
+.matches-list .fa:hover {
+    cursor: pointer;
+}
+/* Widgets End */
+
+/* One Post Start */
+.post-header-close, {
+    cursor: pointer;
+}
+.one-post-comment:hover > .one-post-actions-holder {
+    display: block;
+}
+.show-more-post-comments:hover {
+    cursor: pointer;
+}
+.post-header-close {
+    cursor: pointer;
+}
+/* One Post End */
+/* Modal Start */
+.modal-header-close:hover,
+.cls {
+    cursor: pointer;
+}
+.remove-section:hover,
+.add-list-option:hover {
+    cursor: pointer;   
+}
+/* Modal End */
