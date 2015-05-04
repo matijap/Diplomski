@@ -1,0 +1,557 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="reset.css" type="text/css" rel="stylesheet">
+        <link href="font-awesome-4.3.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+        <!-- <link href="bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet"> -->
+        <link href="main.css" type="text/css" rel="stylesheet">
+        <link href="white-essence.css" type="text/css" rel="stylesheet">
+        <link href="hover.css" type="text/css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Jura' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,600' rel='stylesheet' type='text/css'>
+        <link href='jquery-ui/jquery-ui.min.css' rel='stylesheet' type='text/css'>
+    </head> 
+    <body>
+        <header class="widget-header-color">
+            <nav role="navigation" class="header-holder">
+                <div class="h">
+                    <ul class="main-link-ul">
+                        <li class="cc main-link-li">
+                            <a>Notifications<i class="fa fa-exclamation"></i></a>
+                            <ul class="sublink-ul sublink-ul-1 notifications-menu">
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <div class="person-avatar pull-left">
+                                        <img src="silhouette.png" />
+                                    </div>
+                                    <p class="pull-left">
+                                        <a href="#">
+                                            Person Person likes your post
+                                        </a>
+                                    </p>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="p0.html">8 persons like your post<i class="fa fa-chevron-right"></i></a>
+                                    <ul class="sublink-ul sublink-ul-2">
+                                        <li class="main-background-color sublink-li-2">
+                                            <a href="p1.html">Person Person</a>
+                                        </li>
+                                        <li class="main-background-color sublink-li-2">
+                                            <a href="p2.html">Person Person</a>
+                                        </li>
+                                        <li class="main-background-color sublink-li-2">
+                                            <a href="p3.html">Person Person</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="quiz-game.html">Quiz is about to start</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="fantasy-manage.html">Your fantasy team scored 10 points!</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="cc main-link-li">
+                            <a href="index.html">Refresh Me</a>
+                        </li>
+                        <li class="cc main-link-li">
+                            <a href="my.html">My Posts</a>
+                        </li>
+                        <li class="cc main-link-li">
+                            <a>Games</a>
+                            <ul class="sublink-ul sublink-ul-1">
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="fantasy.html">Fantasy</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="quiz.html">Quiz</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a>Virtual Booking</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="cc main-link-li">
+                            <a>More</a>
+                            <ul class="sublink-ul sublink-ul-1">
+                                <li data-template="new-page-template" class="cc sublink-li-1 bb main-background-color modal-open">
+                                    <a href="javascript:void(0)">New Page</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a>Galery</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a>About Me</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a>Privacy settings</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="login.html">Sign Out</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <a href="javascript:void(0)" class="new-post modal-open" data-template="new-post-template">New Post</a>
+            </nav>
+        </header>
+        <aside class="chat-sidebar position-fixed main-background-color">
+            <div class="chat-search">
+                <input class="search-person-chat" type="text" / placeholder="Type to search" class="bb">
+                <i class="fa fa-search"></i>
+                <i class="fa fa-times display-none"></i>
+            </div>
+            <div class="one-chat-person online">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability  bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Matija Parausic Matija Parausic</p>
+                </div>
+            </div>
+            <div class="one-chat-person online">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Matija Parausic Matija Parausic</p>
+                </div>
+            </div>
+            <div class="one-chat-person online">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Matija Parausic Matija Parausic</p>
+                </div>
+            </div>
+            <div class="one-chat-person online busy">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person online busy">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person online away">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person online away">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person offline">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person offline">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person offline">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person offline">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+        </aside>
+        <div id="main-panel" class="bb my">
+            <div class="one-post video main-background-color">
+                <div class="post-header bb widget-header-color">
+                    <div class="post-header-close">
+                        <i class="fa fa-thumbs-up"></i>
+                        <i class="fa fa-heart"></i>
+                        <i class="fa fa-forward"></i>
+                        <!-- <div class="post-actions">
+                            <ul>
+                                <li>Favourite <i class="fa fa-heart"></i></li>
+                                <li>Forward <i class="fa fa-forward"></i></li>
+                            </ul>
+                        </div> -->
+                    </div>
+                    <div class="post-header-title bb">
+                        <h2 class="truncate-string">This is some very long title of some post</h2>
+                    </div>
+                </div>
+                <div class="post-body bb">
+                    <!-- <iframe src="http://www.youtube.com/embed/XGSy3_Czz8k"></iframe> -->
+                    <div class="post-text">
+                        <p>
+                            This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text.
+                        </p>
+                    </div>
+                </div>
+                <div class="post-footer bb">
+                    <textarea placeholder="Click to enter comment" class="post-comment-textarea bb"></textarea>
+                    <input class="submit-comment" type="submit" value="Submit" />
+                    <div class="post-comment-list bb">
+                        <div class="one-post-comment">
+                            <div class="post-comment-avatar">
+                                <img src="silhouette.png">
+                            </div>
+                            <div class="one-post-actions-holder">
+                                <a href="javascript:void(0)"><i class="fa fa-heart"></i></a>
+                                <a href="javascript:void(0)"><i class="fa fa-reply"></i></a>
+                                <a href="javascript:void(0)"><i class="fa fa-forward"></i></a>
+                                <a href="javascript:void(0)"><i class="fa fa-warning"></i></a>
+                            </div>
+                            <div class="one-post-comment-text">
+                                <p>
+                                This is comment text. This is comment text.  This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text.
+                                </p>
+                            </div>
+                            <div class="post-count-and-date">
+                                <p>53 Favs</p>
+                                <p>14 Forwards</p>
+                                <p class="pull-right">15.06.2015</p>
+                            </div>
+                        </div>
+                        <div class="one-post-comment">
+                            <div class="post-comment-avatar">
+                                <img src="silhouette.png">
+                            </div>
+                            <div class="one-post-actions-holder">
+                                <a href="javascript:void(0)"><i class="fa fa-heart"></i></a>
+                                <a href="javascript:void(0)"><i class="fa fa-reply"></i></a>
+                                <a href="javascript:void(0)"><i class="fa fa-forward"></i></a>
+                                <a href="javascript:void(0)"><i class="fa fa-warning"></i></a>
+                            </div>
+                            <div class="one-post-comment-text">
+                                <p>
+                                This is comment text. This is comment text.  This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text.
+                                </p>
+                            </div>
+                            <div class="post-count-and-date">
+                                <p>53 Favs</p>
+                                <p>14 Forwards</p>
+                                <p class="pull-right">15.06.2015</p>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="show-more-post-comments">
+                            <i class="fa fa-toggle-down"></i>
+                            <i class="fa fa-spinner fa-spin display-none"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="one-post image main-background-color">
+                <div class="post-header bb widget-header-color">
+                    <div class="post-header-close"><i class="fa fa-times"></i></div>
+                    <div class="post-header-title bb">
+                        <p class="truncate-string">This is some very long title of some post</p>
+                    </div>
+                </div>
+                <div class="post-body bb">
+                    <img src="ball.jpg">
+                    <div class="post-text">
+                        <p>
+                            This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text.
+                        </p>
+                    </div>
+                </div>
+                <div class="post-footer bb">
+
+                </div>
+            </div>
+        </div>
+        <div style="position: fixed; right: 0; width: 30%; height: 100%; padding: 10px;" class="main-background-color bb">
+            <h1 class="text-align-center m-t-10">This is New Page</h1>
+            <h2 style="margin-top: 10px;">Widget Customization</h2>
+            <div class="loader-holder m-t-10">
+                <a data-template="new-widget-template" class="text-align-center display-block styled-button modal-open" href="javascript:void(0)">New Widget</a>
+                <i class="fa fa-spinner fa-spin text-align-center display-none"></i>
+            </div>
+            <h3>You have no active widgets</h3>
+            <h3>Currently active widgets</h3>
+            <ul class="m-t-5">
+                <li><a href="javascript:void(0)">Some Widget</a></li>
+                <li><a href="javascript:void(0)">Some Widget</a></li>
+                <li><a href="javascript:void(0)">Some Widget</a></li>
+            </ul>
+        </div>
+        <footer>
+            <script src="jquery-1.11.2.min.js"></script>
+            <script src="select2/dist/js/select2.min.js"></script>
+            <script src="sortable.js"></script>
+            <script src="main.js"></script>
+            <script src="functions.js"></script>
+        </footer>
+    </body>
+    <div class="new-page-template display-none">
+        <div class="new-page-modal">
+            <form action="page.html">
+                <div class="modal-element">
+                    <label for="page-title">
+                        Title
+                    </label>
+                    <input type="text" name="page-title" id="page-title" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="new-widget-template display-none">
+        <div class="new-widget-modal">
+            <form action="#">
+                <div class="modal-element">
+                    <label class="main-label">
+                        Widget Type
+                    </label>
+                    <div class="main-div">
+                        <label class="checkbox-holder"><input data-widget-type="widget-plain" class="widget-type-selector" name="widget_type" checked type="radio">Plain Text</label>
+                        <label class="checkbox-holder"><input data-widget-type="widget-list" class="widget-type-selector" name="widget_type" type="radio">List</label>
+                        <label class="checkbox-holder"><input data-widget-type="widget-table" class="widget-type-selector" name="widget_type" type="radio">Table</label>
+                        <label class="checkbox-holder"><input class="widget-type-selector" name="widget_type" type="radio">List With Edit Button</label>
+                    </div>
+                </div>
+                <div class="modal-element">
+                    <label class="main-label" for="widget-title">Title</label>
+                    <div class="main-div">
+                        <input type="text" name="widget-title" id="widget-title" />
+                    </div>
+                </div>
+                <h3 class="m-b-10">Widget Customization</h3>
+                <button class="m-t-10 display-none widget-list all-widget-types styled-button add-list-section">Add new list section</button>
+                <hr>
+                <div class="widget-settings">
+                    <div class="widget-plain all-widget-types">
+                        <textarea maxlength="1024" placeholder="Enter your widget text here"></textarea>
+                    </div>
+                    <div id="replace-list-section" class="widget-list all-widget-types display-none">
+                        <div class="one-widget-list-section">
+                            <div class="modal-element">
+                                <label class="main-label bold-text" for="list-section-title-1">List section title</label>
+                                <div class="main-div">
+                                    <input type="text" class="widget-list-section-title" name="list-section-title" id="list-section-title-1" />
+                                </div>
+                            </div>
+                            <div class="modal-element">
+                                <label class="main-label" for="list-section-title-1">List section avatar</label>
+                                <div class="main-div">
+                                    <input type="file" name="list-section-avatar" id="list-section-avatar-1" />
+                                </div>
+                            </div>
+                            <div id="replace-list-element" class="owls-holder widget-marker" data-template="list-option-template">
+                                <div class="modal-element column">
+                                    <label class="main-label" for="list-section-title-1">List Option</label>
+                                    <div class="main-div">
+                                        <input type="text" class="widget-option-and-value bb pull-left" name="list_option_title_1" id="list-option-title-1" />
+                                        <input type="text" class="widget-option-and-value bb pull-left" name="list_option_value-1" id="list-option-value-1" />
+                                        <i class="fa fa-times remove-section remove-list-option"></i>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                                <div class="modal-element column">
+                                    <label class="main-label" for="list-section-title-1">List Option</label>
+                                    <div class="main-div">
+                                        <input type="text" class="widget-option-and-value bb pull-left" name="list_option_title_1" id="list-option-title-1" />
+                                        <input type="text" class="widget-option-and-value bb pull-left" name="list_option_value-1" id="list-option-value-1" />
+                                        <i class="fa fa-times remove-section remove-list-option"></i>
+                                        <i class="fa fa-plus m-l-5 add-list-option"></i>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-table all-widget-types display-none">
+                        <h3>Table Options</h3>
+                        <div id="replace-table-element" class="owt-holder widget-marker" data-template="table-option-template">
+                            <div class="modal-element">
+                                <label class="main-label" for="list-section-title-1">Option</label>
+                                <div class="main-div">
+                                    <input type="text" class="widget-option-and-value bb pull-left" name="list_option_title_1" id="list-option-title-1"
+                                    style="width: 90%;" />
+                                    <i class="fa fa-times remove-section remove-list-option"></i>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                            <div class="modal-element">
+                                <label class="main-label" for="list-section-title-1">Option</label>
+                                <div class="main-div">
+                                    <input type="text" class="widget-option-and-value bb pull-left" name="list_option_title_1" id="list-option-title-1" 
+                                    style="width: 90%;" />
+                                    <i class="fa fa-times remove-section remove-list-option"></i>
+                                    <i class="fa fa-plus m-l-5 add-list-option"></i>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3>Table Data</h3>
+                        <div id="widget-table-data">
+                            <label>
+                                Goals For (GF)
+                                <input type="checkbox" checked="checked">
+                            </label>
+                            <label>
+                                Goals Againts (GA)
+                                <input type="checkbox" checked="checked">
+                            </label>
+                            <label>
+                                Points (PT)
+                                <input type="checkbox" checked="checked">
+                            </label>
+                            <label>
+                                Goal Difference (GD)
+                                <input type="checkbox">
+                            </label>
+                            <label>
+                                Rebounds (RB)
+                                <input type="checkbox">
+                            </label>
+                            <label>
+                                Wins (W)
+                                <input type="checkbox" checked="checked">
+                            </label>
+                            <label>
+                                Loses (L)
+                                <input type="checkbox" checked="checked">
+                            </label>
+                            <label>
+                                Draws (D)
+                                <input type="checkbox" checked="checked">
+                            </label>
+                        </div>
+                        <div class="modal-element">
+                            <label class="main-label" for="list-section-title-1">New Table Data</label>
+                            <div class="main-div">
+                                <input placeholder="Official data name" type="text" class="bb pull-left" id="widget-table-data-full" 
+                                style="width: 70%;" />
+                                <input placeholder="Short data name" type="text" class="bb pull-left" id="widget-table-data-short" 
+                                style="width: 20%;" />
+                                <i class="fa fa-plus m-l-5 add-widget-data-table"></i>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="list-option-template display-none">
+                <div class="modal-element">
+                    <label class="main-label">List Option</label>
+                    <div class="main-div">
+                        <input type="text" class="widget-option-and-value bb pull-left"  />
+                        <input type="text" class="widget-option-and-value bb pull-left" />
+                        <i class="fa fa-times remove-section remove-list-option"></i>
+                        <i class="fa fa-plus m-l-5 add-list-option"></i>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-section-template display-none">
+                <div class="one-widget-list-section">
+                    <div class="modal-element">
+                        <label class="main-label bold-text" for="list-section-title-1">List section title</label>
+                        <div class="main-div">
+                            <input type="text" class="widget-list-section-title" name="list-section-title" id="list-section-title-1" />
+                            <i class="fa fa-times remove-section"></i>
+                        </div>
+                    </div>
+                    <div class="modal-element">
+                        <label class="main-label" for="list-section-title-1">List section avatar</label>
+                        <div class="main-div">
+                            <input type="file" name="list-section-avatar" id="list-section-avatar-1" />
+                        </div>
+                    </div>
+                    <div id="replace-list-element" class="owls-holder widget-marker" data-template="list-option-template">
+                        <div class="modal-element">
+                            <label class="main-label" for="list-section-title-1">List Option</label>
+                            <div class="main-div">
+                                <input type="text" class="widget-option-and-value bb pull-left" name="list_option_title_1" id="list-option-title-1" />
+                                <input type="text" class="widget-option-and-value bb pull-left" name="list_option_value-1" id="list-option-value-1" />
+                                <i class="fa fa-times remove-section remove-list-option"></i>
+                                <i class="fa fa-plus m-l-5 add-list-option"></i>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-option-template display-none">
+                <div class="modal-element">
+                    <label class="main-label" for="list-section-title-1">Option</label>
+                    <div class="main-div">
+                        <input type="text" class="widget-option-and-value bb pull-left" name="list_option_title_1" id="list-option-title-1"
+                            style="width: 90%;" />
+                        <i class="fa fa-times remove-section remove-list-option"></i>
+                        <i class="fa fa-plus m-l-5 add-list-option"></i>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-header-close"><i class="fa fa-times"></i></div>
+                    <div class="modal-header-title bb">
+                        <p class="truncate-string">This is some very long title of some dialog</p>
+                    </div>
+                </div>
+                <div class="modal-body bb">
+                    <div class="mcl" style="text-align: center;">
+                        <i style="font-size: 50px;" class="fa fa-spinner fa-spin"></i>
+                    </div>
+                    <div class="mc">
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary pull-right submit-modal-form">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</html>

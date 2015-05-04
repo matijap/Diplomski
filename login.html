@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="reset.css" type="text/css" rel="stylesheet">
+        <link href="font-awesome-4.3.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+        <!-- <link href="bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet"> -->
+        <link href="main.css" type="text/css" rel="stylesheet">
+        <link href="login.css" type="text/css" rel="stylesheet">
+        <link href="hover.css" type="text/css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Jura' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,600' rel='stylesheet' type='text/css'>
+        <link href='jquery-ui/jquery-ui.min.css' rel='stylesheet' type='text/css'>
+    </head> 
+    <body class="main-background-color">
+        <div class="form-holder">
+            <div class="form-title">
+                <h1>Log In</h1>
+            </div>
+            <form action="index.html">
+                <div class="holder">
+                    <label>Email</label>
+                    <input type="email" id="email" required />
+                </div>
+                <div class="holder">
+                    <label>Password</label>
+                    <input type="password" id="password" required pattern=".{6,}" title="Minimum 6 characters" />
+                </div>
+                <input type="submit" value="Submit" />
+            </form>
+            <div class="additional-holder">
+                <div>
+                    <a href="javascript:void(0)">Forgot Password</a>
+                </div>
+                <div>
+                    <a href="javascript:void(0)">Register</a>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <footer>
+            <script src="jquery-1.11.2.min.js"></script>
+            <script src="select2/dist/js/select2.min.js"></script>
+            <script src="sortable.js"></script>
+            <script src="main.js"></script>
+            <script src="functions.js"></script>
+        </footer>
+    </body>
+</html>

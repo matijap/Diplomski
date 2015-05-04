@@ -1,0 +1,418 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="reset.css" type="text/css" rel="stylesheet">
+        <link href="font-awesome-4.3.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+        <!-- <link href="bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet"> -->
+        <link href="main.css" type="text/css" rel="stylesheet">
+        <link href="white-essence.css" type="text/css" rel="stylesheet">
+        <link href="hover.css" type="text/css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Jura' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,600' rel='stylesheet' type='text/css'>
+        <link href='jquery-ui/jquery-ui.min.css' rel='stylesheet' type='text/css'>
+        <link href='select2/dist/css/select2.min.css' rel='stylesheet' type='text/css'>
+        <link href='pnotify/pnotify.custom.min.css' rel='stylesheet' type='text/css'>
+    </head> 
+    <body>
+        <header class="widget-header-color">
+            <nav role="navigation" class="header-holder">
+                <div class="h">
+                    <ul class="main-link-ul">
+                        <li class="cc main-link-li">
+                            <a>Notifications<i class="fa fa-exclamation"></i></a>
+                            <ul class="sublink-ul sublink-ul-1 notifications-menu">
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <div class="person-avatar pull-left">
+                                        <img src="silhouette.png" />
+                                    </div>
+                                    <p class="pull-left">
+                                        <a href="#">
+                                            Person Person likes your post
+                                        </a>
+                                    </p>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="p0.html">8 persons like your post<i class="fa fa-chevron-right"></i></a>
+                                    <ul class="sublink-ul sublink-ul-2">
+                                        <li class="main-background-color sublink-li-2">
+                                            <a href="p1.html">Person Person</a>
+                                        </li>
+                                        <li class="main-background-color sublink-li-2">
+                                            <a href="p2.html">Person Person</a>
+                                        </li>
+                                        <li class="main-background-color sublink-li-2">
+                                            <a href="p3.html">Person Person</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="quiz-game.html">Quiz is about to start</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="fantasy-manage.html">Your fantasy team scored 10 points!</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="cc main-link-li">
+                            <a href="index.html">Refresh Me</a>
+                        </li>
+                        <li class="cc main-link-li">
+                            <a href="my.html">My Posts</a>
+                        </li>
+                        <li class="cc main-link-li">
+                            <a>Games</a>
+                            <ul class="sublink-ul sublink-ul-1">
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="fantasy.html">Fantasy</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="quiz.html">Quiz</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a>Virtual Booking</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="cc main-link-li">
+                            <a>More</a>
+                            <ul class="sublink-ul sublink-ul-1">
+                                <li data-template="new-page-template" class="cc sublink-li-1 bb main-background-color modal-open">
+                                    <a href="javascript:void(0)">New Page</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a>Galery</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a>About Me</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a>Privacy settings</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="login.html">Sign Out</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <a href="javascript:void(0)" class="new-post modal-open" data-template="new-post-template">New Post</a>
+            </nav>
+        </header>
+        <aside class="chat-sidebar position-fixed main-background-color">
+            <div class="chat-search">
+                <input class="search-person-chat" type="text" / placeholder="Type to search" class="bb">
+                <i class="fa fa-search"></i>
+                <i class="fa fa-times display-none"></i>
+            </div>
+            <div class="one-chat-person online">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability  bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Matija Parausic Matija Parausic</p>
+                </div>
+            </div>
+            <div class="one-chat-person online">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Matija Parausic Matija Parausic</p>
+                </div>
+            </div>
+            <div class="one-chat-person online">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Matija Parausic Matija Parausic</p>
+                </div>
+            </div>
+            <div class="one-chat-person online busy">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person online busy">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person online away">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person online away">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person offline">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person offline">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person offline">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person offline">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+        </aside>
+        http://fantasy.premierleague.com/web/api/elements/1/
+        <div id="main-panel" class="bb fantasy">
+            <div class="position-relative pull-left pitch-container">
+                <img src="football_pitch.jpg" width="400" />
+                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="goalkeeper" data-position="goalkeeper" >
+                    <img class="display-block" style="margin: 0 auto;" src="shirt.png" />
+                    <p class="m-t-5 text-align-center">Joe Hart</p>
+                </div>
+                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="defender" data-position="defender">
+                    <img class="display-block" style="margin: 0 auto;" src="shirt.png" />
+                    <p class="m-t-5 text-align-center">Aleksandar Kolarov</p>
+                </div>
+                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="defender" data-position="defender">
+                    <img class="display-block" style="margin: 0 auto;" src="shirt.png" />
+                    <p class="m-t-5 text-align-center">Vincent Kompany</p>
+                </div>
+                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="defender" data-position="defender">
+                    <img class="display-block" style="margin: 0 auto;" src="shirt.png" />
+                    <p class="m-t-5 text-align-center">Pablo Zabaleta</p>
+                </div>
+                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="defender" data-position="defender">
+                    <img class="display-block" style="margin: 0 auto;" src="shirt.png" />
+                    <p class="m-t-5 text-align-center">Bacary Sagna</p>
+                </div>
+                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="midfielder" data-position="midfielder">
+                    <img class="display-block" style="margin: 0 auto;" src="shirt.png" />
+                    <p class="m-t-5 text-align-center">David Silva</p>
+                </div>
+                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="midfielder" data-position="midfielder">
+                    <img class="display-block" style="margin: 0 auto;" src="shirt.png" />
+                    <p class="m-t-5 text-align-center">Yaya Toure</p>
+                </div>
+                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="midfielder" data-position="midfielder">
+                    <img class="display-block" style="margin: 0 auto;" src="shirt.png" />
+                    <p class="m-t-5 text-align-center">Jesus Navas</p>
+                </div>
+                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="midfielder" data-position="midfielder">
+                    <img class="display-block" style="margin: 0 auto;" src="shirt.png" />
+                    <p class="m-t-5 text-align-center">Raheem Sterling</p>
+                </div>
+                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="striker" data-position="striker">
+                    <img class="display-block" style="margin: 0 auto;" src="shirt.png" />
+                    <p class="m-t-5 text-align-center">Sergio Aguero</p>
+                </div>
+                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="striker" data-position="striker">
+                    <img class="display-block" style="margin: 0 auto;" src="shirt.png" />
+                    <p class="m-t-5 text-align-center">Wilfred Bony</p>
+                </div>
+            </div>
+            <div class="pull-right">
+                <div class="main-background-color pull-left" style="padding: 10px;">
+                    <h3>Pick your formation:</h3>
+                    <select class="fantasy-formation-change" style="width: 100px;">
+                        <option value="343">3-4-3</option>
+                        <option value="352">3-5-2</option>
+                        <option value="433">4-3-3</option>
+                        <option value="442" selected>4-4-2</option>
+                        <option value="451">4-5-1</option>
+                        <option value="532">5-3-2</option>
+                        <option value="541">5-4-1</option>
+                    </select>
+                </div>
+                <div class="main-background-color pull-left m-l-10" style="padding: 10px;">
+                    <h3>Pick one of your preferred squads:</h3>
+                    <select class="fantasy-preffered-squad" style="width: 200px;">
+                        <option value="433">Very offensive</option>
+                        <option value="442" selected>Balanced</option>
+                        <option value="532">Contain</option>
+                    </select>
+                    <h3 class="m-t-10">Or, enter name for your new squad (optional)</h3>
+                    <input type="text">
+                </div>
+                <a href="#" class="red-button fantasy-cancel m-l-10 float-right display-none">Cancel</a>
+                <a href="#" class="green-button fantasy-submit m-l-10 float-right">Submit</a>
+                <div class="width-100-percent m-t-10 pull-left main-background-color p-10 bb">
+                    <div>
+                        <h2 class="float-left">Customize your squad</h2>
+                        <h2 class="float-right"><span class="currency">$</span><span class="remaining-budget">100,000,000</span></h2>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="clear"></div>
+                    <h3 class="m-t-10">Available players</h3>
+                    <div class="bb">
+                        <div class="fantasy-picked-player-list bb" data-position="goalkeeper">
+                            <h4 class="m-b-5 m-t-5">Goalkeepers</h4>
+                            <p class="m-b-5"><span>gk1</span><i class="fa fa-times float-right"></i></p>
+                        </div>
+                        <div class="fantasy-picked-player-list bb" data-position="defender">
+                            <h4 class="m-b-5 m-t-5">Defenders</h4>
+                            <p class="m-b-5 p-5"><span>df1</span><i class="fa fa-times float-right"></i></p>
+                        </div>
+                        <div class="fantasy-picked-player-list bb" data-position="midfielder">
+                            <h4 class="m-b-5 m-t-5">Midfielders</h4>
+                            <p class="m-b-5"><span>mf1</span><i class="fa fa-times float-right"></i></p>
+                        </div>
+                        <div class="fantasy-picked-player-list bb" data-position="striker">
+                            <h4 class="m-b-5 m-t-5">Strikers</h4>
+                            <p class="m-b-5"><span>st1</span><i class="fa fa-times float-right"></i></p>
+                        </div>
+                    </div>
+                    <div class="width-100-percent m-t-10 pull-left p-10 bb">
+                        <h3 class="m-t-10 m-b-10">Player Market</h3>
+                        <select id="player-market" class="float-left" style="width: 200px; float: left;">
+                            <optgroup label="Goalkeepers">
+                                <option value="gk1">Victor Valdez - 10.000.000</option>
+                                <option value="gk2">Asmir Begovic - 9.000.000</option>
+                                <option value="gk3">Tim Krul - 8.000.000</option>
+                                <option value="gk4">Simon Mignolet - 7.000.000</option>
+                            </optgroup>
+                            <optgroup label="Defenders">
+                                <option value="df1">John Terry - 10.000.000</option>
+                                <option value="df2">Branislav Ivanovic - 9.000.000</option>
+                                <option value="df3">Martin Skrtel - 8.000.000</option>
+                                <option value="df4">Laurent Koscielny - 7.000.000</option>
+                            </optgroup>
+                            <optgroup label="Midfielders">
+                                <option value="md1">Santi Cazorla - 10.000.000</option>
+                                <option value="md2">Philippe Coutinho - 9.000.000</option>
+                                <option value="md3">Eden Hazard - 8.000.000</option>
+                                <option value="md4">Mesut Ozil - 7.000.000</option>
+                            </optgroup>
+                            <optgroup label="Strikers">
+                                <option value="st1">Olivier Giroud - 10.000.000</option>
+                                <option value="st2">Harry Kane - 9.000.000</option>
+                                <option value="st3">Wayne Rooney - 8.000.000</option>
+                                <option value="st4">Alexis Sanchez - 7.000.000</option>
+                            </optgroup>
+                        </select>
+                        <a style="width: 100px;" href="#" class="pull-left m-l-20 blue-button fantasy-buy">
+                            <i class="fa fa-spin fa-spinner display-none"></i>
+                            <span>Buy</span>
+                        </a>
+                        <div class="message error-message fantasy-buy-message display-none">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <footer>
+            <script src="jquery-1.11.2.min.js"></script>
+            <script src="select2/dist/js/select2.min.js"></script>
+            <script src="pnotify/pnotify.custom.min.js"></script>
+            <script src="sortable.js"></script>
+            <script src="main.js"></script>
+            <script src="fantasy.js"></script>
+            <script src="functions.js"></script>
+        </footer>
+    </body>
+    <div class="new-fantasy-league-template display-none">
+        <div class="new-page-modal">
+            <form action="fantasy-manage.html">
+                <div class="modal-element">
+                    <label class="main-label">League Name</label>
+                    <div class="main-div">
+                        <input type="text" class="bb pull-left"  />
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class="modal-element">
+                    <label class="main-label">Is Private?</label>
+                    <div class="main-div">
+                        <label>Yes<input type="radio"></label>
+                        <label>No<input type="radio"></label>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class="modal-element">
+                    <label class="main-label">Access code</label>
+                    <div class="main-div">
+                        <input placeholder="Type in desired access code" type="text" class="bb pull-left"  />
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class="modal-element">
+                    <label class="main-label">Password</label>
+                    <div class="main-div">
+                        <input placeholder="If league is private, it must have a password" type="text" class="bb pull-left"  />
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-header-close"><i class="fa fa-times"></i></div>
+                    <div class="modal-header-title bb">
+                        <p class="truncate-string">This is some very long title of some dialog</p>
+                    </div>
+                </div>
+                <div class="modal-body bb">
+                    <div class="mcl" style="text-align: center;">
+                        <i style="font-size: 50px;" class="fa fa-spinner fa-spin"></i>
+                    </div>
+                    <div class="mc">
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary pull-right submit-modal-form">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</html>

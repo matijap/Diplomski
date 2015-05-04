@@ -1,0 +1,749 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="reset.css" type="text/css" rel="stylesheet">
+        <link href="font-awesome-4.3.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+        <!-- <link href="bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet"> -->
+        <link href="main.css" type="text/css" rel="stylesheet">
+        <link href="white-essence.css" type="text/css" rel="stylesheet">
+        <link href="hover.css" type="text/css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Jura' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,600' rel='stylesheet' type='text/css'>
+        <link href='jquery-ui/jquery-ui.min.css' rel='stylesheet' type='text/css'>
+    </head>	
+    <body>
+        <header class="widget-header-color">
+            <nav role="navigation" class="header-holder">
+                <div class="h">
+                    <ul class="main-link-ul">
+                        <li class="cc main-link-li">
+                            <a>Notifications<i class="fa fa-exclamation"></i></a>
+                            <ul class="sublink-ul sublink-ul-1 notifications-menu">
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <div class="person-avatar pull-left">
+                                        <img src="silhouette.png" />
+                                    </div>
+                                    <p class="pull-left">
+                                        <a href="#">
+                                            Person Person likes your post
+                                        </a>
+                                    </p>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="p0.html">8 persons like your post<i class="fa fa-chevron-right"></i></a>
+                                    <ul class="sublink-ul sublink-ul-2">
+                                        <li class="main-background-color sublink-li-2">
+                                            <a href="p1.html">Person Person</a>
+                                        </li>
+                                        <li class="main-background-color sublink-li-2">
+                                            <a href="p2.html">Person Person</a>
+                                        </li>
+                                        <li class="main-background-color sublink-li-2">
+                                            <a href="p3.html">Person Person</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="quiz-game.html">Quiz is about to start</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="fantasy-manage.html">Your fantasy team scored 10 points!</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="cc main-link-li">
+                            <a href="index.html">Refresh Me</a>
+                        </li>
+                        <li class="cc main-link-li">
+                            <a href="my.html">My Posts</a>
+                        </li>
+                        <li class="cc main-link-li">
+                            <a>Games</a>
+                            <ul class="sublink-ul sublink-ul-1">
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="fantasy.html">Fantasy</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="quiz.html">Quiz</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a>Virtual Booking</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="cc main-link-li">
+                            <a>More</a>
+                            <ul class="sublink-ul sublink-ul-1">
+                                <li data-template="new-page-template" class="cc sublink-li-1 bb main-background-color modal-open">
+                                    <a href="javascript:void(0)">New Page</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a>Galery</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a>About Me</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a>Privacy settings</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="login.html">Sign Out</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <a href="javascript:void(0)" class="new-post modal-open" data-template="new-post-template">New Post</a>
+            </nav>
+        </header>
+        <aside class="chat-sidebar position-fixed main-background-color">
+            <div class="chat-search">
+                <input class="search-person-chat" type="text" / placeholder="Type to search" class="bb">
+                <i class="fa fa-search"></i>
+                <i class="fa fa-times display-none"></i>
+            </div>
+            <div class="one-chat-person online">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability  bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Matija Parausic Matija Parausic</p>
+                </div>
+            </div>
+            <div class="one-chat-person online">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Matija Parausic Matija Parausic</p>
+                </div>
+            </div>
+            <div class="one-chat-person online">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Matija Parausic Matija Parausic</p>
+                </div>
+            </div>
+            <div class="one-chat-person online busy">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person online busy">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person online away">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person online away">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person offline">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person offline">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person offline">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person offline">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+        </aside>
+        <aside id="left-widget-area" class="widget-area position-fixed column">
+            <div id="w1" class="one-widget dragbox">
+                <div class="widget-header bb widget-header-color">
+                    <div data-template="favourited-pages-template" class="widget-header-close modal-open">
+                        <i class="fa fa-gear"></i>
+                    </div>
+                    <div class="widget-header-title bb">
+                        <h2 class="truncate-string">Favourited pages</h2>
+                    </div>
+                </div>
+                <div class="widget-content favourite-pages main-background-color">
+                    <ul>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <img width="20px" height="20px" class="pull-left" src="widget_logo.png" />
+                                <span class="pull-left">Serie A</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <img width="20px" height="20px" class="pull-left" src="widget_logo.png" />
+                                <span class="pull-left">Premier League</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <img width="20px" height="20px" class="pull-left" src="widget_logo.png" />
+                                <span class="pull-left">FC Red Star Belgrade</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <img width="20px" height="20px" class="pull-left" src="widget_logo.png" />
+                                <span class="pull-left">BC Red Star Belgrade</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <img width="20px" height="20px" class="pull-left" src="widget_logo.png" />
+                                <span class="pull-left">Champions League</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <img width="20px" height="20px" class="pull-left" src="widget_logo.png" />
+                                <span class="pull-left">Turkish Eurolines Euroleague</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <img width="20px" height="20px" class="pull-left" src="widget_logo.png" />
+                                <span class="pull-left">Mozzart bet</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="w2" class="one-widget dragbox">
+                <div class="widget-header bb widget-header-color">
+                    <div class="widget-header-close"><i class="fa fa-times"></i></div>
+                    <div class="widget-header-title bb">
+                        <h2 class="truncate-string">Upcoming games</h2>
+                    </div>
+                </div>
+                <div class="widget-content upcoming-games main-background-color">
+                    <ul>
+                        <li class="widget-sport-type">
+                            <img class="pull-left widget-sport-type-logo" width="15px" height="15px" class="pull-left" src="widget_football.png" />
+                            <span class="pull-left"><h3>Football matches</h3></span>
+                        </li>
+                        <li class="matches-list">
+                            <div>
+                                <div class="teams-holder">
+                                    <img width="20px" height="20px" class="pull-left" src="widget_logo.png" />
+                                    <p class="pull-left">-</p>
+                                    <img width="20px" height="20px" class="pull-left" src="widget_logo.png" />
+                                </div>
+                                <i data-template="upcoming-games-template" class="fa fa-pencil-square-o modal-open"></i>
+                            </div>
+                        </li>
+                        <li class="matches-list">
+                            <div>
+                                <div class="teams-holder">
+                                    <img width="20px" height="20px" class="pull-left" src="widget_logo.png" />
+                                    <p class="pull-left">-</p>
+                                    <img width="20px" height="20px" class="pull-left" src="widget_logo.png" />
+                                </div>
+                                <i data-template="upcoming-games-template" class="fa fa-pencil-square-o modal-open"></i>
+                            </div>
+                        </li>
+                        <li class="widget-sport-type">
+                            <img class="pull-left widget-sport-type-logo" width="15px" height="15px" class="pull-left" src="widget_basketball.png" />
+                            <span class="pull-left"><h3>Basketball matches</h3></span>
+                        </li>
+                        <li class="matches-list">
+                            <div>
+                                <div class="teams-holder">
+                                    <img width="20px" height="20px" class="pull-left" src="widget_basketball.png" />
+                                    <p class="pull-left">-</p>
+                                    <img width="20px" height="20px" class="pull-left" src="widget_basketball.png" />
+                                </div>
+                                <i data-template="upcoming-games-template" class="fa fa-pencil-square-o modal-open"></i>
+                            </div>
+                        </li>
+                        <li class="matches-list">
+                            <div>
+                                <div class="teams-holder">
+                                    <img width="20px" height="20px" class="pull-left" src="widget_basketball.png" />
+                                    <p class="pull-left">-</p>
+                                    <img width="20px" height="20px" class="pull-left" src="widget_basketball.png" />
+                                </div>
+                                <i data-template="upcoming-games-template" class="fa fa-pencil-square-o modal-open"></i>
+                            </div>
+                        </li>
+                        <li class="widget-sport-type">
+                            <img class="pull-left widget-sport-type-logo" width="15px" height="15px" class="pull-left" src="widget_handball.gif" />
+                            <span class="pull-left"><h3>Handball matches</h3></span>
+                        </li>
+                        <li class="matches-list">
+                            <div>
+                                <div class="teams-holder">
+                                    <img width="20px" height="20px" class="pull-left" src="widget_handball.gif" />
+                                    <p class="pull-left">-</p>
+                                    <img width="20px" height="20px" class="pull-left" src="widget_handball.gif" />
+                                </div>
+                                <i data-template="upcoming-games-template" class="fa fa-pencil-square-o modal-open"></i>
+                            </div>
+                        </li>
+                        <li class="matches-list">
+                            <div>
+                                <div class="teams-holder">
+                                    <img width="20px" height="20px" class="pull-left" src="widget_handball.gif" />
+                                    <p class="pull-left">-</p>
+                                    <img width="20px" height="20px" class="pull-left" src="widget_handball.gif" />
+                                </div>
+                                <i data-template="upcoming-games-template" class="fa fa-pencil-square-o modal-open"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+        <aside id="right-widget-area" class="widget-area position-fixed column">
+            <div id="w3" class="one-widget dragbox">
+                <div class="widget-header bb widget-header-color">
+                    <div class="widget-header-close"><i class="fa fa-times"></i></div>
+                    <div class="widget-header-title bb">
+                        <h2 class="truncate-string">Best Scorers</h2>
+                    </div>
+                </div>
+                <div class="widget-content best-scorers main-background-color">
+                    <ul>
+                        <li class="league-title">
+                            <img class="pull-left widget-sport-type-logo" width="15px" height="15px" class="pull-left" src="widget_football.png" />
+                            <h4 class="pull-left">Premier League</h4>
+                        </li>
+                        <li class="one-player">
+                            Lionel Messi
+                            <span>16</span>
+                        </li>
+                        <li class="one-player">
+                            Gareth Bale
+                            <span>13</span>
+                        </li>
+                        <li class="one-player">
+                            Darko Lazovic
+                            <span>8</span>
+                        </li>
+                        <li class="league-title">
+                            <img class="pull-left widget-sport-type-logo" width="15px" height="15px" class="pull-left" src="widget_football.png" />
+                            <h4 class="pull-left">Euroleague</h4>
+                        </li>
+                        <li class="one-player">
+                            Nemanja Bjelica
+                            <span>456</span>
+                        </li>
+                        <li class="one-player">
+                            Charles Jenkins
+                            <span>381</span>
+                        </li>
+                        <li class="one-player">
+                            Milan Macvan
+                            <span>0</span>
+                        </li>
+                        <div class="clear"></div>
+                    </ul>
+                </div>
+            </div>
+            <div id="w4" class="one-widget dragbox">
+                <div class="widget-header bb widget-header-color">
+                    <div class="widget-header-close"><i class="fa fa-times"></i></div>
+                    <div class="widget-header-title bb">
+                        <h2 class="truncate-string">Odds of the day</h2>
+                    </div>
+                </div>
+                <div class="widget-content main-background-color">
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div id="w5" class="one-widget dragbox">
+                <div class="widget-header bb widget-header-color">
+                    <div class="widget-header-close"><i class="fa fa-times"></i></div>
+                    <div class="widget-header-title bb">
+                        <h2 class="truncate-string">Premier league table</h2>
+                    </div>
+                </div>
+                <div class="widget-content main-background-color">
+                    <table class="table" >
+                        <tr>
+                            <th style="border:1px solid black;"></th>
+                            <th style="border:1px solid black;">W</th>
+                            <th style="border:1px solid black;">L</th>
+                            <th style="border:1px solid black;">D</th>
+                            <th style="border:1px solid black;">GF</th>
+                            <th style="border:1px solid black;">GA</th>
+                            <th style="border:1px solid black;">GD</th>
+                            <th style="border:1px solid black;">PT</th>
+                        </tr>
+                        <tr>
+                            <td style="border:1px solid black;">Manchester City</td>
+                            <td style="border:1px solid black;">15</td>
+                            <td style="border:1px solid black;">6</td>
+                            <td style="border:1px solid black;">4</td>
+                            <td style="border:1px solid black;">53</td>
+                            <td style="border:1px solid black;">12</td>
+                            <td style="border:1px solid black;">18</td>
+                            <td style="border:1px solid black;">66</td>
+                        </tr>
+                        <tr>
+                            <td style="border:1px solid black;">Manchester City</td>
+                            <td style="border:1px solid black;">15</td>
+                            <td style="border:1px solid black;">6</td>
+                            <td style="border:1px solid black;">4</td>
+                            <td style="border:1px solid black;">53</td>
+                            <td style="border:1px solid black;">12</td>
+                            <td style="border:1px solid black;">18</td>
+                            <td style="border:1px solid black;">66</td>
+                        </tr>
+                        <tr>
+                            <td style="border:1px solid black;">Manchester City</td>
+                            <td style="border:1px solid black;">15</td>
+                            <td style="border:1px solid black;">6</td>
+                            <td style="border:1px solid black;">4</td>
+                            <td style="border:1px solid black;">53</td>
+                            <td style="border:1px solid black;">12</td>
+                            <td style="border:1px solid black;">18</td>
+                            <td style="border:1px solid black;">66</td>
+                        </tr>
+                    </table>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </aside>
+        <div id="main-panel" class="bb">
+            <div class="one-post video main-background-color">
+                <div class="post-header bb widget-header-color">
+                    <div class="post-header-close">
+                        <i class="fa fa-thumbs-up"></i>
+                        <i class="fa fa-forward"></i>
+                        <i class="fa fa-heart"></i>
+                        <!-- <div class="post-actions">
+                            <ul>
+                                <li>Favourite <i class="fa fa-heart"></i></li>
+                                <li>Forward <i class="fa fa-forward"></i></li>
+                            </ul>
+                        </div> -->
+                    </div>
+                    <div class="post-header-title bb">
+                        <h2 class="truncate-string">This is some very long title of some post</h2>
+                    </div>
+                </div>
+                <div class="post-body bb">
+                    <!-- <iframe src="http://www.youtube.com/embed/XGSy3_Czz8k"></iframe> -->
+                    <div class="post-text">
+                        <p>
+                            This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text.
+                        </p>
+                    </div>
+                </div>
+                <div class="post-footer bb">
+                    <textarea placeholder="Click to enter comment" class="post-comment-textarea bb"></textarea>
+                    <input class="submit-comment" type="submit" value="Submit" />
+                    <div class="post-comment-list bb">
+                        <div class="one-post-comment">
+                            <div class="post-comment-avatar">
+                                <img src="silhouette.png">
+                            </div>
+                            <div class="one-post-actions-holder">
+                                <a href="javascript:void(0)"><i class="fa fa-heart"></i></a>
+                                <a href="javascript:void(0)"><i class="fa fa-reply"></i></a>
+                                <a href="javascript:void(0)"><i class="fa fa-forward"></i></a>
+                                <a href="javascript:void(0)"><i class="fa fa-warning"></i></a>
+                            </div>
+                            <div class="one-post-comment-text">
+                                <p>
+                                This is comment text. This is comment text.  This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text.
+                                </p>
+                            </div>
+                            <div class="post-count-and-date">
+                                <p>53 Favs</p>
+                                <p>14 Forwards</p>
+                                <p class="pull-right">15.06.2015</p>
+                            </div>
+                        </div>
+                        <div class="one-post-comment">
+                            <div class="post-comment-avatar">
+                                <img src="silhouette.png">
+                            </div>
+                            <div class="one-post-actions-holder">
+                                <a href="javascript:void(0)"><i class="fa fa-heart"></i></a>
+                                <a href="javascript:void(0)"><i class="fa fa-reply"></i></a>
+                                <a href="javascript:void(0)"><i class="fa fa-forward"></i></a>
+                                <a href="javascript:void(0)"><i class="fa fa-warning"></i></a>
+                            </div>
+                            <div class="one-post-comment-text">
+                                <p>
+                                This is comment text. This is comment text.  This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text.
+                                </p>
+                            </div>
+                            <div class="post-count-and-date">
+                                <p>53 Favs</p>
+                                <p>14 Forwards</p>
+                                <p class="pull-right">15.06.2015</p>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="show-more-post-comments">
+                            <i class="fa fa-toggle-down"></i>
+                            <i class="fa fa-spinner fa-spin display-none"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="one-post image main-background-color">
+                <div class="post-header bb widget-header-color">
+                    <div class="post-header-close"><i class="fa fa-times"></i></div>
+                    <div class="post-header-title bb">
+                        <p class="truncate-string">This is some very long title of some post</p>
+                    </div>
+                </div>
+                <div class="post-body bb">
+                    <img src="ball.jpg">
+                    <div class="post-text">
+                        <p>
+                            This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text. This is post text.
+                        </p>
+                    </div>
+                </div>
+                <div class="post-footer bb">
+
+                </div>
+            </div>
+        </div>
+    </body>
+    <footer>
+        <script src="jquery-1.11.2.min.js"></script>
+        <script src="select2/dist/js/select2.min.js"></script>
+        <script src="sortable.js"></script>
+        <script src="main.js"></script>
+        <script src="functions.js"></script>
+    </footer>
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-header-close"><i class="fa fa-times"></i></div>
+                    <div class="modal-header-title bb">
+                        <p class="truncate-string">This is some very long title of some dialog</p>
+                    </div>
+                </div>
+                <div class="modal-body bb">
+                    <div class="mcl" style="text-align: center;">
+                        <i style="font-size: 50px;" class="fa fa-spinner fa-spin"></i>
+                    </div>
+                    <div class="mc">
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary pull-right submit-modal-form">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="upcoming-games-template display-none">
+        <div class="upcoming-games-modal">
+            <div class="home-team">
+                <h2 class="text-align-center">Home Team</h2>
+                <img width="50px" height="50px" class="display-block logo" src="widget_logo.png" />
+                <div class="club-info">
+                    <h3>Name:</h3>&nbsp;
+                    <p>FC Red Star Belgrade</p>
+                </div>
+                <div class="club-info">
+                    <h3>Colours:</h3>&nbsp;
+                    <p>Red, White</p>
+                </div>
+                <div class="club-info">
+                    <h3>Founded:</h3>&nbsp;
+                    <p>1945</p>
+                </div>
+                <div class="club-info">
+                    <h3>From:</h3>&nbsp;
+                    <p>Belgrade</p>
+                </div>
+            </div>
+            <div class="away-team">
+                <h2 class="text-align-center">Away Team</h2>
+                <img width="50px" height="50px" class="display-block logo" src="widget_logo.png" />
+                <div class="club-info">
+                    <h3>Name:</h3>&nbsp;
+                    <p>FC Partizan Belgrade</p>
+                </div>
+                <div class="club-info">
+                    <h3>Colours:</h3>&nbsp;
+                    <p>Black, White</p>
+                </div>
+                <div class="club-info">
+                    <h3>Founded:</h3>&nbsp;
+                    <p>1945</p>
+                </div>
+                <div class="club-info">
+                    <h3>From:</h3>&nbsp;
+                    <p>Belgrade</p>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="match-details text-align-center">
+                <h2>Match Details</h2>
+                <div class="match-details-info">
+                    <h3>Date:</h3>&nbsp;
+                    <p>15.06.2015 20:45</p>
+                </div>
+                <div class="match-details-info">
+                    <h3>Venue:</h3>&nbsp;
+                    <p>Stadion Rajko Mitic</p>
+                </div>
+                <div class="match-details-info">
+                    <h3>Referees:</h3>&nbsp;
+                    <p>Petar Petrovic, Milan Milanovic, Jovan Jovanovic, Petar Petrovic, Milan Milanovic, Jovan Jovanovic</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="new-post-template display-none">
+        <div class="new-post-modal">
+            <!-- <div class="modal-element">
+                <label for="post-title">
+                    Post template
+                </label>
+                <select>
+                    <option>
+                        Is watching...
+                    </option>
+                </select>
+            </div> -->
+            <div class="modal-element">
+                <label for="post-title">
+                    Post type
+                </label>
+                <select id="post-selection">
+                    <option value="text">Text only</option>
+                    <option value="image">With Image</option>
+                    <option value="video">With Video</option>
+                </select>
+            </div>
+            <div class="modal-element">
+                <label for="post-title">
+                    Title
+                </label>
+                <input type="text" name="post-title" id="post-title" />
+            </div>
+            <div class="modal-element">
+                <label for="post-content">
+                    Content
+                </label>
+                <textarea name="post-content" id="post-content"></textarea>
+            </div>
+            <div class="modal-element display-none">
+                <label for="image-url">
+                    Image URL
+                </label>
+                <input type="text" name="image-url" id="image-url" />
+            </div>
+            <div class="modal-element display-none">
+                <label for="image-upload">
+                    Upload Image
+                </label>
+                <input type="file" name="image-upload" id="image-upload" />
+            </div>
+            <div class="modal-element display-none">
+                <label for="video-url">
+                    Video URL
+                </label>
+                <input type="text" name="video-url" id="video-url" />
+            </div>
+        </div>
+    </div>
+    <div class="favourited-pages-template display-none">
+        <div class="favourited-pages-modal">
+            <h2>
+                Pick a sport
+            </h2>
+            <label>
+                <input type="checkbox" value="football" checked/>
+                Football
+            </label>
+            <label>
+                <input type="checkbox" value="football" />
+                Basketball
+            </label>
+            <label>
+                <input type="checkbox" value="football" checked/>
+                Handball
+            </label>
+            <label>
+                <input type="checkbox" value="football" checked/>
+                Waterpolo
+            </label>
+            <label>
+                <input type="checkbox" value="football" />
+                Voleyball
+            </label>
+            <h2 class="m-t-10">
+                Number of pages
+            </h2>
+            <input type="number">
+        </div>
+    </div>
+    <div class="new-page-template display-none">
+        <div class="new-page-modal">
+            <form action="page.html">
+                <div class="modal-element">
+                    <label for="page-title">
+                        Title
+                    </label>
+                    <input type="text" name="page-title" id="page-title" />
+                </div>
+            </form>
+        </div>
+    </div>
+</html>

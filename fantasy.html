@@ -1,0 +1,334 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="reset.css" type="text/css" rel="stylesheet">
+        <link href="font-awesome-4.3.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+        <!-- <link href="bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet"> -->
+        <link href="main.css" type="text/css" rel="stylesheet">
+        <link href="white-essence.css" type="text/css" rel="stylesheet">
+        <link href="hover.css" type="text/css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Jura' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,600' rel='stylesheet' type='text/css'>
+        <link href='jquery-ui/jquery-ui.min.css' rel='stylesheet' type='text/css'>
+    </head> 
+    <body>
+        <header class="widget-header-color">
+            <nav role="navigation" class="header-holder">
+                <div class="h">
+                    <ul class="main-link-ul">
+                        <li class="cc main-link-li">
+                            <a>Notifications<i class="fa fa-exclamation"></i></a>
+                            <ul class="sublink-ul sublink-ul-1 notifications-menu">
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <div class="person-avatar pull-left">
+                                        <img src="silhouette.png" />
+                                    </div>
+                                    <p class="pull-left">
+                                        <a href="#">
+                                            Person Person likes your post
+                                        </a>
+                                    </p>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="p0.html">8 persons like your post<i class="fa fa-chevron-right"></i></a>
+                                    <ul class="sublink-ul sublink-ul-2">
+                                        <li class="main-background-color sublink-li-2">
+                                            <a href="p1.html">Person Person</a>
+                                        </li>
+                                        <li class="main-background-color sublink-li-2">
+                                            <a href="p2.html">Person Person</a>
+                                        </li>
+                                        <li class="main-background-color sublink-li-2">
+                                            <a href="p3.html">Person Person</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="quiz-game.html">Quiz is about to start</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="fantasy-manage.html">Your fantasy team scored 10 points!</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="cc main-link-li">
+                            <a href="index.html">Refresh Me</a>
+                        </li>
+                        <li class="cc main-link-li">
+                            <a href="my.html">My Posts</a>
+                        </li>
+                        <li class="cc main-link-li">
+                            <a>Games</a>
+                            <ul class="sublink-ul sublink-ul-1">
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="fantasy.html">Fantasy</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="quiz.html">Quiz</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a>Virtual Booking</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="cc main-link-li">
+                            <a>More</a>
+                            <ul class="sublink-ul sublink-ul-1">
+                                <li data-template="new-page-template" class="cc sublink-li-1 bb main-background-color modal-open">
+                                    <a href="javascript:void(0)">New Page</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a>Galery</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a>About Me</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a>Privacy settings</a>
+                                </li>
+                                <li class="cc sublink-li-1 bb main-background-color">
+                                    <a href="login.html">Sign Out</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <a href="javascript:void(0)" class="new-post modal-open" data-template="new-post-template">New Post</a>
+            </nav>
+        </header>
+        <aside class="chat-sidebar position-fixed main-background-color">
+            <div class="chat-search">
+                <input class="search-person-chat" type="text" / placeholder="Type to search" class="bb">
+                <i class="fa fa-search"></i>
+                <i class="fa fa-times display-none"></i>
+            </div>
+            <div class="one-chat-person online">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability  bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Matija Parausic Matija Parausic</p>
+                </div>
+            </div>
+            <div class="one-chat-person online">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Matija Parausic Matija Parausic</p>
+                </div>
+            </div>
+            <div class="one-chat-person online">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Matija Parausic Matija Parausic</p>
+                </div>
+            </div>
+            <div class="one-chat-person online busy">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person online busy">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person online away">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person online away">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person offline">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person offline">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person offline">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+            <div class="one-chat-person offline">
+                <div class="chat-avatar">
+                    <img src="silhouette.png" />
+                </div>
+                <div class="chat-availability bb"></div>
+                <div class="chat-person-name">
+                    <p class="truncate-string">Pera Pera</p>
+                </div>
+            </div>
+        </aside>
+        <div id="main-panel" class="bb fantasy">
+            <h1 style="text-align:center;">Fantasy</h1>
+            <p>Currently, fantasy is limited to English Football Premier League. As soon as valid API endpoint become available, we can include other league, or even sport.</p>
+            <a href="#" class="pull-left m-t-10 m-b-10" style="width: 100%;">Know for a good API? Let us know!</a>
+            <div class="pull-left">
+                <div class="m-t-10 main-background-color" style="padding: 10px; width: 400px;">
+                    <h2 class="m-b-10">Join a league</h2>
+                    <input placeholder="Enter your access code" type="text" style="width: 300px;">
+                    <button class="green-button" style="width: 50px;">Join</button>
+                </div>
+                <div class="m-t-10 main-background-color" style="padding: 10px; width: 400px;">
+                    <h2 class="m-b-10">Or, create your own!</h2>
+                    <button data-template="new-fantasy-league-template" class="green-button modal-open" style="width: 50px;">Create</button>
+                </div>
+
+                <div class="m-t-10 main-background-color" style="padding: 10px; width: 400px;">
+                    <h2>List of leagues you're part of</h2>
+                    <ul class="m-t-10" style="font-size: 14px;">
+                        <li class="m-b-10">
+                            <p class="bold-text display-inline-block">Pros only</p>
+                            <p class="display-inline-block" style="font-size: 12px;">(Ranked 12)</p>
+                            <a href="fantasy-manage.html" class="blue-button pull-right">Manage</a>
+                        </li>
+                        <li class="m-b-10">
+                            <p class="bold-text display-inline-block">Noobs</p>
+                            <p class="display-inline-block" style="font-size: 12px;"> (Ranked 1)</p>
+                            <a href="fantasy-manage.html" class="blue-button pull-right">Manage</a>
+                        </li>
+                        <li class="m-b-10">
+                            <p class="bold-text display-inline-block">Average Joes</p>
+                            <p class="display-inline-block" style="font-size: 12px;"> (Ranked 8)</p>
+                            <a href="fantasy-manage.html" class="blue-button pull-right">Manage</a>
+                        </li>
+                    </ul>
+                    <h2>You are not part of any league</h2>
+                </div>
+            </div>
+            <div class="pull-left m-l-20">
+                <h2>Upcoming fixtures</h2>
+                <table class="table">
+                    <tr>
+                        <th>Home</th>
+                        <th>Away</th>
+                    </tr> 
+                    <tr>
+                        <td>Manchester United</td>
+                        <td>Mancester City</td>
+                    </tr>
+                    <tr>
+                        <td>Manchester United</td>
+                        <td>Mancester City</td>
+                    </tr>
+                    <tr>
+                        <td>Manchester United</td>
+                        <td>Mancester City</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <footer>
+            <script src="jquery-1.11.2.min.js"></script>
+            <script src="select2/dist/js/select2.min.js"></script>
+            <script src="sortable.js"></script>
+            <script src="main.js"></script>
+            <script src="functions.js"></script>
+        </footer>
+    </body>
+    <div class="new-fantasy-league-template display-none">
+        <div class="new-page-modal">
+            <form action="fantasy-manage.html">
+                <div class="modal-element">
+                    <label class="main-label">League Name</label>
+                    <div class="main-div">
+                        <input type="text" class="bb pull-left"  />
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class="modal-element">
+                    <label class="main-label">Is Private?</label>
+                    <div class="main-div">
+                        <label>Yes<input type="radio"></label>
+                        <label>No<input type="radio"></label>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class="modal-element">
+                    <label class="main-label">Access code</label>
+                    <div class="main-div">
+                        <input placeholder="Type in desired access code" type="text" class="bb pull-left"  />
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class="modal-element">
+                    <label class="main-label">Password</label>
+                    <div class="main-div">
+                        <input placeholder="If league is private, it must have a password" type="text" class="bb pull-left"  />
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-header-close"><i class="fa fa-times"></i></div>
+                    <div class="modal-header-title bb">
+                        <p class="truncate-string">This is some very long title of some dialog</p>
+                    </div>
+                </div>
+                <div class="modal-body bb">
+                    <div class="mcl" style="text-align: center;">
+                        <i style="font-size: 50px;" class="fa fa-spinner fa-spin"></i>
+                    </div>
+                    <div class="mc">
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary pull-right submit-modal-form">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</html>
