@@ -6,33 +6,41 @@ $( document ).ready(function() {
     $( window ).resize(function() {
         applyResizeFunctions();
     });
+
+    // Simple list
+ // var list = document.getElementById("left-widget-area");
+ // Sortable.create(list, { group: "omega" }); // That's all.
+ // var list = document.getElementById("right-widget-area");
+ // Sortable.create(list, { group: "omega" }); // That's all.
     
-    $('.column').sortable({
-        connectWith: '.column',
-        handle: '.main-label',
-        cursor: 'move',
-        placeholder: 'placeholder',
-        forcePlaceholderSize: true,
-        opacity: 0.4,
-        stop: function(event, ui) {
-            var leftArray  = [];
-            var rightArray = [];
-            $('.column').each(function() {
-                var itemorder = $(this).sortable('toArray');
-                var columnId  = $(this).attr('id');
-                if (columnId == 'left-widget-area') {
-                    leftArray.push(itemorder.toString())
-                } else {
-                    rightArray.push(itemorder.toString())
-                }
-            });
+    // $('.column').sortable({
+    //     connectWith: '.column',
+    //     handle: '.widget-header-title',
+    //     cursor: 'move',
+    //     placeholder: 'placeholder',
+    //     forcePlaceholderSize: true,
+    //     opacity: 0.4,
+    //     stop: function(event, ui) {
+    //         var leftArray  = [];
+    //         var rightArray = [];
+    //         $('.column').each(function() {
+    //             var itemorder = $(this).sortable('toArray');
+    //             var columnId  = $(this).attr('id');
+    //             if (columnId == 'left-widget-area') {
+    //                 leftArray.push(itemorder.toString())
+    //             } else {
+    //                 rightArray.push(itemorder.toString())
+    //             }
+    //         });
             
-            var mainJSON = JSON.stringify({left: leftArray, right: rightArray});
-            console.log(mainJSON)
-            /*Pass sortorder variable to server using ajax to save state*/
-        }
-    })
-    .disableSelection();
+    //         var mainJSON = JSON.stringify({left: leftArray, right: rightArray});
+    //         console.log(mainJSON)
+    //         /*Pass sortorder variable to server using ajax to save state*/
+    //     }
+    // })
+    // .disableSelection();
+    // 
+
 
     $(document).on('focus', '.post-comment-textarea', function() {
         $(this).css('height', '100px');
@@ -86,36 +94,27 @@ $( document ).ready(function() {
             var data = element.data();
             $('.modal-body .mc').html($('.' + data.template).html());
 
+            $('.' + data.template).find('#test').remove();
 
+            var list = document.getElementById("test");
+            console.log(list)
+            Sortable.create(list);
+
+// $('.column').sortable('refresh') ;
     
-    $('.column').sortable({
-        connectWith: '.column',
-        handle: '.modal-element',
-        cursor: 'move',
-        placeholder: 'placeholder',
-        forcePlaceholderSize: true,
-        opacity: 0.4,
-        stop: function(event, ui) {
-            console.log('stop')
-            var leftArray  = [];
-            var rightArray = [];
-            $('.column').each(function() {
-                var itemorder = $(this).sortable('toArray');
-                var columnId  = $(this).attr('id');
-                if (columnId == 'left-widget-area') {
-                    leftArray.push(itemorder.toString())
-                } else {
-                    rightArray.push(itemorder.toString())
-                }
-            });
-            
-            var mainJSON = JSON.stringify({left: leftArray, right: rightArray});
-            console.log(mainJSON)
-            /*Pass sortorder variable to server using ajax to save state*/
-        }
-    })
+//             $('.column').sortable({
+//                 connectWith: '.column',
+//                 handle: '.modal-element',
+//                 cursor: 'move',
+//                 placeholder: 'placeholder',
+//                 forcePlaceholderSize: true,
+//                 opacity: 0.4,
+//                 stop: function(event, ui) {
+         
+//                 }
+//             });
 
-        }, 1000);
+        }, 0000);
     });
 
     $('.search-person-chat').on('input', function() {

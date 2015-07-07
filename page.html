@@ -321,8 +321,9 @@
         </div>
         <footer>
             <script src="jquery-1.11.2.min.js"></script>
-            <script src="jquery-ui/jquery-ui.min.js"></script>
-            <script src="bootstrap/js/bootstrap.min.js"></script>
+            <!-- <script src="jquery-ui/jquery-ui.min.js"></script> -->
+            <!-- <script src="bootstrap/js/bootstrap.min.js"></script> -->
+            <script src="test.js"></script>
             <script src="main.js"></script>
             <script src="functions.js"></script>
         </footer>
@@ -367,20 +368,9 @@
                         <textarea maxlength="1024" placeholder="Enter your widget text here"></textarea>
                     </div>
                     <div class="widget-list all-widget-types display-none">
-                        <div class="one-widget-list-section">
-                            <div class="modal-element">
-                                <label class="main-label bold-text" for="list-section-title-1">List section title</label>
-                                <div class="main-div">
-                                    <input type="text" class="widget-list-section-title" name="list-section-title" id="list-section-title-1" />
-                                </div>
-                            </div>
-                            <div class="modal-element">
-                                <label class="main-label" for="list-section-title-1">List section avatar</label>
-                                <div class="main-div">
-                                    <input type="file" name="list-section-avatar" id="list-section-avatar-1" />
-                                </div>
-                            </div>
-                            <div class="modal-element column">
+                        <div id="test" class="one-widget-list-section column">
+                  
+                            <div class="modal-element dragbox">
                                 <label class="main-label" for="list-section-title-1">List Option</label>
                                 <div class="main-div">
                                     <input type="text" class="widget-option-and-value bb pull-left" name="list_option_title_1" id="list-option-title-1" />
@@ -389,7 +379,7 @@
                                     <div class="clear"></div>
                                 </div>
                             </div>
-                            <div class="modal-element column">
+                            <div class="modal-element dragbox">
                                 <label class="main-label" for="list-section-title-1">List Option</label>
                                 <div class="main-div">
                                     <input type="text" class="widget-option-and-value bb pull-left" name="list_option_title_1" id="list-option-title-1" />
