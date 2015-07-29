@@ -12,6 +12,7 @@
         <link href='http://fonts.googleapis.com/css?family=Jura' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,600' rel='stylesheet' type='text/css'>
         <link href='jquery-ui/jquery-ui.min.css' rel='stylesheet' type='text/css'>
+        <link href='countdown/jquery.countdownTimer.css' rel='stylesheet' type='text/css'>
     </head> 
     <body>
         <header class="widget-header-color">
@@ -205,46 +206,59 @@
             </div>
         </aside>
         <div id="main-panel" class="bb">
-            <h1 class="text-align-center m-t-20">This is very cool quiz</h1>
+            <h1 class="text-align-center m-t-20 m-b-20">This is very cool quiz</h1>
             <div class="quiz-leaderboard float-left" style="max-width: 300px;">
                 <h2>Leaderboard</h2>
-                <table class="table m-t-10">
-                    <tr>
-                        <th>Rank</th>
-                        <th>Player name</th>
-                        <th>Points</th>
-                    </tr>
-                    <tr>
-                        <td>1.</td>
-                        <td>Matija ParausicMatija ParausicMatija Parausic</td>
-                        <td>20</td>
-                    </tr>
-                    <tr>
-                        <td>2.</td>
-                        <td>Matija Parausic</td>
-                        <td>15</td>
-                    </tr>
-                    <tr>
-                        <td>3.</td>
-                        <td>Matija Parausic</td>
-                        <td>10</td>
-                    </tr>
-                </table>
+                <div class="lead-table">
+                    <table class="table m-t-10">
+                        <tr>
+                            <th>Rank</th>
+                            <th>Player name</th>
+                            <th>Points</th>
+                        </tr>
+                        <tr>
+                            <td>1.</td>
+                            <td>Matija ParausicMatija ParausicMatija Parausic</td>
+                            <td>20</td>
+                        </tr>
+                        <tr>
+                            <td>2.</td>
+                            <td>Matija Parausic</td>
+                            <td>15</td>
+                        </tr>
+                        <tr>
+                            <td>3.</td>
+                            <td>Matija Parausic</td>
+                            <td>10</td>
+                        </tr>
+                    </table>
+                </div>
+                <h2 class="quiz-joined-players">Joined Players</h2>
             </div>
-            <div class="">
-                <div class="one-quiz-question">
-                <p>This is some very long quiz question. This is some very long quiz question. This is some very long quiz question. This is some very long quiz question. This is some very long quiz question.</p>
+            <div class="quiz-game float-right">
+                <div id="countdowntimer"><span id="hms_timer"><span></div>
+                <h3 class="text-align-center m-t-20 quiz-start-date">Quiz will start 15.06.1987 at 10:00PM</h3>
+                <div class="one-quiz-question text-align-center">
+                    
+                </div>
+                <div class="text-align-center quiz-loader">
+                    <i class="fa fa-spinner fa-spin"></i>
+                </div>
+                <div class="quiz-submit text-align-center m-t-10 display-none">
+                    <button class="blue-button">Submit</button>
                 </div>
             </div>
-            <div class="clear">
-            </div>
+            <div class="clear"></div>
         </div>
         <footer>
             <script src="jquery-1.11.2.min.js"></script>
             <script src="select2/dist/js/select2.min.js"></script>
+            <script src="countdown/jquery.countdownTimer.min.js"></script>
             <script src="sortable.js"></script>
+            <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
             <script src="main.js"></script>
             <script src="functions.js"></script>
+            <script src="quiz-game.js"></script>
         </footer>
         <div class="modal fade">
             <div class="modal-dialog">
@@ -270,5 +284,7 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+        <input type="hidden" class="clientID" value="1">
+        <input type="hidden" class="quizID" value="1">
     </body>
 </html>

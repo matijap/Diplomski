@@ -756,5 +756,16 @@ header li {
 }
 /* Fantasy End */
 /* Quiz Start */
-
+.quiz-leaderboard {
+    padding-right: 10px;
+}
+.quiz-loader {
+    font-size: 60px;
+    display: none;
+}
+.quiz-submit button {
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+}
 /* Quiz End */

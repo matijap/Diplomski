@@ -271,5 +271,8 @@ header .sublink-ul li:last-of-type {
 .table tr.quiz-already-started {
     background-color: #F16C6C;   
 }
+.quiz-leaderboard {
+    border-right: 1px solid black;
+}
 
 /* Quiz End */

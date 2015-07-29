@@ -7,6 +7,7 @@ function applyResizeFunctions() {
     adjustMainPanelWidth();
     adjustCommentTextWidth();
     adjustFantasyManageRightPanel();
+    adjustQuizGameRightPanel();
 
     var toBeCleared = setInterval( function() {
         var ifExists = doesExists('#select2-player-market-container')
@@ -31,7 +32,7 @@ function adjustMainPanelWidth() {
     var acumulated = chatWindowWidth + leftWidgetAreaWidth + rightWidgetAreaWidth;
     $('#main-panel').css('width', windowWidth - acumulated + 'px');
 
-    var startingLeft = chatWindowWidth + leftWidgetAreaWidth + 10;
+    var startingLeft = chatWindowWidth + leftWidgetAreaWidth;
     $('#main-panel').css('left', startingLeft + 'px');
 }
 
@@ -51,6 +52,15 @@ function adjustFantasyManageRightPanel() {
     var rightPanelWidth     = mainPanelWidth - pitchContainerWidth - 10;
     $('.pitch-container').next().css('max-width', rightPanelWidth + 'px');
     $('.pitch-container').next().css('width', (rightPanelWidth - 30) + 'px');
+}
+
+function adjustQuizGameRightPanel() {
+    if (doesExists('.quiz-leaderboard')) {
+        var mainPanelWidth   = getElementWidth('#main-panel');
+        var leaderboardWidth = getElementWidth('.quiz-leaderboard');
+        var remaining        = mainPanelWidth - leaderboardWidth;
+        $('.quiz-game').width((remaining - 20) + 'px');
+    }
 }
 
 function getClickOrTouchstart() {
@@ -146,5 +156,9 @@ function callNotification(text, status) {
             delay: 5000
         });
     });
+}
+
+function getClientID() {
+    return $('.clientID').val();
 }
 
