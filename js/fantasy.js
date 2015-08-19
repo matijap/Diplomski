@@ -1,4 +1,6 @@
 $( document ).ready(function() {
+    var clickOrTouchstart = getClickOrTouchstart();
+    
     $(document).on('change', '.fantasy-formation-change', function(e) {
         var formation      = $(this).val();
 

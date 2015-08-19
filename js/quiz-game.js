@@ -1,5 +1,6 @@
 $( document ).ready(function() {
-
+    var clickOrTouchstart = getClickOrTouchstart();
+    
     var playerID = getClientID();
     var quizID   = $('.quizID').val();
     var socket   = io.connect("localhost:3000");
