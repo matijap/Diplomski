@@ -12,6 +12,7 @@
         <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,600' rel='stylesheet' type='text/css'>
         <link href='plugins/select2/dist/css/select2.min.css' rel='stylesheet' type='text/css'>
         <link href='plugins/pnotify/pnotify.custom.min.css' rel='stylesheet' type='text/css'>
+        <link href='plugins/simple-lightbox/simpleLightbox.min.css' rel='stylesheet' type='text/css'>
     </head> 
     <body>
         <header class="widget-header-color">
@@ -205,13 +206,44 @@
             </div>
         </aside>
         <div id="main-panel" class="bb fantasy">
-            
+            <div class="gallery">
+                <a title="1" href="img/ball.jpg" class="main-background-color" id="test">
+                    <img src="img/ball.jpg" >
+                </a>
+                <a title="2" href="img/football_pitch.jpg" class="main-background-color" id="test1">
+                    <img src="img/football_pitch.jpg" >
+                </a>
+                <a title="3" href="img/widget_handball.gif" class="main-background-color">
+                    <img src="img/widget_handball.gif">
+                </a>
+                <a title="4" href="img/big_image.jpg" class="main-background-color">
+                    <img src="img/big_image.jpg">
+                </a>
+            </div>
+        </div>     
+        <div class="galery-overlay">
+            <div class="galery-comment-holder">
+                <div class="post-footer bb galery-comment">
+                    <textarea placeholder="Click to enter comment" class="post-comment-textarea bb"></textarea>
+                    <input class="submit-comment" type="submit" value="Submit" />
+                    <div class="post-comment-list bb">
+                        
+                        <div class="clear"></div>
+                        <div class="show-more-post-comments">
+                            <i class="fa fa-toggle-down"></i>
+                            <i class="fa fa-spinner fa-spin display-none"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="galery-image"></div>
         </div>
         <footer>
             <script src="js/jquery-1.11.2.min.js"></script>
-            <script src="plugins/plugins/select2/dist/js/select2.min.js"></script>
+            <script src="plugins/select2/dist/js/select2.min.js"></script>
             <script src="plugins/pnotify/pnotify.custom.min.js"></script>
             <script src="plugins/sortable.js"></script>
+            <script src="plugins/simple-lightbox/simpleLightbox.js"></script>
             <script src="js/main.js"></script>
             <script src="js/galery.js"></script>
             <script src="js/functions.js"></script>

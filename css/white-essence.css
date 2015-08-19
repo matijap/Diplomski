@@ -274,5 +274,12 @@ header .sublink-ul li:last-of-type {
 .quiz-leaderboard {
     border-right: 1px solid black;
 }
-
 /* Quiz End */
+/* Galery Start */
+.galery-comment-holder {
+    background-color: black;
+}
+.galery-comment-holder .fa-spinner {
+    color: white;
+}
+/* Galery End */

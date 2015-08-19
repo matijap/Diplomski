@@ -769,3 +769,58 @@ header li {
     font-size: 20px;
 }
 /* Quiz End */
+/* Galery Start */
+.slbOverlay,
+.slbWrapOuter,
+.slbArrows {
+    margin-left: 400px;
+}
+.galery-comment.post-footer {
+    border: 0;
+}
+.galery-comment .one-post-comment {
+    width: 100%;
+}
+.galery-overlay {
+    height: 90%;
+    position: absolute;
+    display: none;
+}
+.galery-comment-holder {
+    width: 400px;
+    height: 91%;
+    position: fixed;
+    overflow-y: scroll;
+    text-align: center;
+}
+.galery-image {
+    position: absolute;
+    left: 400px;
+}
+.gallery a {
+    display: inline-block;
+    width: 300px;
+    height: 300px;
+    position: relative;
+}
+.gallery a img {
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.galery-comment-holder .fa-spinner {
+    font-size: 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.slbCaption {
+    display: none;
+}
+/* Galery End */
