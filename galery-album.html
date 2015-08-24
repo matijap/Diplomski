@@ -205,32 +205,36 @@
                 </div>
             </div>
         </aside>
-        <div id="main-panel" class="bb fantasy">
+        <div id="main-panel" class="bb">
             <div class="galery-upload m-t-20">
-                <h2>Welcome to your albums!</h2>
-                <button class="blue-button m-t-10">Create album</button>
+                <h2>Upload pictures</h2>
+                <input type="file" class="upload-change-it m-t-10 float-left" id="fileupload" name="files[]" data-url="ajax/upload.php" multiple/>
+                <a class="float-right green-button back-to-galery" href="galery.html">Back To Galery</a>
+            </div>
+            <div id="progress">
+                <div class="bar" style="width: 0%;"></div>
             </div>
             <hr>
-            <div class="gallery">
-                <a title="1" href="galery-album.html" class="main-background-color one-galery-item">
+            <div class="gallery album">
+                <a title="1" href="img/ball.jpg" class="main-background-color one-galery-item">
                     <div class="remove-galery-item">
                         <i class="fa fa-times"></i>
                     </div>
                     <img src="img/ball.jpg" >
                 </a>
-                <a title="2" href="galery-album.html" class="main-background-color one-galery-item">
+                <a title="2" href="img/football_pitch.jpg" class="main-background-color one-galery-item">
                     <div class="remove-galery-item">
                         <i class="fa fa-times"></i>
                     </div>
                     <img src="img/football_pitch.jpg" >
                 </a>
-                <a title="3" href="galery-album.html" class="main-background-color one-galery-item">
+                <a title="3" href="img/widget_handball.gif" class="main-background-color one-galery-item">
                     <div class="remove-galery-item">
                         <i class="fa fa-times"></i>
                     </div>
                     <img src="img/widget_handball.gif">
                 </a>
-                <a title="4" href="galery-album.html" class="main-background-color one-galery-item">
+                <a title="4" href="img/big_image.jpg" class="main-background-color one-galery-item">
                     <div class="remove-galery-item">
                         <i class="fa fa-times"></i>
                     </div>

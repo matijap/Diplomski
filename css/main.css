@@ -97,6 +97,9 @@ a.display-none {
 .width-100-percent {
     width: 100%;
 }
+.height-90-percent {
+    height: 90%;
+}
 /* Utility Classes End */
 /* Margin and Padding Start */
 .m-t-5 {
@@ -543,8 +546,7 @@ header li {
 .modal-dialog {
     width: 600px;
     margin: 0 auto;
-    height: 90%;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 .modal-header {
     height: 70px;
@@ -799,8 +801,8 @@ header li {
 }
 .gallery a {
     display: inline-block;
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
     position: relative;
 }
 .gallery a img {
@@ -822,5 +824,30 @@ header li {
 }
 .slbCaption {
     display: none;
+}
+.bar {
+    margin-top: 10px;
+    height: 18px;
+}
+.choose-upload {
+    width: 150px;
+}
+.remove-galery-item {
+    position: absolute;
+    right: 10;
+    height: 35%;
+    width: 100%;
+    text-align: center;
+    display: none;
+    z-index: 5000;
+}
+.remove-galery-item .fa {
+    margin-top: 20px;
+    font-size: 25px;
+}
+a.back-to-galery {
+    height: 20px;
+    width: 154px;
+    font-size: 20px;
 }
 /* Galery End */

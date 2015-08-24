@@ -282,4 +282,13 @@ header .sublink-ul li:last-of-type {
 .galery-comment-holder .fa-spinner {
     color: white;
 }
+.bar {
+    background: green;
+}
+.remove-galery-item {
+    background-color: rgba(146, 146, 146, 0.9);
+}
+.remove-galery-item .fa {
+    color: red;
+}
 /* Galery End */

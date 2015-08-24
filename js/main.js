@@ -214,11 +214,33 @@ $( document ).ready(function() {
         $('.modal-body .mc').find('.widget-settings .all-widget-types').each(function() {
             initializeSimpleSortable('#' + $(this).attr('id'), true);
         });
+        recalculateModalHeight();
     });
     $(document).on(clickOrTouchstart, '.add-widget-data-table', function(e) {
         var fullData = $('.modal-body .mc #widget-table-data-full').val();
         var shortData = $('.modal-body .mc #widget-table-data-short').val();
 
         $('.modal-body .mc #widget-table-data').append('<label>' + fullData + ' (' + shortData + ')<input type="checkbox" checked="checked"></label>');
+    });
+
+    var uploadSizeButtonLength = doesExists('.upload-change-it');
+    if (uploadSizeButtonLength) {
+        $('.upload-change-it').each(function() {
+            $(this).hide();
+            var classesToBeAdded = $(this).attr('class');
+            classesToBeAdded = classesToBeAdded.split(' ');
+            
+            var stringClasses = '';
+            $.each(classesToBeAdded, function( index, value ) {
+                if (value != 'upload-change-it') {
+                    stringClasses += ' ' + value;
+                }
+            });
+            $(this).after('<a class="blue-button display-inline-block choose-upload ' + stringClasses + '" data-trigger="' + $(this).attr('id') + '">Choose files</a>');
+        });
+    }
+    $(document).on(clickOrTouchstart, '.choose-upload', function(e) {
+        var data = $(this).data();
+        $('#' + data.trigger).trigger('click');
     });
 });

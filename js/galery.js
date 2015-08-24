@@ -2,7 +2,7 @@ $( document ).ready(function() {
     var clickOrTouchstart = getClickOrTouchstart();
 
     var commentGalleryClass = '.galery-overlay';
-    $(document).on(clickOrTouchstart, '.gallery a', function(e) {
+    $(document).on(clickOrTouchstart, '.gallery.album a', function(e) {
         $(commentGalleryClass).show();
         var toClear = setInterval(function() {
             var id = $('.slbCaption').html().trim();
@@ -48,9 +48,34 @@ $( document ).ready(function() {
         }, 300);
     }
 
-    $('.gallery a').simpleLightbox({
+    $('.gallery.album a').simpleLightbox({
         appendTarget: $('.galery-image'),
         closeOnOverlayClick: false,
         nextOnImageClick: false,
     });
+
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+            $('.choose-upload').hide();
+            $.each(data.result.files, function (index, file) {
+                $('<p class="m-t-10" />').text(file.name).appendTo('.galery-upload');
+            });
+            setTimeout(function() {
+                location.reload();
+            }, 700);
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .bar').css(
+                'width',
+                progress + '%'
+            );
+        }
+    });
+
+    $(document).on(clickOrTouchstart, '.remove-galery-item .fa', function(e) {
+        e.stopPropagation();
+    });
+    
 });

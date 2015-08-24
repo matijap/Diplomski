@@ -77,3 +77,11 @@ header li:hover {
     cursor: pointer;
 }
 /* Fantasy End */
+/* Galery Start */
+.choose-upload:hover {
+    cursor: pointer;
+}
+ .one-galery-item:hover > .remove-galery-item {
+    display: block;
+ }
+/* Galery End */

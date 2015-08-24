@@ -3,6 +3,10 @@ function getScreenWidth() {
     return $(window).width();
 }
 
+function getScreenHeight() {
+    return $(window).height();
+}
+
 function applyResizeFunctions() {
     adjustMainPanelWidth();
     adjustCommentTextWidth();
@@ -160,5 +164,13 @@ function callNotification(text, status) {
 
 function getClientID() {
     return $('.clientID').val();
+}
+
+function recalculateModalHeight() {
+    var screenHeight = getScreenHeight();
+    var modalHeight  = $('.modal-dialog').height();
+    if ((screenHeight - modalHeight) < 50) {
+        $('.modal-dialog').addClass('height-90-percent');
+    }
 }
 
