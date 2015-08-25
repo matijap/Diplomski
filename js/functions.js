@@ -171,6 +171,8 @@ function recalculateModalHeight() {
     var modalHeight  = $('.modal-dialog').height();
     if ((screenHeight - modalHeight) < 50) {
         $('.modal-dialog').addClass('height-90-percent');
+    } else {
+        $('.modal-dialog').removeClass('height-90-percent');
     }
 }
 

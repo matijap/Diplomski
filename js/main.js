@@ -243,4 +243,6 @@ $( document ).ready(function() {
         var data = $(this).data();
         $('#' + data.trigger).trigger('click');
     });
+
+    $('input.datepicker').Zebra_DatePicker();
 });

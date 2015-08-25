@@ -8,10 +8,10 @@
         <link href="css/main.css" type="text/css" rel="stylesheet">
         <link href="css/white-essence.css" type="text/css" rel="stylesheet">
         <link href="css/hover.css" type="text/css" rel="stylesheet">
+        <link href="plugins/zebra-datepicker/default.css" type="text/css" rel="stylesheet">
         <link href='http://fonts.googleapis.com/css?family=Jura' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,600' rel='stylesheet' type='text/css'>
         <link href='plugins/select2/dist/css/select2.min.css' rel='stylesheet' type='text/css'>
-        <link href='plugins/pnotify/pnotify.custom.min.css' rel='stylesheet' type='text/css'>
     </head> 
     <body>
         <header class="widget-header-color">
@@ -204,190 +204,128 @@
                 </div>
             </div>
         </aside>
-        http://fantasy.premierleague.com/web/api/elements/1/
         <div id="main-panel" class="bb fantasy">
-            <div class="position-relative pull-left pitch-container">
-                <img src="img/football_pitch.jpg" width="400" />
-                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="goalkeeper" data-position="goalkeeper" >
-                    <img class="display-block" style="margin: 0 auto;" src="img/shirt.png" />
-                    <p class="m-t-5 text-align-center">Joe Hart</p>
+            <div class="main-background-color">
+                <h2>Personal Information</h2>
+                <div class="personal-settings-container">
+                    <label>First Name</label>
+                    <input type="text" value="Matija">
                 </div>
-                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="defender" data-position="defender">
-                    <img class="display-block" style="margin: 0 auto;" src="img/shirt.png" />
-                    <p class="m-t-5 text-align-center">Aleksandar Kolarov</p>
+                <div class="personal-settings-container">
+                    <label>Last Name</label>
+                    <input type="text" value="Parausic">
                 </div>
-                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="defender" data-position="defender">
-                    <img class="display-block" style="margin: 0 auto;" src="img/shirt.png" />
-                    <p class="m-t-5 text-align-center">Vincent Kompany</p>
+                <div class="personal-settings-container">
+                    <label>Email</label>
+                    <input type="text" value="matijap87@gmail.com">
                 </div>
-                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="defender" data-position="defender">
-                    <img class="display-block" style="margin: 0 auto;" src="img/shirt.png" />
-                    <p class="m-t-5 text-align-center">Pablo Zabaleta</p>
+                <div class="personal-settings-container">
+                    <label>Date Of Birth</label>
+                    <input type="text" class="datepicker" value="1987-06-15">
                 </div>
-                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="defender" data-position="defender">
-                    <img class="display-block" style="margin: 0 auto;" src="img/shirt.png" />
-                    <p class="m-t-5 text-align-center">Bacary Sagna</p>
+                <div class="personal-settings-container">
+                    <label>Phone</label>
+                    <input type="text" value="064/1-898-654">
                 </div>
-                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="midfielder" data-position="midfielder">
-                    <img class="display-block" style="margin: 0 auto;" src="img/shirt.png" />
-                    <p class="m-t-5 text-align-center">David Silva</p>
+                <div class="personal-settings-container">
+                    <label>City</label>
+                    <input type="text" value="Pancevo">
                 </div>
-                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="midfielder" data-position="midfielder">
-                    <img class="display-block" style="margin: 0 auto;" src="img/shirt.png" />
-                    <p class="m-t-5 text-align-center">Yaya Toure</p>
+                <div class="personal-settings-container">
+                    <label>Country</label>
+                    <select style="width: 200px;">
+                        <option>Serbia</option>
+                        <option>United States</option>
+                        <option>Italia</option>
+                    </select>
                 </div>
-                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="midfielder" data-position="midfielder">
-                    <img class="display-block" style="margin: 0 auto;" src="img/shirt.png" />
-                    <p class="m-t-5 text-align-center">Jesus Navas</p>
+                <div class="personal-settings-container">
+                    <label>Avatar</label>
+                    <input type="file" class="upload-change-it display-inline-block m-l-15 " id="upload-avatar">
+                    <img src="img/silhouette.png">
                 </div>
-                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="midfielder" data-position="midfielder">
-                    <img class="display-block" style="margin: 0 auto;" src="img/shirt.png" />
-                    <p class="m-t-5 text-align-center">Raheem Sterling</p>
-                </div>
-                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="striker" data-position="striker">
-                    <img class="display-block" style="margin: 0 auto;" src="img/shirt.png" />
-                    <p class="m-t-5 text-align-center">Sergio Aguero</p>
-                </div>
-                <div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="striker" data-position="striker">
-                    <img class="display-block" style="margin: 0 auto;" src="img/shirt.png" />
-                    <p class="m-t-5 text-align-center">Wilfred Bony</p>
-                </div>
+                <hr>
             </div>
-            <div class="pull-right">
-                <div class="main-background-color pull-left" style="padding: 10px;">
-                    <h3>Pick your formation:</h3>
-                    <select class="fantasy-formation-change" style="width: 100px;">
-                        <option value="343">3-4-3</option>
-                        <option value="352">3-5-2</option>
-                        <option value="433">4-3-3</option>
-                        <option value="442" selected>4-4-2</option>
-                        <option value="451">4-5-1</option>
-                        <option value="532">5-3-2</option>
-                        <option value="541">5-4-1</option>
-                    </select>
-                </div>
-                <div class="main-background-color pull-left m-l-10" style="padding: 10px;">
-                    <h3>Pick one of your preferred squads:</h3>
-                    <select class="fantasy-preffered-squad" style="width: 200px;">
-                        <option value="433">Very offensive</option>
-                        <option value="442" selected>Balanced</option>
-                        <option value="532">Contain</option>
-                    </select>
-                    <h3 class="m-t-10">Or, enter name for your new squad (optional)</h3>
-                    <input type="text">
-                </div>
-                <a href="#" class="red-button fantasy-cancel m-l-10 float-right display-none">Cancel</a>
-                <a href="#" class="green-button fantasy-submit m-l-10 float-right">Submit</a>
-                <div class="width-100-percent m-t-10 pull-left main-background-color p-10 bb">
-                    <div>
-                        <h2 class="float-left">Customize your squad</h2>
-                        <h2 class="float-right"><span class="currency">$</span><span class="remaining-budget">100,000,000</span></h2>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="clear"></div>
-                    <h3 class="m-t-10">Available players</h3>
-                    <div class="bb">
-                        <div class="fantasy-picked-player-list bb" data-position="goalkeeper">
-                            <h4 class="m-b-5 m-t-5">Goalkeepers</h4>
-                            <p class="m-b-5"><span>gk1</span><i class="fa fa-times float-right"></i></p>
-                        </div>
-                        <div class="fantasy-picked-player-list bb" data-position="defender">
-                            <h4 class="m-b-5 m-t-5">Defenders</h4>
-                            <p class="m-b-5 p-5"><span>df1</span><i class="fa fa-times float-right"></i></p>
-                        </div>
-                        <div class="fantasy-picked-player-list bb" data-position="midfielder">
-                            <h4 class="m-b-5 m-t-5">Midfielders</h4>
-                            <p class="m-b-5"><span>mf1</span><i class="fa fa-times float-right"></i></p>
-                        </div>
-                        <div class="fantasy-picked-player-list bb" data-position="striker">
-                            <h4 class="m-b-5 m-t-5">Strikers</h4>
-                            <p class="m-b-5"><span>st1</span><i class="fa fa-times float-right"></i></p>
-                        </div>
-                    </div>
-                    <div class="width-100-percent m-t-10 pull-left p-10 bb">
-                        <h3 class="m-t-10 m-b-10">Player Market</h3>
-                        <select id="player-market" class="float-left" style="width: 200px; float: left;">
-                            <optgroup label="Goalkeepers">
-                                <option value="gk1">Victor Valdez - 10.000.000</option>
-                                <option value="gk2">Asmir Begovic - 9.000.000</option>
-                                <option value="gk3">Tim Krul - 8.000.000</option>
-                                <option value="gk4">Simon Mignolet - 7.000.000</option>
-                            </optgroup>
-                            <optgroup label="Defenders">
-                                <option value="df1">John Terry - 10.000.000</option>
-                                <option value="df2">Branislav Ivanovic - 9.000.000</option>
-                                <option value="df3">Martin Skrtel - 8.000.000</option>
-                                <option value="df4">Laurent Koscielny - 7.000.000</option>
-                            </optgroup>
-                            <optgroup label="Midfielders">
-                                <option value="md1">Santi Cazorla - 10.000.000</option>
-                                <option value="md2">Philippe Coutinho - 9.000.000</option>
-                                <option value="md3">Eden Hazard - 8.000.000</option>
-                                <option value="md4">Mesut Ozil - 7.000.000</option>
-                            </optgroup>
-                            <optgroup label="Strikers">
-                                <option value="st1">Olivier Giroud - 10.000.000</option>
-                                <option value="st2">Harry Kane - 9.000.000</option>
-                                <option value="st3">Wayne Rooney - 8.000.000</option>
-                                <option value="st4">Alexis Sanchez - 7.000.000</option>
-                            </optgroup>
+            <div class="main-background-color">
+                <h2>About me</h2>
+                <div class="personal-settings-container favorite">
+                    <label class="display-inline-block">Favourite Sport</label>
+                    <div class="m-t-10">
+                        <select id="favorite-sport" multiple="multiple" style="width: 100%;">
+                            <option selected>Football</option>
+                            <option selected >Basketball</option>
+                            <option selected >Handball</option>
+                            <option >Voleyball</option>
                         </select>
-                        <a style="width: 100px;" href="#" class="pull-left m-l-20 blue-button fantasy-buy">
-                            <i class="fa fa-spin fa-spinner display-none"></i>
-                            <span>Buy</span>
-                        </a>
-                        <div class="message error-message fantasy-buy-message display-none">
-                            <p></p>
-                        </div>
                     </div>
                 </div>
+                <div class="personal-settings-container favorite">
+                    <label class="display-inline-block">Favourite Player</label>
+                    <div class="display-inline-block append-into">
+                        <div class="to-be-removed">
+                            <input type="text" class="m-t-5" value="Ivan Gennaro Gattuso">
+                            <i class="fa fa-times m-l-5 cursor-pointer remove-item" data-closest="favorite"></i>
+                        </div>
+                        <div class="to-be-removed">
+                            <input type="text" class="m-t-5" value="Andrea Pirlo">
+                            <i class="fa fa-times m-l-5 cursor-pointer remove-item" data-closest="favorite"></i>
+                        </div>
+                        <div class="to-be-removed">
+                            <input type="text" class="m-t-5" value="Charles Jenkins">
+                            <i class="fa fa-times m-l-5 cursor-pointer remove-item" data-closest="favorite"></i>
+                        </div>
+                    </div>
+                    <div class="display-inline-block m-l-10">
+                        <i class="fa fa-plus cursor-pointer add-new-item" data-closest="favorite" data-html-template="favorite-player-template"></i>
+                    </div>
+                    <p class="m-t-10 m-b-10">Players that have page and can be linked:</p>
+                    <select multiple="multiple" style="width: 100%;">
+                        <option>Francesco Totti</option>
+                        <option>Nemanja Vidic</option>
+                        <option selected>Maik Zirbes</option>
+                    </select>
+                </div>
+                <div class="personal-settings-container favorite">
+                    <label class="display-inline-block">Favourite Team</label>
+                    <div class="display-inline-block append-into">
+                        <div class="to-be-removed">
+                            <input type="text" class="m-t-5" value="Thurrock FC">
+                            <i class="fa fa-times m-l-5 cursor-pointer remove-item" data-closest="favorite"></i>
+                        </div>
+                        <div class="to-be-removed">
+                            <input type="text" class="m-t-5" value="Gosport FC">
+                            <i class="fa fa-times m-l-5 cursor-pointer remove-item" data-closest="favorite"></i>
+                        </div>
+                    </div>
+                    <div class="display-inline-block m-l-10">
+                        <i class="fa fa-plus cursor-pointer add-new-item" data-closest="favorite" data-html-template="favorite-player-template"></i>
+                    </div>
+                    <p class="m-t-10 m-b-10">Teams that have page and can be linked:</p>
+                    <select multiple="multiple" style="width: 100%;">
+                        <option selected>Red Star Belgrade</option>
+                        <option selected>AC Milan</option>
+                        <option selected>Atletico Madrid</option>
+                        <option selected>Manchester City</option>
+                        <option>Real Madrid FC</option>
+                    </select>
+                </div>
+                <hr>
             </div>
-            <div class="clear"></div>
         </div>
         <footer>
             <script src="js/jquery-1.11.2.min.js"></script>
             <script src="plugins/select2/dist/js/select2.min.js"></script>
-            <script src="plugins/pnotify/pnotify.custom.min.js"></script>
             <script src="plugins/sortable.js"></script>
             <script src="plugins/zebra-datepicker/zebra_datepicker.js"></script>
             <script src="js/main.js"></script>
-            <script src="js/fantasy.js"></script>
+            <script src="js/personal-settings.js"></script>
             <script src="js/functions.js"></script>
         </footer>
     </body>
-    <div class="new-fantasy-league-template display-none">
-        <div class="new-page-modal">
-            <form action="fantasy-manage.html">
-                <div class="modal-element">
-                    <label class="main-label">League Name</label>
-                    <div class="main-div">
-                        <input type="text" class="bb pull-left"  />
-                        <div class="clear"></div>
-                    </div>
-                </div>
-                <div class="modal-element">
-                    <label class="main-label">Is Private?</label>
-                    <div class="main-div">
-                        <label>Yes<input type="radio"></label>
-                        <label>No<input type="radio"></label>
-                        <div class="clear"></div>
-                    </div>
-                </div>
-                <div class="modal-element">
-                    <label class="main-label">Access code</label>
-                    <div class="main-div">
-                        <input placeholder="Type in desired access code" type="text" class="bb pull-left"  />
-                        <div class="clear"></div>
-                    </div>
-                </div>
-                <div class="modal-element">
-                    <label class="main-label">Password</label>
-                    <div class="main-div">
-                        <input placeholder="If league is private, it must have a password" type="text" class="bb pull-left"  />
-                        <div class="clear"></div>
-                    </div>
-                </div>
-            </form>
+    <div class="favorite-player-template display-none">
+        <div class="to-be-removed">
+            <input type="text" class="m-t-5">
+            <i class="fa fa-times m-l-5 cursor-pointer remove-item" data-closest="favorite"></i>
         </div>
     </div>
     <div class="modal fade">

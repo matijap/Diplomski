@@ -123,6 +123,9 @@ a.display-none {
 .m-l-10 {
     margin-left: 10px;
 }
+.m-l-15 {
+    margin-left: 15px;
+}
 .m-l-20 {
     margin-left: 20px;
 }
@@ -672,10 +675,11 @@ header li {
     width: 50% !important;
 }
 #about.my {
-    height: 100%;
+    height: 90%;
     width: 30%;
     right: 0;
     position: fixed;
+    overflow-y: scroll;
 }
 #about.my img {
     width: 100%;
@@ -690,29 +694,33 @@ header li {
     padding-left: 5px;
     padding-right: 5px;
 }
- .one-about-me-holder p:nth-of-type(2) {
-    margin-left: 5px;
- }
- .styled-button {
-    width: 150px;
-    margin: 0 auto;
-    height: 100%;
-    line-height: 30px;
-    padding-left: 5px;
-    padding-right: 5px;
-    color: black;
- }
- #about.my .fa-spinner {
-    font-size: 20px;
- }
- #about.my .loader-holder {
-    margin-bottom: 10px;
-    height: 30px;
- }
-  #about.my .fa-check-circle {
-    margin-left: 3px;
-    color: green;
-  }
+.one-about-me-holder p:nth-of-type(1) {
+    width: 100px;
+}
+.one-about-me-holder p:nth-of-type(2) {
+   margin-left: 5px;
+   max-width: 300px;
+}
+.styled-button {
+   width: 150px;
+   margin: 0 auto;
+   height: 100%;
+   line-height: 30px;
+   padding-left: 5px;
+   padding-right: 5px;
+   color: black;
+}
+#about.my .fa-spinner {
+   font-size: 20px;
+}
+#about.my .loader-holder {
+   margin-bottom: 10px;
+   height: 30px;
+}
+ #about.my .fa-check-circle {
+   margin-left: 3px;
+   color: green;
+}
 /* Main Content My Posts End */
 /* Fantasy start */
 .fantasy#main-panel {
@@ -851,3 +859,37 @@ a.back-to-galery {
     font-size: 20px;
 }
 /* Galery End */
+/* Personal Settings Start */
+.personal-settings-container {
+    display: inline-block;
+    padding: 10px;
+    padding-right: 20px;
+    margin-right: 10px;
+}
+.personal-settings-container input {
+    font-size: 15px;
+    margin-left: 5px;
+}
+.personal-settings-container .display-inline-block {
+    display: inline-block;
+}
+.personal-settings-container img {
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+.favorite label {
+    vertical-align: top;
+    margin-top: 10px;
+}
+.personal-settings-container.favorite {
+    vertical-align: top;
+    width: 32%;
+    box-sizing: border-box;
+}
+.personal-settings-container.favorite .select2-container {
+    float: right;
+    max-width: 357px;
+}
+/* Personal Settings End */

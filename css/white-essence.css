@@ -292,3 +292,14 @@ header .sublink-ul li:last-of-type {
     color: red;
 }
 /* Galery End */
+/* Personal Settings Start */
+.personal-settings-container {
+    border-right: 1px solid #9C9C9C;
+}
+.favorite .fa-plus {
+    color: green;
+}
+.favorite .fa-times {
+    color: red;
+}
+/* Personal Settings End */

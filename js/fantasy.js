@@ -134,7 +134,7 @@ $( document ).ready(function() {
             $.each( converted, function( position, players ) {
                 if (position != 'formation' && position != 'reserves') {
                     $.each( players, function( index, onePlayer ) {
-                        $('.pitch-container').append('<div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="' + position + '" data-position="' + position + '" ><img class="display-block" style="margin: 0 auto;" src="shirt.png" /><p class="m-t-5 text-align-center">' + onePlayer + '</p></div>');
+                        $('.pitch-container').append('<div class="position-absolute one-fantasy-pitch-player" style="top: 450px; left: 20px;" data-player-position="' + position + '" data-position="' + position + '" ><img class="display-block" style="margin: 0 auto;" src="img/shirt.png" /><p class="m-t-5 text-align-center">' + onePlayer + '</p></div>');
                     });
                 }
             });

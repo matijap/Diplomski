@@ -25,6 +25,9 @@ header li:hover {
     background-color: rgb(48, 48, 48);
     color: white;
 }
+.cursor-pointer:hover {
+    cursor: pointer;
+}
 /* Header End */
 /* Chat Sidebar Start */
 .chat-search .fa-times:hover {
