@@ -216,12 +216,6 @@ $( document ).ready(function() {
         });
         recalculateModalHeight();
     });
-    $(document).on(clickOrTouchstart, '.add-widget-data-table', function(e) {
-        var fullData = $('.modal-body .mc #widget-table-data-full').val();
-        var shortData = $('.modal-body .mc #widget-table-data-short').val();
-
-        $('.modal-body .mc #widget-table-data').append('<label>' + fullData + ' (' + shortData + ')<input type="checkbox" checked="checked"></label>');
-    });
 
     var uploadSizeButtonLength = doesExists('.upload-change-it');
     if (uploadSizeButtonLength) {
@@ -245,4 +239,44 @@ $( document ).ready(function() {
     });
 
     $('input.datepicker').Zebra_DatePicker();
+
+    $(document).on(clickOrTouchstart, '.dream-team-sport .fa', function(e) {
+        $(this).closest('.dream-team-display').find('.dream-team-display-team').toggle();
+        $(this).closest('.dream-team-display').find('.fa').toggle();
+    });
+
+    $(document).on(clickOrTouchstart, '.dream-team-sport p', function(e) {
+        $(this).closest('.dream-team-display').find('.dream-team-display-team').toggle();
+        $(this).closest('.dream-team-display').find('.fa').toggle();
+    });
+
+    $(document).on(clickOrTouchstart, '.widget-table .fa-cog', function(e) {
+        var element = $(this);
+
+        var htmlToAppend = '<div class="widget-table-option-configure">';
+        $('.modal #widget-table-data input[type="checkbox"]').each(function() {
+            // console.log($(this).is(':checked'));
+            if ($(this).is(':checked')) {
+                var data      = $(this).data();
+                htmlToAppend += '<input type="text" placeholder="' + data.placeholder + '">';
+            }
+        });
+        htmlToAppend += "<i class='fa fa-check cursor-pointer'></i><i class='fa fa-times cursor-pointer'></i></div>";
+        element.closest('.modal-element').append(htmlToAppend);
+    });
+
+    $(document).on(clickOrTouchstart, '.widget-table-option-configure .fa-times', function(e) {
+        $(this).parent().remove();
+    });
+
+    $(document).on(clickOrTouchstart, '.add-new-widget-table-data', function(e) {
+        var htmlToAppend = '<label>';
+        var fullName     = $(this).parent().find('#widget-table-data-full').val();
+        var shortName    = $(this).parent().find('#widget-table-data-short').val();
+        htmlToAppend    += fullName + ' (' + shortName + ')';
+        htmlToAppend    += '<input type="checkbox" checked="checked" data-placeholder="' + shortName + '"></label>';
+
+        $('.modal #widget-table-data').find('.main-div').append(htmlToAppend);
+        $('.modal #widget-table-data').find('.main-div').find('label').last().find('input').data('placeholder', shortName);
+    });
 });

@@ -66,20 +66,27 @@
 .one-chat-person .chat-avatar {
     background-color: white;
 }
-.chat-sidebar .online .chat-availability {
+.chat-sidebar .online .chat-availability,
+.profile-availability.online {
     background-color: #437D4E;
     border-bottom: 1px solid #386B16;
 }
-.chat-sidebar .online.busy .chat-availability {
+.chat-sidebar .online.busy .chat-availability,
+.profile-availability.online.busy {
     background-color: #FA5A5A;
     border-bottom: 1px solid #DE474A;
 }
-.chat-sidebar .online.away .chat-availability {
+.chat-sidebar .online.away .chat-availability,
+.profile-availability.online.away  {
     background-color: #FF9D4D;
     border-bottom: 1px solid #ED823B;
 }
-.chat-sidebar .offline .chat-availability {
+.chat-sidebar .offline .chat-availability,
+.profile-availability.offline {
     border-bottom: 1px solid #CCCCCC;
+}
+.profile-availability {
+    border: 1px solid #CCCCCC;   
 }
 .chat-sidebar .chat-person-name {
     border-bottom: 1px solid #E8E8E8;
@@ -220,14 +227,35 @@ header .sublink-ul li:last-of-type {
 .add-list-option {
     color: green;
 }
+.modal-header {
+    background-color: white;
+}
+.widget-table-option-configure .fa-check {
+    color: green;
+    margin-right: 5px;
+}
+.widget-table-option-configure .fa-times {
+    color: red;
+    margin-right: 5px;
+}
+.widget-table-option-configure {
+    background-color: black;
+}
+.widget-table .fa-plus {
+    color: green;
+}
 /* Modal End */
 
-/* Main Content My Posts Start */
+/* My Posts Start */
  .styled-button {
     border: 1px solid rgb(48,48,48);
     background-color: white;
  }
-/* Main Content My Posts End */
+ .dream-team-sport p,
+  .dream-team-sport i {
+    color: crimson;
+ }
+/* My Posts End */
 /* Fantasy Start */
 .one-fantasy-pitch-player {
     color: white;

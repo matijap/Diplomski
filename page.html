@@ -359,7 +359,7 @@
                     </div>
                 </div>
                 <h3 class="m-b-10">Widget Customization</h3>
-                <button class="m-t-10 display-none widget-list all-widget-types styled-button add-list-section">Add new list section</button>
+                <button class="m-t-10 display-none widget-list all-widget-types blue-button add-list-section">Add new list section</button>
                 <hr>
                 <div class="widget-settings">
                     <div class="widget-plain all-widget-types">
@@ -413,6 +413,8 @@
                                     <i class="fa fa-times remove-section remove-list-option"></i>
                                     <div class="clear"></div>
                                 </div>
+                                <i class="fa fa-cog cursor-pointer"></i>
+                                <i class="fa fa-spin fa-spinner" style="display:none;"></i>
                             </div>
                             <div class="modal-element">
                                 <label class="main-label" for="list-section-title-1">Option</label>
@@ -423,42 +425,49 @@
                                     <i class="fa fa-plus m-l-5 add-list-option"></i>
                                     <div class="clear"></div>
                                 </div>
+                                <i class="fa fa-cog cursor-pointer"></i>
+                                <i class="fa fa-spin fa-spinner" style="display:none;"></i>
                             </div>
                         </div>
                         <h3>Table Data</h3>
                         <div id="widget-table-data">
-                            <label>
-                                Goals For (GF)
-                                <input type="checkbox" checked="checked">
-                            </label>
-                            <label>
-                                Goals Againts (GA)
-                                <input type="checkbox" checked="checked">
-                            </label>
-                            <label>
-                                Points (PT)
-                                <input type="checkbox" checked="checked">
-                            </label>
-                            <label>
-                                Goal Difference (GD)
-                                <input type="checkbox">
-                            </label>
-                            <label>
-                                Rebounds (RB)
-                                <input type="checkbox">
-                            </label>
-                            <label>
-                                Wins (W)
-                                <input type="checkbox" checked="checked">
-                            </label>
-                            <label>
-                                Loses (L)
-                                <input type="checkbox" checked="checked">
-                            </label>
-                            <label>
-                                Draws (D)
-                                <input type="checkbox" checked="checked">
-                            </label>
+                            <div class="modal-element">
+                                <label class="main-label" for="list-section-title-1">Available Data</label>
+                                <div class="main-div">
+                                    <label>
+                                        Goals For (GF)
+                                        <input type="checkbox" checked="checked" data-placeholder="GF">
+                                    </label>
+                                    <label>
+                                        Goals Againts (GA)
+                                        <input type="checkbox" checked="checked" data-placeholder="GA">
+                                    </label>
+                                    <label>
+                                        Points (PT)
+                                        <input type="checkbox" checked="checked" data-placeholder="PT">
+                                    </label>
+                                    <label>
+                                        Goal Difference (GD)
+                                        <input type="checkbox" data-placeholder="GD">
+                                    </label>
+                                    <label>
+                                        Rebounds (RB)
+                                        <input type="checkbox" data-placeholder="RB">
+                                    </label>
+                                    <label>
+                                        Wins (W)
+                                        <input type="checkbox" checked="checked" data-placeholder="W">
+                                    </label>
+                                    <label>
+                                        Loses (L)
+                                        <input type="checkbox" checked="checked" data-placeholder="L">
+                                    </label>
+                                    <label>
+                                        Draws (D)
+                                        <input type="checkbox" checked="checked" data-placeholder="D">
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-element">
                             <label class="main-label" for="list-section-title-1">New Table Data</label>
@@ -467,7 +476,7 @@
                                 style="width: 70%;" />
                                 <input placeholder="Short data name" type="text" class="bb pull-left" id="widget-table-data-short" 
                                 style="width: 20%;" />
-                                <i class="fa fa-plus m-l-5 add-widget-data-table"></i>
+                                <i class="fa fa-plus m-l-5 cursor-pointer add-new-widget-table-data"></i>
                                 <div class="clear"></div>
                             </div>
                         </div>
@@ -525,13 +534,15 @@
                         <i class="fa fa-plus m-l-5 add-list-option"></i>
                         <div class="clear"></div>
                     </div>
+                    <i class="fa fa-cog cursor-pointer"></i>
+                    <i class="fa fa-spin fa-spinner" style="display:none;"></i>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal fade">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content main-background-color">
                 <div class="modal-header">
                     <div class="modal-header-close"><i class="fa fa-times"></i></div>
                     <div class="modal-header-title bb">
@@ -548,7 +559,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary pull-right submit-modal-form">Save changes</button>
+                    <button type="button" class="btn btn-primary pull-right submit-modal-form green-button">Save changes</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
