@@ -29,7 +29,8 @@ textarea {
 }
 a.blue-button,
 a.green-button,
-a.red-button {
+a.red-button,
+a.dark-orange-button {
     font-size: 11px;
     display: block;
     padding-top: 4px;
@@ -44,6 +45,10 @@ a.display-none {
     padding: 5px;
     vertical-align: middle;
     text-align: center;
+}
+.add-new-item,
+.remove-item {
+    font-size: 15px;
 }
 /* Utility Classes Start */
 .truncate-string {
@@ -90,7 +95,8 @@ a.display-none {
     font-weight: bold;
 }
 .green-button,
-.blue-button {
+.blue-button,
+.dark-orange-button {
   padding-left: 5px;
   padding-right: 5px;
 }
@@ -99,6 +105,12 @@ a.display-none {
 }
 .height-90-percent {
     height: 90%;
+}
+.width-95-percent {
+    width: 95%;
+}
+.height-50px {
+    height: 50px;
 }
 /* Utility Classes End */
 /* Margin and Padding Start */
@@ -125,6 +137,9 @@ a.display-none {
 }
 .m-l-15 {
     margin-left: 15px;
+}
+.m-r-5 {
+    margin-right: 5px;
 }
 .m-l-20 {
     margin-left: 20px;
@@ -629,12 +644,13 @@ header li {
     font-size: 16px;
 }
 .modal-element .main-div {
-    width: 420px;
+    width: 400px;
     display: inline-block;
     font-size: 12px; 
 }
 .widget-settings .modal-element .main-div {
-    width: 400px;
+    width: 375px;
+    position: relative;
 }
 .modal-element input[type="text"] {
     width: 100%;
@@ -684,6 +700,7 @@ header li {
     padding: 2px;
     padding-top: 5px;
     margin-bottom: 5px;
+    position: relative;
 }
 .add-list-section {
     width: 150px;
@@ -719,6 +736,39 @@ header li {
 }
 .widget-table .modal-element {
     position: relative;
+}
+.list-with-button-upload {
+    width: 150px;
+    display: inline-block;
+    position: relative;
+}
+.list-with-button-upload:nth-of-type(2) {
+    margin-left: 3px;
+}
+.list-with-button-upload img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=1, M12=0, M21=0, M22=1, SizingMethod='auto image')";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.remove-list-with-button-option {
+    position: absolute;
+    top: 0;
+}
+.add-list-section {
+    font-size: 13px;
+    padding: 10px;
+}
+.remove-list-section {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 25px;
 }
 /* Modal End */
 

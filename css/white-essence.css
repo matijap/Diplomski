@@ -28,20 +28,24 @@
     background-color: rgb(216, 216, 216);
 }
 /* Utility Classes Start */
-.green-button {
-    background-color: green;
+.green-button,
+.blue-button,
+.red-button,
+.dark-orange-button {
     color: white;
     border: 0;
+}
+.green-button {
+    background-color: green;
 }
 .blue-button {
     background-color: blue;
-    color: white;
-    border: 0;
 }
 .red-button {
     background-color: red;
-    color: white;
-    border: 0;   
+}
+.dark-orange-button {
+    background-color: orange;
 }
 .message {
     padding: 10px;
@@ -54,6 +58,12 @@
 .success-message {
     background-color: rgba(0, 255, 0, 0.46);
     color: green;
+}
+.add-new-item {
+    color: green;
+}
+.remove-item {
+    color: red;
 }
 /* Utility Classes End */
 /* Chat Sidebar Start */
@@ -243,6 +253,9 @@ header .sublink-ul li:last-of-type {
 }
 .widget-table .fa-plus {
     color: green;
+}
+.add-list-section {
+    color: white !important;
 }
 /* Modal End */
 

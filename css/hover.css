@@ -2,6 +2,10 @@
 .green-button:hover {
     cursor: pointer;
 }
+.add-new-item:hover,
+.remove-item:hover {
+    cursor: pointer;
+}
 /* Header Start */
 .main-link-li:hover > .sublink-ul:first-of-type {
     display: block;

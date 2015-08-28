@@ -168,11 +168,39 @@ function getClientID() {
 
 function recalculateModalHeight() {
     var screenHeight = getScreenHeight();
-    var modalHeight  = $('.modal-dialog').height();
+    var modalHeight  = $('.modal-dialog .modal-content').height();
     if ((screenHeight - modalHeight) < 50) {
         $('.modal-dialog').addClass('height-90-percent');
     } else {
         $('.modal-dialog').removeClass('height-90-percent');
+    }
+}
+
+function addIDAndInitializeSortable() {
+    $('.sortable-initialize').each(function(i, k){
+        var randomNumber = getRandomNumber();
+        $(this).attr('id', 'sortable-' + randomNumber);
+        initializeSimpleSortable('#sortable-' + randomNumber, true);
+        $(this).removeClass('.sortable-initialize');
+    });
+}
+
+function initUploadButtonsChange() {
+    var uploadSizeButtonLength = doesExists('.upload-change-it');
+    if (uploadSizeButtonLength) {
+        $('.upload-change-it').each(function() {
+            $(this).hide();
+            var classesToBeAdded = $(this).attr('class');
+            classesToBeAdded = classesToBeAdded.split(' ');
+            
+            var stringClasses = '';
+            $.each(classesToBeAdded, function( index, value ) {
+                if (value != 'upload-change-it') {
+                    stringClasses += ' ' + value;
+                }
+            });
+            $(this).after('<a class="dark-orange-button display-inline-block choose-upload ' + stringClasses + '" data-trigger="' + $(this).attr('id') + '">Choose files</a>');
+        });
     }
 }
 

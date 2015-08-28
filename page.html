@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -349,7 +349,7 @@
                         <label class="checkbox-holder"><input data-widget-type="widget-plain" class="widget-type-selector" name="widget_type" checked type="radio">Plain Text</label>
                         <label class="checkbox-holder"><input data-widget-type="widget-list" class="widget-type-selector" name="widget_type" type="radio">List</label>
                         <label class="checkbox-holder"><input data-widget-type="widget-table" class="widget-type-selector" name="widget_type" type="radio">Table</label>
-                        <label class="checkbox-holder"><input class="widget-type-selector" name="widget_type" type="radio">List With Edit Button</label>
+                        <label class="checkbox-holder"><input data-widget-type="widget-list-with-edit-button" class="widget-type-selector" name="widget_type" type="radio">List With Edit Button</label>
                     </div>
                 </div>
                 <div class="modal-element">
@@ -359,14 +359,15 @@
                     </div>
                 </div>
                 <h3 class="m-b-10">Widget Customization</h3>
-                <button class="m-t-10 display-none widget-list all-widget-types blue-button add-list-section">Add new list section</button>
+                <button data-html-template="list-section-template" class="add-new-item m-t-10 display-none widget-list all-widget-types blue-button add-list-section" data-closest="new-widget-modal">Add new list section</button>
+                <button data-html-template="list-with-edit-button-section-template" class="add-new-item m-t-10 display-none widget-list-with-edit-button all-widget-types blue-button add-list-section" data-closest="new-widget-modal" data-find="widget-list-with-edit-button">Add new list section</button>
                 <hr>
                 <div class="widget-settings">
                     <div class="widget-plain all-widget-types">
                         <textarea maxlength="1024" placeholder="Enter your widget text here"></textarea>
                     </div>
-                    <div id="replace-list-section" class="widget-list all-widget-types display-none">
-                        <div class="one-widget-list-section">
+                    <div class="widget-list all-widget-types display-none append-into sortable-initialize">
+                        <div class="one-widget-list-section to-be-removed">
                             <div class="modal-element">
                                 <label class="main-label bold-text" for="list-section-title-1">List section title</label>
                                 <div class="main-div">
@@ -376,30 +377,34 @@
                             <div class="modal-element">
                                 <label class="main-label" for="list-section-title-1">List section avatar</label>
                                 <div class="main-div">
-                                    <input type="file" name="list-section-avatar" id="list-section-avatar-1" />
-                                </div>
-                            </div>
-                            <div id="replace-list-element" class="owls-holder widget-marker" data-template="list-option-template">
-                                <div class="modal-element column">
-                                    <label class="main-label" for="list-section-title-1">List Option</label>
-                                    <div class="main-div">
-                                        <input type="text" class="widget-option-and-value bb pull-left" name="list_option_title_1" id="list-option-title-1" />
-                                        <input type="text" class="widget-option-and-value bb pull-left" name="list_option_value-1" id="list-option-value-1" />
-                                        <i class="fa fa-times remove-section remove-list-option"></i>
-                                        <div class="clear"></div>
-                                    </div>
-                                </div>
-                                <div class="modal-element column">
-                                    <label class="main-label" for="list-section-title-1">List Option</label>
-                                    <div class="main-div">
-                                        <input type="text" class="widget-option-and-value bb pull-left" name="list_option_title_1" id="list-option-title-1" />
-                                        <input type="text" class="widget-option-and-value bb pull-left" name="list_option_value-1" id="list-option-value-1" />
-                                        <i class="fa fa-times remove-section remove-list-option"></i>
-                                        <i class="fa fa-plus m-l-5 add-list-option"></i>
-                                        <div class="clear"></div>
+                                    <input id="avatar-list1" type="file" class="upload-change-it list-option-avatar" />
+                                    <div class="list-with-button-upload upload-avatar-list1 height-50px">
+                                         <img src="img/ball.jpg">
                                     </div>
                                 </div>
                             </div>
+                            <div class="owls-holder widget-marker sortable-initialize width-95-percent display-inline-block append-into" data-template="list-option-template">
+                                <div class="modal-element to-be-removed">
+                                    <label class="main-label" for="list-section-title-1">List Option</label>
+                                    <div class="main-div">
+                                        <input type="text" class="widget-option-and-value bb pull-left" />
+                                        <input type="text" class="widget-option-and-value bb pull-left"/>
+                                        <i data-closest="widget-marker" class="fa fa-times remove-item m-l-5"></i>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                                <div class="modal-element to-be-removed">
+                                    <label class="main-label" for="list-section-title-1">List Option</label>
+                                    <div class="main-div">
+                                        <input type="text" class="widget-option-and-value bb pull-left" />
+                                        <input type="text" class="widget-option-and-value bb pull-left" />
+                                        <i data-closest="widget-marker" class="fa fa-times remove-item m-l-5"></i>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <i class="fa fa-plus m-r-5 add-new-item" style="vertical-align: top;" data-html-template="list-option-template" data-closest="one-widget-list-section"></i>
+                            <i data-closest="widget-list" class="fa fa-times remove-item remove-list-section" style="display: none;"></i>
                         </div>
                     </div>
                     <div class="widget-table all-widget-types display-none">
@@ -481,47 +486,92 @@
                             </div>
                         </div>
                     </div>
+                    <!-- this -->
+                    <div class="widget-list-with-edit-button all-widget-types display-none">
+                        <div class="append-into sortable-initialize">
+                            <div class="one-widget-list-section to-be-removed">
+                                <div class="modal-element">
+                                    <label class="main-label bold-text" for="list-section-title-1">List section title</label>
+                                    <div class="main-div">
+                                        <input type="text" class="widget-list-section-title" name="list-section-title" id="list-section-title-1" />
+                                    </div>
+                                </div>
+                                <!-- this -->
+                                <div class="owls-holder widget-marker sortable-initialize width-95-percent display-inline-block append-into" data-template="list-option-template">
+                                    <div class="modal-element to-be-removed">
+                                        <label class="main-label" >Option Avatars</label>
+                                        <div class="main-div">
+                                            <input id="ap1" type="file" class="list-option-avatar bb pull-left upload-change-it" />
+                                            <input id="ap2" type="file" class="list-option-avatar bb pull-left upload-change-it m-l-5" />
+                                            <div class="list-with-button-upload upload-ap1"></div>
+                                            <div class="list-with-button-upload upload-ap2"></div>
+                                            <i data-closest="widget-marker" style="vertical-align: top;" class="fa fa-times remove-item m-l-5 remove-list-with-button-option"></i>
+                                            <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-element to-be-removed">
+                                        <label class="main-label" >Option Avatars</label>
+                                        <div class="main-div">
+                                            <input id="ap3" type="file" class="bb pull-left upload-change-it" />
+                                            <input id="ap4" type="file" class="bb pull-left upload-change-it m-l-5" />
+                                            <div class="list-with-button-upload upload-ap3 height-50px">
+                                                <img src="img/ball.jpg">
+                                            </div>
+                                            <div class="list-with-button-upload upload-ap4 height-50px">
+                                                <img src="img/ball.jpg">
+                                            </div>
+                                            <i data-closest="widget-marker" style="vertical-align: top;" class="fa fa-times remove-item m-l-5 remove-list-with-button-option"></i>
+                                            <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <i class="fa fa-plus m-r-5 add-new-item pull-right" data-html-template="list-with-edit-button-option-template" data-closest="one-widget-list-section"></i>
+                                <i data-closest="widget-list-with-edit-button" class="fa fa-times remove-item remove-list-section" style="display: none;"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
             <div class="list-option-template display-none">
-                <div class="modal-element">
+                <div class="modal-element to-be-removed">
                     <label class="main-label">List Option</label>
                     <div class="main-div">
                         <input type="text" class="widget-option-and-value bb pull-left"  />
                         <input type="text" class="widget-option-and-value bb pull-left" />
-                        <i class="fa fa-times remove-section remove-list-option"></i>
-                        <i class="fa fa-plus m-l-5 add-list-option"></i>
+                        <i data-closest="widget-marker" class="fa fa-times remove-item m-l-5"></i>
                         <div class="clear"></div>
                     </div>
                 </div>
             </div>
             <div class="list-section-template display-none">
-                <div class="one-widget-list-section">
+                <div class="one-widget-list-section to-be-removed">
                     <div class="modal-element">
                         <label class="main-label bold-text" for="list-section-title-1">List section title</label>
                         <div class="main-div">
                             <input type="text" class="widget-list-section-title" name="list-section-title" id="list-section-title-1" />
-                            <i class="fa fa-times remove-section"></i>
                         </div>
                     </div>
                     <div class="modal-element">
                         <label class="main-label" for="list-section-title-1">List section avatar</label>
                         <div class="main-div">
-                            <input type="file" name="list-section-avatar" id="list-section-avatar-1" />
+                            <input id="avatar-list2" type="file" class="upload-change-it list-option-avatar" />
+                            <div class="list-with-button-upload upload-avatar-list2">
+                            </div>
                         </div>
                     </div>
-                    <div id="replace-list-element" class="owls-holder widget-marker" data-template="list-option-template">
-                        <div class="modal-element">
+                    <div class="owls-holder widget-marker sortable-initialize width-95-percent display-inline-block append-into" data-template="list-option-template">
+                        <div class="modal-element to-be-removed">
                             <label class="main-label" for="list-section-title-1">List Option</label>
                             <div class="main-div">
-                                <input type="text" class="widget-option-and-value bb pull-left" name="list_option_title_1" id="list-option-title-1" />
-                                <input type="text" class="widget-option-and-value bb pull-left" name="list_option_value-1" id="list-option-value-1" />
-                                <i class="fa fa-times remove-section remove-list-option"></i>
-                                <i class="fa fa-plus m-l-5 add-list-option"></i>
+                                <input type="text" class="widget-option-and-value bb pull-left" />
+                                <input type="text" class="widget-option-and-value bb pull-left"/>
+                                <i data-closest="widget-marker" class="fa fa-times remove-item m-l-5"></i>
                                 <div class="clear"></div>
                             </div>
                         </div>
                     </div>
+                    <i class="fa fa-plus m-r-5 add-new-item" style="vertical-align: top;" data-html-template="list-option-template" data-closest="one-widget-list-section"></i>
+                    <i data-closest="widget-list" class="fa fa-times remove-item remove-list-section" style="display: none;"></i>
                 </div>
             </div>
             <div class="table-option-template display-none">
@@ -536,6 +586,47 @@
                     </div>
                     <i class="fa fa-cog cursor-pointer"></i>
                     <i class="fa fa-spin fa-spinner" style="display:none;"></i>
+                </div>
+            </div>
+            <div class="list-with-edit-button-option-template display-none">
+                <div class="modal-element to-be-removed">
+                    <label class="main-label" >Option Avatars</label>
+                    <div class="main-div">
+                        <input id="ap5" type="file" class="list-option-avatar bb pull-left upload-change-it" />
+                        <input id="ap6" type="file" class="list-option-avatar bb pull-left upload-change-it m-l-5" />
+                        <div class="list-with-button-upload upload-ap5"></div>
+                        <div class="list-with-button-upload upload-ap6"></div>
+                        <i data-closest="widget-marker" class="fa fa-times remove-item m-l-5 remove-list-with-button-option"></i>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-with-edit-button-section-template display-none">
+                <div class="one-widget-list-section to-be-removed">
+                    <div class="modal-element">
+                        <label class="main-label bold-text" for="list-section-title-1">List section title</label>
+                        <div class="main-div">
+                            <input type="text" class="widget-list-section-title" name="list-section-title" id="list-section-title-1" />
+                        </div>
+                    </div>
+                    <!-- this -->
+                    <div class="owls-holder widget-marker sortable-initialize width-95-percent display-inline-block append-into" data-template="list-option-template">
+                        <div class="modal-element to-be-removed">
+                            <label class="main-label" >Option Avatars</label>
+                            <div class="main-div">
+                                <input id="ap7" type="file" class="bb pull-left upload-change-it" />
+                                <input id="ap8" type="file" class="bb pull-left upload-change-it m-l-5" />
+                                <div class="list-with-button-upload upload-ap7">
+                                </div>
+                                <div class="list-with-button-upload upload-ap8">
+                                </div>
+                                <i data-closest="widget-marker"class="fa fa-times remove-item m-l-5 remove-list-with-button-option"></i>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <i class="fa fa-plus m-r-5 add-new-item pull-right" data-html-template="list-with-edit-button-option-template" data-closest="one-widget-list-section"></i>
+                    <i data-closest="widget-list-with-edit-button" class="fa fa-times remove-item remove-list-section" style="display: none;"></i>
                 </div>
             </div>
         </div>
