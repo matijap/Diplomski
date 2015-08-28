@@ -10,6 +10,7 @@
         <link href="css/hover.css" type="text/css" rel="stylesheet">
         <link href='http://fonts.googleapis.com/css?family=Jura' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,600' rel='stylesheet' type='text/css'>
+        <link href='plugins/select2/dist/css/select2.min.css' rel='stylesheet' type='text/css'>
     </head> 
     <body>
         <header class="widget-header-color">
@@ -323,6 +324,7 @@
             <script src="plugins/sortable.js"></script>
             <script src="plugins/zebra-datepicker/zebra_datepicker.js"></script>
             <script src="js/main.js"></script>
+            <script src="js/page.js"></script>
             <script src="js/functions.js"></script>
         </footer>
     </body>
@@ -499,18 +501,20 @@
                                 <!-- this -->
                                 <div class="owls-holder widget-marker sortable-initialize width-95-percent display-inline-block append-into" data-template="list-option-template">
                                     <div class="modal-element to-be-removed">
-                                        <label class="main-label" >Option Avatars</label>
+                                        <label class="main-label">Option Avatars</label>
                                         <div class="main-div">
                                             <input id="ap1" type="file" class="list-option-avatar bb pull-left upload-change-it" />
                                             <input id="ap2" type="file" class="list-option-avatar bb pull-left upload-change-it m-l-5" />
                                             <div class="list-with-button-upload upload-ap1"></div>
                                             <div class="list-with-button-upload upload-ap2"></div>
                                             <i data-closest="widget-marker" style="vertical-align: top;" class="fa fa-times remove-item m-l-5 remove-list-with-button-option"></i>
+                                            <i data-wiod="1" data-item="456789" class="fa fa-cog customize-list-with-edit-button-options"></i>
+                                            <i class="fa fa-spinner fa-spin customize-list-with-edit-button-options-spinner" style="display:none"></i>
                                             <div class="clear"></div>
                                         </div>
                                     </div>
                                     <div class="modal-element to-be-removed">
-                                        <label class="main-label" >Option Avatars</label>
+                                        <label class="main-label">Option Avatars</label>
                                         <div class="main-div">
                                             <input id="ap3" type="file" class="bb pull-left upload-change-it" />
                                             <input id="ap4" type="file" class="bb pull-left upload-change-it m-l-5" />
@@ -521,6 +525,8 @@
                                                 <img src="img/ball.jpg">
                                             </div>
                                             <i data-closest="widget-marker" style="vertical-align: top;" class="fa fa-times remove-item m-l-5 remove-list-with-button-option"></i>
+                                            <i data-wiod="new" data-item="987654" class="fa fa-cog customize-list-with-edit-button-options"></i>
+                                            <i class="fa fa-spinner fa-spin" style="display:none"></i>
                                             <div class="clear"></div>
                                         </div>
                                     </div>
@@ -597,6 +603,8 @@
                         <div class="list-with-button-upload upload-ap5"></div>
                         <div class="list-with-button-upload upload-ap6"></div>
                         <i data-closest="widget-marker" class="fa fa-times remove-item m-l-5 remove-list-with-button-option"></i>
+                        <i class="fa fa-cog"></i>
+                        <i class="fa fa-spinner fa-spin" style="display:none;"></i>
                         <div class="clear"></div>
                     </div>
                 </div>
@@ -621,6 +629,8 @@
                                 <div class="list-with-button-upload upload-ap8">
                                 </div>
                                 <i data-closest="widget-marker"class="fa fa-times remove-item m-l-5 remove-list-with-button-option"></i>
+                                <i class="fa fa-cog"></i>
+                                <i class="fa fa-spinner fa-spin" style="display:none;"></i>
                                 <div class="clear"></div>
                             </div>
                         </div>

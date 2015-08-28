@@ -6,6 +6,9 @@
 .remove-item:hover {
     cursor: pointer;
 }
+.fa-cog:hover {
+    cursor: pointer;
+}
 /* Header Start */
 .main-link-li:hover > .sublink-ul:first-of-type {
     display: block;
@@ -76,6 +79,9 @@ header li:hover {
     cursor: pointer;   
 }
 .owls-holder .main-label:hover {
+    cursor: move;
+}
+.list-with-button-settings-item label:hover {
     cursor: move;
 }
 /* Modal End */

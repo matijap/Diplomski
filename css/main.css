@@ -770,8 +770,82 @@ header li {
     right: 5px;
     font-size: 25px;
 }
+.widget-list-with-edit-button .fa-cog,
+.widget-list-with-edit-button .fa-spin {
+    position: absolute;
+    top: 0px;
+    right: 25px;
+    margin-left: 25px;
+    font-size: 18px;
+}
 /* Modal End */
-
+/* Page Start */
+.add-list-with-button-settings-panel {
+    position: fixed;
+    overlay-y: auto;
+    width: 500px;
+    right: 0px;
+    height: 90%;
+    background-color: white;
+    padding: 20px;
+    border-left: 2px solid black;
+}
+.add-list-with-button-settings-panel .list-with-button-select {
+    width: 200px;
+}
+.list-with-button-select-where-to {
+    width: 100px;
+}
+.add-list-with-button-customize-option {
+    width: 50px;
+    display: inline-block !important;
+    margin-left: 50px;
+    margin-right: 20px;
+}
+.close-list-with-button-settings-panel {
+    font-size: 30px;
+}
+.list-with-button-settings-main,
+.list-with-button-settings-additional {
+    margin-top: 20px;
+}
+.list-with-button-settings-main h1 {
+    margin-bottom: 10px;
+}
+.list-with-button-settings-item {
+    margin-bottom: 10px;
+}
+.list-with-button-settings-item label {
+    font-size: 13px;
+    width: 50px;
+    display: inline-block;
+}
+.list-with-button-settings-item input[type="text"] {
+    width: 150px;
+    float: right;
+}
+.list-with-button-settings-additional .list-with-button-settings-item input[type="text"] {
+    width: 350px;
+}
+.list-with-button-settings-option-name {
+    margin-right: 17px;
+}
+.list-with-button-settings-main .lwbsm-left {
+    width: 49%;
+    float: left;
+    border-right: 1px solid black;
+    padding: 10px;
+}
+.list-with-button-settings-main div h2 {
+    margin-bottom: 10px;
+    word-break: break-all;
+}
+.list-with-button-settings-main .lwbsm-right {
+    width: 50%;
+    float: left;
+    padding: 10px;
+}
+/* Page End */
 /* Main Content My Posts Start */
 #main-panel.my {
     overflow-y: auto;

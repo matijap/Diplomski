@@ -85,6 +85,11 @@ function stripDotSlashToUnderScoreFilter(value) {
     filteredValue     = filteredValue.replace(/\-/g, '_');
     return filteredValue;
 }
+function spacesToUnderScoreAndLowercaseWordFilter(value) {
+    var filteredValue = value.replace(/ /g, '_');
+    filteredValue     = filteredValue.toLowerCase();
+    return filteredValue;
+}
 
 function doesExists(element) {
     return $(element).size();
@@ -177,7 +182,7 @@ function recalculateModalHeight() {
 }
 
 function addIDAndInitializeSortable() {
-    $('.sortable-initialize').each(function(i, k){
+    $('.sortable-initialize').each(function(i, k) {
         var randomNumber = getRandomNumber();
         $(this).attr('id', 'sortable-' + randomNumber);
         initializeSimpleSortable('#sortable-' + randomNumber, true);
@@ -202,5 +207,20 @@ function initUploadButtonsChange() {
             $(this).after('<a class="dark-orange-button display-inline-block choose-upload ' + stringClasses + '" data-trigger="' + $(this).attr('id') + '">Choose files</a>');
         });
     }
+}
+
+var entityMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': '&quot;',
+    "'": '&#39;',
+    "/": '&#x2F;'
+  };
+
+function escapeHtml(string) {
+    return String(string).replace(/[&<>"'\/]/g, function (s) {
+      return entityMap[s];
+    });
 }
 
