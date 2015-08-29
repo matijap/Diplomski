@@ -343,4 +343,7 @@ header .sublink-ul li:last-of-type {
 .favorite .fa-times {
     color: red;
 }
+.one-personal-settings-section h2 {
+    color: white;
+}
 /* Personal Settings End */

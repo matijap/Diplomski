@@ -204,9 +204,9 @@
                 </div>
             </div>
         </aside>
-        <div id="main-panel" class="bb fantasy">
-            <div class="main-background-color">
-                <h2>Personal Information</h2>
+        <div id="main-panel" class="bb">
+            <div class="main-background-color one-personal-settings-section">
+                <h2 class="widget-header-color">Personal Information</h2>
                 <div class="personal-settings-container">
                     <label>First Name</label>
                     <input type="text" value="Matija">
@@ -246,8 +246,73 @@
                 </div>
                 <hr>
             </div>
-            <div class="main-background-color">
-                <h2>About me</h2>
+            <div class="main-background-color one-personal-settings-section privacy-settings">
+                <h2 class="widget-header-color">Privacy settings</h2>
+                <div class="personal-settings-container">
+                    <label>Personal Info visibility</label>
+                    <select class="personal-info-visibility">
+                        <option>All</option>
+                        <option>Friends of a friends</option>
+                        <option>Friends only</option>
+                        <option value="friends_list">Friends from specific lists</option>
+                        <option value="specific_friends">Specific friends</option>
+                        <option>None</option>
+                    </select>
+                    <div class="width-100-percent m-t-10 privacy-friends-list" style="display: none;">
+                        <div class="width-200px float-right">
+                            <select multiple="multiple" class="width-100-percent">
+                                <option>Colleagues</option>
+                                <option>College friends</option>
+                                <option>Gym dudes</option>
+                                <option>Family</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="width-100-percent m-t-10 privacy-friends" style="display: none;">
+                        <div class="width-200px float-right">
+                            <select multiple="multiple" class="width-100-percent">
+                                <option>John</option>
+                                <option>Mike</option>
+                                <option>Steve</option>
+                                <option>Brad</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="personal-settings-container">
+                    <label>Posts visibility</label>
+                    <select class="posts-visibility">
+                        <option>All</option>
+                        <option>Friends of a friends</option>
+                        <option>Friends only</option>
+                        <option value="friends_list">Friends from specific lists</option>
+                        <option value="specific_friends">Specific friends</option>>
+                        <option>None</option>
+                    </select>
+                    <div class="width-100-percent m-t-10 privacy-friends-list" style="display: none;">
+                        <div class="width-200px float-right">
+                            <select multiple="multiple" class="width-100-percent">
+                                <option>Colleagues</option>
+                                <option>College friends</option>
+                                <option>Gym dudes</option>
+                                <option>Family</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="width-100-percent m-t-10 privacy-friends" style="display: none;">
+                        <div class="width-200px float-right">
+                            <select multiple="multiple" class="width-100-percent">
+                                <option>John</option>
+                                <option>Mike</option>
+                                <option>Steve</option>
+                                <option>Brad</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-background-color one-personal-settings-section">
+                <h2 class="widget-header-color">About me</h2>
                 <div class="personal-settings-container favorite">
                     <label class="display-inline-block">Favourite Sport</label>
                     <div class="m-t-10">
@@ -311,8 +376,75 @@
                 </div>
                 <hr>
             </div>
-            <div class="main-background-color">
-                <h2>Dream Teams</h2>
+            <div class="main-background-color one-personal-settings-section dream-team">
+                <h2 class="widget-header-color float-left">Dream Teams</h2>
+                <div class="add-dream-team-container">
+                    <select class="width-200px add-dream-team-sport">
+                        <option value="11">Football</option>
+                        <option value="5">Basketball</option>
+                        <option value="7">Waterpolo</option>
+                    </select>
+                    <input type="text" class="add-dream-team-name" placeholder="Dream team name">
+                    <a class="blue-button add-dream-team" href="javascript:void(0)">Add a team</a>
+                </div>
+                <div class="personal-settings-container favorite to-be-removed">
+                    <h3 class="text-align-center">Red Star 1991</h3>
+                    <i data-closest="personal-settings-container" class="fa fa-times remove-item remove-dream-team"></i>
+                    <div>
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                    </div>
+                </div>
+                <div class="personal-settings-container favorite">
+                    <h3 class="text-align-center">Montevideo</h3>
+                    <i data-closest="personal-settings-container" class="fa fa-times remove-item remove-dream-team"></i>
+                    <div>
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                    </div>
+                </div>
+                <div class="personal-settings-container favorite">
+                    <h3 class="text-align-center">Yugoslavia Basket 1995</h3>
+                    <i data-closest="personal-settings-container" class="fa fa-times remove-item remove-dream-team"></i>
+                    <div>
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                    </div>
+                </div>
+                <div class="personal-settings-container favorite">
+                    <h3 class="text-align-center">Waterpolo 2015</h3>
+                    <i data-closest="personal-settings-container" class="fa fa-times remove-item remove-dream-team"></i>
+                    <div>
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                    </div>
+                </div>
             </div>
         </div>
         <footer>
