@@ -106,6 +106,9 @@ a.display-none {
 .width-200px {
     width: 200px;
 }
+.width-100px {
+    width: 100px;
+}
 .height-90-percent {
     height: 90%;
 }
@@ -143,6 +146,9 @@ a.display-none {
 }
 .m-r-5 {
     margin-right: 5px;
+}
+.m-r-10 {
+    margin-right: 10px;
 }
 .m-l-20 {
     margin-left: 20px;
@@ -1146,3 +1152,22 @@ a.back-to-galery {
     width: 100% !important;
 }
 /* Personal Settings End */
+/* Favourites Start */
+.favourite-page-container {
+    display: inline-block;
+    padding: 10px;
+}
+.search-favourite-content {
+    font-size: 17px;
+}
+.search-favourite-content::-webkit-input-placeholder {
+    font-size: 10px;
+    vertical-align: middle;
+    padding-top: 5px;
+    padding-left: 5px;
+}
+.favorite-post-container {
+    font-size: 10px;
+    padding: 5px;
+}
+/* Favourites End */

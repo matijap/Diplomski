@@ -102,3 +102,10 @@ header li:hover {
     display: block;
  }
 /* Galery End */
+/* Favourites Start */
+.favorite-post-container:hover {
+    border: 1px solid black;
+    background-color: white;
+    cursor: pointer;
+}
+/* Favourites End */

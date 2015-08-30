@@ -10,8 +10,9 @@
         <link href="css/hover.css" type="text/css" rel="stylesheet">
         <link href='http://fonts.googleapis.com/css?family=Jura' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,600' rel='stylesheet' type='text/css'>
-        <link href='plugins/countdown/jquery.countdownTimer.css' rel='stylesheet' type='text/css'>
-    </head> 
+        <link href='plugins/select2/dist/css/select2.min.css' rel='stylesheet' type='text/css'>
+        <link href='plugins/pnotify/pnotify.custom.min.css' rel='stylesheet' type='text/css'>
+    </head>
     <body>
         <header class="widget-header-color">
             <nav role="navigation" class="header-holder">
@@ -22,7 +23,7 @@
                             <ul class="sublink-ul sublink-ul-1 notifications-menu">
                                 <li class="cc sublink-li-1 bb main-background-color">
                                     <div class="person-avatar pull-left">
-                                        <img src="silhouette.png" />
+                                        <img src="img/silhouette.png" />
                                     </div>
                                     <p class="pull-left">
                                         <a href="#">
@@ -105,7 +106,7 @@
             </div>
             <div class="one-chat-person online">
                 <div class="chat-avatar">
-                    <img src="silhouette.png" />
+                    <img src="img/silhouette.png" />
                 </div>
                 <div class="chat-availability  bb"></div>
                 <div class="chat-person-name">
@@ -114,7 +115,7 @@
             </div>
             <div class="one-chat-person online">
                 <div class="chat-avatar">
-                    <img src="silhouette.png" />
+                    <img src="img/silhouette.png" />
                 </div>
                 <div class="chat-availability bb"></div>
                 <div class="chat-person-name">
@@ -123,7 +124,7 @@
             </div>
             <div class="one-chat-person online">
                 <div class="chat-avatar">
-                    <img src="silhouette.png" />
+                    <img src="img/silhouette.png" />
                 </div>
                 <div class="chat-availability bb"></div>
                 <div class="chat-person-name">
@@ -132,7 +133,7 @@
             </div>
             <div class="one-chat-person online busy">
                 <div class="chat-avatar">
-                    <img src="silhouette.png" />
+                    <img src="img/silhouette.png" />
                 </div>
                 <div class="chat-availability bb"></div>
                 <div class="chat-person-name">
@@ -141,7 +142,7 @@
             </div>
             <div class="one-chat-person online busy">
                 <div class="chat-avatar">
-                    <img src="silhouette.png" />
+                    <img src="img/silhouette.png" />
                 </div>
                 <div class="chat-availability bb"></div>
                 <div class="chat-person-name">
@@ -150,7 +151,7 @@
             </div>
             <div class="one-chat-person online away">
                 <div class="chat-avatar">
-                    <img src="silhouette.png" />
+                    <img src="img/silhouette.png" />
                 </div>
                 <div class="chat-availability bb"></div>
                 <div class="chat-person-name">
@@ -159,7 +160,7 @@
             </div>
             <div class="one-chat-person online away">
                 <div class="chat-avatar">
-                    <img src="silhouette.png" />
+                    <img src="img/silhouette.png" />
                 </div>
                 <div class="chat-availability bb"></div>
                 <div class="chat-person-name">
@@ -168,7 +169,7 @@
             </div>
             <div class="one-chat-person offline">
                 <div class="chat-avatar">
-                    <img src="silhouette.png" />
+                    <img src="img/silhouette.png" />
                 </div>
                 <div class="chat-availability bb"></div>
                 <div class="chat-person-name">
@@ -177,7 +178,7 @@
             </div>
             <div class="one-chat-person offline">
                 <div class="chat-avatar">
-                    <img src="silhouette.png" />
+                    <img src="img/silhouette.png" />
                 </div>
                 <div class="chat-availability bb"></div>
                 <div class="chat-person-name">
@@ -186,7 +187,7 @@
             </div>
             <div class="one-chat-person offline">
                 <div class="chat-avatar">
-                    <img src="silhouette.png" />
+                    <img src="img/silhouette.png" />
                 </div>
                 <div class="chat-availability bb"></div>
                 <div class="chat-person-name">
@@ -195,7 +196,7 @@
             </div>
             <div class="one-chat-person offline">
                 <div class="chat-avatar">
-                    <img src="silhouette.png" />
+                    <img src="img/silhouette.png" />
                 </div>
                 <div class="chat-availability bb"></div>
                 <div class="chat-person-name">
@@ -203,87 +204,179 @@
                 </div>
             </div>
         </aside>
-        <div id="main-panel" class="bb">
-            <h1 class="text-align-center m-t-20 m-b-20">This is very cool quiz</h1>
-            <div class="quiz-leaderboard float-left" style="max-width: 300px;">
-                <h2>Leaderboard</h2>
-                <div class="lead-table">
-                    <table class="table m-t-10">
+        <div id="main-panel" class="bb fantasy">
+            <div class="main-background-color one-personal-settings-section">
+                <h2 class="widget-header-color">Favorite pages</h2>
+                <div class="favourite-page-container m-t-10 current-favourite-pages">
+                    <h3 class="text-align-center m-b-10">Current favorites</h3>
+                    <table class="table">
                         <tr>
-                            <th>Rank</th>
-                            <th>Player name</th>
-                            <th>Points</th>
+                            <th>Page Name</th>
+                            <th>Widget Settings</th>
+                            <th>Unlike</th>
+                            <th>Show in favorite pages widget?</th>
                         </tr>
                         <tr>
-                            <td>1.</td>
-                            <td>Matija ParausicMatija ParausicMatija Parausic</td>
-                            <td>20</td>
+                            <td><a href="page.html">FC Red Star Belgrade</td>
+                            <td><a data-template="widget-settings-template" class="blue-button modal-open" href="javascript:void(0)"><i class="fa fa-cog"></i></a></td>
+                            <td><a class="blue-button unfavorite-page" href="javascript:void(0)"><i class="fa fa-heartbeat"></i></a></td>
+                            <td><input class="show-in-widget-favorite cursor-pointer" type="checkbox"></td>
                         </tr>
                         <tr>
-                            <td>2.</td>
-                            <td>Matija Parausic</td>
-                            <td>15</td>
+                            <td><a href="page.html">BC Red Star Belgrade</td>
+                            <td><a class="blue-button" href="javascript:void(0)"><i class="fa fa-cog"></i></a></td>
+                            <td><a class="blue-button unfavorite-page" href="javascript:void(0)"><i class="fa fa-heartbeat"></i></a></td>
+                            <td><input class="show-in-widget-favorite cursor-pointer" type="checkbox"></td>
                         </tr>
                         <tr>
-                            <td>3.</td>
-                            <td>Matija Parausic</td>
-                            <td>10</td>
+                            <td><a href="page.html">Premier League</td>
+                            <td><a class="blue-button" href="javascript:void(0)"><i class="fa fa-cog"></i></a></td>
+                            <td><a class="blue-button unfavorite-page" href="javascript:void(0)"><i class="fa fa-heartbeat"></i></a></td>
+                            <td><input class="show-in-widget-favorite cursor-pointer" type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td><a href="page.html">Serie A</td>
+                            <td><a class="blue-button" href="javascript:void(0)"><i class="fa fa-cog"></i></a></td>
+                            <td><a class="blue-button unfavorite-page" href="javascript:void(0)"><i class="fa fa-heartbeat"></i></a></td>
+                            <td><input class="show-in-widget-favorite cursor-pointer" type="checkbox"></td>
+                        </tr>
+                        <tr>    
+                            <td><a href="page.html">Champions Leage</td>
+                            <td><a class="blue-button" href="javascript:void(0)"><i class="fa fa-cog"></i></a></td>
+                            <td><a class="blue-button unfavorite-page" href="javascript:void(0)"><i class="fa fa-heartbeat"></i></a></td>
+                            <td><input class="show-in-widget-favorite cursor-pointer" type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td><a href="page.html">Turkish Euroliges Euroleague</td>
+                            <td><a class="blue-button" href="javascript:void(0)"><i class="fa fa-cog"></i></a></td>
+                            <td><a class="blue-button unfavorite-page" href="javascript:void(0)"><i class="fa fa-heartbeat"></i></a></td>
+                            <td><input class="show-in-widget-favorite cursor-pointer" type="checkbox"></td>
                         </tr>
                     </table>
                 </div>
-                <h2 class="quiz-joined-players">Joined Players</h2>
+                <div class="favourite-page-container m-t-10 m-l-20 ex-favourite-pages">
+                    <h3 class="text-align-center m-b-10">Ex-favorites</h3>
+                    <table class="table">
+                        <tr>
+                            <th>Page Name</th>
+                            <th>Like</th>
+                        </tr>
+                        <tr>
+                            <td><a href="page.html">Real Madrid FC</td>
+                            <td><a class="blue-button favourite-page-back" href="javascript:void(0)"><i class="fa fa-heart"></i></a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="page.html">Barcelona FC</td>
+                            <td><a class="blue-button favourite-page-back" href="javascript:void(0)"><i class="fa fa-heart"></i></a></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-            <div class="quiz-game float-right">
-                <div id="countdowntimer"><span id="hms_timer"><span></div>
-                <h3 class="text-align-center m-t-20 quiz-start-date">Quiz will start 15.06.1987 at 10:00PM</h3>
-                <div class="one-quiz-question text-align-center">
-                    
+            <div class="main-background-color one-personal-settings-section">
+                <h2 class="widget-header-color display-inline-block">Favorite posts</h2>
+                <div class="display-inline-block add-dream-team-container">
+                    <select class="width-200px add-dream-team-sport">
+                        <option value="11">Date (ascending)</option>
+                        <option value="5">Date (descending)</option>
+                        <option value="7">Post Author</option>
+                        <option value="7">Title</option>
+                    </select>
+                    <input type="text" class="search-favourite-content" placeholder="Search post content, title or author">
+                    <a class="blue-button" href="javascript:void(0)">Search</a>
                 </div>
-                <div class="text-align-center quiz-loader">
-                    <i class="fa fa-spinner fa-spin"></i>
-                </div>
-                <div class="quiz-submit text-align-center m-t-10 display-none">
-                    <button class="blue-button">Submit</button>
+                <div class="clear"></div>
+                <div class="p-10">
+                    <div class="display-inline-block width-200px favorite-post-container">
+                        <p class="truncate-string">This is some long post content. This is some long post content.</p>
+                    </div>
+                    <div class="display-inline-block width-200px favorite-post-container">
+                        <p class="truncate-string">This is some long post content. This is some long post content.</p>
+                    </div>
+                    <div class="display-inline-block width-200px favorite-post-container">
+                        <p class="truncate-string">This is some long post content. This is some long post content.</p>
+                    </div>
+                    <div class="display-inline-block width-200px favorite-post-container">
+                        <p class="truncate-string">This is some long post content. This is some long post content.</p>
+                    </div>
+                    <div class="display-inline-block width-200px favorite-post-container">
+                        <p class="truncate-string">This is some long post content. This is some long post content.</p>
+                    </div>
+                    <div class="display-inline-block width-200px favorite-post-container">
+                        <p class="truncate-string">This is some long post content. This is some long post content.</p>
+                    </div>
                 </div>
             </div>
-            <div class="clear"></div>
+            <div class="main-background-color one-personal-settings-section">
+                <h2 class="widget-header-color display-inline-block">Favorite comments</h2>
+                <div class="display-inline-block add-dream-team-container">
+                    <select class="width-200px add-dream-team-sport">
+                        <option value="11">Date (ascending)</option>
+                        <option value="5">Date (descending)</option>
+                        <option value="7">Title</option>
+                    </select>
+                    <input type="text" class="search-favourite-content" placeholder="Search post content, title or author">
+                    <a class="blue-button" href="javascript:void(0)">Search</a>
+                </div>
+                <div class="clear"></div>
+                <div class="p-10">
+                    <div class="display-inline-block width-200px favorite-post-container">
+                        <p class="truncate-string">This is some long post content. This is some long post content.</p>
+                    </div>
+                    <div class="display-inline-block width-200px favorite-post-container">
+                        <p class="truncate-string">This is some long post content. This is some long post content.</p>
+                    </div>
+                    <div class="display-inline-block width-200px favorite-post-container">
+                        <p class="truncate-string">This is some long post content. This is some long post content.</p>
+                    </div>
+                    <div class="display-inline-block width-200px favorite-post-container">
+                        <p class="truncate-string">This is some long post content. This is some long post content.</p>
+                    </div>
+                    <div class="display-inline-block width-200px favorite-post-container">
+                        <p class="truncate-string">This is some long post content. This is some long post content.</p>
+                    </div>
+                    <div class="display-inline-block width-200px favorite-post-container">
+                        <p class="truncate-string">This is some long post content. This is some long post content.</p>
+                    </div>
+                </div>
+            </div>
         </div>
         <footer>
             <script src="js/jquery-1.11.2.min.js"></script>
             <script src="plugins/select2/dist/js/select2.min.js"></script>
-            <script src="plugins/countdown/jquery.countdownTimer.min.js"></script>
+            <script src="plugins/pnotify/pnotify.custom.min.js"></script>
             <script src="plugins/sortable.js"></script>
             <script src="plugins/zebra-datepicker/zebra_datepicker.js"></script>
-            <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
             <script src="js/main.js"></script>
+            <script src="js/fantasy.js"></script>
+            <script src="js/favorite.js"></script>
             <script src="js/functions.js"></script>
-            <script src="js/quiz-game.js"></script>
         </footer>
-        <div class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content main-background-color">
-                    <div class="modal-header">
-                        <div class="modal-header-close"><i class="fa fa-times"></i></div>
-                        <div class="modal-header-title bb">
-                            <p class="truncate-string">This is some very long title of some dialog</p>
-                        </div>
+    </body>
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content main-background-color">
+                <div class="modal-header">
+                    <div class="modal-header-close"><i class="fa fa-times"></i></div>
+                    <div class="modal-header-title bb">
+                        <p class="truncate-string">This is some very long title of some dialog</p>
                     </div>
-                    <div class="modal-body bb">
-                        <div class="mcl" style="text-align: center;">
-                            <i style="font-size: 50px;" class="fa fa-spinner fa-spin"></i>
-                        </div>
-                        <div class="mc">
-                            
-                        </div>
+                </div>
+                <div class="modal-body bb">
+                    <div class="mcl" style="text-align: center;">
+                        <i style="font-size: 50px;" class="fa fa-spinner fa-spin"></i>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary pull-right submit-modal-form green-button">Save changes</button>
+                    <div class="mc">
+                        
                     </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-        <div class="new-page-template display-none">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary pull-right submit-modal-form green-button">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="new-page-template display-none">
         <div class="new-page-modal">
             <form action="page.html">
                 <div class="modal-element">
@@ -339,7 +432,24 @@
             </div>
         </div>
     </div>
-        <input type="hidden" class="clientID" value="1">
-        <input type="hidden" class="quizID" value="1">
-    </body>
+    <div class="widget-settings-template display-none">
+        <div class="widget-settings-modal">
+            <div class="modal-element">
+                <label class="main-label">Awesome widget 1</label>
+                <div class="main-div">
+                    <label class="m-r-10">Left<input class="m-l-5" type="radio" name="ws1" checked="checked"></label>
+                    <label class="m-r-10">Right<input class="m-l-5" type="radio" name="ws1"></label>
+                    <label class="m-r-10">Do not show<input class="m-l-5" type="radio" name="ws1"></label>
+                </div>
+            </div>
+            <div class="modal-element">
+                <label class="main-label">Awesome widget 2</label>
+                <div class="main-div">
+                    <label class="m-r-10">Left<input class="m-l-5" type="radio" name="ws2"></label>
+                    <label class="m-r-10">Right<input class="m-l-5" type="radio" name="ws2"></label>
+                    <label class="m-r-10">Do not show<input class="m-l-5" type="radio" name="ws2" checked="checked"></label>
+                </div>
+            </div>
+        </div>
+    </div>
 </html>
