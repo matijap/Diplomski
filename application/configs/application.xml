@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<config xmlns:zf="http://framework.zend.com/xml/zend-config-xml/1.0/">
+    <production>
+        <includePaths>
+            <library>
+               <zf:const zf:name="APPLICATION_PATH"/>../library
+            </library>
+        </includePaths>
+        <bootstrap>
+            <path><zf:const zf:name="APPLICATION_PATH"/>/modules/Bootstrap.php</path>
+            <class value="Bootstrap"/>
+        </bootstrap>    
+        <appnamespace value="Application"/>
+        <version value="1.0.0.0"/>
+        <services>
+        </services>
+        <wantsDbMetaCaching>1</wantsDbMetaCaching>
+        <resources>       
+            <db>
+              <adapter>PDO_MYSQL</adapter>
+              <params>
+                <host>127.0.0.1</host>
+                <dbname>sportalize</dbname>
+                <username>root</username>
+                <password></password>
+                <charset>utf8</charset>
+              </params>
+              <isDefaultTableAdapter>true</isDefaultTableAdapter>
+            </db>            
+            <view value=""/>
+            <frontController>
+                <moduleDirectory><zf:const zf:name="APPLICATION_PATH"/>/modules</moduleDirectory>
+                <defaultModule>main</defaultModule>             
+                <params>
+                    <displayExceptions value="0"/>
+                </params>
+            </frontController>
+            <layout>
+                <layoutPath><zf:const zf:name="APPLICATION_PATH"/>/layouts/scripts</layoutPath>
+            </layout>
+        </resources>            
+    </production>
+    <staging zf:extends="production">
+    </staging>
+    <testing zf:extends="production">
+        <phpSettings>
+            <display_startup_errors value="1"/>
+            <display_errors value="1"/>
+        </phpSettings>
+        <resources>            
+       </resources>
+    </testing>
+    <development zf:extends="production">
+        <phpSettings>
+            <display_startup_errors value="1"/>
+            <display_errors value="1"/>
+        </phpSettings>
+    </development>
+</config>
