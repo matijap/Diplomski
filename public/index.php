@@ -4,13 +4,11 @@
       
       set_include_path(implode(PATH_SEPARATOR, array( 
           realpath(APPLICATION_PATH . '/modules'),
-          realpath(APPLICATION_PATH . '/modules/core/models'),
-          realpath(APPLICATION_PATH . '/modules/billing/models'),
-          realpath(APPLICATION_PATH . '/modules/billing/views/forms'),
-          realpath(APPLICATION_PATH . '/modules/core/views/forms'),
-          realpath(APPLICATION_PATH . '/modules/api/models'),          
+          realpath(APPLICATION_PATH . '/modules/main/models'),
+          realpath(APPLICATION_PATH . '/modules/main/models'),
+          realpath(APPLICATION_PATH . '/modules/login/views/forms'),
+          realpath(APPLICATION_PATH . '/modules/main/views/forms'),
           realpath(APPLICATION_PATH . '/../library'),
-          realpath(APPLICATION_PATH . '/../library/Platforma'),
           realpath(APPLICATION_PATH . '/../library/Zend/library'),
           realpath('/lib/Zend/library'),
           get_include_path(),

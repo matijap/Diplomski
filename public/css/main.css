@@ -1,0 +1,1173 @@
+html, body {
+    height: 100%;
+}
+body, input {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 300;
+}
+a:link {
+    text-decoration: none;
+}
+h1 {
+    font-weight: bold;
+    font-size: 25px;
+}
+h2 {
+    font-weight: bold;
+    font-size: 18px;
+}
+h3 {
+    font-weight: bold;
+    font-size: 16px;
+}
+h4 {
+    font-weight: bold;
+    font-size: 14px;
+}
+textarea {
+    outline: none;
+}
+a.blue-button,
+a.green-button,
+a.red-button,
+a.dark-orange-button {
+    font-size: 11px;
+    display: block;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    text-align: center;
+}
+a.display-none {
+    display: none;
+}
+.table th,
+.table td {
+    padding: 5px;
+    vertical-align: middle;
+    text-align: center;
+}
+.add-new-item,
+.remove-item {
+    font-size: 15px;
+}
+/* Utility Classes Start */
+.truncate-string {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.float-left,
+.pull-left {
+    float: left;
+}
+.float-right,
+.pull-right {
+    float: right;
+}
+.position-fixed {
+    position: fixed;
+}
+.position-relative {
+    position: relative;
+}
+.position-absolute {
+    position: absolute;
+}
+.bb {
+    box-sizing: border-box;
+}
+.display-none {
+    display: none;
+}
+.display-block {
+    display: block;
+}
+.display-inline-block {
+    display: inline-block;
+}
+.text-align-center {
+    text-align: center;
+}
+.clear {
+    clear: both;
+}
+.bold-text {
+    font-weight: bold;
+}
+.green-button,
+.blue-button,
+.dark-orange-button {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.width-100-percent {
+    width: 100%;
+}
+.width-200px {
+    width: 200px;
+}
+.width-100px {
+    width: 100px;
+}
+.height-90-percent {
+    height: 90%;
+}
+.width-95-percent {
+    width: 95%;
+}
+.height-50px {
+    height: 50px;
+}
+/* Utility Classes End */
+/* Margin and Padding Start */
+.m-t-5 {
+    margin-top: 5px;
+}
+.m-t-10 {
+    margin-top: 10px;
+}
+.m-t-20 {
+    margin-top: 20px;
+}
+.m-b-10 {
+    margin-bottom: 10px;
+}
+.m-b-20 {
+    margin-bottom: 20px;
+}
+.m-l-5 {
+    margin-left: 5px;
+}
+.m-l-10 {
+    margin-left: 10px;
+}
+.m-l-15 {
+    margin-left: 15px;
+}
+.m-r-5 {
+    margin-right: 5px;
+}
+.m-r-10 {
+    margin-right: 10px;
+}
+.m-l-20 {
+    margin-left: 20px;
+}
+.m-b-5 {
+    margin-bottom: 5px;
+}
+.p-10 {
+    padding: 10px;
+}
+.p-5 {
+    padding: 5px;
+}
+/* Margin and Padding End */
+
+/* Chat Sidebar Start */
+.chat-sidebar {
+    width: 200px;
+    overflow-y: auto;
+    height: 90%;
+    left: 0px;
+}
+.one-chat-person {
+    height: 50px;
+    position: relative;
+}
+.one-chat-person .chat-availability {
+    height: 50px;
+    width: 50px;
+    float: left;
+}
+.one-chat-person .chat-avatar {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 10px;
+    left: 7px;
+    overflow: hidden;
+}
+.one-chat-person .chat-avatar img {
+    width: 100%;
+    height: 100%;
+}
+.chat-sidebar .chat-person-name {
+    line-height: 49px;
+    overflow: hidden;
+    padding-left: 10px;
+    font-size: 12px;
+}
+.chat-search {
+    height: 50px;
+    position: relative;
+}
+.chat-search .fa {
+    position: absolute;
+    right: 10px;
+    top: 17px;
+}
+.chat-search input[type=text] {
+    width: 100%;
+    height: 100%;
+    outline: none !important;
+    padding-right: 30px;
+    padding-left: 10px;
+    box-sizing: border-box;
+}
+.chat-search input[type=text]:focus {
+    outline: none !important;
+}
+/* Chat Sidebar End */
+ 
+/* Widgets Start */
+#left-widget-area {
+    left: 200px;
+}
+.widget-area {
+    width: 350px;
+    overflow-y: auto;
+    height: 90%;
+}
+#right-widget-area {
+    right: 0px;
+    border-right: 0px;
+}
+.one-widget {
+    width: 100%;
+}
+.widget-header {
+    padding-left: 10px;
+}
+.widget-header-title {
+    overflow: hidden;
+    height: 40px;
+    line-height: 40px;
+}
+.widget-header-close {
+    width: 40px;
+    float: right;
+    text-align: center;
+    height: 100%;
+    line-height: 40px;
+}
+.widget-content {
+    padding: 10px;
+}
+.widget-content.favourite-pages ul,
+.widget-content.upcoming-games ul {
+    overflow: hidden;
+}
+.widget-content.favourite-pages li,
+.widget-content.upcoming-games li {
+    list-style-type: none;
+    overflow: hidden;
+    margin-bottom: 5px;
+    position: relative;
+}
+.widget-content.favourite-pages li a {
+    height: 20px;
+    line-height: 20px;
+}
+.widget-content.favourite-pages li a span {
+    height: 100%;
+    display: block;
+    width: 190px;
+    margin-left: 5px;
+    font-size: 13px;
+}
+.widget-content.upcoming-games .widget-sport-type {
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+.widget-content.upcoming-games .widget-sport-type:first-of-type {
+    margin-top: 0px;
+}
+.widget-sport-type-logo {
+    padding-right: 3px;
+    margin-right: 3px;
+}
+.widget-content.upcoming-games .matches-list {
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+.widget-content.upcoming-games .teams-holder {
+    margin: 0 auto;
+    width: 90px;
+    overflow: hidden;
+    line-height: 20px;
+    position: relative;
+}
+.widget-content.upcoming-games .teams-holder p {
+    font-size: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.matches-list .fa {
+    position: absolute;
+    right: 0;
+    top: 5px;
+}
+.widget-content.best-scorers ul li {
+    display: inline-block;
+    width: 100%;
+}
+.widget-content.best-scorers .widget-sport-type {
+    margin-bottom: 5px;
+}
+.widget-content.best-scorers .league-title {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-size: 14px;
+    margin-top: 5px;
+}
+.widget-content.best-scorers .league-title:first-of-type {
+    margin-top: 0;
+}
+.widget-content.best-scorers .one-player {
+    margin-top: 3px;
+    font-size: 11px;
+    width: 100%;
+}
+.widget-content.best-scorers .one-player span {
+    font-weight: bold;
+}
+.widget-content table {
+    table-layout: fixed;
+}
+.widget-content table td:not(:first-child) {
+    max-width: 60px;
+    padding: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* Widgets End */
+
+/* Header Start */
+header {
+    height: 70px;
+}
+.header-holder {
+    height: 100%;
+    line-height: 70px;
+}
+.header-holder .h {
+    margin: 0 auto;
+    text-align: center;
+    width: 1024px;
+}
+header li {
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.sublink-ul {
+    display: none;
+    position: absolute;
+    left: 0;
+    z-index: 2;
+}
+.main-link-li {
+    position: relative;
+}
+.sublink-ul {
+    width: 180px;
+}
+.sublink-ul li {
+    width: 100%;
+    padding: 0;
+    height: 50px;
+    line-height: 50px;
+    float: left;
+    position: relative;
+}
+.main-link-li .fa-exclamation {
+    margin-left: 5px;
+}
+.notifications-menu {
+    width: 280px;
+}
+.notifications-menu .person-avatar {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    overflow: hidden;
+    margin-top: 10px;
+    margin-left: 5px;
+}
+ .person-avatar img {
+    width: 100%;
+    height: 100%;
+}
+.notifications-menu p {
+    float: left;
+    text-overflow: ellipsis;
+    width: 237px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.sublink-li-1 .fa {
+    position: absolute;
+    right: 5px;
+    top: 18px;
+}
+.new-post {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding-right: 20px;
+    padding-left: 20px;
+    background-color: lightgray;
+    color: black;
+}
+/* Header End */
+
+/* Main Content Start */
+#main-panel {
+    overflow-y: auto;
+    padding: 10px;
+    position: fixed;
+    left: 554px;
+    height: 90%;
+}
+/* Main Content End */
+
+/* One Post Start */
+.one-post {
+    margin-bottom: 20px;
+}
+.post-header {
+    padding-left: 10px;
+}
+.post-header-title {
+    overflow: hidden;
+    height: 40px;
+    line-height: 40px;
+}
+.post-header-title p {
+    font-weight: bold;
+}
+.post-header-close {
+    width: 130px;
+    float: right;
+    text-align: center;
+    height: 100%;
+    line-height: 40px;
+    position: relative;
+}
+.post-header-close .fa {
+    width: 40px;
+}
+.post-actions {
+    width: 100px;
+    position: absolute;
+    right: 0;
+    display: none;
+}
+.post-body {
+    padding: 10px;
+}
+.post-body iframe {
+    width: 100%;
+    height: 400px;
+    margin-bottom: 20px;
+}
+.post-body img {
+    width: 100%;
+    margin-bottom: 20px;
+}
+.post-body p {
+    padding-top: 20px;
+    line-height: 18px;
+    letter-spacing: 0.1px;
+}
+.post-footer {
+    position: relative;
+}
+.post-comment-textarea {
+    width: 100%;
+    height: 25px;
+    padding: 5px;
+    resize: none;
+}
+.submit-comment {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.one-post-comment {
+    width: 95%;
+    position: relative;
+    float: right;
+}
+.one-post-comment .post-comment-avatar {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+    display: inline-block;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+.post-comment-avatar img {
+    width: 100%;
+    height: 100%;
+}
+.post-comment-list {
+    margin-top: 10px;
+}
+.one-post-comment .one-post-comment-text {
+    vertical-align: top;
+    display: inline-block;
+    margin-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.one-post-comment .one-post-comment-text p {
+    font-size: 13px;
+    letter-spacing: 0.4px;
+}
+.one-post-comment-action-and-avatar {
+    display: inline-block;
+    width: 35px;
+}
+.one-post-action-holder {
+    text-align: center;
+    margin-top: 5px;
+}
+.one-post-actions-holder {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 20px;
+    width: 100px;
+    padding: 5px;
+    color: white;
+}
+.one-post-actions-holder a {
+    color: white;
+}
+.post-count-and-date {
+    margin-top: 10px;
+    margin-left: 53px;
+    padding-bottom: 10px;
+    font-size: 11px;
+}
+.post-count-and-date p {
+    display: inline-block;
+}
+.post-count-and-date p:first-of-type {
+    padding-right: 7px;
+}
+.post-count-and-date p:last-of-type {
+    padding-right: 10px;
+}
+.show-more-post-comments {
+    height: 30px;
+}
+/* One Post End */
+
+/* Modal Start */
+.modal.fade {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    position: fixed;
+    display: none;
+    opacity: 0;
+}
+.modal-dialog {
+    width: 600px;
+    margin: 0 auto;
+    overflow-y: auto;
+}
+.modal-header {
+    height: 70px;
+}
+.modal-header-close {
+    width: 40px;
+    float: right;
+    text-align: center;
+    height: 100%;
+    line-height: 70px;
+}
+.modal-header-title {
+    overflow: hidden;
+    height: 100%;
+    line-height: 70px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.modal-footer {
+    height: 50px;
+}
+.modal-footer .cls {
+    height: 100%;
+    width: 150px;
+}
+.modal-footer .btn-primary {
+    height: 100%;
+    width: 150px;   
+}
+.modal-body {
+    padding: 10px;
+}
+.upcoming-games-modal .logo {
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.upcoming-games-modal h3,
+.upcoming-games-modal p {
+    display: inline-block;
+}
+.upcoming-games-modal .club-info {
+    width: 100%;
+    margin-bottom: 5px;
+}
+.upcoming-games-modal .home-team,
+.upcoming-games-modal .away-team {
+    width: 50%;
+    float: left;
+}
+.upcoming-games-modal .match-details {
+    width: 100%;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+.match-details h2 {
+    margin-bottom: 10px;
+}
+.match-details .match-details-info {
+    margin-bottom: 10px;
+}
+.modal-element .main-label {
+    width: 150px;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 16px;
+}
+.modal-element .main-div {
+    width: 400px;
+    display: inline-block;
+    font-size: 12px; 
+}
+.widget-settings .modal-element .main-div {
+    width: 375px;
+    position: relative;
+}
+.modal-element input[type="text"] {
+    width: 100%;
+}
+.modal-element .checkbox-holder {
+    margin-right: 10px;
+}
+.modal-element {
+    margin-bottom: 10px;
+}
+.modal-element textarea {
+    width: 420px;
+}
+.favourited-pages-modal h2 {
+    margin-bottom: 15px;
+}
+.widget-settings {
+
+}
+.widget-plain textarea {
+    width: 100%;
+    height: 100px;
+    resize: none;
+    box-sizing: border-box;
+    padding: 5px;
+}
+.modal-element .widget-option-and-value:first-of-type {
+    width: 65%;
+}
+.modal-element .widget-option-and-value:nth-of-type(2) {
+    width: 25%;
+}
+.modal-element .widget-list-section-title {
+    width: 90% !important;
+}
+.remove-section {
+    font-size: 20px;
+    vertical-align: middle;
+    float: right;
+}
+.remove-list-option,
+.add-list-option {
+    font-size: 15px;
+}
+.one-widget-list-section {
+    border: 1px solid black;
+    padding: 2px;
+    padding-top: 5px;
+    margin-bottom: 5px;
+    position: relative;
+}
+.add-list-section {
+    width: 150px;
+    height: 35px;
+}
+.widget-table h3 {
+    margin-bottom: 8px;
+}
+#widget-table-data .main-div label {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+}
+.widget-table .fa-cog,
+.widget-table .fa-spin {
+    margin-left: 6px;
+    vertical-align: top;
+}
+.widget-table-option-configure {
+    position: absolute;
+    right: 0;
+    height: 50px;
+    border: 3px solid black;
+    box-sizing: border-box;
+    z-index: 500;
+}
+.widget-table-option-configure input {
+    width: 50px !important;
+    height: 100%;
+    box-sizing: border-box;
+    margin-right: 5px;
+    font-size: 16px;
+}
+.widget-table .modal-element {
+    position: relative;
+}
+.list-with-button-upload {
+    width: 150px;
+    display: inline-block;
+    position: relative;
+}
+.list-with-button-upload:nth-of-type(2) {
+    margin-left: 3px;
+}
+.list-with-button-upload img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=1, M12=0, M21=0, M22=1, SizingMethod='auto image')";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.remove-list-with-button-option {
+    position: absolute;
+    top: 0;
+}
+.add-list-section {
+    font-size: 13px;
+    padding: 10px;
+}
+.remove-list-section {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 25px;
+}
+.widget-list-with-edit-button .fa-cog,
+.widget-list-with-edit-button .fa-spin {
+    position: absolute;
+    top: 0px;
+    right: 25px;
+    margin-left: 25px;
+    font-size: 18px;
+}
+/* Modal End */
+/* Page Start */
+.add-list-with-button-settings-panel {
+    position: fixed;
+    overlay-y: auto;
+    width: 500px;
+    right: 0px;
+    height: 90%;
+    background-color: white;
+    padding: 20px;
+    border-left: 2px solid black;
+}
+.add-list-with-button-settings-panel .list-with-button-select {
+    width: 200px;
+}
+.list-with-button-select-where-to {
+    width: 100px;
+}
+.add-list-with-button-customize-option {
+    width: 50px;
+    display: inline-block !important;
+    margin-left: 50px;
+    margin-right: 20px;
+}
+.close-list-with-button-settings-panel {
+    font-size: 30px;
+}
+.list-with-button-settings-main,
+.list-with-button-settings-additional {
+    margin-top: 20px;
+}
+.list-with-button-settings-main h1 {
+    margin-bottom: 10px;
+}
+.list-with-button-settings-item {
+    margin-bottom: 10px;
+}
+.list-with-button-settings-item label {
+    font-size: 13px;
+    width: 50px;
+    display: inline-block;
+}
+.list-with-button-settings-item input[type="text"] {
+    width: 150px;
+    float: right;
+}
+.list-with-button-settings-additional .list-with-button-settings-item input[type="text"] {
+    width: 350px;
+}
+.list-with-button-settings-option-name {
+    margin-right: 17px;
+}
+.list-with-button-settings-main .lwbsm-left {
+    width: 49%;
+    float: left;
+    border-right: 1px solid black;
+    padding: 10px;
+}
+.list-with-button-settings-main div h2 {
+    margin-bottom: 10px;
+    word-break: break-all;
+}
+.list-with-button-settings-main .lwbsm-right {
+    width: 50%;
+    float: left;
+    padding: 10px;
+}
+/* Page End */
+/* Main Content My Posts Start */
+#main-panel.my {
+    overflow-y: auto;
+    padding: 10px;
+    position: fixed;
+    left: 200px;
+    height: 90%;
+    width: 50% !important;
+}
+#about.my {
+    height: 90%;
+    width: 30%;
+    right: 0;
+    position: fixed;
+    overflow-y: scroll;
+}
+#about.my img {
+    width: 100%;
+}
+#about.my h1 {
+    text-align: center;
+    margin: 10px;
+    margin-bottom: 20px;
+}
+.one-about-me-holder {
+    margin-top: 8px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.one-about-me-holder p:nth-of-type(1) {
+    width: 100px;
+    font-size: 13px;
+}
+.one-about-me-holder p:nth-of-type(2) {
+   margin-left: 5px;
+   max-width: 300px;
+   font-size: 13px;
+}
+.styled-button {
+   width: 150px;
+   margin: 0 auto;
+   height: 100%;
+   line-height: 30px;
+   padding-left: 5px;
+   padding-right: 5px;
+   color: black;
+}
+#about.my .fa-spinner {
+   font-size: 20px;
+}
+#about.my .loader-holder {
+   margin-bottom: 10px;
+   height: 30px;
+}
+ #about.my .fa-check-circle {
+   margin-left: 3px;
+   color: green;
+}
+.dream-team-display {
+    padding: 10px;
+    display: inline-block;
+    vertical-align: top;
+    width: 49%;
+    box-sizing: border-box;
+}
+.dream-team-sport {
+    margin-bottom: 5px;
+}
+.dream-team-sport i,
+.dream-team-sport p {
+    display: inline-block;
+}
+.dream-team-display-team li {
+    font-size: 11px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+.profile-availability {
+    position: absolute;
+    top: -12px;
+    right: 0;
+    width: 50px;
+    height: 50px;
+}
+/* My Posts End */
+/* Fantasy start */
+.fantasy#main-panel {
+    left: 200px;
+}
+.one-fantasy-pitch-player {
+    font-size: 9px;
+    width: 65px;
+}
+.pitch-overlay {
+    width: 100%;
+    height: 100%;
+    z-index: 500;
+    opacity: 0.6;
+    position: absolute;
+}
+.pitch-overlay .fa-spinner {
+    position: absolute;
+    font-size: 48px;
+    top: 295px;
+    left: 175px;
+}
+.fantasy-submit,
+.fantasy-cancel {
+    width: 50px;
+    height: 47px;
+    line-height: 47px;
+    text-align: center;
+}
+.fantasy-picked-player-list {
+    width: 25%;
+    float: left;
+}
+#select2-player-market-results li {
+    font-size: 13px !important;
+}
+.fantasy-buy-message {
+    float: right;
+    max-width: 385px;
+}
+.fantasy-picked-player-list p {
+    padding: 5px;
+}
+/* Fantasy End */
+/* Quiz Start */
+.quiz-leaderboard {
+    padding-right: 10px;
+}
+.quiz-loader {
+    font-size: 60px;
+    display: none;
+}
+.quiz-submit button {
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+}
+/* Quiz End */
+/* Galery Start */
+.slbOverlay,
+.slbWrapOuter,
+.slbArrows {
+    margin-left: 400px;
+}
+.galery-comment.post-footer {
+    border: 0;
+}
+.galery-comment .one-post-comment {
+    width: 100%;
+}
+.galery-overlay {
+    height: 90%;
+    position: absolute;
+    display: none;
+}
+.galery-comment-holder {
+    width: 400px;
+    height: 91%;
+    position: fixed;
+    overflow-y: scroll;
+    text-align: center;
+}
+.galery-image {
+    position: absolute;
+    left: 400px;
+}
+.gallery a {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    position: relative;
+}
+.gallery a img {
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.galery-comment-holder .fa-spinner {
+    font-size: 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.slbCaption {
+    display: none;
+}
+.bar {
+    margin-top: 10px;
+    height: 18px;
+}
+.choose-upload {
+    width: 150px;
+}
+.remove-galery-item {
+    position: absolute;
+    right: 10;
+    height: 35%;
+    width: 100%;
+    text-align: center;
+    display: none;
+    z-index: 5000;
+}
+.remove-galery-item .fa {
+    margin-top: 20px;
+    font-size: 25px;
+}
+a.back-to-galery {
+    height: 20px;
+    width: 154px;
+    font-size: 20px;
+}
+/* Galery End */
+/* Personal Settings Start */
+.personal-settings-container {
+    display: inline-block;
+    padding: 10px;
+    padding-right: 20px;
+    margin-right: 10px;
+}
+.personal-settings-container input {
+    font-size: 15px;
+    margin-left: 5px;
+}
+.personal-settings-container .display-inline-block {
+    display: inline-block;
+}
+.personal-settings-container img {
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+.favorite label {
+    vertical-align: top;
+    margin-top: 10px;
+}
+.personal-settings-container.favorite {
+    vertical-align: top;
+    width: 32%;
+    box-sizing: border-box;
+    position: relative;
+}
+.personal-settings-container.favorite .select2-container {
+    float: right;
+    max-width: 357px;
+}
+.one-personal-settings-section h2 {
+    width: 200px;
+    height: 30px;
+    padding-top: 10px;
+    padding-left: 10px;
+    text-align: center;
+}
+.dream-team input,
+.dream-team h3 {
+    margin-bottom: 5px;
+}
+.add-dream-team-container {
+    width: 80%;
+    float: right;
+}
+.add-dream-team-container input {
+    font-size: 15px;
+    height: 30px;
+    margin-left: 10px;
+}
+.add-dream-team-container .blue-button {
+    display: inline-block !important;
+    width: 150px;
+    margin-left: 10px;
+    height: 19px;
+    vertical-align: top;
+    padding-top: 13px;
+}
+.remove-dream-team {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+.one-personal-settings-section {
+    margin-bottom: 10px;
+}
+.privacy-settings .privacy-friends-list .select2-container,
+.privacy-settings .privacy-friends .select2-container {
+    width: 100% !important;
+}
+/* Personal Settings End */
+/* Favourites Start */
+.favourite-page-container {
+    display: inline-block;
+    padding: 10px;
+}
+.search-favourite-content {
+    font-size: 17px;
+}
+.search-favourite-content::-webkit-input-placeholder {
+    font-size: 10px;
+    vertical-align: middle;
+    padding-top: 5px;
+    padding-left: 5px;
+}
+.favorite-post-container {
+    font-size: 10px;
+    padding: 5px;
+}
+/* Favourites End */

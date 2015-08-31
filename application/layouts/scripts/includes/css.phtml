@@ -1,0 +1,14 @@
+<?php
+
+$reset  = filemtime(WEB_ROOT_PATH . '/css/reset.css');
+$styles = filemtime(WEB_ROOT_PATH . '/css/main.css');
+$skin   = filemtime(WEB_ROOT_PATH . '/css/white-essence.css');
+$login  = filemtime(WEB_ROOT_PATH . '/css/login.css');
+$hover  = filemtime(WEB_ROOT_PATH . '/css/hover.css');
+
+echo $this->headLink()
+     ->appendStylesheet(APP_URL . '/css/reset.css?t=' . $reset)
+     ->appendStylesheet(APP_URL . '/css/main.css?t=' . $styles)
+     ->appendStylesheet(APP_URL . '/css/white-essence.css?t=' . $skin)
+     ->appendStylesheet(APP_URL . '/css/login.css?t=' . $login)
+     ->appendStylesheet(APP_URL . '/css/hover.css?t=' . $hover);

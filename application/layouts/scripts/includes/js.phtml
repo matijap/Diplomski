@@ -1,0 +1,21 @@
+<?php
+
+$fantasy          = filemtime(WEB_ROOT_PATH . '/js/fantasy.js');
+$favorite         = filemtime(WEB_ROOT_PATH . '/js/favorite.js');
+$functions        = filemtime(WEB_ROOT_PATH . '/js/functions.js');
+$galery           = filemtime(WEB_ROOT_PATH . '/js/galery.js');
+$main             = filemtime(WEB_ROOT_PATH . '/js/main.js');
+$page             = filemtime(WEB_ROOT_PATH . '/js/page.js');
+$personalSettings = filemtime(WEB_ROOT_PATH . '/js/personal-settings.js');
+$quizGame         = filemtime(WEB_ROOT_PATH . '/js/quiz-game.js');
+
+echo $this->headScript()
+     ->prependFile(APP_URL . '/js/fantasy.js?t=' . $fantasy)
+     ->prependFile(APP_URL . '/js/favorite.js?t=' . $favorite)
+     ->prependFile(APP_URL . '/js/functions.js?t=' . $functions)
+     ->prependFile(APP_URL . '/js/galery.js?t=' . $galery)
+     ->prependFile(APP_URL . '/js/main.js?t=' . $main)
+     ->prependFile(APP_URL . '/js/page.js?t=' . $page)
+     ->prependFile(APP_URL . '/js/personal-settings.js?t=' . $personalSettings)
+     // ->prependFile(APP_URL . '/js/quiz-game.js?t=' . $quizGame)
+     ;

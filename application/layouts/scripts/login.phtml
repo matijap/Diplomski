@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sportalize - Welcome</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <?php echo $this->render('includes/css.phtml'); ?>
+        <?php echo $this->render('includes/login-css.phtml'); ?>
+    </head>
+    <body class="main-background-color">
+        <div class="form-holder">
+            <div class="form-title">
+                <h1>Log In</h1>
+            </div>
+            <?php echo $this->form; ?>
+            <div class="additional-holder">
+                <div>
+                    <a href="javascript:void(0)">Forgot Password</a>
+                </div>
+                <div>
+                    <a href="javascript:void(0)">Register</a>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </body>
+</html>

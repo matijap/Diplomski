@@ -1,9 +1,8 @@
 <?php
 
-class IndexController extends Zend_Controller_Action
+class IndexController extends Sportalize_Controller_Action
 {
-    public function indexAction()
-    {
-    
+    public function indexAction() {
+        
     }
 }

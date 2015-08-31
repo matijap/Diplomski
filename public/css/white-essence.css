@@ -1,0 +1,354 @@
+.main-background-color {
+    /*background-color: rgb(245, 245, 245);*/
+    background: #f4f4f4; /* Old browsers */
+    background: -moz-linear-gradient(top,  #f4f4f4 0%, #cecece 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f4f4), color-stop(100%,#cecece)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #f4f4f4 0%,#cecece 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #f4f4f4 0%,#cecece 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #f4f4f4 0%,#cecece 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #f4f4f4 0%,#cecece 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#cecece',GradientType=0 ); /* IE6-9 */
+}
+.widget-header-color {
+    background-color: rgb(48, 48, 48);
+}
+.table {
+    background-color: white;
+    border: 1px solid black;
+}
+.table th,
+.table td {
+    border: 1px solid black;
+}
+.table th {
+    background-color: rgb(48, 48, 48);
+    color: white;
+}
+.table tr:nth-child(odd) {
+    background-color: rgb(216, 216, 216);
+}
+/* Utility Classes Start */
+.green-button,
+.blue-button,
+.red-button,
+.dark-orange-button {
+    color: white;
+    border: 0;
+}
+.green-button {
+    background-color: green;
+}
+.blue-button {
+    background-color: blue;
+}
+.red-button {
+    background-color: red;
+}
+.dark-orange-button {
+    background-color: orange;
+}
+.message {
+    padding: 10px;
+    border: 1px solid;
+}
+.error-message {
+    background-color: rgba(255, 0, 0, 0.25);
+    color: red;
+}
+.success-message {
+    background-color: rgba(0, 255, 0, 0.46);
+    color: green;
+}
+.add-new-item {
+    color: green;
+}
+.remove-item {
+    color: red;
+}
+/* Utility Classes End */
+/* Chat Sidebar Start */
+.chat-sidebar {
+    border-right: 1px solid #E8E8E8;
+}
+.one-chat-person .chat-availability {
+    background-color: #DEDEDE;
+}
+.one-chat-person .chat-avatar {
+    background-color: white;
+}
+.chat-sidebar .online .chat-availability,
+.profile-availability.online {
+    background-color: #437D4E;
+    border-bottom: 1px solid #386B16;
+}
+.chat-sidebar .online.busy .chat-availability,
+.profile-availability.online.busy {
+    background-color: #FA5A5A;
+    border-bottom: 1px solid #DE474A;
+}
+.chat-sidebar .online.away .chat-availability,
+.profile-availability.online.away  {
+    background-color: #FF9D4D;
+    border-bottom: 1px solid #ED823B;
+}
+.chat-sidebar .offline .chat-availability,
+.profile-availability.offline {
+    border-bottom: 1px solid #CCCCCC;
+}
+.profile-availability {
+    border: 1px solid #CCCCCC;   
+}
+.chat-sidebar .chat-person-name {
+    border-bottom: 1px solid #E8E8E8;
+}
+.chat-search {
+    border-bottom: 1px solid #E8E8E8;
+}
+.chat-search .fa {
+    color: #E8E8E8;
+}
+.chat-search input[type=text] {
+    border:  1px solid white;
+}
+.chat-search input[type=text]:focus {
+    border: 1px solid #CFCFCF;
+}
+/* Chat Sidebar End */
+
+/* Widgets Start */
+.widget-area {
+    border-right: 1px solid #E8E8E8;
+}
+#right-widget-area {
+    border-left: 1px solid #E8E8E8;
+}
+.one-widget {
+    border-bottom: 1px solid black;
+}
+.widget-header {
+    border-bottom: 1px solid #E8E8E8;
+    color: white;
+}
+.widget-sport-type-logo {
+    border-right: 1px solid #E8E8E8;   
+}
+.widget-content.best-scorers .league-title {
+    border-bottom: 1px solid #E8E8E8;
+}
+/* Widgets End */
+/* Header Start */
+header {
+    border-bottom: 1px solid black;
+}
+header a {
+    color: white;
+}
+header li {
+    border-left: 1px solid #545454;
+    color: white;
+}
+header li:last-of-type {
+    border-right: 1px solid #545454;
+}
+header .sublink-ul li:last-of-type {
+    border-right: 0;
+}
+.sublink-ul li {
+    border-left: 1px solid #E8E8E8;;
+    border-right: 1px solid #E8E8E8;;
+    border-bottom: 1px solid #E8E8E8;
+    color: black;
+}
+.sublink-ul li a {
+    color: black;   
+}
+/* Header End */
+/* One Post Start */
+.post-header {
+    border: 1px solid #E8E8E8;
+    color: white;
+}
+.post-actions {
+    background-color: #B8E8B8;
+}
+.post-body {
+    border-left: 1px solid #E8E8E8;
+    border-right: 1px solid #E8E8E8;
+    border-bottom: 1px solid #E8E8E8;
+}
+.post-body p {
+    border-top: 1px solid #E8E8E8;
+}
+.post-footer {
+    border-left: 1px solid #E8E8E8;
+    border-right: 1px solid #E8E8E8;
+    border-bottom: 1px solid #E8E8E8;
+}
+.one-post-actions-holder {
+    background-color: grey;
+}
+.one-post-comment-text {
+    border-bottom: 1px solid #E8E8E8;
+}
+.post-count-and-date p:first-of-type {
+    border-right: 1px solid #E8E8E8;
+}
+.one-post-comment:nth-child(even) {
+    background-color: #E2E2E2;
+}
+.one-post-comment:nth-child(odd) {
+    background-color: #F9F9F9;
+}
+.show-more-post-comments {
+    background-color: black;
+    line-height: 30px;
+    text-align: center;
+}
+.show-more-post-comments .fa {
+    color: white;
+}
+.submit-comment {
+    width: 80px;
+    height: 25px;
+    border: 0;
+    color: white;
+}
+/* One Post End */
+
+/* Modal Start */
+.modal-content {
+    background-color: white;
+}
+.modal-header {
+    border-bottom: 1px solid black;
+}
+.modal-footer .btn {
+    border: 0;
+}
+.modal-footer .btn:focus {
+    outline: none;
+}
+.upcoming-games-modal .match-details {
+    border-top: 1px solid #E8E8E8;
+}
+.remove-section {
+    color: red;
+}
+.add-list-option {
+    color: green;
+}
+.modal-header {
+    background-color: white;
+}
+.widget-table-option-configure .fa-check {
+    color: green;
+    margin-right: 5px;
+}
+.widget-table-option-configure .fa-times {
+    color: red;
+    margin-right: 5px;
+}
+.widget-table-option-configure {
+    background-color: black;
+}
+.widget-table .fa-plus {
+    color: green;
+}
+.add-list-section {
+    color: white !important;
+}
+/* Modal End */
+
+/* My Posts Start */
+ .styled-button {
+    border: 1px solid rgb(48,48,48);
+    background-color: white;
+ }
+ .dream-team-sport p,
+  .dream-team-sport i {
+    color: crimson;
+ }
+/* My Posts End */
+/* Fantasy Start */
+.one-fantasy-pitch-player {
+    color: white;
+}
+.fantasy-invalid-position {
+    color: red;
+}
+.pitch-overlay {
+    background-color: black;
+}
+.pitch-overlay .fa-spinner {
+    color: white;
+}
+.fantasy-picked-player-list {
+    border-right: 1px solid black;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+.one-fantasy-pitch-player-selected {
+    border: 1px solid blue;
+}
+.fantasy-picked-player-list .fa {
+    color: red;
+}
+/* Fantasy End */
+/* PNotify Start */
+.ui-pnotify .alert-success {
+    background-color: #74E974;
+    color: green;
+}
+.ui-pnotify .alert-danger {
+    background-color: #DFA0A0;
+    color: red;
+}
+/* PNotify End */
+
+/* Quiz Start */
+.table tr.quiz-starting-soon {
+    background-color: #B0DAFF;
+}
+.table tr.quiz-already-started {
+    background-color: #F16C6C;   
+}
+.quiz-leaderboard {
+    border-right: 1px solid black;
+}
+/* Quiz End */
+/* Galery Start */
+.galery-comment-holder {
+    background-color: black;
+}
+.galery-comment-holder .fa-spinner {
+    color: white;
+}
+.bar {
+    background: green;
+}
+.remove-galery-item {
+    background-color: rgba(146, 146, 146, 0.9);
+}
+.remove-galery-item .fa {
+    color: red;
+}
+/* Galery End */
+/* Personal Settings Start */
+.personal-settings-container {
+    border-right: 1px solid #9C9C9C;
+}
+.favorite .fa-plus {
+    color: green;
+}
+.favorite .fa-times {
+    color: red;
+}
+.one-personal-settings-section h2 {
+    color: white;
+}
+/* Personal Settings End */
+/* Favorites start */
+.favorite-post-container {
+    border: 1px solid #E8E8E8;
+}
+/* Favorites end */

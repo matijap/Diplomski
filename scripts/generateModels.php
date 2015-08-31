@@ -137,7 +137,7 @@ protected \$_referenceMap = array(";
       }
 
       foreach ($rows as $key => $row) {
-          $includePath = 'require_once \'Core/Row.php\';';
+          $includePath = 'require_once \'Main/Row.php\';';
           $modul       = 'core'; 
 
           $tableNameArray = explode("_",$key);
@@ -146,12 +146,10 @@ protected \$_referenceMap = array(";
               $tableName .= ucfirst($tableString);
           } 
 $strRow = "<?php
-/**
-* @see Core_Row
-*/
+
 $includePath
 
-class " . $tableName . "_Row extends Core_Row {\n";
+class " . $tableName . "_Row extends Main_Row {\n";
 if ($row != "") {
 foreach ($row as  $tblRef => $table) {
   $tableNameArray2 = explode("_", $tblRef);
@@ -167,15 +165,15 @@ foreach ($row as  $tblRef => $table) {
           $refFiltered   = $filter->filter($oneFunction);
           $functionName .= ucfirst($refFiltered);
           $strRow       .= "
-public function get" . $functionName . "List(\$select=null) {
-return \$this->_getListOfDepObjects('" . $tableName2 . "','" . $oneFunction . "',\$select);
-}\n";
+    public function get" . $functionName . "List(\$select=null) {
+        return \$this->_getListOfDepObjects('" . $tableName2 . "','" . $oneFunction . "',\$select);
+    }\n";
       }
   } else {
       $strRow .= "
-public function get" . $functionName . "List(\$select=null) {
-return \$this->_getListOfDepObjects('" . $tableName2 . "','" . $table[0] . "',\$select);
-}\n";
+      public function get" . $functionName . "List(\$select=null) {
+          return \$this->_getListOfDepObjects('" . $tableName2 . "','" . $table[0] . "',\$select);
+      }\n";
   }
 }
 }

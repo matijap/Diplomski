@@ -1,1 +1,48 @@
- <?php echo $this->layout()->content ?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sportalize</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <?php echo $this->render('includes/css.phtml'); ?>
+    </head>
+    <body>
+        <header class="widget-header-color">
+            <nav role="navigation" class="header-holder">
+                <div class="h">
+                    <ul class="main-link-ul">
+                    <?php
+                    foreach ($this->links as $oneLink) {
+                        ?>
+                        <li class="cc main-link-li">
+                            <a href="<?php echo $oneLink['url'] ?>"><?php echo $oneLink['title']; ?></a>
+                            <?php
+                            if (isset($oneLink['sublinks'])) {
+                                ?>
+                                <ul class="sublink-ul sublink-ul-1">
+                                <?php
+                                foreach ($oneLink['sublinks'] as $oneSublink) {
+                                    ?>
+                                    <li class="cc sublink-li-1 bb main-background-color">
+                                        <a href="<?php  echo $oneSublink['url']; ?>"><?php echo  $oneSublink['title']; ?></a>
+                                    </li>
+                                    <?php
+                                }
+                                ?>
+                                </ul>
+                                <?php
+                            }
+                            ?>
+                        </li>
+                        <?php
+                    }
+                    ?>
+                    </ul>
+                </div>
+                <a href="javascript:void(0)" class="new-post modal-open" data-template="new-post-template">New Post</a>
+            </nav>
+        </header>
+        <?php echo $this->layout()->content; ?>
+        <script src="<?php echo APP_URL; ?>/js/jquery-1.11.2.min.js"></script>
+        <?php echo $this->render('includes/js.phtml'); ?>
+    </body>
+</html>
