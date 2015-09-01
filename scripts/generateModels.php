@@ -186,16 +186,6 @@ $strRow .="\n}";
           fclose($fh);
           
           $modelStr = "<?php
-/**
-*  Model $tableName 
-*
-* @package CORE
-* @subpackage Models
-* @copyright Ivan Dudas, Platforma, 2011
-* @license http://propulsionapp.com/core/license
-* @version  1.0.0
-* @since 2010
-*/
 
 require_once '$tableName/Row.php';
 

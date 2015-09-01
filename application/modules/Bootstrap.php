@@ -26,7 +26,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         // Fetch the Singleton instance of Zend_Loader_Autoloader
         $autoloader = Zend_Loader_Autoloader::getInstance();
-
+        $autoloader->registerNamespace("Main");
+        $autoloader->registerNamespace("Login");
+        
         // Set the autoloader as a fallback autoloader (loads all namespaces by default)
         $autoloader->setFallbackAutoloader(true);
         

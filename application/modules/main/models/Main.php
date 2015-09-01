@@ -4,6 +4,9 @@ require_once 'Zend/Db/Table.php';
 
 class Main {
     protected static $_tables = array();
+    
+    //Here are all objects and their tables that are loaded
+    protected static $loadedObjects = array();
 
     public static function createNewObject($objectName, $objData = array()) {
         //Include object table class if not included
@@ -14,6 +17,29 @@ class Main {
         $dataToInsert   = array_intersect_key($objData, array_fill_keys($objectColumns,1));
         self::includeObject($objectName);
         return $objectTable->createRow($objectName::getDefaultValues($dataToInsert));
+    }
+
+    public static function includeObjectTable($object) {
+        //If we do not have object in tables array, we will add it and then return it, if there is already we will return it right away
+        return array_key_exists($object,self::$loadedObjects) ? self::$loadedObjects[$object] : self::setObjectInTable($object);
+    }
+
+    public static function includeObject($objectName) {
+        if (!class_exists($objectName)) {
+        require_once "$objectName.php";
+        }
+    }
+
+    public static function setObjectInTable($object) {
+        //First we need to require object table class if not included
+        $objectTable = $object . "_Table";
+        if (!class_exists($objectTable)) {
+            require_once "$object/Table.php";
+        }
+        //Add object table into tables array
+        self::$loadedObjects[$object] = new $objectTable();
+        //Return object table
+        return self::$loadedObjects[$object];
     }
 
     public static function getTableFor($modelClass) {
@@ -81,6 +107,7 @@ class Main {
     }
 
     public static function fetchRow($className, $select = null) {
+        //$res = Model::fetchRow(Model::select('')->where('=?',)));
         if ($className instanceof Zend_Db_Table_Select) {
           $table  = $className->getTable();
           $select = $className;
@@ -101,7 +128,6 @@ class Main {
     }
 
     public static function debug($toDebug, $toArray = true) {
-        // echo '<pre>';
         if ($toArray) {
             Zend_Debug::dump($toDebug->toArray());
         } else {

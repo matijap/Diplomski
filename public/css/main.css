@@ -50,6 +50,9 @@ a.display-none {
 .remove-item {
     font-size: 15px;
 }
+ul.errors {
+    margin-top: 5px;
+}
 /* Utility Classes Start */
 .truncate-string {
     white-space: nowrap;

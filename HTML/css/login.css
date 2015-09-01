@@ -66,3 +66,7 @@ input[type="submit"] {
 .clear {
     clear: both;
 }
+.login-info {
+    margin-top: 10px;
+    text-align: center;
+}

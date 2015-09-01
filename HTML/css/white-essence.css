@@ -27,6 +27,9 @@
 .table tr:nth-child(odd) {
     background-color: rgb(216, 216, 216);
 }
+ul.errors {
+    color: red;
+}
 /* Utility Classes Start */
 .green-button,
 .blue-button,

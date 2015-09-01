@@ -1,9 +1,8 @@
 <?php 
     error_reporting(E_ALL);
-    // Define path to application directory
-    if (!defined('APPLICATION_PATH')){
-        define("APPLICATION_PATH","/Users/sredoje/Desktop/git/Diplomski/application"); 
-    }
+
+    defined('APPLICATION_PATH')
+        || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
       
     if (!defined('WEB_ROOT_PATH')){
         define("WEB_ROOT_PATH","/Users/sredoje/Desktop/git/Diplomski/public"); 

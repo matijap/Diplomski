@@ -7,20 +7,6 @@
         <?php echo $this->render('includes/login-css.phtml'); ?>
     </head>
     <body class="main-background-color">
-        <div class="form-holder">
-            <div class="form-title">
-                <h1>Log In</h1>
-            </div>
-            <?php echo $this->form; ?>
-            <div class="additional-holder">
-                <div>
-                    <a href="javascript:void(0)">Forgot Password</a>
-                </div>
-                <div>
-                    <a href="javascript:void(0)">Register</a>
-                </div>
-                <div class="clear"></div>
-            </div>
-        </div>
+        <?php echo $this->layout()->content; ?>
     </body>
 </html>
