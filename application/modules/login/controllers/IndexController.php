@@ -18,10 +18,10 @@ class Login_IndexController extends Login_BaseController
                     if ($login) {
                         $this->_redirect(APP_URL . '/');
                     } else {
-                        $this->view->message = 'User not activated, or unknown email / password';
+                        $this->view->message = $this->translate->_('User not activated, or unknown email / password');
                     }    
                 } else {
-                    $this->view->message = 'Unknown email / password';
+                    $this->view->message = $this->translate->_('Unknown email / password');
                 }
             }
         }
@@ -57,7 +57,7 @@ class Login_IndexController extends Login_BaseController
                 $this->view->message = $activated['message'];
             }
         } else {
-            $this->view->message = 'Invalid Token.';
+            $this->view->message = $this->translate->_('Invalid Token.');
         }
     }
 
@@ -91,7 +91,7 @@ class Login_IndexController extends Login_BaseController
         $this->view->form = $form = new ForgotPasswordForm();
         $response         = $this->validateForm($form);
         if (isset($this->params['trigger'])) {
-            $this->view->message = 'Email with recovery link sent. Please check your inbox.';
+            $this->view->message = $this->translate->_('Email with recovery link sent. Please check your inbox.');
         }
         if ($response['isPost']) {
             if ($response['isValid']) {
@@ -100,7 +100,7 @@ class Login_IndexController extends Login_BaseController
                     $user->sendForgotPasswordToken();
                     $this->_redirect(APP_URL . '/login/index/forgot-password?trigger=activate');
                 } else {
-                    $this->view->message = 'Unknown email';
+                    $this->view->message = $this->translate->_('Unknown email address');
                 }
             }
         }
@@ -123,13 +123,13 @@ class Login_IndexController extends Login_BaseController
                         if ($login) {
                             $this->_redirect(APP_URL . '/');
                         } else {
-                            $this->view->message = 'Unknown user';
+                            $this->view->message = $this->translate->_('Unknown user');
                         }
                     } else {
-                        $this->view->message = 'Token expired.';
+                        $this->view->message = $this->translate->_('Token expired.');
                     }
                 } else {
-                    $this->view->message = 'Unknown token';
+                    $this->view->message = $this->translate->_('Unknown token');
                 }
             }
         }

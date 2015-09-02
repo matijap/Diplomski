@@ -1,0 +1,64 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Sportalize Serbian\n"
+"POT-Creation-Date: 2015-09-02 22:09+0100\n"
+"PO-Revision-Date: 2015-09-02 22:11+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;translate\n"
+"X-Poedit-Basepath: /Users/sredoje/Desktop/git/Diplomski\n"
+"X-Poedit-SearchPath-0: application\n"
+
+#: application/modules/login/controllers/IndexController.php:21
+msgid "User not activated, or unknown email / password"
+msgstr ""
+"Korisnik nije aktivirao nalog, ili ne postoji kombinacija email / sifra"
+
+#: application/modules/login/controllers/IndexController.php:24
+msgid "Unknown email / password"
+msgstr "Nepoznata email adresa / sifra"
+
+#: application/modules/login/controllers/IndexController.php:60
+msgid "Invalid Token."
+msgstr "Token je postoji."
+
+#: application/modules/login/controllers/IndexController.php:94
+msgid "Email with recovery link sent. Please check your inbox."
+msgstr "Email sa linkom za reset sifre je poslat. Proverite vas inbox."
+
+#: application/modules/login/controllers/IndexController.php:103
+msgid "Unknown email address"
+msgstr "Nepoznata email adresa."
+
+#: application/modules/login/controllers/IndexController.php:126
+msgid "Unknown user"
+msgstr "Nepoznat korisnik."
+
+#: application/modules/login/controllers/IndexController.php:129
+msgid "Token expired."
+msgstr "Token je istekao."
+
+#: application/modules/login/controllers/IndexController.php:132
+msgid "Unknown token"
+msgstr "Nepoznat token."
+
+#: application/modules/login/views/forms/LoginForm.php:35
+msgid "Password"
+msgstr "Sifra"
+
+#: application/modules/login/views/forms/LoginForm.php:40
+#, php-format
+msgid "Password should be at least %d characters"
+msgstr "Sifra bi trebalo da sadrzi barem %d karaktera"
+
+#: application/modules/login/views/forms/LoginForm.php:60
+msgid "Client with existing email already exist"
+msgstr "Klijent sa unetim emailom vec postoji u bazi."
+
+#: application/modules/login/views/scripts/index/sign-in.phtml:3
+msgid "Log In"
+msgstr "Uloguj se"

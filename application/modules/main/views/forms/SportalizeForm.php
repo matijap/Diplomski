@@ -4,10 +4,12 @@ class SportalizeForm extends Zend_Form {
     
     public $request;
     public $params;
+    public $translate;
 
     public function init() {
-        $this->request = $request = Zend_Controller_Front::getInstance()->getRequest();
-        $this->params  = $request->getParams();
+        $this->request   = $request = Zend_Controller_Front::getInstance()->getRequest();
+        $this->params    = $request->getParams();
+        $this->translate = Zend_Registry::getInstance()->Zend_Translate;
         
         $this->createElements();
         $this->redecorate();

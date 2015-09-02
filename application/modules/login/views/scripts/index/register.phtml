@@ -1,17 +1,17 @@
 <div class="form-holder">
     <div class="form-title">
-        <h1>Register</h1>
+        <h1><?php echo $this->translate->_('Register'); ?></h1>
     </div>
     <?php echo $this->form; ?>
     <?php if (isset($_GET['trigger']) && $_GET['trigger'] == 'activate') { ?>
-        <p class="login-info">You have registered. To complete your registration, please check your inbox.</p>
+        <p class="login-info"><?php echo $this->translate->_('You have registered. To complete your registration, please check your inbox.');</p>
     <?php } ?>
     <div class="additional-holder">
         <div>
-            <a href="<?php echo APP_URL ?>/login/index/forgot-password">Forgot Password</a>
+            <a href="<?php echo APP_URL ?>/login/index/forgot-password"><?php echo $this->translate->_('Forgot Password'); ?></a>
         </div>
         <div>
-            <a href="<?php echo APP_URL ?>/login/index/sign-in">Log In</a>
+            <a href="<?php echo APP_URL ?>/login/index/sign-in"><?php echo $this->translate->_('Log In'); ?></a>
         </div>
         <div class="clear"></div>
     </div>

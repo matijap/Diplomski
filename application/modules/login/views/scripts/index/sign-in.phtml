@@ -1,6 +1,6 @@
 <div class="form-holder">
     <div class="form-title">
-        <h1>Log In</h1>
+        <h1><?php echo $this->translate->_('Log In'); ?></h1>
     </div>
     <?php echo $this->form; ?>
     <?php if (isset($this->message)) { ?>
@@ -8,10 +8,10 @@
     <?php } ?>
     <div class="additional-holder">
         <div>
-            <a href="<?php echo APP_URL ?>/login/index/forgot-password">Forgot Password</a>
+            <a href="<?php echo APP_URL ?>/login/index/forgot-password"><?php echo $this->translate->_('Forgot Password'); ?></a>
         </div>
         <div>
-            <a href="<?php echo APP_URL ?>/login/index/register">Register</a>
+            <a href="<?php echo APP_URL ?>/login/index/register"><?php echo $this->translate->_('Register'); ?></a>
         </div>
         <div class="clear"></div>
     </div>

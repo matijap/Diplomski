@@ -113,18 +113,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
     } 
 
-    // protected function _initTranslate() {
-    //     // We use the Swedish locale as an example
-    //     $locale = new Zend_Locale('en_US');
-    //     Zend_Registry::set('Zend_Locale', $locale);
+    protected function _initTranslate() {
+        // We use the Swedish locale as an example
+        $locale = new Zend_Locale('en_US');
+        Zend_Registry::set('Zend_Locale', $locale);
 
-    //     $session = new Zend_Session_Namespace(APP_URL);
-    //     $langLocale = isset($session->lang) ? $session->lang : $locale;
+        $session = new Zend_Session_Namespace(APP_URL);
+        $langLocale = isset($session->lang) ? $session->lang : $locale;
 
-    //     $translate = new Zend_Translate('gettext', APPLICATION_PATH . '/languages/en/en.mo', $langLocale,array('disableNotices' => true));
-    //     $translate->setLocale($langLocale);
-    //     Zend_Registry::set('Zend_Translate', $translate);
-    // }
+        $translate = new Zend_Translate('gettext', APPLICATION_PATH . '/languages/en.mo', $langLocale,array('disableNotices' => true));
+        $translate->setLocale($langLocale);
+        Zend_Registry::set('Zend_Translate', $translate);
+    }
 
     protected function _initLogging()
     {

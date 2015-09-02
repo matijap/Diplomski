@@ -7,6 +7,7 @@ class Sportalize_Controller_Action extends Zend_Controller_Action
         $this->request = $this->getRequest();
         $this->params  = $this->request->getParams();
         $this->_helper->layout->setLayout('layout');
+        $this->translate = $this->view->translate = Zend_Registry::getInstance()->Zend_Translate;
     }
 
     public function validateForm($form) {

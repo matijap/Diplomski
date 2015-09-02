@@ -32,12 +32,12 @@ class LoginForm extends SportalizeForm {
 
     public function getLoginPasswordElement() {
         $password = $this->createElement('password', 'password', array(
-            'label'    => 'Password',
+            'label'    => $this->translate->_('Password'),
             'pattern'  => '.{' . self::PASSWORD_LENGTH . ',}',
             'required' => true,
             'title'    => 'Minimum ' . self::PASSWORD_LENGTH . ' characters',
         ));
-        $password->addValidator('StringLength', false, array('min' => self::PASSWORD_LENGTH, 'messages' => 'Password should be at least ' . self::PASSWORD_LENGTH . ' characters long'));
+        $password->addValidator('StringLength', false, array('min' => self::PASSWORD_LENGTH, 'messages' => sprintf($this->translate->_('Password should be at least %d characters'), self::PASSWORD_LENGTH)));
 
         return $password;
     }
@@ -57,7 +57,7 @@ class LoginForm extends SportalizeForm {
                           'field' => 'id',
                           'value' => isset($this->clientID) ? $this->clientID : ''
                         ),
-                    'messages' => "Client with existing email already exist"
+                    'messages' => $this->translate->_("Client with existing email already exist")
                 ));
         }
         return $email;

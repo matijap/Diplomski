@@ -2,9 +2,9 @@
     <p>
         <?php
             if ($this->status) {
-                echo 'Email sent. Please check your inbox.';
+                echo $this->translate->_('Email sent. Please check your inbox.');
             } else {
-                echo 'Unable to send email. Please try again later.';
+                echo $this->translate->_('Unable to send email. Please try again later.');
             }
         ?>
     </p>
