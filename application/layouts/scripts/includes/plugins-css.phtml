@@ -1,0 +1,14 @@
+<?php
+$select2          = filemtime(WEB_ROOT_PATH . '/plugins/select2/dist/css/select2.min.css');
+$pnotify          = filemtime(WEB_ROOT_PATH . '/plugins/pnotify/pnotify.custom.min.css');
+$simpleLightbox   = filemtime(WEB_ROOT_PATH . '/plugins/simple-lightbox/simpleLightbox.min.css');
+$zebraDatepicker  = filemtime(WEB_ROOT_PATH . '/plugins/zebra-datepicker/default.css');
+$countdownTimer   = filemtime(WEB_ROOT_PATH . '/plugins/countdown/jquery.countdownTimer.css');
+
+echo $this->headLink()
+     ->appendStylesheet(APP_URL . '/plugins/select2/dist/css/select2.min.css?t=' . $select2)
+     ->appendStylesheet(APP_URL . '/plugins/pnotify/pnotify.custom.min.css?t=' . $pnotify)
+     ->appendStylesheet(APP_URL . '/plugins/simple-lightbox/simpleLightbox.min.css?t=' . $simpleLightbox)
+     ->appendStylesheet(APP_URL . '/plugins/zebra-datepicker/default.css?t=' . $zebraDatepicker)
+     ->appendStylesheet(APP_URL . '/plugins/countdown/jquery.countdownTimer.css?t=' . $countdownTimer)
+     ;

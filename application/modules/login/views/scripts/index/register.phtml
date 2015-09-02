@@ -3,15 +3,15 @@
         <h1>Register</h1>
     </div>
     <?php echo $this->form; ?>
-    <?php if (isset($_GET['action']) && $_GET['action'] == 'activate') { ?>
+    <?php if (isset($_GET['trigger']) && $_GET['trigger'] == 'activate') { ?>
         <p class="login-info">You have registered. To complete your registration, please check your inbox.</p>
     <?php } ?>
     <div class="additional-holder">
         <div>
-            <a href="javascript:void(0)">Forgot Password</a>
+            <a href="<?php echo APP_URL ?>/login/index/forgot-password">Forgot Password</a>
         </div>
         <div>
-            <a href="<?php echo APP_URL ?>/login/index/sign-up">Log In</a>
+            <a href="<?php echo APP_URL ?>/login/index/sign-in">Log In</a>
         </div>
         <div class="clear"></div>
     </div>

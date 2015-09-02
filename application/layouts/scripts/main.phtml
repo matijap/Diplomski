@@ -4,6 +4,8 @@
         <title>Sportalize</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <?php echo $this->render('includes/css.phtml'); ?>
+        <?php echo $this->render('includes/plugins-css.phtml'); ?>
+        <?php echo $this->render('includes/fonts.phtml'); ?>
     </head>
     <body>
         <header class="widget-header-color">
@@ -23,7 +25,8 @@
                                 foreach ($oneLink['sublinks'] as $oneSublink) {
                                     ?>
                                     <li class="cc sublink-li-1 bb main-background-color">
-                                        <a href="<?php  echo $oneSublink['url']; ?>"><?php echo  $oneSublink['title']; ?></a>
+                                    <?php $link = $oneSublink['url'] != 'javascript:void(0)' ? APP_URL . $oneSublink['url'] : $oneSublink['url']; ?>
+                                        <a href="<?php echo $link; ?>"><?php echo $oneSublink['title']; ?></a>
                                     </li>
                                     <?php
                                 }
@@ -43,6 +46,7 @@
         </header>
         <?php echo $this->layout()->content; ?>
         <script src="<?php echo APP_URL; ?>/js/jquery-1.11.2.min.js"></script>
+        <?php echo $this->render('includes/plugins-js.phtml'); ?>
         <?php echo $this->render('includes/js.phtml'); ?>
     </body>
 </html>

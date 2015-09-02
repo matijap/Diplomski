@@ -1,9 +1,5 @@
 <div class="form-title">
     <?php echo $this->message; ?>
     <?php echo 'If you think that you have followed valid link, please enter your email and request new token.'; ?>
-    <form action="<?php echo APP_URL ?>/login/index/get-new-token" method="get">
-        <input type="text" name="email">
-        <input type="hidden" name="trigger" value="register">
-        <input type="submit">
-    </form>
+    <a href="<?php echo APP_URL; ?>/login/index/sign-in">Back to Sign in page</a>
 </div>

@@ -1,0 +1,23 @@
+<?php
+    $select2                   = filemtime(WEB_ROOT_PATH . '/plugins/select2/dist/js/select2.min.js');
+    $sortable                  = filemtime(WEB_ROOT_PATH . '/plugins/sortable.js');
+    $zebraDatepicker           = filemtime(WEB_ROOT_PATH . '/plugins/zebra-datepicker/zebra_datepicker.js');
+    $pnotify                   = filemtime(WEB_ROOT_PATH . '/plugins/pnotify/pnotify.custom.min.js');
+    $simpleLightbox            = filemtime(WEB_ROOT_PATH . '/plugins/simple-lightbox/simpleLightbox.js');
+    $fileUploadUIWidget        = filemtime(WEB_ROOT_PATH . '/plugins/file-upload/js/vendor/jquery.ui.widget.js');
+    $fileUploadIFrameTransport = filemtime(WEB_ROOT_PATH . '/plugins/file-upload/js/jquery.iframe-transport.js');
+    $fileUpload                = filemtime(WEB_ROOT_PATH . '/plugins/file-upload/js/jquery.fileupload.js');
+    $countDownTimer            = filemtime(WEB_ROOT_PATH . '/plugins/countdown/jquery.countdownTimer.min.js');
+
+echo $this->headScript()
+    ->prependFile(APP_URL . '/plugins/select2/dist/js/select2.min.js?t=' . $select2)
+    ->prependFile(APP_URL . '/plugins/sortable.js?t=' . $sortable)
+    ->prependFile(APP_URL . '/plugins/zebra-datepicker/zebra_datepicker.js?t=' . $zebraDatepicker)
+    ->prependFile(APP_URL . '/plugins/pnotify/pnotify.custom.min.js?t=' . $pnotify)
+    ->prependFile(APP_URL . '/plugins/simple-lightbox/simpleLightbox.js?t=' . $simpleLightbox)
+    ->prependFile(APP_URL . '/plugins/file-upload/js/jquery.fileupload.js?t=' . $fileUpload)
+    ->prependFile(APP_URL . '/plugins/file-upload/js/jquery.iframe-transport.js?t=' . $fileUploadIFrameTransport)
+    ->prependFile(APP_URL . '/plugins/file-upload/js/vendor/jquery.ui.widget.js?t=' . $fileUploadUIWidget)
+    ->prependFile(APP_URL . '/plugins/countdown/jquery.countdownTimer.min.js?t=' . $countDownTimer)
+    ->prependFile("https://cdn.socket.io/socket.io-1.2.0.js")
+    ;

@@ -30,6 +30,9 @@
 ul.errors {
     color: red;
 }
+.login-info {
+    color: red;
+}
 /* Utility Classes Start */
 .green-button,
 .blue-button,
