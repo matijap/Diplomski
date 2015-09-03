@@ -1,0 +1,15 @@
+<ul>
+<?php
+    foreach ($this->oneWidget['options'] as $key => $value) {
+        ?>
+        <li>
+            <a href="javascript:void(0)">
+                <img width="20px" height="20px" class="pull-left" src="<?php echo APP_URL . $value['image']; ?>" />
+                <span class="pull-left"><?php echo $value['title']; ?></span>
+            </a>
+        </li>
+        <?php
+    }           
+?>
+</ul>
+<?php

@@ -1,0 +1,26 @@
+<ul>
+<?php
+    foreach ($this->oneWidget['options'] as $key => $value) {
+        ?>
+        <li class="widget-sport-type">
+            <span class="pull-left"><h3><?php echo $value['title']; ?></h3></span>
+        </li>
+        <?php
+            foreach ($value['options'] as $k => $v) {
+        ?>
+            <li class="matches-list">
+                <div>
+                    <div class="teams-holder">
+                        <img width="20px" height="20px" class="pull-left" src="<?php echo APP_URL . $v['image_1']; ?>" />
+                        <p class="pull-left">-</p>
+                        <img width="20px" height="20px" class="pull-left" src="<?php echo APP_URL . $v['image_2']; ?>" />
+                    </div>
+                    <i data-template="upcoming-games-template" class="fa fa-pencil-square-o modal-open" data-url="/main/widget/get-lweb-data/lwebOptionID/<?php echo $k; ?>"></i>
+                </div>
+            </li>
+        <?php
+        }
+    }
+?>
+</ul>
+<?php

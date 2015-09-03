@@ -5,7 +5,7 @@ class Main_BaseController extends Sportalize_Controller_Action
     public function preDispatch() {
         parent::preDispatch();
         if(!Zend_Auth::getInstance()->hasIdentity()) {
-            if ($this->getRequest()->isXmlHttpRequest()) {
+            if ($this->request->isXmlHttpRequest()) {
                $status = array('url' => APP_URL . '/login/index/sign-in', 'status' => 'redirect');
                $this->_helper->json($status);
                $this->_helper->layout()->disableLayout();
@@ -17,7 +17,10 @@ class Main_BaseController extends Sportalize_Controller_Action
         $this->user        = Main::fetchRow("User", Main::select("User")->where("email = ?", $info->email));
         $this->_helper->layout->setLayout('main');
         $this->view->links = MenuLink::fetchMenuLinks();
-        
+        if ($this->request->isXmlHttpRequest()) {
+            $this->isXHR = TRUE;
+            $this->_helper->layout()->disableLayout();
+        }
     }
 
     public function indexAction() {

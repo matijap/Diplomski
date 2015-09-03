@@ -1,0 +1,41 @@
+<div class="upcoming-games-modal">
+    <?php
+    for($i = 1; $i <= 2; $i++) {
+    ?>
+        <div class="home-team">
+            <h2 class="text-align-center"><?php echo $this->lwebOptionData[Widget::WIDGET_LWEB_PLACEMENT_MAIN][0]['value_' . $i]; ?></h2>
+            <img width="50px" height="50px" class="display-block logo" src="img/widget_logo.png" />
+            <?php
+                $count = 0;
+                foreach ($this->lwebOptionData[Widget::WIDGET_LWEB_PLACEMENT_MAIN] as $value) {
+                    if ($count > 0) {
+                ?>  
+                    <div class="club-info">
+                        <h3><?php echo $value['title']; ?>:</h3>&nbsp;
+                        <p><?php echo $value['value_' . $i]; ?></p>
+                    </div>
+                <?php
+                    }
+                    $count++;
+                }
+            ?>
+        </div>
+    <?php
+    }
+    ?>
+    <div class="clear"></div>
+    <div class="match-details text-align-center">
+        <h2>Match Details</h2>
+    <?php
+        foreach($this->lwebOptionData[Widget::WIDGET_LWEB_PLACEMENT_ADDITIONAL] as $value) {
+    ?>
+        <div class="match-details-info">
+            <h3><?php echo $value['title']; ?>:</h3>&nbsp;
+            <p><?php echo $value['value_1']; ?></p>
+        </div>
+        <?php
+        }
+        ?>
+    </div>
+</div>
+<?php

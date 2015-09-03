@@ -72,27 +72,18 @@ $( document ).ready(function() {
         var element = $(this);
         $( ".modal.fade" ).toggle();
         $( ".modal.fade" ).fadeTo( "fast" , 1, function() {});
-        setTimeout(function() {
-            $('.mcl').toggle();
-            // just for the html purposes. remove in php!
-            var data = element.data();
-            $('.modal-body .mc').append($('.' + data.template).html());
-            if (data.template == 'new-widget-template') {
-                var randomNumber = getRandomNumber();
-                $('.modal-body .mc').find('#replace-list-element').attr('id', 'owls' + randomNumber);
-                initializeSimpleSortable('#owls' + randomNumber);
-
-                $('.modal-body .mc').find('#replace-table-element').attr('id', 'owt' + randomNumber);
-                initializeSimpleSortable('#owt' + randomNumber);
-
-                $('.modal-body .mc').find('#replace-list-section').attr('id', 'wls' + randomNumber);
-                $('.modal-body .mc').find('.widget-settings .all-widget-types').each(function() {
-                    initializeSimpleSortable('#' + $(this).attr('id'));
-                });
+        $('.mcl').toggle();
+        var appurl = getAppUrl();
+        var data   = element.data();
+        $.ajax({
+            url: appurl + data.url,
+            data: {},
+            success: function(result) {
+                $('.modal-body .mc').append(result);
+                addIDAndInitializeSortable();
+                initUploadButtonsChange();
             }
-            addIDAndInitializeSortable();
-            //initUploadButtonsChange();
-        }, 000);
+        });
     });
 
     $('.search-person-chat').on('input', function() {

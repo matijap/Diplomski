@@ -1,1 +1,31 @@
-Works
+<?php
+    foreach ($this->widgets as $widgetSide => $widgetsOnSide) {
+?>
+    <aside id="<?php echo strtolower($widgetSide); ?>-widget-area" class="widget-area position-fixed column">
+    <?php
+        foreach ($widgetsOnSide as $widgetID => $oneWidget) {
+        ?>
+            <div id="<?php echo $widgetID; ?>" class="one-widget dragbox">
+                <div class="widget-header bb widget-header-color">
+                    <div class="widget-header-close modal-open">
+                        <i class="fa fa-gear"></i>
+                    </div>
+                    <div class="widget-header-title bb">
+                        <h2 class="truncate-string"><?php echo $oneWidget['title'] ?></h2>
+                    </div>
+                </div>
+                <?php
+                    $class = Widget::getWidgetBodyClass($oneWidget['type']);
+                    $file  = Widget::getFileNameToRender($oneWidget['type']);
+                ?>
+                <div class="widget-content <?php echo $class; ?> main-background-color">
+                    <?php echo $this->partial("index/partial/$file.phtml", array('oneWidget' => $oneWidget)); ?>
+                </div>
+            </div>
+        <?php
+        }
+    ?>
+    </aside>
+<?php
+    }
+

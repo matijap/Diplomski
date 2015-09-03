@@ -2,11 +2,11 @@
 
 require_once 'Zend/Db/Table/Abstract.php';
 
-class WidgetItemFavouritePage_Table extends Zend_Db_Table_Abstract {
+class WidgetOption_Table extends Zend_Db_Table_Abstract {
 
-protected $_name         = 'widget_item_favourite_page';
+protected $_name         = 'widget_option';
 protected $_primary      = array('id');
-protected $_rowClass     = 'WidgetItemFavouritePage';
+protected $_rowClass     = 'WidgetOption';
 
 protected $_referenceMap = array(
                   'linked_page' => array(
@@ -17,6 +17,11 @@ protected $_referenceMap = array(
                   'widget' => array(
                     'columns'          => 'widget_id',
                     'refTableClass'    => 'Widget_Table',
+                    'refColumns'       => 'id'),
+
+                  'parent_widget_option' => array(
+                    'columns'          => 'parent_widget_option_id',
+                    'refTableClass'    => 'WidgetOption_Table',
                     'refColumns'       => 'id')
                     );
 

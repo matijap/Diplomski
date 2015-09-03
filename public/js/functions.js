@@ -1,3 +1,6 @@
+function getAppUrl() {
+    return $('.appurl').val();
+}
 
 function getScreenWidth() {
     return $(window).width();

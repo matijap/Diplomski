@@ -1,0 +1,22 @@
+<ul>
+    <?php
+        foreach ($this->oneWidget['options'] as $key => $value) {
+            ?>
+                <li class="league-title">
+                    <img class="pull-left widget-sport-type-logo" width="15px" height="15px" class="pull-left" src="<?php echo $value['image']; ?>" />
+                    <h4 class="pull-left"><?php echo $value['title']; ?></h4>
+                </li>
+            <?php
+            foreach ($value['options'] as $k => $v) {
+                ?>
+                <li class="one-player">
+                    <?php echo $v['value_1']; ?>
+                    <span><?php echo $v['value_2']; ?></span>
+                </li>
+                <?php
+            }
+        }
+    ?>
+    <div class="clear"></div>
+</ul>
+<?php

@@ -1,0 +1,36 @@
+<?php
+$first            = reset($this->oneWidget['options']);
+$tableHeadingData = $first['value_2'];
+$headingDecoded   = Zend_Json::decode($tableHeadingData);
+
+?>
+<table class="table">
+    <tr>
+        <th style="border:1px solid black;"></th>
+        <?php
+            foreach ($headingDecoded as $key => $value) {
+        ?>
+            <th style="border:1px solid black;"><?php echo $key; ?></th>
+        <?php
+        }
+        ?>
+    </tr>
+    <?php
+        foreach ($this->oneWidget['options'] as $key => $value) {
+            ?>
+            <tr>
+                <td style="border:1px solid black;"><div><?php echo $value['value_1']; ?></div></td>
+                <?php
+                    $tableCellData = $value['value_2'];
+                    $dataDecoded = Zend_Json::decode($tableCellData);
+                    foreach ($dataDecoded as $k => $v) {
+                    ?>
+                        <td style="border:1px solid black;"><div><?php echo $v; ?></div></td>
+                    <?php
+                    }
+                ?>
+            </tr>
+            <?php
+        }
+    ?>
+</table>
