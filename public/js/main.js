@@ -225,9 +225,23 @@ $( document ).ready(function() {
     var d      = new Object;
     d.userID   = getUserID();
     var data   = JSON.stringify(d);
-    socket.emit('client_browse', data);
+    socket.emit('person_browse', data);
     
     socket.on('set_online', function(data) {
-        console.log(data);
+        // console.log(data);
+        $('.one-chat-person').each(function(i, k) {
+            var element    = $(this);
+            var id         = element.attr('id');
+            var addedClass = false;
+            $.each(data, function(o, onePerson) {
+                if (id == onePerson.userID) {
+                    element.addClass('online');
+                    addedClass = true;
+                }
+            });
+            if (!addedClass) {
+                element.removeClass('online');
+            }
+        });
     });
 });

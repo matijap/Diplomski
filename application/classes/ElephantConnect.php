@@ -28,8 +28,8 @@ class ElephantConnect {
     }
 
     public function initializePersonOnline() {
-        $this->emitLocation = 'person_online';
-        $this->_send(array('userID' => $this->userID));
+        $this->emitLocation = 'user_online';
+        // $this->_send(array('userID' => $this->userID));
     }
     
 }

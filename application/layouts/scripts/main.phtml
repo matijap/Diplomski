@@ -46,6 +46,7 @@
                 <a href="javascript:void(0)" class="new-post modal-open" data-template="new-post-template">New Post</a>
             </nav>
         </header>
+        <?php echo $this->render('includes/chat.phtml'); ?>
         <?php echo $this->layout()->content; ?>
         <script src="<?php echo APP_URL; ?>/js/jquery-1.11.2.min.js"></script>
         <?php echo $this->render('includes/plugins-js.phtml'); ?>

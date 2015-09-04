@@ -130,13 +130,23 @@ class User extends User_Row
     }
 
     public function getFriendList() {
-        
-        // $friends = Main::select()
-        //            ->from(array('UU' => 'UserUser'), '')
-        //            ->where('UU.user_id = ?', $this->id)
-        //            ->orWhere('UU.friend_id = ?', $this->id)
-        //            ->columns(array('UU.user_id', 'UU.friend_id'))
-        //            ->query()->fetchAll();
-        // fb($friends);
+        $friends = Main::select()
+                    ->from(array('UU' => 'user_user'), '')
+                    ->where('UU.user_id = ?', $this->id)
+                    ->orWhere('UU.friend_id = ?', $this->id)
+                    ->columns(array('UU.user_id', 'UU.friend_id'))
+                    ->query()->fetchAll();
+
+        $filtered = array();
+        foreach ($friends as $key => $value) {
+            $filtered[] = $value['user_id'] == $this->id ? $value['friend_id'] : $value['user_id'];
+        }
+        $filtered[] = $this->id;
+        $allFriends = Main::select()
+                    ->from(array('U' => 'user'), '')
+                    ->where('id IN (?)', $filtered)
+                    ->columns(array('U.id', 'U.first_name', 'U.last_name'))
+                    ->query()->fetchAll();
+        return $allFriends;
     }
 }

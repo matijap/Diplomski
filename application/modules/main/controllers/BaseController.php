@@ -22,5 +22,6 @@ class Main_BaseController extends Sportalize_Controller_Action
             $this->isXHR = TRUE;
             $this->_helper->layout()->disableLayout();
         }
+        $this->view->friends = $this->user->getFriendList();
     }
 }

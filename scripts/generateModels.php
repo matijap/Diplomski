@@ -161,7 +161,7 @@ foreach ($row as  $tblRef => $table) {
 
   if (count($table) > 1) {
       foreach ($table as $oneFunction) {
-          $filter        = new Platforma_Filter_Word_UnderscoreToCamelCase();
+          $filter        = new Sportalize_Filter_Word_UnderscoreToCamelCase();
           $refFiltered   = $filter->filter($oneFunction);
           $functionName .= ucfirst($refFiltered);
           $strRow       .= "
