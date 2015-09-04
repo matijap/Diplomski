@@ -14,7 +14,9 @@ var socket = http.listen(3000, function(){
   console.log('listening on *:3000');
 });
 
-var quizData = [];
+var quizData    = [];
+var onlineUsers = [];
+
 io.on("connection", function (client) {
     client.on("quiz_starting", function(data) {
         io.emit('quiz_starting', data);
@@ -55,5 +57,23 @@ io.on("connection", function (client) {
 
     client.on("next_question_get", function(data) {
         io.emit('next_question', data);
+    });
+
+    client.on("user_online", function(data) {
+        if (onlineUsers.indexOf(data.userID) > 1) {
+            onlineUsers.push(player);
+        }
+        
+    });
+
+    client.on("person_online", function(data) {
+        var obj    = new Object;
+        obj.id     = client.id;
+        obj.userID = data.userID;
+        onlineUsers.push(obj);
+    });
+
+    client.on("person_browse", function(data) {
+        io.emit('set_online', onlineUsers);
     });
 });

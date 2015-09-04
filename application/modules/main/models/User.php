@@ -88,9 +88,11 @@ class User extends User_Row
         $return  = false;
         if ($user->activated) {
             if ($result->isValid()) {
-                $storage = $auth->getStorage();
+                $storage  = $auth->getStorage();
                 $storage->write($adapter->getResultRowObject(array('email', 'password')));
-                $return  = true;
+                $return   = true;
+                $elephant = new ElephantConnect(array('userID' => $user->id));
+                $elephant->initializePersonOnline();
             }
         }
         return $return;
@@ -125,5 +127,16 @@ class User extends User_Row
     public static function create($data, $tableName = false) {
         $data['password'] = Utils::encrypt($data['password']);
         return parent::create($data, $tableName);
+    }
+
+    public function getFriendList() {
+        
+        // $friends = Main::select()
+        //            ->from(array('UU' => 'UserUser'), '')
+        //            ->where('UU.user_id = ?', $this->id)
+        //            ->orWhere('UU.friend_id = ?', $this->id)
+        //            ->columns(array('UU.user_id', 'UU.friend_id'))
+        //            ->query()->fetchAll();
+        // fb($friends);
     }
 }

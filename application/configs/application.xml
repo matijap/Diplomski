@@ -13,6 +13,9 @@
         <appnamespace value="Application"/>
         <version value="1.0.0.0"/>
         <services>
+            <socketIO>
+                <host>http://localhost:3000</host>
+            </socketIO>
         </services>
         <wantsDbMetaCaching>1</wantsDbMetaCaching>
         <resources>       

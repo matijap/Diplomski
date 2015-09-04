@@ -11,6 +11,8 @@ $( document ).ready(function() {
     initUploadButtonsChange();
     addIDAndInitializeSortable();
 
+    var socket = getIOConnection();
+
     $('input.datepicker').Zebra_DatePicker();
     $('select').select2();
 
@@ -218,5 +220,14 @@ $( document ).ready(function() {
                 $(selector).find('.remove-list-section').hide();
             }
         }
+    });
+
+    var d      = new Object;
+    d.userID   = getUserID();
+    var data   = JSON.stringify(d);
+    socket.emit('client_browse', data);
+    
+    socket.on('set_online', function(data) {
+        console.log(data);
     });
 });

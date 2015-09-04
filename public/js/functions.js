@@ -10,6 +10,10 @@ function getScreenHeight() {
     return $(window).height();
 }
 
+function getIOConnection() {
+    return io.connect("localhost:3000");
+}
+
 function applyResizeFunctions() {
     adjustMainPanelWidth();
     adjustCommentTextWidth();
@@ -170,8 +174,8 @@ function callNotification(text, status) {
     });
 }
 
-function getClientID() {
-    return $('.clientID').val();
+function getUserID() {
+    return $('.userID').val();
 }
 
 function recalculateModalHeight() {

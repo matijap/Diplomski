@@ -56,4 +56,8 @@ io.on("connection", function (client) {
     client.on("next_question_get", function(data) {
         io.emit('next_question', data);
     });
+
+    client.on("test", function(data) {
+        console.log(data);
+    }
 });

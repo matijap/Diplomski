@@ -1,13 +1,15 @@
 $( document ).ready(function() {
     var clickOrTouchstart = getClickOrTouchstart();
     
-    var playerID = getClientID();
+    var playerID = getUserID();
     var quizID   = $('.quizID').val();
-    var socket   = io.connect("localhost:3000");
+    var socket   = getIOConnection();
 
     var d = new Object;
     d.playerID = playerID;
-    d.quizID   = quizID;;
+    d.quizID   = quizID;
+    d.playerID = 1;
+    d.quizID   = 1;
     var data   = JSON.stringify(d);
     
     socket.emit('quiz_join', data);
