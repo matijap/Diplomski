@@ -12,24 +12,8 @@ class Widget_Row extends Main_Row {
           return $this->_getListOfDepObjects('UserWidget','widget',$select);
       }
 
-      public function getWidgetItemFavouritePageList($select=null) {
-          return $this->_getListOfDepObjects('WidgetItemFavouritePage','widget',$select);
-      }
-
-      public function getWidgetItemListOptionList($select=null) {
-          return $this->_getListOfDepObjects('WidgetItemListOption','widget',$select);
-      }
-
-      public function getWidgetItemLwebOptionList($select=null) {
-          return $this->_getListOfDepObjects('WidgetItemLwebOption','widget',$select);
-      }
-
-      public function getWidgetItemPlainList($select=null) {
-          return $this->_getListOfDepObjects('WidgetItemPlain','widget',$select);
-      }
-
-      public function getWidgetItemTableList($select=null) {
-          return $this->_getListOfDepObjects('WidgetItemTable','widget',$select);
+      public function getWidgetOptionList($select=null) {
+          return $this->_getListOfDepObjects('WidgetOption','widget',$select);
       }
 
 }

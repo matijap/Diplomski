@@ -4,6 +4,14 @@ require_once 'Main/Row.php';
 
 class User_Row extends Main_Row {
 
+    public function getPostUserList($select=null) {
+        return $this->_getListOfDepObjects('Post','user',$select);
+    }
+
+    public function getPostUserUserList($select=null) {
+        return $this->_getListOfDepObjects('Post','user',$select);
+    }
+
     public function getUserUserUserList($select=null) {
         return $this->_getListOfDepObjects('UserUser','user',$select);
     }
