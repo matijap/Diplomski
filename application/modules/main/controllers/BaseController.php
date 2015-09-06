@@ -17,6 +17,7 @@ class Main_BaseController extends Sportalize_Controller_Action
         $this->user         = Main::fetchRow("User", Main::select("User")->where("email = ?", $info->email));
         $this->view->userID = $this->user->id;
         $this->_helper->layout->setLayout('main');
+        Zend_Registry::set('logged_user', $this->user);
         $this->view->links = MenuLink::fetchMenuLinks();
         if ($this->request->isXmlHttpRequest()) {
             $this->isXHR = TRUE;

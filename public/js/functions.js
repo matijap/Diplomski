@@ -11,7 +11,7 @@ function getScreenHeight() {
 }
 
 function getIOConnection() {
-    return io.connect("localhost:3000");
+    // return io.connect("localhost:3000");
 }
 
 function applyResizeFunctions() {
@@ -19,6 +19,7 @@ function applyResizeFunctions() {
     adjustCommentTextWidth();
     adjustFantasyManageRightPanel();
     adjustQuizGameRightPanel();
+    addRequiredToPostCommentsTextArea();
 
     var toBeCleared = setInterval( function() {
         var ifExists = doesExists('#select2-player-market-container')
@@ -29,6 +30,15 @@ function applyResizeFunctions() {
     }, 50);
 }
 
+function addRequiredToPostCommentsTextArea() {
+    $('.one-post').each(function(i, element) {
+        $(this).find('textarea').attr('required', 'required');
+        var postID     = $(this).attr('id');
+        var form       = $(this).find('form');
+        form.find('.form_postID').val(postID);
+        form.find('textarea').attr('required', 'required');
+    });
+}
 function getElementWidth(element, outerWidth) {
     return element == 'window' ? getScreenWidth() :
     typeof(outerWidth) === 'undefined' ? $(element).width() : $(element).outerWidth();

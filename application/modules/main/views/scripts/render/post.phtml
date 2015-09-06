@@ -1,0 +1,35 @@
+ <div class="one-post video main-background-color" id="<?php echo $this->onePost['post_id']; ?>">
+    <div class="post-header bb widget-header-color">
+        <div class="post-header-close">
+            <i class="fa fa-thumbs-up"></i>
+            <i class="fa fa-forward"></i>
+            <i class="fa fa-heart"></i>
+        </div>
+        <div class="post-header-title bb">
+            <h2 class="truncate-string"><?php echo $this->onePost['title']; ?></h2>
+        </div>
+    </div>
+    <div class="post-body bb">
+        <div class="post-text">
+            <p><?php echo $this->onePost['text']; ?></p>
+        </div>
+    </div>
+    <div class="post-footer bb">
+        <?php echo $this->form; ?>
+        <div class="post-comment-list bb">
+            <?php
+                if (isset($this->onePost['comments'])) {
+                    foreach ($this->onePost['comments'] as $oneComment) {
+                        echo $this->partial('render/comment.phtml', array('oneComment' => $oneComment, 'translate' => $this->translate));
+                    }
+                }
+            ?>
+            <div class="clear"></div>
+            <div class="show-more-post-comments">
+                <i class="fa fa-toggle-down"></i>
+                <i class="fa fa-spinner fa-spin display-none"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<?php

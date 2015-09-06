@@ -19,7 +19,7 @@
                     $file  = Widget::getFileNameToRender($oneWidget['type']);
                 ?>
                 <div class="widget-content <?php echo $class; ?> main-background-color">
-                    <?php echo $this->partial("index/partial/$file.phtml", array('oneWidget' => $oneWidget)); ?>
+                    <?php echo $this->partial("render/partial/$file.phtml", array('oneWidget' => $oneWidget, 'translate' => $this->translate)); ?>
                 </div>
             </div>
         <?php
@@ -28,4 +28,15 @@
     </aside>
 <?php
     }
+    ?>
+    <div id="main-panel" class="bb">
+    <?php
+        if (!empty($this->posts)) {
+            foreach ($this->posts as $key => $onePost) {
+                echo $this->partial('render/post.phtml', array('onePost' => $onePost, 'translate' => $this->translate, 'form' => $this->form));
+            }
+        }
+    ?>
+    </div>
+<?php
 

@@ -1,6 +1,7 @@
 $( document ).ready(function() {
     var windowWidth       = getScreenWidth();
     var clickOrTouchstart = getClickOrTouchstart();
+    var appurl            = getAppUrl();
 
     applyResizeFunctions();
     $( window ).resize(function() {
@@ -10,16 +11,25 @@ $( document ).ready(function() {
     initializeWidgetSortable();
     initUploadButtonsChange();
     addIDAndInitializeSortable();
+    addRequiredToPostCommentsTextArea();
 
     var socket = getIOConnection();
 
     $('input.datepicker').Zebra_DatePicker();
     $('select').select2();
 
+    var printNotificationMessage = doesExists('.notification-status');
+    if (printNotificationMessage) {
+        var status  = $('.notification-status').val();
+        var message = $('.notification-message').val();
+        callNotification(message, status);
+    }
+
 
     $(document).on('focus', '.post-comment-textarea', function() {
         $(this).css('height', '100px');
     });
+
     $(document).on('blur', '.post-comment-textarea', function() {
         $(this).css('height', '25px');
     });
@@ -41,12 +51,15 @@ $( document ).ready(function() {
         var spinner      = element.find('.fa-spinner');
         loadMoreIcon.addClass('display-none');
         spinner.removeClass('display-none');
-        setTimeout(function() {
-            var clone = $('.one-post-comment').eq(0).html();
-            element.prev().before('<div class="one-post-comment">' + clone + '</div>');
-            loadMoreIcon.removeClass('display-none');
-            spinner.addClass('display-none');
-        }, 1000);
+        var commentID    = element.parent().find('.one-post-comment').last().find('.one-post-actions-holder').attr('id');
+        $.ajax({
+            url: appurl + '/comment/load-more-comments',
+            data: {'commentID': commentID},
+            success: function(result) {
+                loadMoreIcon.removeClass('display-none');
+                spinner.addClass('display-none');
+            }
+        });
     });
 
     $(document).on(clickOrTouchstart, 'html', function(event) {
@@ -222,26 +235,57 @@ $( document ).ready(function() {
         }
     });
 
-    var d      = new Object;
-    d.userID   = getUserID();
-    var data   = JSON.stringify(d);
-    socket.emit('person_browse', data);
+    // var d      = new Object;
+    // d.userID   = getUserID();
+    // var data   = JSON.stringify(d);
+    // socket.emit('person_browse', data);
     
-    socket.on('set_online', function(data) {
-        // console.log(data);
-        $('.one-chat-person').each(function(i, k) {
-            var element    = $(this);
-            var id         = element.attr('id');
-            var addedClass = false;
-            $.each(data, function(o, onePerson) {
-                if (id == onePerson.userID) {
-                    element.addClass('online');
-                    addedClass = true;
+    // socket.on('set_online', function(data) {
+    //     $('.one-chat-person').each(function(i, k) {
+    //         var element    = $(this);
+    //         var id         = element.attr('id');
+    //         var addedClass = false;
+    //         $.each(data, function(o, onePerson) {
+    //             if (id == onePerson.userID) {
+    //                 element.addClass('online');
+    //                 addedClass = true;
+    //             }
+    //         });
+    //         if (!addedClass) {
+    //             element.removeClass('online');
+    //         }
+    //     });
+    // });
+    // 
+    
+    $(document).on(clickOrTouchstart, '.like-or-unlike-comment', function(e) {
+        var element = $(this);
+        var parent  = element.parent();
+        var id      = parent.attr('id');
+        element.hide();
+        element.after('<i class="fa fa-spinner fa-spin"></i>');
+        $.ajax({
+            url: appurl + '/comment/like-or-unlike-comment',
+            data: {'commentID': id},
+            success: function(result) {
+                if (element.find('.fa').hasClass('fa-heart')) {
+                    //parent() here refers to a link holding icon, while parent variable is comment holder
+                    parent.find('.fa-heartbeat').parent().show();
+                } else {
+                    parent.find('.fa-heart').parent().show();
                 }
-            });
-            if (!addedClass) {
-                element.removeClass('online');
+                parent.find('.fa-spin').remove();
+                element.closest('.one-post-comment').find('.like-count').text(result.message);
             }
         });
+    });
+
+    $(document).on(clickOrTouchstart, '.reply-to-comment', function(e) {
+        var element = $(this);
+        var parent  = element.parent();
+        var id      = parent.attr('id');
+        var form = element.closest('.one-post').find('form');
+        form.find('.form_commentID').val(id);
+        form.find('textarea').trigger('focus');
     });
 });

@@ -1,0 +1,25 @@
+<div class="one-post-comment">
+    <div class="post-comment-avatar">
+        <img src="img/silhouette.png">
+    </div>
+    <div class="one-post-actions-holder" id="<?php echo $this->oneComment['comment_id']; ?>" >
+        <a class="like-or-unlike-comment" <?php echo empty($this->oneComment['user_like']) ? '': 'style="display: none;"'; ?> href="javascript:void(0)">
+            <i class="fa fa-heart"></i>
+        </a>
+        <a class="like-or-unlike-comment" <?php echo empty($this->oneComment['user_like']) ? 'style="display: none;"': ''; ?> href="javascript:void(0)">
+            <i class="fa fa-heartbeat"></i>
+        </a>
+        <a class="reply-to-comment" href="javascript:void(0)"><i class="fa fa-reply"></i></a>
+        <a class="forward-comment" href="javascript:void(0)"><i class="fa fa-forward"></i></a>
+        <a class="report-comment" href="javascript:void(0)"><i class="fa fa-warning"></i></a>
+    </div>
+    <div class="one-post-comment-text">
+        <p><?php echo $this->oneComment['text']; ?></p>
+    </div>
+    <div class="post-count-and-date">
+        <p class="like-count"><?php echo $this->oneComment['likes'] ? $this->oneComment['likes'] . ' ' . $this->translate->_('Likes') : ''; ?></p>
+        <p><?php echo $this->oneComment['forwarded'] ? $this->oneComment['forwarded'] . ' ' . $this->translate->_('Forwards') : '';?></p>
+        <p class="pull-right"><?php echo $this->oneComment['date']; ?></p>
+    </div>
+</div>
+<?php

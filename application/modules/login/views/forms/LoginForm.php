@@ -1,6 +1,6 @@
 <?php
 
-class LoginForm extends SportalizeForm {
+class LoginForm extends Sportalize_Form_Base {
     
     const PASSWORD_LENGTH = 6;
     public $clientID      = false;

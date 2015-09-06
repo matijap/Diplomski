@@ -3,13 +3,24 @@
     <head>
         <title>Sportalize</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <?php echo $this->render('includes/css.phtml'); ?>
-        <?php echo $this->render('includes/plugins-css.phtml'); ?>
         <?php echo $this->render('includes/fonts.phtml'); ?>
+        <?php echo $this->render('includes/plugins-css.phtml'); ?>
+        <?php echo $this->render('includes/css.phtml'); ?>
     </head>
     <body>
         <input type="hidden" value="<?php echo APP_URL; ?>" class="appurl">
         <input type="hidden" value="<?php echo $this->userID; ?>" class="userID">
+        <?php
+            $session = new Zend_Session_Namespace(Sportalize_Controller_Action::SESSION_NAMESPACE_NOTIFICATION);
+            if (!empty($session->notificationStatus)) {
+                ?>
+                <input type="hidden" value="<?php echo $session->notificationStatus; ?>" class="notification-status">
+                <input type="hidden" value="<?php echo $session->notificationMessage; ?>" class="notification-message">
+                <?php
+                unset($session->notificationStatus);
+                unset($session->notificationMessage);
+            }
+        ?>
         <header class="widget-header-color">
             <nav role="navigation" class="header-holder">
                 <div class="h">

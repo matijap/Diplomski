@@ -3,7 +3,8 @@ require_once 'User/Row.php';
 
 class User extends User_Row
 {
-    const MAX_LINK_DURATION = 600;
+    const MAX_LINK_DURATION     = 600;
+    const INDEX_PAGE_POST_LIMIT = 10;
 
     public function generateToken() {
         $string = $this->email . '_' . time();
@@ -129,7 +130,7 @@ class User extends User_Row
         return parent::create($data, $tableName);
     }
 
-    public function getFriendList() {
+    public function getFriendList($includeSelf = true, $idOnly = false) {
         $friends = Main::select()
                     ->from(array('UU' => 'user_user'), '')
                     ->where('UU.user_id = ?', $this->id)
@@ -141,12 +142,125 @@ class User extends User_Row
         foreach ($friends as $key => $value) {
             $filtered[] = $value['user_id'] == $this->id ? $value['friend_id'] : $value['user_id'];
         }
-        $filtered[] = $this->id;
+        if ($includeSelf) {
+            $filtered[] = $this->id;
+        }
+        if ($idOnly) {
+            return $filtered;
+        }
         $allFriends = Main::select()
                     ->from(array('U' => 'user'), '')
                     ->where('id IN (?)', $filtered)
                     ->columns(array('U.id', 'U.first_name', 'U.last_name'))
                     ->query()->fetchAll();
         return $allFriends;
+    }
+
+    public function getPageList($idOnly = false) {
+        $pages = Main::select()
+                ->from(array('UP' => 'user_page'), '')
+                ->where('UP.user_id = ?', $this->id)
+                ->columns(array('UP.page_id'))
+                ->query()->fetchAll();
+
+        if ($idOnly) {
+            return $pages;
+        }
+
+        $allPages = Main::select()
+                   ->from(array('PA' => 'page'), '')
+                   ->where('id IN (?)', $pages)
+                   ->columns(array('PA.id', 'PA.title', 'PA.logo'))
+                   ->query()->fetchAll();
+
+        return $allPages;
+    }
+
+    public function getFriendsAndPagePosts($page = 1) {
+        $friendIDS = $this->getFriendList(false, true);
+        $pageIDS   = $this->getPageList(true);
+        $limit     = Comment::COMMENT_SHOW_LIMIT;
+        try {
+            // for more reference visit http://frishit.com/2010/07/mysql-selecting-top-n-per-group/
+
+            $commentColumnsToBeFetched = array('PO.title as post_title', 'PO.text as post_text', 'PO.id as post_id', 'PO.date as post_date', 'CO1.id',
+                                        'CO1.text as comment_text', 'CO1.date as comment_date', 'CO1.id as comment_id', 'CO1.ulid as user_like',
+                                        'CO1.parent_comment_id as parent_comment_id', 'CO1.forwarded', 'CO1.likes',
+                                        'CO1.first_name as commenter_first_name', 'CO1.last_name as commenter_last_name',
+                                        );
+            $subQuery = Main::select()
+                        ->from(array('CO2' => 'comment'), '')
+                        ->where('CO2.commented_post_id = CO1.commented_post_id AND CO1.id > CO2.id')
+                        ->columns(array('COUNT(*)'));
+            
+            $commentSelect = Main::select()
+                ->from(array('CO1' => 'comment'), '')
+                ->join(array('PO' => 'post'), 'CO1.commented_post_id = PO.id', '')
+                ->joinLeft(array('UL' => 'user_like'), 'UL.comment_id = CO1.id AND UL.user_id = ' .  $this->id, '')
+                ->joinLeft(array('US' => 'user'), 'CO1.commenter_id = US.id', '')
+                ->where("$limit > ($subQuery)")
+                ->where('PO.user_id IN (?)', $friendIDS)
+                ->orWhere('PO.page_id IN (?)', $pageIDS)
+                ->group(array('CO1.commented_post_id', 'CO1.id'))
+                ->order(array('CO1.commented_post_id', 'CO1.id'))
+                ->columns(array('CO1.id', 'CO1.text', 'CO1.commented_post_id', 'CO1.date',
+                                'UL.id as ulid', 'CO1.parent_comment_id', 'CO1.forwarded',
+                                'CO1.likes', 'US.first_name', 'US.last_name'));
+            
+            // @todo Implement that when user registers, automatically favourited system page, and have one post with comment (as a welcome)
+             $select1 = Main::select()
+                        ->from(array('PO' => 'post'), '')
+                        ->joinLeft(array('CO1' => new Zend_Db_Expr("($commentSelect)")), 'CO1.commented_post_id = PO.id', '')
+                        ->where('PO.user_id IN (?)', $friendIDS)
+                        ->columns($commentColumnsToBeFetched);
+
+            $select2 = false;
+            if (!empty($pageIDS)) {
+                $select2 = Main::select()
+                            ->from(array('PO' => 'post'), '')
+                            ->joinLeft(array('CO1' => new Zend_Db_Expr("($commentSelect)")), 'CO1.commented_post_id = PO.id', '')
+                            ->where('PO.page_id IN (?)', $pageIDS)
+                            ->columns($commentColumnsToBeFetched);
+            }
+
+            $union = Main::select()->union(array($select1, $select2));
+
+            $mainSelect = Main::select()
+                        ->from($union, '')
+                        ->columns(array('post_title', 'post_text', 'post_id', 'post_date',
+                                        'comment_text', 'comment_date', 'comment_id', 
+                                        'commenter_first_name', 'commenter_last_name', 'likes', 'forwarded', 'user_like',
+                                        'parent_comment_id',
+                                    ))
+                        ->order(array('post_date DESC', 'comment_date ASC'))
+                        ->query()->fetchAll();
+
+            $return = array();
+            foreach ($mainSelect as $key => $onePost) {
+                // fb($onePost);
+                $return[$onePost['post_id']]['post_id'] = $onePost['post_id'];
+                $return[$onePost['post_id']]['title']   = $onePost['post_title'];
+                $return[$onePost['post_id']]['text']    = $onePost['post_text'];
+                $return[$onePost['post_id']]['date']    = $onePost['post_date'];
+                if (!empty($onePost['comment_id'])) {
+                    $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['comment_id']        = $onePost['comment_id'];
+                    $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['text']              = $onePost['comment_text'];
+                    $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['parent_comment_id'] = $onePost['parent_comment_id'];
+                    $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['forwarded']         = $onePost['forwarded'];
+                    $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['likes']             = $onePost['likes'];
+                    $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['date']              = $onePost['comment_date'];
+                    $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['user_like']         = $onePost['user_like'];
+                }
+            }
+
+            $paginator = Zend_Paginator::factory($return);
+            $paginator->setCurrentPageNumber($page);
+            $paginator->setItemCountPerPage(User::INDEX_PAGE_POST_LIMIT);
+            // return false;
+            return $paginator;
+        } catch(Exception $e) {
+            fb($e->getMessage());
+        }
+                    
     }
 }
