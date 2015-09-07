@@ -7,14 +7,21 @@ class Sportalize_Form_Base extends Zend_Form {
     public $translate;
     public $user;
 
+   public function __construct($data = array()) {
+        $this->translate = Zend_Registry::getInstance()->Zend_Translate;
+
+        parent::__construct();
+    }
+
     public function init() {
         $this->request   = $request = Zend_Controller_Front::getInstance()->getRequest();
         $this->params    = $request->getParams();
-        $this->translate = Zend_Registry::getInstance()->Zend_Translate;
+        
         if (Zend_Registry::isRegistered('logged_user')) {
             $this->user = Zend_Registry::get('logged_user');
         }
-
+        
+        $this->setDisableLoadDefaultDecorators(true);
         $this->createElements();
         $this->redecorate();
         $this->setMethod(Zend_Form::METHOD_POST);
@@ -41,7 +48,12 @@ class Sportalize_Form_Base extends Zend_Form {
     }
 
     public function clearDecoratorsAndSetViewHelperOnly($element) {
-        $element = $element->clearDecorators()->setDecorators($this->getViewHelperDecorator());
+        $element = $this->clearDecoratorsAndSetDecorator($element, $this->getViewHelperDecorator());
+        return $element;
+    }
+
+    public function clearDecoratorsAndSetDecorator($element, $decorators) {
+        $element = $element->clearDecorators()->setDecorators($decorators);
         return $element;
     }
 }

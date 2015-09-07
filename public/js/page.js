@@ -43,15 +43,6 @@ $( document ).ready(function() {
         }
     });
 
-    $(document).on('change', '.list-option-avatar', function(e) {
-        var id           = $(this).attr('id');
-        var divWithImage = $('.upload-' + id);
-        
-        divWithImage.html('');
-        divWithImage.append('<img src="' + URL.createObjectURL(e.target.files[0]) + '">');
-        divWithImage.addClass('height-50px');
-    });
-
     $(document).on(clickOrTouchstart, '.customize-list-with-edit-button-options', function(e) {
         var element        = $(this);
         var spinner        = element.parent().find('.fa-spin');

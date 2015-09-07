@@ -54,7 +54,9 @@
                     ?>
                     </ul>
                 </div>
-                <a href="javascript:void(0)" class="new-post modal-open" data-template="new-post-template">New Post</a>
+                <a data-url="/post/new-post" href="javascript:void(0)" class="new-post modal-open" data-template="new-post-template">
+                    <?php echo $this->translate->_('New Post'); ?>
+                </a>
             </nav>
         </header>
         <?php echo $this->render('includes/chat.phtml'); ?>

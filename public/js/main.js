@@ -95,8 +95,11 @@ $( document ).ready(function() {
             data: {},
             success: function(result) {
                 $('.modal-body .mc').append(result);
+                var title = $('#modal_title').val();
+                $('.modal-header-title p').text(title);
                 addIDAndInitializeSortable();
                 initUploadButtonsChange();
+                $('select').select2();
             }
         });
     });
@@ -287,5 +290,15 @@ $( document ).ready(function() {
         var form = element.closest('.one-post').find('form');
         form.find('.form_commentID').val(id);
         form.find('textarea').trigger('focus');
+    });
+
+    $(document).on('change', '.upload-change-it', function(e) {
+        var data         = $(this).data();
+        var id           = data.trigger;
+        var divWithImage = $('.upload-' + id);
+        
+        divWithImage.html('');
+        divWithImage.append('<img src="' + URL.createObjectURL(e.target.files[0]) + '">');
+        divWithImage.addClass('height-50px');
     });
 });

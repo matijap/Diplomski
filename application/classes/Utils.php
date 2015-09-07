@@ -9,4 +9,8 @@ class Utils
     public static function encrypt($toEncrypt) {
         return hash('sha256', $toEncrypt);
     }
+
+    public static function getRandomNumber($min = 1, $max = 100000) {
+        return rand($min, $max);
+    }
 }

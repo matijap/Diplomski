@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <div class="modal-header-close"><i class="fa fa-times"></i></div>
                 <div class="modal-header-title bb">
-                    <p class="truncate-string">This is some very long title of some dialog</p>
+                    <p class="truncate-string"></p>
                 </div>
             </div>
             <div class="modal-body bb">
@@ -16,9 +16,14 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary pull-right submit-modal-form green-button">Save changes</button>
+                <button type="button" class="btn btn-default cls" data-dismiss="modal">
+                    <?php echo $this->translate->_('Close'); ?>
+                </button>
+                <button type="button" class="btn btn-primary pull-right submit-modal-form green-button">
+                    <?php echo $this->translate->_('Save changes'); ?>
+                </button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<?php

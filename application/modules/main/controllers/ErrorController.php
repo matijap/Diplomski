@@ -8,6 +8,8 @@ class ErrorController extends Zend_Controller_Action
         $request            = $this->getRequest();
         if ($request->isXmlHttpRequest()) {
             // ajax error
+                     $message = $errors->exception->getMessage();
+                    fb($message);
         } else {
             $this->view->translate  = $translate = Zend_Registry::getInstance()->Zend_Translate;
             $this->view->module     = 'core';

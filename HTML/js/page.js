@@ -43,7 +43,7 @@ $( document ).ready(function() {
         }
     });
 
-    $(document).on('change', '.list-option-avatar', function(e) {
+    $(document).on('change', '.upload-change-it', function(e) {
         var id           = $(this).attr('id');
         var divWithImage = $('.upload-' + id);
         

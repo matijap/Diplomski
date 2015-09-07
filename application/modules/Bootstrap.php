@@ -28,12 +28,28 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $autoloader = Zend_Loader_Autoloader::getInstance();
         $autoloader->registerNamespace("Main");
         $autoloader->registerNamespace("Login");
+        $autoloader->registerNamespace('Sportalize_');
+        $autoloader->registerNamespace('Sportalize_Form_Element_');
+        $autoloader->registerNamespace('Sportalize_View_Helper_');
         
         // Set the autoloader as a fallback autoloader (loads all namespaces by default)
         $autoloader->setFallbackAutoloader(true);
         
         // Return the autoloader
         return $autoloader;
+    }
+
+    protected function _initView() {
+        $view = new Zend_View();
+        $view->doctype('HTML5');
+
+        // add our view helper path and filter path
+        $view->addHelperPath(realpath(APPLICATION_PATH . '/../library/Sportalize/View/Helper'), 'Sportalize_View_Helper');
+
+        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
+        $viewRenderer->setView($view);
+
+        return $view;
     }
     
     protected function _initConfig() {
