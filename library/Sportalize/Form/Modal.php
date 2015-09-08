@@ -4,6 +4,12 @@ class Sportalize_Form_Modal extends Sportalize_Form_Base {
     
     public $modalTitle = '';
 
+    public function init() {
+        $this->setAttrib('enctype', Zend_Form::ENCTYPE_MULTIPART);
+
+        parent::init();
+    }
+
     public function setModalTitle($title) {
         $this->modalTitle = $title;
     }
@@ -41,5 +47,9 @@ class Sportalize_Form_Modal extends Sportalize_Form_Base {
                 $this->clearDecoratorsAndSetDecorator($oneElement, $decorator);
             }
         }
+    }
+
+    public function getUserIDElement($fieldName = 'user_id') {
+        $this->addElement('hidden', $fieldName, array('value' => $this->user->id));
     }
 }

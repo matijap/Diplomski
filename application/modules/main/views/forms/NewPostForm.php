@@ -1,7 +1,7 @@
 <?php
 
 class NewPostForm extends Sportalize_Form_Modal {
-    
+
     public function init() {
         $this->setAction(APP_URL . '/post/new-post');
         $this->setModalTitle($this->translate->_('Create New Post'));
@@ -11,34 +11,60 @@ class NewPostForm extends Sportalize_Form_Modal {
     public function createElements() {
         parent::createElements();
 
-        $this->addElement('select', 'post-selection', array(
+        $param = Utils::arrayFetch($this->params, 'post_type', false);
+
+        $multioptions = Post::getPostTypeMultioptions();
+        $this->addElement('select', 'post_type', array(
             'label'        => $this->translate->_('Type'),
-            'multioptions' => array('text' => 'text', 'image' => 'image', 'video' => 'video'),
+            'multioptions' => $multioptions,
             'class'        => 'width-100px'
         ));
 
         $this->addElement('text', 'title', array(
-            'label' => $this->translate->_('Title'),
+            'label' => $this->translate->_('Title')
         ));
 
         $this->addElement('textarea', 'text', array(
-            'label' => $this->translate->_('Text'),
-            'rows'  => 5,
+            'label'    => $this->translate->_('Text'),
+            'rows'     => 5,
+            'required' => true,
         ));
-
-        $this->addElement('text', 'image-url', array(
+        
+        $class = $param == Post::POST_TYPE_IMAGE ? '' : 'hide-modal-parent';
+        $this->addElement('text', 'image_url', array(
             'label' => $this->translate->_('Image URL'),
+            'class' => $class,
         ));
 
-        $test = new Sportalize_Form_Element_FileUpload( 'image-upload', array(
+        $fileUpload = new Sportalize_Form_Element_FileUpload( 'image_upload', array(
             'label' => $this->translate->_('Upload Image'),
+            'class' => $class,
         ));
-        $this->addElement($test);
+        $fileUpload->setMaxFileSize();
+        $this->addElement($fileUpload);
 
-        $this->addElement('text', 'video-url', array(
-            'label' => $this->translate->_('Video URL'),
+        $class = $param == Post::POST_TYPE_VIDEO ? '' : 'hide-modal-parent';
+        $this->addElement('text', 'video', array(
+            'label' => $this->translate->_('YouTube URL'),
+            'class' => $class,
         ));
+
+        $this->getUserIDElement();
     }
 
-    
+    public function isValid($data) {
+        $ok = parent::isValid($data);
+        if (!isset($_FILES['image_upload']) && empty($data['image_url']) && $data['post_type'] == Post::POST_TYPE_IMAGE) {
+            $this->getElement('image_upload')->addError($this->translate->_('You must eiter upload image or enter url'));
+            $ok = false;
+        }
+        if ($data['post_type'] == Post::POST_TYPE_VIDEO) {
+            $id = Utils::getYoutubeIdFromUrl($data['video']);
+            if (!$id) {
+                $this->getElement('video')->addError($this->translate->_('Invalid URL'));
+                $ok = false;
+            }
+        }
+        return $ok;
+    }
 }

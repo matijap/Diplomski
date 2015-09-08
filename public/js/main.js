@@ -97,9 +97,7 @@ $( document ).ready(function() {
                 $('.modal-body .mc').append(result);
                 var title = $('#modal_title').val();
                 $('.modal-header-title p').text(title);
-                addIDAndInitializeSortable();
-                initUploadButtonsChange();
-                $('select').select2();
+                applyInitFunctions();
             }
         });
     });
@@ -133,17 +131,17 @@ $( document ).ready(function() {
         chatParent.find('.fa-times').toggle();
     });
 
-    $(document).on('change', '#post-selection', function() {
+    $(document).on('change', '#post_type', function() {
         var val = $(this).val();
-        $('#image-url').closest('.modal-element').hide();
-        $('#image-upload').closest('.modal-element').hide();
-        $('#video-url').closest('.modal-element').hide();
-        if (val == 'image') {
-            $('#image-url').closest('.modal-element').show();
-            $('#image-upload').closest('.modal-element').show();
+        $('#image_url').closest('.modal-element').hide();
+        $('#image_upload').closest('.modal-element').hide();
+        $('#video').closest('.modal-element').hide();
+        if (val == 'IMAGE') {
+            $('#image_url').closest('.modal-element').show();
+            $('#image_upload').closest('.modal-element').show();
         }
-        if (val == 'video') {
-            $('#video-url').closest('.modal-element').show();
+        if (val == 'VIDEO') {
+            $('#video').closest('.modal-element').show();
         }
     });
 
@@ -156,12 +154,6 @@ $( document ).ready(function() {
             element.html('Sent<i class="fa fa-check-circle"></i>');
             element.show();
         }, 1000);
-    });
-
-    $(document).on(clickOrTouchstart, '.submit-modal-form', function(e) {
-        e.preventDefault();
-        var element = $(this);
-        element.closest('.modal').find('form').submit();
     });
 
     $(document).on(clickOrTouchstart, '.choose-upload', function(e) {
@@ -298,7 +290,65 @@ $( document ).ready(function() {
         var divWithImage = $('.upload-' + id);
         
         divWithImage.html('');
-        divWithImage.append('<img src="' + URL.createObjectURL(e.target.files[0]) + '">');
-        divWithImage.addClass('height-50px');
+        if ($(this).hasExtension(['.jpg', '.png', '.gif'])) {
+            divWithImage.append('<img src="' + URL.createObjectURL(e.target.files[0]) + '">');
+            divWithImage.addClass('height-50px');
+        }
+        divWithImage.parent().find('ul').remove();
     });
+
+    $(document).on(clickOrTouchstart, '.submit-modal-form', function(e) {
+        e.preventDefault();
+
+        var form      = $(this).closest('.modal').find('form');
+        var submitUrl = form.attr('action');
+        $('.modal .mc').hide();
+        $('.mcl').show();
+        form.ajaxSubmit({type: 'POST', url: submitUrl,
+            success: function(data) {
+                if (typeof data.status == 'undefined') {
+                    $('.modal .mc').html(data);
+                    $('.modal .mc').show();
+                    $('.mcl').hide();
+                    applyInitFunctions();
+                    addVideoToModalElement($('#video'));
+                } else {
+                    if (data.status) {
+                        window.location = data.url;
+                    } else {
+                        $('.modal .mc').show();
+                        $('.mcl').hide();
+                        callNotification(data.message, 'error');
+                    }
+                }
+            }
+        });
+    });
+
+    $.fn.hasExtension = function(exts) {
+        return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test($(this).val());
+    }
+
+    $(document).on('keyup paste', '#video', function(e) {
+        addVideoToModalElement($(this));
+    });
+
+    function addVideoToModalElement(element) {
+        var parent           = element.parent();
+        var youtubeContainer = parent.find('.video-container').size();
+        if (!youtubeContainer) {
+            var regex = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+            var val   = element.val();
+            var id    = val.match(regex);
+            if (id) {
+                parent.find('.video-container').remove();
+                parent.append('<div class="video-container">' + 
+                                '<iframe width="300" height="200"'+
+                                    'src="http://www.youtube.com/embed/' + id[1] + '">'+
+                                '</iframe>' +
+                              '</div>');
+            }
+        }
+    }
+    
 });

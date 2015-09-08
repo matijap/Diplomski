@@ -8,6 +8,7 @@
     $fileUploadIFrameTransport = filemtime(WEB_ROOT_PATH . '/plugins/file-upload/js/jquery.iframe-transport.js');
     $fileUpload                = filemtime(WEB_ROOT_PATH . '/plugins/file-upload/js/jquery.fileupload.js');
     $countDownTimer            = filemtime(WEB_ROOT_PATH . '/plugins/countdown/jquery.countdownTimer.min.js');
+    $jQueryForms               = filemtime(WEB_ROOT_PATH . '/plugins/jquery.forms.js');
 
 echo $this->headScript()
     ->prependFile(APP_URL . '/plugins/select2/dist/js/select2.min.js?t=' . $select2)
@@ -20,4 +21,5 @@ echo $this->headScript()
     ->prependFile(APP_URL . '/plugins/file-upload/js/vendor/jquery.ui.widget.js?t=' . $fileUploadUIWidget)
     ->prependFile(APP_URL . '/plugins/countdown/jquery.countdownTimer.min.js?t=' . $countDownTimer)
     ->prependFile("https://cdn.socket.io/socket.io-1.2.0.js")
+    ->prependFile(APP_URL . '/plugins/jquery.forms.js?t=' . $jQueryForms)
     ;

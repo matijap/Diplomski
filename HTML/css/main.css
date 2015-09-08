@@ -790,6 +790,9 @@ header li {
     margin-left: 25px;
     font-size: 18px;
 }
+.video-container {
+    margin-top: 10px;
+}
 /* Modal End */
 /* Page Start */
 .add-list-with-button-settings-panel {

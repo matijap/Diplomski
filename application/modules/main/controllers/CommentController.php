@@ -24,9 +24,7 @@ class CommentController extends Main_BaseController
             $status              = self::NOTIFICATION_SUCCESS;
             $notificationMessage = $this->translate->_('Comment posted.');
         }
-        $session                      = new Zend_Session_Namespace(self::SESSION_NAMESPACE_NOTIFICATION);
-        $session->notificationStatus  = $status;
-        $session->notificationMessage = $notificationMessage;
+        $this->setNotificationMessage($status, $notificationMessage);
         $this->_redirect('/');
     }
 

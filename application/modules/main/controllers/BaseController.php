@@ -25,4 +25,10 @@ class Main_BaseController extends Sportalize_Controller_Action
         }
         $this->view->friends = $this->user->getFriendList();
     }
+
+    public function setNotificationMessage($status, $message) {
+        $session                      = new Zend_Session_Namespace(Sportalize_Controller_Action::SESSION_NAMESPACE_NOTIFICATION);
+        $session->notificationStatus  = $status;
+        $session->notificationMessage = $message;
+    }
 }

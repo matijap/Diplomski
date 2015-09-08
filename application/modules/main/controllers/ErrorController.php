@@ -6,10 +6,10 @@ class ErrorController extends Zend_Controller_Action
     {   
         $errors             = $this->_getParam('error_handler');
         $request            = $this->getRequest();
+        $message = $errors->exception->getMessage();
         if ($request->isXmlHttpRequest()) {
             // ajax error
-                     $message = $errors->exception->getMessage();
-                    fb($message);
+            fb($message);
         } else {
             $this->view->translate  = $translate = Zend_Registry::getInstance()->Zend_Translate;
             $this->view->module     = 'core';
@@ -31,7 +31,6 @@ class ErrorController extends Zend_Controller_Action
                     $this->view->messageStatus = $translate->_("Don't panic");
                     //$this->view->messageText   = $translate->_('A server error occurred. Please try again in a few minutes. In the meantime we will notify developers.');
                     $this->view->messageText  = $errors->exception->getMessage();
-                    $message = $errors->exception->getMessage();
                     fb($message);
                     @list($type, $msg) = explode(":::", $message);
                     if ($type == "warn") {

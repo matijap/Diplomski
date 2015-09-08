@@ -29,8 +29,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $autoloader->registerNamespace("Main");
         $autoloader->registerNamespace("Login");
         $autoloader->registerNamespace('Sportalize_');
-        $autoloader->registerNamespace('Sportalize_Form_Element_');
-        $autoloader->registerNamespace('Sportalize_View_Helper_');
         
         // Set the autoloader as a fallback autoloader (loads all namespaces by default)
         $autoloader->setFallbackAutoloader(true);

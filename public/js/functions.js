@@ -241,3 +241,10 @@ function escapeHtml(string) {
     });
 }
 
+function applyInitFunctions() {
+    addIDAndInitializeSortable();
+    initUploadButtonsChange();
+    $('select').select2();
+    $('.hide-modal-parent').closest('.modal-element').hide();
+}
+
