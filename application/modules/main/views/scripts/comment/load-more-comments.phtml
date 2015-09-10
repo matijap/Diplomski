@@ -1,0 +1,9 @@
+<?php
+$count = 0;
+foreach ($this->comments as $oneComment) {
+    echo $this->partial('render/comment.phtml', array('oneComment' => $oneComment, 'translate' => $this->translate));
+    $count++;
+    if ($count == 5 ) {
+        break;
+    }
+}

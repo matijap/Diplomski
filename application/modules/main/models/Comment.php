@@ -26,16 +26,19 @@ class Comment extends Comment_Row
         return $this->edit(array('likes' => $likes));
     }
 
-    public function loadNextComments() {
+    public function loadNextComments($loggedUserID) {
         $result = Main::select()
                   ->from(array('CO' => 'comment'), '')
+                  ->join(array('US' => 'user'), 'CO.commenter_id = US.id', '')
+                  ->joinLeft(array('UL' => 'user_like'), 'CO.id = UL.comment_id AND UL.user_id = ' . $loggedUserID, '')
                   ->where('CO.commented_post_id = ?', $this->commented_post_id)
-                  ->where('CO.id > ?', $this->id)
-                  ->columns(array('CO.id'));
-                  fb("$result");
-                  $result = $result->query()->fetchAll();
+                  ->where('CO.id < ?', $this->id)
+                  ->columns(array('CO.id as comment_id', 'UL.id as user_like',
+                                  'CO.text', 'CO.likes', 'CO.forwarded', 'CO.date'))
+                  ->order('CO.id DESC')
+                  ->limit(Comment::COMMENT_SHOW_LIMIT)
+                  ->query()->fetchAll();
 
-        fb($result);
-        return '';
+        return $result;
     }
 }

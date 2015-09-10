@@ -163,17 +163,30 @@ class User extends User_Row
                 ->columns(array('UP.page_id'))
                 ->query()->fetchAll();
 
+        $pgs = array();
+        foreach ($pages as $key => $value) {
+            $pgs[] = $value['page_id'];
+        }
         if ($idOnly) {
-            return $pages;
+            return $pgs;
         }
 
         $allPages = Main::select()
                    ->from(array('PA' => 'page'), '')
-                   ->where('id IN (?)', $pages)
+                   ->where('id IN (?)', $pgs)
                    ->columns(array('PA.id', 'PA.title', 'PA.logo'))
                    ->query()->fetchAll();
 
         return $allPages;
+    }
+
+    public static function getColumnsToBeFetched() {
+        return array('PO.title as post_title', 'PO.text as post_text', 'PO.id as post_id', 'PO.date as post_date', 'CO1.id',
+                     'CO1.text as comment_text', 'CO1.date as comment_date', 'CO1.id as comment_id', 'CO1.ulid as user_like',
+                     'CO1.parent_comment_id as parent_comment_id', 'CO1.forwarded', 'CO1.likes',
+                     'CO1.first_name as commenter_first_name', 'CO1.last_name as commenter_last_name', 'PO.post_type as post_type',
+                     'PO.video as post_video', 'PO.image as post_image',
+                    );
     }
 
     public function getFriendsAndPagePosts($page = 1) {
@@ -181,31 +194,41 @@ class User extends User_Row
         $pageIDS   = $this->getPageList(true);
         $limit     = Comment::COMMENT_SHOW_LIMIT;
         try {
+            
             // for more reference visit http://frishit.com/2010/07/mysql-selecting-top-n-per-group/
 
-            $commentColumnsToBeFetched = array('PO.title as post_title', 'PO.text as post_text', 'PO.id as post_id', 'PO.date as post_date', 'CO1.id',
-                                        'CO1.text as comment_text', 'CO1.date as comment_date', 'CO1.id as comment_id', 'CO1.ulid as user_like',
-                                        'CO1.parent_comment_id as parent_comment_id', 'CO1.forwarded', 'CO1.likes',
-                                        'CO1.first_name as commenter_first_name', 'CO1.last_name as commenter_last_name',
-                                        );
+            $commentColumnsToBeFetched = User::getColumnsToBeFetched();
             $subQuery = Main::select()
                         ->from(array('CO2' => 'comment'), '')
-                        ->where('CO2.commented_post_id = CO1.commented_post_id AND CO1.id > CO2.id')
+                        ->where('CO2.commented_post_id = PO.id AND CO1.id > CO2.id')
                         ->columns(array('COUNT(*)'));
+
+            $implodedFriend = implode(',', $friendIDS);
+            $implodedPage   = implode(',', $pageIDS);
+
+            $subQueryForCount = Main::select()
+                        ->from(array('CO3' => 'comment'), 'COUNT(*)')
+                        ->join(array('PO3' => 'post'), 'CO3.commented_post_id = PO3.id', '')
+                        ->where("PO3.user_id IN (" . $implodedFriend . ") OR PO3.page_id IN (" . $implodedPage . ")")
+                        ->where('CO3.commented_post_id = PO.id');
             
             $commentSelect = Main::select()
                 ->from(array('CO1' => 'comment'), '')
                 ->join(array('PO' => 'post'), 'CO1.commented_post_id = PO.id', '')
                 ->joinLeft(array('UL' => 'user_like'), 'UL.comment_id = CO1.id AND UL.user_id = ' .  $this->id, '')
                 ->joinLeft(array('US' => 'user'), 'CO1.commenter_id = US.id', '')
-                ->where("$limit > ($subQuery)")
+                ->where("
+                    (($subQueryForCount 
+                    ) - " . (Comment::COMMENT_SHOW_LIMIT + 1) . ")
+                 < ($subQuery)")
                 ->where('PO.user_id IN (?)', $friendIDS)
                 ->orWhere('PO.page_id IN (?)', $pageIDS)
                 ->group(array('CO1.commented_post_id', 'CO1.id'))
-                ->order(array('CO1.commented_post_id', 'CO1.id'))
+                ->order(array('CO1.commented_post_id', 'CO1.date DESC', 'CO1.id DESC', ))
                 ->columns(array('CO1.id', 'CO1.text', 'CO1.commented_post_id', 'CO1.date',
                                 'UL.id as ulid', 'CO1.parent_comment_id', 'CO1.forwarded',
                                 'CO1.likes', 'US.first_name', 'US.last_name'));
+                // fb("$commentSelect");
             
             // @todo Implement that when user registers, automatically favourited system page, and have one post with comment (as a welcome)
              $select1 = Main::select()
@@ -227,12 +250,12 @@ class User extends User_Row
 
             $mainSelect = Main::select()
                         ->from($union, '')
-                        ->columns(array('post_title', 'post_text', 'post_id', 'post_date',
+                        ->columns(array('post_title', 'post_text', 'post_id', 'post_date', 'post_type', 'post_video', 'post_image',
                                         'comment_text', 'comment_date', 'comment_id', 
                                         'commenter_first_name', 'commenter_last_name', 'likes', 'forwarded', 'user_like',
                                         'parent_comment_id',
                                     ))
-                        ->order(array('post_date DESC', 'comment_date ASC'))
+                        ->order(array('post_date DESC', 'comment_date DESC'))
                         ->query()->fetchAll();
 
             $return = array();
@@ -242,6 +265,9 @@ class User extends User_Row
                 $return[$onePost['post_id']]['title']   = $onePost['post_title'];
                 $return[$onePost['post_id']]['text']    = $onePost['post_text'];
                 $return[$onePost['post_id']]['date']    = $onePost['post_date'];
+                $return[$onePost['post_id']]['type']    = $onePost['post_type'];
+                $return[$onePost['post_id']]['video']   = $onePost['post_video'];
+                $return[$onePost['post_id']]['image']   = $onePost['post_image'];
                 if (!empty($onePost['comment_id'])) {
                     $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['comment_id']        = $onePost['comment_id'];
                     $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['text']              = $onePost['comment_text'];
@@ -261,6 +287,72 @@ class User extends User_Row
         } catch(Exception $e) {
             fb($e->getMessage());
         }
-                    
+    }
+
+    public function getPostsByUser($page = 1) {
+
+        $commentColumnsToBeFetched = User::getColumnsToBeFetched();
+        $subQuery = Main::select()
+                    ->from(array('CO2' => 'comment'), '')
+                    ->where('CO2.commented_post_id = PO.id AND CO1.id > CO2.id')
+                    ->columns(array('COUNT(*)'));
+
+        $subQueryForCount = Main::select()
+                            ->from(array('CO3' => 'comment'), 'COUNT(*)')
+                            ->join(array('PO3' => 'post'), 'CO3.commented_post_id = PO3.id', '')
+                            ->where("PO3.user_id = ?", $this->id)
+                            ->where('CO3.commented_post_id = PO.id');
+
+        $commentSelect = Main::select()
+            ->from(array('CO1' => 'comment'), '')
+            ->join(array('PO' => 'post'), 'CO1.commented_post_id = PO.id', '')
+            ->joinLeft(array('UL' => 'user_like'), 'UL.comment_id = CO1.id AND UL.user_id = ' .  $this->id, '')
+            ->joinLeft(array('US' => 'user'), 'CO1.commenter_id = US.id', '')
+            ->where("
+                (($subQueryForCount 
+                ) - " . (Comment::COMMENT_SHOW_LIMIT + 1) . ")
+             < ($subQuery)")
+            ->where('PO.user_id = ?', $this->id)
+            ->group(array('CO1.commented_post_id', 'CO1.id'))
+            ->order(array('CO1.commented_post_id', 'CO1.date DESC', 'CO1.id DESC', ))
+            ->columns(array('CO1.id', 'CO1.text', 'CO1.commented_post_id', 'CO1.date',
+                            'UL.id as ulid', 'CO1.parent_comment_id', 'CO1.forwarded',
+                            'CO1.likes', 'US.first_name', 'US.last_name'));
+
+        
+        $posts = Main::select()
+                    ->from(array('PO' => 'post'), '')
+                    ->joinLeft(array('CO1' => new Zend_Db_Expr("($commentSelect)")), 'CO1.commented_post_id = PO.id', '')
+                    ->where('PO.user_id = ?', $this->id)
+                    ->columns($commentColumnsToBeFetched)
+                    ->query()->fetchAll();
+
+        $return = array();
+        foreach ($posts as $key => $onePost) {
+            // fb($onePost);
+            $return[$onePost['post_id']]['post_id'] = $onePost['post_id'];
+            $return[$onePost['post_id']]['title']   = $onePost['post_title'];
+            $return[$onePost['post_id']]['text']    = $onePost['post_text'];
+            $return[$onePost['post_id']]['date']    = $onePost['post_date'];
+            $return[$onePost['post_id']]['type']    = $onePost['post_type'];
+            $return[$onePost['post_id']]['video']   = $onePost['post_video'];
+            $return[$onePost['post_id']]['image']   = $onePost['post_image'];
+            if (!empty($onePost['comment_id'])) {
+                $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['comment_id']        = $onePost['comment_id'];
+                $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['text']              = $onePost['comment_text'];
+                $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['parent_comment_id'] = $onePost['parent_comment_id'];
+                $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['forwarded']         = $onePost['forwarded'];
+                $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['likes']             = $onePost['likes'];
+                $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['date']              = $onePost['comment_date'];
+                $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['user_like']         = $onePost['user_like'];
+            }
+        }        
+
+        // fb($return);
+        $paginator = Zend_Paginator::factory($return);
+        $paginator->setCurrentPageNumber($page);
+        $paginator->setItemCountPerPage(User::INDEX_PAGE_POST_LIMIT);
+        // return false;
+        return $paginator;
     }
 }

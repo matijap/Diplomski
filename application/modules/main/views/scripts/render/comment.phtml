@@ -1,6 +1,6 @@
 <div class="one-post-comment">
     <div class="post-comment-avatar">
-        <img src="img/silhouette.png">
+        <img src="<?php echo APP_URL; ?>/img/silhouette.png">
     </div>
     <div class="one-post-actions-holder" id="<?php echo $this->oneComment['comment_id']; ?>" >
         <a class="like-or-unlike-comment" <?php echo empty($this->oneComment['user_like']) ? '': 'style="display: none;"'; ?> href="javascript:void(0)">

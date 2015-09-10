@@ -58,6 +58,7 @@ $( document ).ready(function() {
             success: function(result) {
                 loadMoreIcon.removeClass('display-none');
                 spinner.addClass('display-none');
+                element.closest('.post-comment-list').find('.one-post-comment').last().after(result);
             }
         });
     });

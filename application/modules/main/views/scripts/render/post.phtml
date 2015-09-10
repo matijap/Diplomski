@@ -10,6 +10,19 @@
         </div>
     </div>
     <div class="post-body bb">
+    <?php
+        if ($this->onePost['type'] == Post::POST_TYPE_VIDEO) {
+        ?>
+            <iframe src="http://www.youtube.com/embed/<?php echo $this->onePost['video']; ?>"></iframe>
+        <?php
+        }
+        if ($this->onePost['type'] == Post::POST_TYPE_IMAGE) {
+            $url = Post::getImageUrl($this->onePost['image']);
+        ?>
+            <img src="<?php echo $url; ?>">
+        <?php
+        }
+    ?>
         <div class="post-text">
             <p><?php echo $this->onePost['text']; ?></p>
         </div>
@@ -18,9 +31,14 @@
         <?php echo $this->form; ?>
         <div class="post-comment-list bb">
             <?php
+                $count = 0;
                 if (isset($this->onePost['comments'])) {
                     foreach ($this->onePost['comments'] as $oneComment) {
                         echo $this->partial('render/comment.phtml', array('oneComment' => $oneComment, 'translate' => $this->translate));
+                        $count++;
+                        if ($count == 5 ) {
+                            break;
+                        }
                     }
                 }
             ?>

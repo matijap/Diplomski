@@ -35,6 +35,6 @@ class CommentController extends Main_BaseController
     }
 
     public function loadMoreCommentsAction() {
-        $result = $this->comment->loadNextComments();
+        $this->view->comments = $this->comment->loadNextComments($this->user->id);
     }
 }

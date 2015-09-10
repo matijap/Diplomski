@@ -29,7 +29,13 @@
                     foreach ($this->links as $oneLink) {
                         ?>
                         <li class="cc main-link-li">
-                            <a href="<?php echo $oneLink['url'] ?>"><?php echo $oneLink['title']; ?></a>
+                        <?php
+                            $translatedMenuLinks = MenuLink::getTranslatedMenuTitles();
+                            if ($oneLink['title'] == MenuLink::MENU_LINK_MY_POSTS) {
+                                $oneLink['url'] = $oneLink['url'] . '?userID=' . $this->userID;
+                            }
+                        ?>
+                            <a href="<?php echo $oneLink['url'] ?>"><?php echo $translatedMenuLinks[$oneLink['title']]; ?></a>
                             <?php
                             if (isset($oneLink['sublinks'])) {
                                 ?>
@@ -39,7 +45,7 @@
                                     ?>
                                     <li class="cc sublink-li-1 bb main-background-color">
                                     <?php $link = $oneSublink['url'] != 'javascript:void(0)' ? APP_URL . $oneSublink['url'] : $oneSublink['url']; ?>
-                                        <a href="<?php echo $link; ?>"><?php echo $oneSublink['title']; ?></a>
+                                        <a href="<?php echo $link; ?>"><?php echo $translatedMenuLinks[$oneSublink['title']]; ?></a>
                                     </li>
                                     <?php
                                 }
