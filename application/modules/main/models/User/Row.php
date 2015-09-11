@@ -8,6 +8,10 @@ class User_Row extends Main_Row {
           return $this->_getListOfDepObjects('Comment','commenter',$select);
       }
 
+      public function getDreamTeamList($select=null) {
+          return $this->_getListOfDepObjects('DreamTeam','user',$select);
+      }
+
       public function getGaleryList($select=null) {
           return $this->_getListOfDepObjects('Galery','user',$select);
       }
@@ -20,8 +24,20 @@ class User_Row extends Main_Row {
         return $this->_getListOfDepObjects('Post','user',$select);
     }
 
+      public function getUserInfoList($select=null) {
+          return $this->_getListOfDepObjects('UserInfo','user',$select);
+      }
+
+      public function getUserLikeList($select=null) {
+          return $this->_getListOfDepObjects('UserLike','user',$select);
+      }
+
       public function getUserPageList($select=null) {
           return $this->_getListOfDepObjects('UserPage','user',$select);
+      }
+
+      public function getUserSportList($select=null) {
+          return $this->_getListOfDepObjects('UserSport','user',$select);
       }
 
     public function getUserUserUserList($select=null) {

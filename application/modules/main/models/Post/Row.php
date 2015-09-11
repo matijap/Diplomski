@@ -8,4 +8,8 @@ class Post_Row extends Main_Row {
           return $this->_getListOfDepObjects('Comment','commented_post',$select);
       }
 
+      public function getUserLikeList($select=null) {
+          return $this->_getListOfDepObjects('UserLike','post',$select);
+      }
+
 }
