@@ -20,20 +20,19 @@ class PersonalSettings_PersonalSettingsBaseForm extends Sportalize_Form_Base {
     public function redecorate() {
         parent::redecorate();
         foreach ($this->getDisplayGroups() as $key => $displayGroup) {
-            $displayGroup->clearDecorators()->setDecorators(array(
+            $this->clearDecoratorsAndSetDecorator($displayGroup, array(
                 'FormElements',
                 array('HtmlTag', array('tag'   =>'div','class'  => 'personal-settings-container favorite'))
             ));
         }
         foreach ($this->getElements() as $key => $element) {
-            // $this->clearDecoratorsAndSetViewHelperOnly($element);
             $this->clearDecoratorsAndSetDecorator($element, array($this->getViewHelperDecorator(), 'Errors'));
         }
     }
 
-    public function addTitleElement($titleMessage) {
+    public function addTitleElement($titleMessage, $class = '') {
         $title = new Sportalize_Form_Element_PlainHtml('title', array(
-            'value' => '<h2 class="widget-header-color">' . $titleMessage . '</h2>'
+            'value' => '<h2 class="widget-header-color ' . $class . '">' . $titleMessage . '</h2>'
         ));
         $this->addElement($title);
     }

@@ -54,4 +54,12 @@ class Utils
         }    
         return $filename;
     }
+
+    public static function getAvailableSports() {
+        $translate = Zend_Registry::getInstance()->Zend_Translate;
+        return array('11' => $translate->_('Football'),
+                     '5'  => $translate->_('Basketball'),
+                     '7'  => $translate->_('Waterpolo'),
+                     );
+    }
 }

@@ -355,4 +355,12 @@ class User extends User_Row
         // return false;
         return $paginator;
     }
+
+    public function getDreamTeams() {
+        return Main::select()
+                ->from(array('DT' => 'dream_team'), '')
+                ->where('DT.user_id = ?', $this->id)
+                ->columns(array('DT.name', 'DT.data'))
+                ->query()->fetchAll();
+    }
 }

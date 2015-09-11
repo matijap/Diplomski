@@ -2,16 +2,17 @@ $( document ).ready(function() {
     var clickOrTouchstart = getClickOrTouchstart();
 
     $(document).on(clickOrTouchstart, '.add-dream-team', function() {
-        var pickedSport = $('.add-dream-team-sport').val();
-        var teamName    = $('.add-dream-team-name').val();
-
+        var pickedSport  = $('.add-dream-team-sport').val();
+        var teamName     = $('.add-dream-team-name').val();
+        var randomNumber = getRandomNumber();
         if (teamName != '') {
             var htmlToAppend = '<div class="personal-settings-container favorite to-be-removed">' + 
                                     '<h3 class="text-align-center">' + teamName + '</h3>' +
+                                    '<input type="hidden" name="personal_settings[dream_team][' + randomNumber + '][name]" value="' + teamName + '">' +
                                     '<i data-closest="personal-settings-container" class="fa fa-times remove-item remove-dream-team"></i>' +
                                     '<div>';
             for(i = 0; i < pickedSport; i++) {
-                htmlToAppend += '<input type="text">';
+                htmlToAppend += '<input name="personal_settings[dream_team][' + randomNumber + '][data][]" type="text">';
             }
             htmlToAppend += '</div></div>';
             $('.one-personal-settings-section.dream-team').append(htmlToAppend);
