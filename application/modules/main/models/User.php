@@ -150,8 +150,9 @@ class User extends User_Row
         }
         $allFriends = Main::select()
                     ->from(array('U' => 'user'), '')
-                    ->where('id IN (?)', $filtered)
-                    ->columns(array('U.id', 'U.first_name', 'U.last_name'))
+                    ->join(array('UI' => 'user_info'), 'UI.user_id = U.id', '')
+                    ->where('U.id IN (?)', $filtered)
+                    ->columns(array('U.id', 'UI.first_name', 'UI.last_name'))
                     ->query()->fetchAll();
         return $allFriends;
     }
@@ -483,6 +484,27 @@ class User extends User_Row
                 $name = $value['name'];
                 $data = Zend_Json::encode($value['data']);
                 Main::execQuery("INSERT INTO `dream_team` (`user_id`, `name`, `data`) VALUES ('$this->id', '$name', '$data');");
+            }
+        }
+    }
+
+    public function updatePersonalInfo($params) {
+        $userInfo = Main::fetchRow(Main::select('UserInfo')->where('user_id = ?', $this->id));
+        if ($userInfo) {
+            if (!empty($params['date_of_birth'])) {
+                $date = new Zend_Date($params['date_of_birth'], Zend_Date::DATES);
+                $params['date_of_birth'] = $date->get(Zend_Date::TIMESTAMP);
+                $userInfo->edit($params);
+
+$locale = Zend_Registry::get('Zend_Locale');
+//                 $date = Zend_Locale_Format::getDate($params['date_of_birth'],
+//                                     array('date_format' =>
+//                                               Zend_Locale_Format::STANDARD,
+//                                           'locale' => $locale)
+//                                    );
+// fb($date->toString());
+$list = Zend_Locale::getTranslationList('Date', 'en_US');
+fb($list);
             }
         }
     }

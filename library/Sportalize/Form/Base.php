@@ -9,7 +9,7 @@ class Sportalize_Form_Base extends Zend_Form {
 
    public function __construct($data = array()) {
         $this->translate = Zend_Registry::getInstance()->Zend_Translate;
-
+        $this->setAttrib('enctype', Zend_Form::ENCTYPE_MULTIPART);
         parent::__construct();
     }
 

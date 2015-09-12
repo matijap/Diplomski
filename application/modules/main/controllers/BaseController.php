@@ -24,6 +24,10 @@ class Main_BaseController extends Sportalize_Controller_Action
             $this->_helper->layout()->disableLayout();
         }
         $this->view->friends = $this->user->getFriendList();
+
+        Zend_Locale::setDefault('sr_RS');
+        $locale = new Zend_Locale('sr_RS');
+        Zend_Registry::set('Zend_Locale', $locale);
     }
 
     public function setNotificationMessage($status, $message) {

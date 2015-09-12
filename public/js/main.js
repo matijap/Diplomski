@@ -15,7 +15,9 @@ $( document ).ready(function() {
 
     var socket = getIOConnection();
 
-    $('input.datepicker').Zebra_DatePicker();
+    $('input.datepicker').Zebra_DatePicker(
+        {format: 'M/d/yy'}
+    );
     $('select').select2();
 
     var printNotificationMessage = doesExists('.notification-status');

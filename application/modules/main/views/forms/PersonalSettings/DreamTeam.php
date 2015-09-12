@@ -4,7 +4,7 @@ class PersonalSettings_DreamTeam extends PersonalSettings_PersonalSettingsBaseFo
 
     public function __construct() {
         $this->class   = 'dream-team';
-        $this->dgClass = 'to-be-removed';
+        $this->dgClass = 'to-be-removed favorite';
         parent::__construct();
     }
 

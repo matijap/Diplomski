@@ -28,7 +28,7 @@ class PersonalSettings_PersonalSettingsBaseForm extends Sportalize_Form_Base {
         foreach ($this->getDisplayGroups() as $key => $displayGroup) {
             $this->clearDecoratorsAndSetDecorator($displayGroup, array(
                 'FormElements',
-                array('HtmlTag', array('tag'   =>'div','class'  => 'personal-settings-container favorite ' . $this->dgClass))
+                array('HtmlTag', array('tag'   =>'div','class'  => 'personal-settings-container ' . $this->dgClass))
             ));
         }
         foreach ($this->getElements() as $key => $element) {

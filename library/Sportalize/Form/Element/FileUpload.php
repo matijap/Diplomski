@@ -20,18 +20,18 @@ class Sportalize_Form_Element_FileUpload extends Sportalize_Form_Element_Xhtml
     }
 
     public function isValid($data) {
-        
         $return = true;
-        if ($this->isRequired() && !isset($_FILES[$this->getName()])) {
+        $name   = $this->getName();
+        if ($this->isRequired() && !isset($_FILES[$name])) {
             $this->_messages[] = $translate->_('You must upload a file');
             $return = false;
         }
-        if (!isset($_FILES[$this->getName()])) {
+        if (!isset($_FILES[$name])) {
             $return = true;
         } else {
-            if ($return) {
+            if ($return && !empty($_FILES[$name]['name'])) {
                 foreach ($this->getValidators() as $key => $validator) {
-                    if (!$validator->isValid($_FILES[$this->getName()]['tmp_name'])) {
+                    if (!$validator->isValid($_FILES[$name]['tmp_name'])) {
                         $msgs = $validator->getMessages();
                         $this->_messages = array_merge($this->_messages, $validator->getMessages());
                         $return = false;

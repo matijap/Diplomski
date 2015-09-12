@@ -4,12 +4,6 @@ class Sportalize_Form_Modal extends Sportalize_Form_Base {
     
     public $modalTitle = '';
 
-    public function init() {
-        $this->setAttrib('enctype', Zend_Form::ENCTYPE_MULTIPART);
-
-        parent::init();
-    }
-
     public function setModalTitle($title) {
         $this->modalTitle = $title;
     }

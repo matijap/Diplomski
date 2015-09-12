@@ -12,6 +12,7 @@ class SettingsController extends Main_BaseController
                 $user = Main::buildObject('User', $this->params['userID']);
                 if ($user) {
                     $user->updateFavouritesAndDreamTeam($this->params);
+                $user->updatePersonalInfo($this->params['personal_info']);
                 }
                 // fb('forma je validna');
                 // fb($this->params, 'personal settings params');

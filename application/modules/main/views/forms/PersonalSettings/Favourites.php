@@ -3,6 +3,7 @@
 class PersonalSettings_Favourites extends PersonalSettings_PersonalSettingsBaseForm {
 
     public function __construct() {
+        $this->dgClass = 'favorite';
         parent::__construct();
     }
 
