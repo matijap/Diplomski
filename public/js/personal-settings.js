@@ -2,9 +2,11 @@ $( document ).ready(function() {
     var clickOrTouchstart = getClickOrTouchstart();
 
     $(document).on(clickOrTouchstart, '.add-dream-team', function() {
-        var pickedSport  = $('.add-dream-team-sport').val();
-        var teamName     = $('.add-dream-team-name').val();
-        var randomNumber = getRandomNumber();
+        var pickedSportString  = $('.add-dream-team-sport').val();
+        var pickedSportArray   = pickedSportString.split('_');
+        var pickedSport        = pickedSportArray[1];
+        var teamName           = $('.add-dream-team-name').val();
+        var randomNumber       = getRandomNumber();
         if (teamName != '') {
             var htmlToAppend = '<div class="personal-settings-container favorite to-be-removed">' + 
                                     '<h3 class="text-align-center">' + teamName + '</h3>' +

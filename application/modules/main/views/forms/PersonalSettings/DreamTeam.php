@@ -3,7 +3,8 @@
 class PersonalSettings_DreamTeam extends PersonalSettings_PersonalSettingsBaseForm {
 
     public function __construct() {
-        $this->class = 'dream-team';
+        $this->class   = 'dream-team';
+        $this->dgClass = 'to-be-removed';
         parent::__construct();
     }
 
@@ -12,7 +13,8 @@ class PersonalSettings_DreamTeam extends PersonalSettings_PersonalSettingsBaseFo
 
         $this->addTitleElement($this->translate->_('Dream Teams'), 'pull-left');
 
-        $sports = Utils::getAvailableSports();
+        $sports = Sport::getSportMultioptionsForDreamTeam();
+
         $this->addElement('select', 'dream_team_sport_select', array(
             'multioptions' => $sports,
             'class'        => 'width-200px add-dream-team-sport',

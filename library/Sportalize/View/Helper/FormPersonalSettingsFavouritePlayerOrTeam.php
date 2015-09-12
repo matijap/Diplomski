@@ -27,16 +27,22 @@ class Sportalize_View_Helper_FormPersonalSettingsFavouritePlayerOrTeam extends Z
             // > 1 because of template input
             if (($dataCount) > 1) {
                 foreach ($data[$elementName] as $key => $value) {
+                    $displayNone = $dataCount == 2 ? 'display-none' : '';
                     $html .= '<div class="to-be-removed">
                                 <input value="' . $value . '" type="text" class="m-t-5" name="personal_settings[favourites][' . $elementName . '][]">
-                                <i class="fa fa-times m-l-5 cursor-pointer remove-item" data-closest="favorite"></i>
+                                <i class="fa fa-times m-l-5 cursor-pointer remove-item ' . $displayNone . '" data-closest="favorite"></i>
                              </div>';
-                    if ($count == ($dataCount - 1)){
+                    if ($count == ($dataCount - 1)) {
                         break;
                     }
                     $count++;
                 }
             }
+        } else {
+            $html .= '<div class="to-be-removed">
+                        <input value="" type="text" class="m-t-5" name="personal_settings[favourites][' . $elementName . '][]">
+                        <i class="fa fa-times m-l-5 cursor-pointer remove-item display-none" data-closest="favorite"></i>
+                    </div>';
         }
         $html .='</div>
                 <div class="display-inline-block m-l-10">
@@ -47,7 +53,7 @@ class Sportalize_View_Helper_FormPersonalSettingsFavouritePlayerOrTeam extends Z
                         <select name="personal_settings[favourites][available_' . $elementName . '][]" multiple="multiple" style="width: 100%;">';
             foreach ($availablePlayersOrTeams as $value) {
                 if (is_array($selectedPlayersOrTeams)) {
-                    $selected = in_array($value['id'], $selectedPlayersOrTeams) ? 'selected' : '';    
+                    $selected = in_array($value['id'], $selectedPlayersOrTeams) ? 'selected' : '';
                 } else {
                     $selected = '';
                 }
@@ -56,13 +62,6 @@ class Sportalize_View_Helper_FormPersonalSettingsFavouritePlayerOrTeam extends Z
             }
             $html .= '</select>';
         }
-        $html .='<div class="favorite-' . $elementName . '-template display-none">
-                    <div class="to-be-removed">
-                        <input type="text" class="m-t-5" name="personal_settings[favourites][' . $elementName . '][]">
-                        <i class="fa fa-times m-l-5 cursor-pointer remove-item" data-closest="favorite"></i>
-                    </div>
-                </div>';
-        
         return $html;
     }
 }

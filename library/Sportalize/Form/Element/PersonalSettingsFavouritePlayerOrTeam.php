@@ -10,10 +10,9 @@ class Sportalize_Form_Element_PersonalSettingsFavouritePlayerOrTeam extends Spor
         $name      = $this->getName();
         $key       = $name == 'favourite_player' ? 'players' : 'teams';
 
-
         $data      = Utils::arrayFetch($this->params, 'personal_settings.favourites', false);
         $dataCount = count($data[$key]);
-        if ($dataCount > 1) {
+        if ($dataCount > 2) {
             $count = 1;
             foreach ($data[$key] as $value) {
                 if (empty($value)) {
@@ -24,6 +23,7 @@ class Sportalize_Form_Element_PersonalSettingsFavouritePlayerOrTeam extends Spor
                 if ($count == ($dataCount - 1)) {
                     break;
                 }
+                $count++;
             }
         }
         return $this->return;

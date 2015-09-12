@@ -4,6 +4,10 @@ require_once 'Main/Row.php';
 
 class Page_Row extends Main_Row {
 
+      public function getFavouriteItemList($select=null) {
+          return $this->_getListOfDepObjects('FavouriteItem','page',$select);
+      }
+
       public function getPageWidgetList($select=null) {
           return $this->_getListOfDepObjects('PageWidget','page',$select);
       }

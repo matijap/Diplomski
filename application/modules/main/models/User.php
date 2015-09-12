@@ -363,4 +363,127 @@ class User extends User_Row
                 ->columns(array('DT.name', 'DT.data'))
                 ->query()->fetchAll();
     }
+
+    public function getFavouriteSports() {
+        return Main::select()
+            ->from(array('US' => 'user_sport'), 'US.sport_id')
+            ->where('US.user_id = ?', $this->id)
+            ->query()->fetchAll(Zend_Db::FETCH_COLUMN, 0);
+    }
+
+    public function getFavouritePlayersWithPage() {
+        return $this->getFavouriteItemsWithPage(Page::PAGE_TYPE_PLAYER);
+    }
+
+    public function getFavouriteTeamsWithPage() {
+        return $this->getFavouriteItemsWithPage(Page::PAGE_TYPE_TEAM);
+    }
+
+    public function getFavouriteItemsWithPage($type) {
+        return Main::select()
+            ->from(array('FI' => 'favourite_item'), '')
+            ->join(array('PA' => 'page'), 'FI.page_id = PA.id', '')
+            ->where('FI.user_id = ?', $this->id)
+            ->where('FI.page_id IS NOT NULL')
+            ->where('PA.type = ?', $type)
+            ->columns(array('PA.id'))
+            ->query()->fetchAll(Zend_Db::FETCH_COLUMN, 0);
+    }
+
+    public function getFavouritePlayersAndTeamsWithoutPage() {
+        return Main::select()
+            ->from(array('FI' => 'favourite_item'), '')
+            ->where('FI.user_id = ?', $this->id)
+            ->where('FI.type = "' . FavouriteItem::FAVOURITE_ITEM_TYPE_PLAYER . '" OR FI.type = "' . FavouriteItem::FAVOURITE_ITEM_TYPE_TEAM . '"')
+            ->columns(array('FI.name', 'FI.type'))
+            ->query()->fetchAll();
+    }
+
+    public function updateFavouritesAndDreamTeam($data) {
+        $cache = Zend_Registry::get('cache');
+        // In order to easy unset it from array, make category as key. We want to unset it because, if nothing is
+        // selected in form, that form key will not be sent. So after all regular checks, we need to see if there
+        // is something left in favouritesArray. If there is something, that means that it is not sent from from and
+        // that is should be removed completely from db
+        $favouritesArray = array('favourite_sport'   => 1,
+                                 'players'           => 1,
+                                 'teams'             => 1,
+                                 'available_players' => 1,
+                                 'available_teams'   => 1);
+        foreach ($data['personal_settings']['favourites'] as $key => $value) {
+            unset($favouritesArray[$key]);
+            $cacheKey   = $key . '_' . $this->id;
+            $serialized = serialize($value);
+            $compared   = true;
+            $toCompare  = '';
+            if (!$cache->test($cacheKey)) {
+                $cache->save($serialized, $cacheKey);
+                $compared = false;
+            } else {
+                $toCompare = $cache->load($cacheKey);
+                if ($serialized != $toCompare) {
+                    $compared = false;
+                    $cache->remove($cacheKey);
+                    $cache->save($serialized, $cacheKey);
+                }
+            }
+            if (!$compared && $key == 'favourite_sport') {
+                Main::execQuery('DELETE FROM `user_sport` WHERE `user_id` = ?', $this->id);
+                foreach ($value as $v) {
+                    Main::execQuery("INSERT INTO `user_sport` (`user_id`, `sport_id`) VALUES ('$this->id', '$v')");
+                }
+            }
+            if (!$compared && ($key == 'players' || $key == 'teams')) {
+                $type   = $key == 'players' ? FavouriteItem::FAVOURITE_ITEM_TYPE_PLAYER : FavouriteItem::FAVOURITE_ITEM_TYPE_TEAM;
+                Main::execQuery('DELETE FROM `favourite_item` WHERE `user_id` = ? AND `page_id` IS NULL AND `type` = ?', array($this->id, $type));
+                foreach ($value as $v) {
+                    if (!empty($v)) {
+                        Main::execQuery("INSERT INTO `favourite_item` (`user_id`, `name`, `type`) VALUES ('$this->id', '$v', '$type')");
+                    }
+                }
+            }
+            if (!$compared && ($key == 'available_players' || $key == 'available_teams')) {
+                $type = $key == 'players' ? Page::PAGE_TYPE_PLAYER : Page::PAGE_TYPE_TEAM;
+                Main::execQuery('DELETE FA FROM `favourite_item` FA JOIN page PA on FA.page_id = PA.id WHERE FA.`user_id` = ? AND `page_id` IS NOT NULL AND PA.type = ?', array($this->id, $type));
+                foreach ($value as $v) {
+                    if (!empty($v)) {
+                        Main::execQuery("INSERT INTO `favourite_item` (`user_id`, `page_id`) VALUES ('$this->id', '$v')");
+                    }
+                }
+            }
+        }
+        foreach ($favouritesArray as $key => $value) {
+            if ($key == 'players' || $key == 'teams') {
+                $type   = $key == 'players' ? FavouriteItem::FAVOURITE_ITEM_TYPE_PLAYER : FavouriteItem::FAVOURITE_ITEM_TYPE_TEAM;
+                Main::execQuery('DELETE FROM `favourite_item` WHERE `user_id` = ? AND `page_id` IS NULL AND `type` = ?', array($this->id, $type));
+            }
+            if ($key == 'available_players' || $key == 'available_teams') {
+                $type = $key == 'players' ? Page::PAGE_TYPE_PLAYER : Page::PAGE_TYPE_TEAM;
+                Main::execQuery('DELETE FA FROM `favourite_item` FA JOIN page PA on FA.page_id = PA.id WHERE FA.`user_id` = ? AND `page_id` IS NOT NULL AND PA.type = ?', array($this->id, $type));
+            }
+            $cache->remove($cacheKey);
+        }
+
+        $serialized = serialize($data['personal_settings']['dream_team']);
+        $cacheKey   = 'dream_teams_' . $this->id;
+        if (!$cache->test($cacheKey)) {
+            $cache->save($serialized, $cacheKey);
+            $compared = false;
+        } else {
+            $toCompare = $cache->load($cacheKey);
+            if ($serialized != $toCompare) {
+                $compared = false;
+                $cache->remove($cacheKey);
+                $cache->save($serialized, $cacheKey);
+            }
+        }
+        if (!$compared) {
+            Main::execQuery("DELETE FROM dream_team WHERE user_id = ?", $this->id);
+            foreach ($data['personal_settings']['dream_team'] as $key => $value) {
+                $name = $value['name'];
+                $data = Zend_Json::encode($value['data']);
+                Main::execQuery("INSERT INTO `dream_team` (`user_id`, `name`, `data`) VALUES ('$this->id', '$name', '$data');");
+            }
+        }
+    }
 }

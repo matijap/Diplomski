@@ -40,6 +40,9 @@ class Sportalize_Form_Base extends Zend_Form {
             if ($oneElement->getType() == 'Zend_Form_Element_Hidden') {
                 $this->clearDecoratorsAndSetViewHelperOnly($oneElement);
             }
+            if ($oneElement->getType() == 'Zend_Form_Element_Select') {
+                $oneElement->setRegisterInArrayValidator(false);
+            }
         }
     }
 
@@ -55,5 +58,9 @@ class Sportalize_Form_Base extends Zend_Form {
     public function clearDecoratorsAndSetDecorator($element, $decorators) {
         $element = $element->clearDecorators()->setDecorators($decorators);
         return $element;
+    }
+
+    public function addUserIDElement() {
+        $this->addElement('hidden', 'userID', array('value' => $this->user->id));
     }
 }

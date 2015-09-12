@@ -9,8 +9,13 @@ class SettingsController extends Main_BaseController
         $response         = $this->validateForm($form);
         if ($response['isPost']) {
             if ($response['isValid']) {
+                $user = Main::buildObject('User', $this->params['userID']);
+                if ($user) {
+                    $user->updateFavouritesAndDreamTeam($this->params);
+                }
+                // fb('forma je validna');
+                // fb($this->params, 'personal settings params');
             }
         }
-        // fb($this->params, 'personal settings params');
     }
 }

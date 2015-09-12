@@ -11,13 +11,13 @@ class Page extends Page_Row
     const PAGE_TYPE_LEAGUE = 'LEAGUE';
 
     public static function getAvailablePlayers() {
-        return Page::getAvailables(Page::PAGE_TYPE_PLAYER);
+        return Page::getAvailablePages(Page::PAGE_TYPE_PLAYER);
     }
     public static function getAvailableTeams() {
-        return Page::getAvailables(Page::PAGE_TYPE_TEAM);
+        return Page::getAvailablePages(Page::PAGE_TYPE_TEAM);
     }
 
-    public static function getAvailables($type) {
+    public static function getAvailablePages($type) {
         return Main::select()
         ->from(array('PA' => 'page'), '')
         ->where('PA.type = ?', $type)

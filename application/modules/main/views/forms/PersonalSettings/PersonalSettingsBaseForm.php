@@ -2,7 +2,8 @@
 
 class PersonalSettings_PersonalSettingsBaseForm extends Sportalize_Form_Base {
     
-    public $class = '';
+    public $class   = '';
+    public $dgClass = '';
 
     public function init() {
         parent::init();
@@ -17,12 +18,17 @@ class PersonalSettings_PersonalSettingsBaseForm extends Sportalize_Form_Base {
         $this->clearDecorators()->setDecorators($decorator);
     }
 
+    public function createElements() {
+        parent::createElements();
+        $this->addUserIDElement();
+    }
+
     public function redecorate() {
         parent::redecorate();
         foreach ($this->getDisplayGroups() as $key => $displayGroup) {
             $this->clearDecoratorsAndSetDecorator($displayGroup, array(
                 'FormElements',
-                array('HtmlTag', array('tag'   =>'div','class'  => 'personal-settings-container favorite'))
+                array('HtmlTag', array('tag'   =>'div','class'  => 'personal-settings-container favorite ' . $this->dgClass))
             ));
         }
         foreach ($this->getElements() as $key => $element) {
