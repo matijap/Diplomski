@@ -218,6 +218,7 @@ class User extends User_Row
                 ->join(array('PO' => 'post'), 'CO1.commented_post_id = PO.id', '')
                 ->joinLeft(array('UL' => 'user_like'), 'UL.comment_id = CO1.id AND UL.user_id = ' .  $this->id, '')
                 ->joinLeft(array('US' => 'user'), 'CO1.commenter_id = US.id', '')
+                ->joinLeft(array('UI' => 'user_info'), 'UI.user_id = US.id', '')
                 ->where("
                     (($subQueryForCount 
                     ) - " . (Comment::COMMENT_SHOW_LIMIT + 1) . ")
@@ -228,10 +229,14 @@ class User extends User_Row
                 ->order(array('CO1.commented_post_id', 'CO1.date DESC', 'CO1.id DESC', ))
                 ->columns(array('CO1.id', 'CO1.text', 'CO1.commented_post_id', 'CO1.date',
                                 'UL.id as ulid', 'CO1.parent_comment_id', 'CO1.forwarded',
-                                'CO1.likes', 'US.first_name', 'US.last_name'));
+                                'CO1.likes', 'UI.first_name', 'UI.last_name'));
                 // fb("$commentSelect");
             
             // @todo Implement that when user registers, automatically favourited system page, and have one post with comment (as a welcome)
+            // @todo create default privacy settings
+            // @todo update user info properly
+            // @todo insert default widgets
+            // @todo implement default user lists, also that list cannot have name same as is system
              $select1 = Main::select()
                         ->from(array('PO' => 'post'), '')
                         ->joinLeft(array('CO1' => new Zend_Db_Expr("($commentSelect)")), 'CO1.commented_post_id = PO.id', '')
@@ -309,6 +314,7 @@ class User extends User_Row
             ->join(array('PO' => 'post'), 'CO1.commented_post_id = PO.id', '')
             ->joinLeft(array('UL' => 'user_like'), 'UL.comment_id = CO1.id AND UL.user_id = ' .  $this->id, '')
             ->joinLeft(array('US' => 'user'), 'CO1.commenter_id = US.id', '')
+            ->joinLeft(array('UI' => 'user_info'), 'UI.user_id = US.id', '')
             ->where("
                 (($subQueryForCount 
                 ) - " . (Comment::COMMENT_SHOW_LIMIT + 1) . ")
@@ -318,7 +324,7 @@ class User extends User_Row
             ->order(array('CO1.commented_post_id', 'CO1.date DESC', 'CO1.id DESC', ))
             ->columns(array('CO1.id', 'CO1.text', 'CO1.commented_post_id', 'CO1.date',
                             'UL.id as ulid', 'CO1.parent_comment_id', 'CO1.forwarded',
-                            'CO1.likes', 'US.first_name', 'US.last_name'));
+                            'CO1.likes', 'UI.first_name', 'UI.last_name'));
 
         
         $posts = Main::select()
@@ -492,20 +498,33 @@ class User extends User_Row
         $userInfo = Main::fetchRow(Main::select('UserInfo')->where('user_id = ?', $this->id));
         if ($userInfo) {
             if (!empty($params['date_of_birth'])) {
-                $date = new Zend_Date($params['date_of_birth'], Zend_Date::DATES);
+                $locale                  = Zend_Registry::get('Zend_Locale');
+                $date                    = new Zend_Date($params['date_of_birth'], Zend_Date::DATE_SHORT, $locale);
                 $params['date_of_birth'] = $date->get(Zend_Date::TIMESTAMP);
                 $userInfo->edit($params);
-
-$locale = Zend_Registry::get('Zend_Locale');
-//                 $date = Zend_Locale_Format::getDate($params['date_of_birth'],
-//                                     array('date_format' =>
-//                                               Zend_Locale_Format::STANDARD,
-//                                           'locale' => $locale)
-//                                    );
-// fb($date->toString());
-$list = Zend_Locale::getTranslationList('Date', 'en_US');
-fb($list);
+            }
+            $fileName = Utils::uploadFile('avatar', UserInfo::AVATAR_IMAGES_FOLDER, $this->id);
+            if ($fileName) {
+                fb('edituje usera');
+                $userInfo->edit(array('avatar' => $fileName));
             }
         }
+    }
+
+    public function getFriendGroups() {
+        $list =  Main::select()
+                ->from(array('FL' => 'friend_list'))
+                ->where('user_id = ?', $this->id)
+                ->orWhere('is_system = ?', 1)
+                ->columns(array('FL.id', 'FL.title'))
+                ->query()->fetchAll();
+        $return = array();
+        foreach ($list as $key => $value) {
+            if (in_array($value['title'], FriendList::getSystemGroupsArray())) {
+                $value['title'] = FriendList::getTranslated($value['title']);
+            }
+            $return[$value['id']] = $value['title'];
+        }
+        return $return;
     }
 }

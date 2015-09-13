@@ -10,6 +10,7 @@
     <body>
         <input type="hidden" value="<?php echo APP_URL; ?>" class="appurl">
         <input type="hidden" value="<?php echo $this->userID; ?>" class="userID">
+        <input type="hidden" value="<?php echo $this->datePickerFormat; ?>" class="datePickerFormat">
         <?php
             $session = new Zend_Session_Namespace(Sportalize_Controller_Action::SESSION_NAMESPACE_NOTIFICATION);
             if (!empty($session->notificationStatus)) {

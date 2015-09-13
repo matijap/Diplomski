@@ -12,10 +12,17 @@ class SettingsController extends Main_BaseController
                 $user = Main::buildObject('User', $this->params['userID']);
                 if ($user) {
                     $user->updateFavouritesAndDreamTeam($this->params);
-                $user->updatePersonalInfo($this->params['personal_info']);
+                    $user->updatePersonalInfo($this->params['personal_info']);
+                    // $user->updatePrivacySettings();
+                    fb($this->params);
+
+                    //hacky solution, because file upload is performed only after validation. so form will
+                    //have avatar image set to one before upload occured
+                    // also will handle if country is changed, so will display proper date format
+                    $loc = $this->setLocParam();
+                    $this->setDatePickerFormat($loc);
+                    $this->view->form = new PersonalSettingsForm();
                 }
-                // fb('forma je validna');
-                // fb($this->params, 'personal settings params');
             }
         }
     }

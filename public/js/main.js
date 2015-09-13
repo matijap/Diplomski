@@ -15,8 +15,9 @@ $( document ).ready(function() {
 
     var socket = getIOConnection();
 
+    var format = $('.datePickerFormat').val();
     $('input.datepicker').Zebra_DatePicker(
-        {format: 'M/d/yy'}
+        {format: format}
     );
     $('select').select2();
 

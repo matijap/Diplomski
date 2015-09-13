@@ -24,15 +24,41 @@ class Main_BaseController extends Sportalize_Controller_Action
             $this->_helper->layout()->disableLayout();
         }
         $this->view->friends = $this->user->getFriendList();
-
-        Zend_Locale::setDefault('sr_RS');
-        $locale = new Zend_Locale('sr_RS');
-        Zend_Registry::set('Zend_Locale', $locale);
+        $loc = $this->setLocParam();
+        $this->setDatePickerFormat($loc);
     }
 
     public function setNotificationMessage($status, $message) {
         $session                      = new Zend_Session_Namespace(Sportalize_Controller_Action::SESSION_NAMESPACE_NOTIFICATION);
         $session->notificationStatus  = $status;
         $session->notificationMessage = $message;
+    }
+
+    public function getDatePickerFormat($phpFormat) {
+        $return = array('d.M.yy.' => 'd.m.yy',
+                        'M/d/yy'  => 'm/d/yy');
+        return $return[$phpFormat];
+    }
+
+    public function setLocParam() {
+        $userInfo = $this->user->getUserInfoList();
+        $loc = 'en_US';
+        if ($userInfo[0]->country_id) {
+            if ($userInfo[0]->country_id == '189') {
+                $loc = 'sr_RS';
+            }
+        }
+        $this->loc = $loc;
+
+        Zend_Registry::set('loc', $loc);
+        Zend_Locale::setDefault($loc);
+        $locale = new Zend_Locale($loc);
+        Zend_Registry::set('Zend_Locale', $locale);
+        return $loc;
+    }
+
+    public function setDatePickerFormat($loc) {
+        $list = Zend_Locale::getTranslationList('Date', $loc);
+        $this->view->datePickerFormat = $this->getDatePickerFormat($list['short']);
     }
 }

@@ -6,6 +6,7 @@ class Sportalize_Form_Base extends Zend_Form {
     public $params;
     public $translate;
     public $user;
+    public $loc;
 
    public function __construct($data = array()) {
         $this->translate = Zend_Registry::getInstance()->Zend_Translate;
@@ -20,6 +21,8 @@ class Sportalize_Form_Base extends Zend_Form {
         if (Zend_Registry::isRegistered('logged_user')) {
             $this->user = Zend_Registry::get('logged_user');
         }
+
+        $this->loc = Zend_Registry::get('loc');
         
         $this->setDisableLoadDefaultDecorators(true);
         $this->createElements();

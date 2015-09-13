@@ -30,21 +30,12 @@ class Post extends Post_Row
         if ($data['post_type'] == self::POST_TYPE_IMAGE) {
             unset($data['video']);
             if (isset($_FILES["image_upload"])) {
-                $file      = $_FILES["image_upload"];
-                if ($file['tmp_name'] != '') {
-                    if (is_uploaded_file($file['tmp_name'])) {
-                        $fileName = Utils::fileExist(WEB_ROOT_PATH . "/" . Post::POST_IMAGES_FOLDER . "/" , $post->id . '_' . $file['name']);
-                        if (!move_uploaded_file($file['tmp_name'], WEB_ROOT_PATH . "/" . Post::POST_IMAGES_FOLDER . "/" . $fileName)) {
-                            throw new Exception($translate->_("Could not upload files or images."));
-                        } else {
-                            $post->image = $fileName;
-                            $post->save();
-                        }
-                    }
+                $fileName = Utils::uploadFile('image_upload', Post::POST_IMAGES_FOLDER, $post->id);
+                if ($fileName) {
+                    $post = $post->edit(array('image' => $fileName));
                 }
             } else {
-                $post->image = $data['image_url'];
-                $post->save();
+                $post = $post->edit(array('image' => $data['image_url']));
             }
         }
         return $post;

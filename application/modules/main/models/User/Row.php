@@ -12,6 +12,10 @@ class User_Row extends Main_Row {
           return $this->_getListOfDepObjects('DreamTeam','user',$select);
       }
 
+      public function getFriendListList($select=null) {
+          return $this->_getListOfDepObjects('FriendList','user',$select);
+      }
+
       public function getGaleryList($select=null) {
           return $this->_getListOfDepObjects('Galery','user',$select);
       }
@@ -23,6 +27,10 @@ class User_Row extends Main_Row {
     public function getPostUserUserList($select=null) {
         return $this->_getListOfDepObjects('Post','user',$select);
     }
+
+      public function getPrivacySettingList($select=null) {
+          return $this->_getListOfDepObjects('PrivacySetting','user',$select);
+      }
 
       public function getUserInfoList($select=null) {
           return $this->_getListOfDepObjects('UserInfo','user',$select);

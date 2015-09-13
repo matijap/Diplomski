@@ -27,10 +27,10 @@ $( document ).ready(function() {
         element.closest('.personal-settings-container').find('.privacy-friends-list').hide();
         element.closest('.personal-settings-container').find('.privacy-friends').hide();
 
-        if (val == 'friends_list') {
+        if (val == 'SPECIFIC_LISTS') {
             element.closest('.personal-settings-container').find('.privacy-friends-list').show();
         }
-        if (val == 'specific_friends') {
+        if (val == 'SPECIFIC_FRIENDS') {
             element.closest('.personal-settings-container').find('.privacy-friends').show();
         }
     });

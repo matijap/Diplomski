@@ -8,13 +8,19 @@ class Sportalize_View_Helper_FormFileUpload extends Zend_View_Helper_FormElement
     {
         $info = $this->_getInfo($name, $value, $attribs, $options);
         extract($info); // name, value, attribs, options
+        $file              = isset($attribs['file']) ? $attribs['file'] : '';
+        $divWithImageClass = empty($file) ? '' : 'height-50px';
+        $class             = isset($attribs['class']) ? $attribs['class'] : '';
+        $randomNumber      = Utils::getRandomNumber();
 
-        $class = isset($attribs['class']) ? $attribs['class'] : '';
-        $randomNumber = Utils::getRandomNumber();
         $xhtml  =  '<input name="' . $name . '" data-trigger="' . $randomNumber . '" id="' . $name . '" type="file" class="upload-change-it ' . $class . '" />';
-        $xhtml .= '<div class="list-with-button-upload upload-' . $randomNumber . '">
+        $xhtml .= '<div class="' . $divWithImageClass . ' list-with-button-upload upload-' . $randomNumber . '">';
+
+        if (!empty($file)) {
+            $xhtml .= '<img src="' . APP_URL . '/' . $file . '" />';
+        }
                     
-                  </div>';
+        $xhtml .= '</div>';
         return $xhtml;
     }
 }

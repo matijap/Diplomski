@@ -54,4 +54,20 @@ class Utils
         }    
         return $filename;
     }
+
+    public static function uploadFile($fileName, $uploadFolder, $fileNamePrefix = '', $delimeter = '_') {
+        if (isset($_FILES[$fileName]) && !empty($fileName)) {
+            $file      = $_FILES[$fileName];
+            if ($file['tmp_name'] != '') {
+                if (is_uploaded_file($file['tmp_name'])) {
+                    $fileName = Utils::fileExist(WEB_ROOT_PATH . "/" . $uploadFolder . "/" , $fileNamePrefix . $delimeter .$file['name']);
+                    if (!move_uploaded_file($file['tmp_name'], WEB_ROOT_PATH . "/" . $uploadFolder . "/" . $fileName)) {
+                        throw new Exception("Could not upload files or images.");
+                    } else {
+                        return $fileName;
+                    }
+                }
+            }
+        }
+    }
 }
