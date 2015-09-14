@@ -13,8 +13,7 @@ class SettingsController extends Main_BaseController
                 if ($user) {
                     $user->updateFavouritesAndDreamTeam($this->params);
                     $user->updatePersonalInfo($this->params['personal_info']);
-                    // $user->updatePrivacySettings();
-                    fb($this->params);
+                    $user->updatePrivacySettings($this->params['privacy_settings']);
 
                     //hacky solution, because file upload is performed only after validation. so form will
                     //have avatar image set to one before upload occured

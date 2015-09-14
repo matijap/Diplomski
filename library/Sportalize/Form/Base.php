@@ -21,8 +21,8 @@ class Sportalize_Form_Base extends Zend_Form {
         if (Zend_Registry::isRegistered('logged_user')) {
             $this->user = Zend_Registry::get('logged_user');
         }
-
-        $this->loc = Zend_Registry::get('loc');
+    
+        $this->loc = Zend_Registry::isRegistered('loc') ? Zend_Registry::get('loc') : 'en_US';
         
         $this->setDisableLoadDefaultDecorators(true);
         $this->createElements();

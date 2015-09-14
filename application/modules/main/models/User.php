@@ -527,4 +527,32 @@ class User extends User_Row
         }
         return $return;
     }
+
+    public function updatePrivacySettings($params) {
+        $array = array('personal_info_visibility' => PrivacySetting::PRIVACY_TYPE_PROFILE,
+                       'post_visibility'          => PrivacySetting::PRIVACY_TYPE_POST,
+                       'galery_visibility'        => PrivacySetting::PRIVACY_TYPE_GALERY,
+                       );
+        foreach ($params as $key => $value) {
+            $setting = Main::fetchRow(Main::select('PrivacySetting')
+                            ->where('user_id = ?', $this->id)
+                            ->where('type = ?', $array[$key]));
+            $data = array();
+            $data['setting'] = $value['visibility'];
+            $data['options'] = '';
+
+            $keyToFetch = '';
+            if ($value['visibility'] == PrivacySetting::PRIVACY_SETTING_SPECIFIC_LISTS) {
+                $keyToFetch = 'friend_list';
+            }
+            if ($value['visibility'] == PrivacySetting::PRIVACY_SETTING_SPECIFIC_FRIENDS) {
+                $keyToFetch = 'specific_friends';
+            }
+            $options = Utils::arrayFetch($value, $keyToFetch, false);
+            if ($options) {
+               $data['options'] = Zend_Json::encode($options);
+            }
+            $setting->edit($data);
+        }
+    }
 }
