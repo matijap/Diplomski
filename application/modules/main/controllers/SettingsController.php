@@ -21,6 +21,7 @@ class SettingsController extends Main_BaseController
                     $loc = $this->setLocParam();
                     $this->setDatePickerFormat($loc);
                     $this->view->form = new PersonalSettingsForm();
+                    $this->setNotificationMessage($this->translate->_('Personal settings saved successfully.'));
                 }
             }
         }

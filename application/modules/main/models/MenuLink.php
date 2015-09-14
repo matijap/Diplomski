@@ -24,9 +24,9 @@ class MenuLink extends MenuLink_Row
         $return = array();
         foreach ($links as $oneLink) {
             if (empty($oneLink['parent_menu_link_id'])) {
-                $return[$oneLink['id']] = array('url' => $oneLink['url'], 'title' => $oneLink['title']);
+                $return[$oneLink['id']] = array('url' => $oneLink['url'], 'title' => $oneLink['title'], 'class' => $oneLink['class']);
             } else {
-                $return[$oneLink['parent_menu_link_id']]['sublinks'][$oneLink['id']] = array('url' => $oneLink['url'], 'title' => $oneLink['title']);
+                $return[$oneLink['parent_menu_link_id']]['sublinks'][$oneLink['id']] = array('url' => $oneLink['url'], 'title' => $oneLink['title'], 'class' => $oneLink['class']);
             }
         }
         return $return;

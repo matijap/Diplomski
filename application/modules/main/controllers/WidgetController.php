@@ -8,4 +8,8 @@ class WidgetController extends Main_BaseController
         $lwebOptionID               = $this->params['lwebOptionID'];
         $this->view->lwebOptionData = Widget::getLwebOptionData($lwebOptionID);
     }
+
+    public function newWidgetAction() {
+        $this->view->form = $form = new WidgetForm();
+    }
 }

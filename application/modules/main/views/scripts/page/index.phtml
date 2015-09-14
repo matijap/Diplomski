@@ -1,0 +1,26 @@
+<div id="main-panel" class="bb my">
+<?php
+    if (!empty($this->posts)) {
+        foreach ($this->posts as $key => $onePost) {
+            echo $this->partial('render/post.phtml', array('onePost' => $onePost, 'translate' => $this->translate, 'form' => $this->form));
+        }
+    }
+?>
+</div>
+<div style="position: fixed; right: 0; width: 30%; height: 100%; padding: 10px;" class="main-background-color bb">
+    <h1 class="text-align-center m-t-10"><?php echo $this->page->title; ?></h1>
+    <h2 style="margin-top: 10px;"><?php echo $this->translate->_('Widget Customization'); ?></h2>
+    <div class="loader-holder m-t-10">
+        <a data-url="/widget/new-widget" data-template="new-widget-template" class="text-align-center display-block styled-button modal-open" href="javascript:void(0)">
+            <?php echo $this->translate->_('New Widget'); ?>
+        </a>
+        <i class="fa fa-spinner fa-spin text-align-center display-none"></i>
+    </div>
+    <h3>You have no active widgets</h3>
+    <h3>Currently active widgets</h3>
+    <ul class="m-t-5">
+        <li><a href="javascript:void(0)">Some Widget</a></li>
+        <li><a href="javascript:void(0)">Some Widget</a></li>
+        <li><a href="javascript:void(0)">Some Widget</a></li>
+    </ul>
+</div>

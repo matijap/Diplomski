@@ -43,9 +43,13 @@
                                 <ul class="sublink-ul sublink-ul-1">
                                 <?php
                                 foreach ($oneLink['sublinks'] as $oneSublink) {
+                                    $dataUrl = '';
+                                    if ($oneSublink['title'] == MenuLink::MENU_LINK_NEW_PAGE) {
+                                        $dataUrl = 'data-url="/page/new-page"';
+                                    }
                                     ?>
-                                    <li class="cc sublink-li-1 bb main-background-color">
-                                    <?php $link = $oneSublink['url'] != 'javascript:void(0)' ? APP_URL . $oneSublink['url'] : $oneSublink['url']; ?>
+                                    <li <?php echo $dataUrl ?> class="cc sublink-li-1 bb main-background-color <?php echo $oneSublink['class']; ?>">
+                                    <?php $link = $oneSublink['url'] != 'javascript:void(0)' ? APP_URL . '/' .$oneSublink['url'] : $oneSublink['url']; ?>
                                         <a href="<?php echo $link; ?>"><?php echo $translatedMenuLinks[$oneSublink['title']]; ?></a>
                                     </li>
                                     <?php

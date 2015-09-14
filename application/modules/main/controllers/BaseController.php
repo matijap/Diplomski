@@ -28,7 +28,7 @@ class Main_BaseController extends Sportalize_Controller_Action
         $this->setDatePickerFormat($loc);
     }
 
-    public function setNotificationMessage($status, $message) {
+    public function setNotificationMessage($message, $status = Sportalize_Controller_Action::NOTIFICATION_SUCCESS) {
         $session                      = new Zend_Session_Namespace(Sportalize_Controller_Action::SESSION_NAMESPACE_NOTIFICATION);
         $session->notificationStatus  = $status;
         $session->notificationMessage = $message;

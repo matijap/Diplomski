@@ -181,13 +181,17 @@ class User extends User_Row
         return $allPages;
     }
 
-    public static function getColumnsToBeFetched() {
-        return array('PO.title as post_title', 'PO.text as post_text', 'PO.id as post_id', 'PO.date as post_date', 'CO1.id',
-                     'CO1.text as comment_text', 'CO1.date as comment_date', 'CO1.id as comment_id', 'CO1.ulid as user_like',
+    public static function getColumnsToBeFetched($includeUlid = true) {
+        $return =  array('PO.title as post_title', 'PO.text as post_text', 'PO.id as post_id', 'PO.date as post_date', 'CO1.id',
+                     'CO1.text as comment_text', 'CO1.date as comment_date', 'CO1.id as comment_id',
                      'CO1.parent_comment_id as parent_comment_id', 'CO1.forwarded', 'CO1.likes',
                      'CO1.first_name as commenter_first_name', 'CO1.last_name as commenter_last_name', 'PO.post_type as post_type',
                      'PO.video as post_video', 'PO.image as post_image',
                     );
+        if ($includeUlid) {
+            $return[] = 'CO1.ulid as user_like';
+        }
+        return $return;
     }
 
     public function getFriendsAndPagePosts($page = 1) {
@@ -505,7 +509,6 @@ class User extends User_Row
             }
             $fileName = Utils::uploadFile('avatar', UserInfo::AVATAR_IMAGES_FOLDER, $this->id);
             if ($fileName) {
-                fb('edituje usera');
                 $userInfo->edit(array('avatar' => $fileName));
             }
         }

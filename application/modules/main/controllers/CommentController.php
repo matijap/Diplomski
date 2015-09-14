@@ -24,8 +24,12 @@ class CommentController extends Main_BaseController
             $status              = self::NOTIFICATION_SUCCESS;
             $notificationMessage = $this->translate->_('Comment posted.');
         }
-        $this->setNotificationMessage($status, $notificationMessage);
-        $this->_redirect('/');
+        $this->setNotificationMessage($notificationMessage, $status);
+        $redirectURL = '/';
+        if (isset($this->params['page_id'])) {
+            $redirectURL = 'page/index?pageID=' . $this->params['page_id'];
+        }
+        $this->_redirect($redirectURL);
     }
 
     public function likeOrUnlikeCommentAction() {

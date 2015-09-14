@@ -11,7 +11,7 @@ class PostController extends Main_BaseController
         if ($response['isPost']) {
             if ($response['isValid']) {
                 $post = Post::create($this->params);
-                $this->setNotificationMessage(self::NOTIFICATION_SUCCESS, $this->translate->_('Posted successfully'));
+                $this->setNotificationMessage($this->translate->_('Posted successfully'));
                 $this->_helper->json(array('status'  => 1,
                                            'url'     => APP_URL . '/'));
                 

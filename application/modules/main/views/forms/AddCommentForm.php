@@ -2,6 +2,14 @@
 
 class AddCommentForm extends Sportalize_Form_Base {
     
+    public $pageID = false;
+
+    public function __construct($data = array()) {
+        if (isset($data['pageID'])) {
+            $this->pageID = $data['pageID'];
+        }
+        parent::__construct($data);
+    }
     public function init() {
         parent::init();
         $this->setAction(APP_URL . '/comment/submit-comment');
@@ -26,6 +34,9 @@ class AddCommentForm extends Sportalize_Form_Base {
         $this->addElement('hidden', 'commented_post_id', array('value' => 0, 'class' => 'form_postID'));
         $this->addElement('hidden', 'parent_comment_id', array('value' => 0, 'class' => 'form_commentID'));
         $this->addElement('hidden', 'commenter_id', array('value' => $this->user->id, 'class' => 'form_commenterID'));
+        if ($this->pageID) {
+            $this->addElement('hidden', 'page_id', array('value' => 7));
+        }
     }
 
     public function redecorate() {

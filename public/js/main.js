@@ -315,7 +315,9 @@ $( document ).ready(function() {
                     $('.modal .mc').show();
                     $('.mcl').hide();
                     applyInitFunctions();
-                    addVideoToModalElement($('#video'));
+                    if (doesExists('#video')) {
+                        addVideoToModalElement($('#video'));
+                    }
                 } else {
                     if (data.status) {
                         window.location = data.url;

@@ -12,7 +12,7 @@ class IndexController extends Main_BaseController
 
     public function profileAction() {
         if (!isset($this->params['userID'])) {
-            $this->setNotificationMessage(Sportalize_Controller_Action::NOTIFICATION_ERROR, $this->translate->_('User ID not sent.'));
+            $this->setNotificationMessage($this->translate->_('User ID not sent.'), Sportalize_Controller_Action::NOTIFICATION_ERROR);
             $this->_redirect('/');
         }
         $user              = Main::buildObject('User', $this->params['userID']);

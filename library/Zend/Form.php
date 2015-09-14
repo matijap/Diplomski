@@ -3320,6 +3320,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
             $index = 0;
             foreach ($this->_order as $key => $order) {
                 if (null === $order) {
+                    fb('key', $key);
                     if (null === ($order = $this->{$key}->getOrder())) {
                         while (array_search($index, $this->_order, true)) {
                             ++$index;
