@@ -16,7 +16,8 @@
 .sublink-li-1:hover > .sublink-ul:first-of-type {
     display: block;
     top: 0px;
-    left: 277px;
+    left: initial;
+    right: -180px;
 }
 header li:hover {
     cursor: pointer;

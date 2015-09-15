@@ -59,19 +59,17 @@ $( document ).ready(function() {
                 tempData = tempHidden.val();
             }
         }
-        
-        setTimeout(function() {
-            $.ajax({
-               url: "ajax/customizeListOptions.php",
-               data: {'widgetOptionID': widgetOptionID, 'item': item, 'tempData': tempData},
-               success: function(result) {
-                   $('body').append(result);
-                    $('select').select2();
-               }
-            });
-            element.toggle();
-            spinner.toggle();
-        }, 300);
+        var appurl = getAppUrl();
+        $.ajax({
+           url: appurl + "/widget/edit-lweb-data",
+           data: {'widgetOptionID': widgetOptionID, 'item': item, 'tempData': tempData},
+           success: function(result) {
+               $('body').append(result);
+               $('select').select2();
+               element.toggle();
+               spinner.toggle();
+           }
+        });
     });
 
     $(document).on(clickOrTouchstart, '.add-list-with-button-customize-option', function(e) {

@@ -40,7 +40,8 @@ class Sportalize_Form_Base extends Zend_Form {
         $this->clearDecorators()->setDecorators(array('FormElements', 'Form'));
         $elements = $this->getElements();
         foreach ($elements as $oneElement) {
-            if ($oneElement->getType() == 'Zend_Form_Element_Hidden') {
+            $viewOnlyHelperElements = array('Zend_Form_Element_Hidden', 'Sportalize_Form_Element_PlainHtml');
+            if (in_array($oneElement->getType(), $viewOnlyHelperElements)) {
                 $this->clearDecoratorsAndSetViewHelperOnly($oneElement);
             }
             if ($oneElement->getType() == 'Zend_Form_Element_Select') {

@@ -1,2 +1,18 @@
+<?php echo $this->form; ?>
+<div class="list-with-edit-button-option-template display-none">
+    <div class="modal-element to-be-removed">
+        <label class="main-label"><?php echo $this->translate->_('Option Avatars'); ?></label>
+        <div class="main-div">
+            <input id="change_1" type="file" class="list-option-avatar bb pull-left upload-change-it" />
+            <input id="change_2" type="file" class="list-option-avatar bb pull-left upload-change-it m-l-5" />
+            <div class="c1 list-with-button-upload"></div>
+            <div class="c2 list-with-button-upload"></div>
+            <i data-closest="widget-marker" class="fa fa-times remove-item m-l-5 remove-list-with-button-option"></i>
+            <i class="fa fa-cog"></i>
+            <i class="fa fa-spinner fa-spin" style="display:none;"></i>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
 <?php
-echo $this->form;
+

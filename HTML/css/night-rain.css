@@ -358,3 +358,6 @@ header .sublink-ul li:last-of-type {
     border: 1px solid #E8E8E8;
 }
 /* Favorites end */
+.widget-content.favourite-pages li a {
+    color: red;
+}

@@ -25,6 +25,8 @@ class Widget extends Widget_Row
     const WIDGET_LWEB_PLACEMENT_MAIN         = 'MAIN';
     const WIDGET_LWEB_PLACEMENT_ADDITIONAL   = 'ADDITIONAL';
 
+    const WIDGET_IMAGES_FOLDER               = 'user_images/widget_images';
+
     public static function gatherAllWidgetsForUser($userID) {
         try {
             $widgets = Main::select()
@@ -146,5 +148,28 @@ class Widget extends Widget_Row
         } catch(Exception $e) {
             fb($e->getMessage());
         }
+    }
+
+    public function getDataForLwebWidget() {
+        $data   = $this->getWidgetOptionList();
+        $data   = $data->toArray();
+        $return = array();
+        $listID = false;
+        foreach ($data as $key => $value) {
+            if ($value['type'] == self::WIDGET_OPTION_TYPE_LIST_WEB) {
+                $return[$value['id']]['title'] = $value['title'];
+                $listID = $value['id'];
+            }
+            if ($value['type'] == self::WIDGET_OPTION_TYPE_LIST_WEB_OPTION) {
+                $return[$listID]['options'][$value['id']]['image_1'] = $value['image_1'];
+                $return[$listID]['options'][$value['id']]['image_2'] = $value['image_2'];
+            }
+            if ($value['type'] == self::WIDGET_OPTION_TYPE_LIST_WEB_DATA) {
+                $return[$listID]['options'][$value['parent_widget_option_id']]['data'][$value['placement']][$value['id']]['value_1'] = $value['value_1'];
+                $return[$listID]['options'][$value['parent_widget_option_id']]['data'][$value['placement']][$value['id']]['value_2'] = $value['value_2'];
+            }
+        }
+        // fb($return);
+        return $return;
     }
 }

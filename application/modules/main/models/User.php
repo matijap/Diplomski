@@ -558,4 +558,18 @@ class User extends User_Row
             $setting->edit($data);
         }
     }
+
+    public function getUserPages() {
+        $pages = Main::select()
+                ->from(array('PA' => 'page'), '')
+                ->where('PA.user_id = ?', $this->id)
+                ->columns(array('PA.id', 'PA.title'))
+                ->query()->fetchAll();
+
+        $return = array();
+        foreach ($pages as $key => $value) {
+            $return[$value['id']] = $value['title'];
+        }
+        return $return;
+    }
 }

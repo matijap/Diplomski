@@ -195,6 +195,19 @@ $( document ).ready(function() {
         var selector = '';
         if ($('.widget-list-with-edit-button').is(':visible')) {
             selector = '.modal .widget-list-with-edit-button';
+            var rand1 = getRandomNumber(1, 100000);
+            var rand2 = getRandomNumber(1, 100000);
+            $('.modal #change_1').data('trigger', 'ap_' + rand1);
+            $('.modal #change_2').data('trigger', 'ap_' + rand2);
+            $('.modal #change_1').attr('data-trigger', 'ap_' + rand1);
+            $('.modal #change_2').attr('data-trigger', 'ap_' + rand2);
+            $('.modal #change_1').attr('id', rand1);
+            $('.modal #change_2').attr('id', rand2);
+            $('.modal .c1').addClass('upload-ap_' + rand1);
+            $('.modal .c2').addClass('upload-ap_' + rand2);
+            $('.modal .c1').removeClass('c1');
+            $('.modal .c2').removeClass('c2');
+            initUploadButtonsChange();
         }
         if ($('.widget-list').is(':visible')) {
             selector = '.modal .widget-list';
@@ -206,6 +219,7 @@ $( document ).ready(function() {
             } else {
                 $(selector).find('.remove-list-section').hide();
             }
+            $(this).closest('.' + closest).find('.fa-times').show();
         } else {
             $(this).closest('.' + closest).find('.fa-times').show();
         }
@@ -292,7 +306,6 @@ $( document ).ready(function() {
         var data         = $(this).data();
         var id           = data.trigger;
         var divWithImage = $('.upload-' + id);
-        
         divWithImage.html('');
         if ($(this).hasExtension(['.jpg', '.png', '.gif'])) {
             divWithImage.append('<img src="' + URL.createObjectURL(e.target.files[0]) + '">');

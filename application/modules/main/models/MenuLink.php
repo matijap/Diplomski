@@ -13,6 +13,7 @@ class MenuLink extends MenuLink_Row
     const MENU_LINK_QUIZ              = 'QUIZ';
     const MENU_LINK_VIRTUAL_BOOKING   = 'VIRTUAL_BOOKING';
     const MENU_LINK_NEW_PAGE          = 'NEW_PAGE';
+    const MENU_LINK_MY_PAGES          = 'MY_PAGES';
     const MENU_LINK_GALERY            = 'GALERY';
     const MENU_LINK_PERSONAL_SETTINGS = 'PERSONAL_SETTINGS';
     const MENU_LINK_FAVORITES         = 'FAVORITES';
@@ -43,6 +44,7 @@ class MenuLink extends MenuLink_Row
                      self::MENU_LINK_QUIZ              => $translate->_('Quiz'),
                      self::MENU_LINK_VIRTUAL_BOOKING   => $translate->_('Virtual Booking'),
                      self::MENU_LINK_NEW_PAGE          => $translate->_('New Page'),
+                     self::MENU_LINK_MY_PAGES          => $translate->_('My Pages'),
                      self::MENU_LINK_GALERY            => $translate->_('Galery'),
                      self::MENU_LINK_PERSONAL_SETTINGS => $translate->_('Personal Settings'),
                      self::MENU_LINK_FAVORITES         => $translate->_('Favorites'),

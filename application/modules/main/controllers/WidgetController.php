@@ -10,6 +10,11 @@ class WidgetController extends Main_BaseController
     }
 
     public function newWidgetAction() {
-        $this->view->form = $form = new WidgetForm();
+        $this->view->form = $form = new WidgetForm(array('widgetID' => 5));
+        // fb($_FILES, 'files');
+    }
+
+    public function editLwebDataAction() {
+        
     }
 }
