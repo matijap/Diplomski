@@ -11,7 +11,7 @@ function getScreenHeight() {
 }
 
 function getIOConnection() {
-    // return io.connect("localhost:3000");
+     return io.connect("localhost:3000");
 }
 
 function applyResizeFunctions() {
