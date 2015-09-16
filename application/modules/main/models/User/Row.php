@@ -60,4 +60,8 @@ class User_Row extends Main_Row {
           return $this->_getListOfDepObjects('UserWidget','user',$select);
       }
 
+      public function getUserWidgetDataList($select=null) {
+          return $this->_getListOfDepObjects('UserWidgetData','user',$select);
+      }
+
 }

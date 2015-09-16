@@ -155,6 +155,7 @@ class Widget extends Widget_Row
         $data   = $data->toArray();
         $return = array();
         $listID = false;
+
         foreach ($data as $key => $value) {
             if ($value['type'] == self::WIDGET_OPTION_TYPE_LIST_WEB) {
                 $return[$value['id']]['title'] = $value['title'];
@@ -165,11 +166,51 @@ class Widget extends Widget_Row
                 $return[$listID]['options'][$value['id']]['image_2'] = $value['image_2'];
             }
             if ($value['type'] == self::WIDGET_OPTION_TYPE_LIST_WEB_DATA) {
-                $return[$listID]['options'][$value['parent_widget_option_id']]['data'][$value['placement']][$value['id']]['value_1'] = $value['value_1'];
-                $return[$listID]['options'][$value['parent_widget_option_id']]['data'][$value['placement']][$value['id']]['value_2'] = $value['value_2'];
+                $parent = $value['parent_widget_option_id'];
+                $temp = Main::buildObject('WidgetOption', $parent);
+                $return[$temp->parent_widget_option_id]['options'][$value['parent_widget_option_id']]['data'][$value['placement']][$value['id']]['value_1'] = $value['value_1'];
+                $return[$temp->parent_widget_option_id]['options'][$value['parent_widget_option_id']]['data'][$value['placement']][$value['id']]['value_2'] = $value['value_2'];
             }
         }
-        // fb($return);
         return $return;
+    }
+
+    public static function getWidgetTypeMultioptions($includePage = false) {
+        $translate = Zend_Registry::getInstance()->Zend_Translate;
+        $return    = array(self::WIDGET_TYPE_PLAIN    => $translate->_('Plain'),
+                           self::WIDGET_TYPE_LIST     => $translate->_('List'),
+                           self::WIDGET_TYPE_LIST_WEB => $translate->_('List with edit button'),
+                           self::WIDGET_TYPE_TABLE    => $translate->_('Table'),
+                     );
+        if ($includePage) {
+            $return[self::WIDGET_TYPE_PAGE] = $translate->_('Page');
+        }
+        return $return;
+    }
+
+    public static function getSelectorForWidgetType($type) {
+        switch ($type) {
+            case self::WIDGET_TYPE_PLAIN:
+                $return = 'widget-plain';
+                break;
+            case self::WIDGET_TYPE_LIST:
+                $return = 'widget-list';
+                break;
+            case self::WIDGET_TYPE_TABLE:
+                $return = 'widget-table';
+                break;
+            case self::WIDGET_TYPE_LIST_WEB:
+                $return = 'widget-list-with-edit-button';
+                break;
+        }
+        return $return;
+    }
+
+    public static function create($data, $tableName = null) {
+        $widgetData = array('type'    => $data['type'],
+                            'title'   => $data['title'],
+                            'page_id' => 7);
+        $widget = parent::create($widgetData);
+        return $widget;
     }
 }

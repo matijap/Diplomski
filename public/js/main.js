@@ -182,7 +182,16 @@ $( document ).ready(function() {
         var closest = data.closest;
         var find    = data.find;
 
-        var element = $(this).closest('.' + closest);
+        var chars = (closest.indexOf('d') == 0);
+
+        var c = '';
+        if (chars) {
+            c = closest;
+        } else {
+            c = '.' + closest;
+        }
+
+        var element = $(this).closest(c);
 
         if (typeof find != 'undefined') {
             element = element.find('.' + find);
@@ -193,35 +202,55 @@ $( document ).ready(function() {
 
         //small hack #1
         var selector = '';
-        if ($('.widget-list-with-edit-button').is(':visible')) {
-            selector = '.modal .widget-list-with-edit-button';
+        if ($('div.widget-list-with-edit-button').is(':visible')) {
+            selector = '.modal div.widget-list-with-edit-button';
             var rand1 = getRandomNumber(1, 100000);
             var rand2 = getRandomNumber(1, 100000);
-            $('.modal #change_1').data('trigger', 'ap_' + rand1);
-            $('.modal #change_2').data('trigger', 'ap_' + rand2);
-            $('.modal #change_1').attr('data-trigger', 'ap_' + rand1);
-            $('.modal #change_2').attr('data-trigger', 'ap_' + rand2);
-            $('.modal #change_1').attr('id', rand1);
-            $('.modal #change_2').attr('id', rand2);
+            var rand3 = getRandomNumber(1, 100000);
+            var rand4 = getRandomNumber(1, 100000);
+            $('.modal .change_1').data('trigger', 'ap_' + rand1);
+            $('.modal .change_2').data('trigger', 'ap_' + rand2);
+            $('.modal .change_1').attr('data-trigger', 'ap_' + rand1);
+            $('.modal .change_2').attr('data-trigger', 'ap_' + rand2);
+            var input   = $('.modal .change_1').closest('.one-widget-list-section').find('input[type="text"]');
+            var inputID = input.attr('id');
+            var did     = '';
+            if (inputID == 'list-section-title-1') {
+                input.attr('data-id', rand4);
+                input.attr('name', 'lweb[' + rand4 + '][title_' + rand4 + ']');
+                did = rand4;
+            } else {
+                var d = input.data(); 
+                did   = d.id;
+            }
+
+            $('.modal .change_1').parent().find('.fa-cog').attr('data-item', rand3);
+            
+            $('.modal .change_1').attr('name', 'lweb[' + did + '][' + rand3 + '][images][]');
+            $('.modal .change_2').attr('name', 'lweb[' + did + '][' + rand3 + '][images][]');
+            $('.modal .change_1').attr('id', rand1);
+            $('.modal .change_2').attr('id', rand2);
+            
             $('.modal .c1').addClass('upload-ap_' + rand1);
             $('.modal .c2').addClass('upload-ap_' + rand2);
             $('.modal .c1').removeClass('c1');
             $('.modal .c2').removeClass('c2');
             initUploadButtonsChange();
         }
-        if ($('.widget-list').is(':visible')) {
+        if ($('div.widget-list').is(':visible')) {
             selector = '.modal .widget-list';
         }
         if (selector != '') {
             // $('.remove-list-section').hide();
+            $(this).closest(c).find('.fa-times').show();
             if ($(selector).find('.remove-list-section').size() > 1) {
                 $(selector).find('.remove-list-section').show();
             } else {
                 $(selector).find('.remove-list-section').hide();
             }
-            $(this).closest('.' + closest).find('.fa-times').show();
+            
         } else {
-            $(this).closest('.' + closest).find('.fa-times').show();
+            $(this).closest(c).find('.fa-times').show();
         }
     });
 
@@ -235,12 +264,13 @@ $( document ).ready(function() {
 
         //small hack #1 (related)
         var selector = '';
-        if ($('.widget-list-with-edit-button').is(':visible')) {
-            selector = '.modal .widget-list-with-edit-button';
+        if ($('div.widget-list-with-edit-button').is(':visible')) {
+            selector = '.modal div.widget-list-with-edit-button';
         }
-        if ($('.widget-list').is(':visible')) {
-            selector = '.modal .widget-list';
+        if ($('div.widget-list').is(':visible')) {
+            selector = '.modal div.widget-list';
         }
+
         if (selector != '') {
             if ($(selector).find('.remove-list-section').size() < 2) {
                 $(selector).find('.remove-list-section').hide();

@@ -9,38 +9,40 @@ $( document ).ready(function() {
         var left           = {};
         var right          = {};
         var additional     = {};
-        if (widgetOptionID == 'new') {
-            $('.add-list-with-button-settings-panel .lwbsm-left').find('input').each(function() {
-                var name      = $(this).attr('name');
-                var tempObj   = {};
-                tempObj.label = $(this).parent().find('label').text();
-                tempObj.value = $(this).val();
-                left[name]    = tempObj;
-            });
-            $('.add-list-with-button-settings-panel .lwbsm-right').find('input').each(function() {
-                var name      = $(this).attr('name');
-                var tempObj   = {};
-                tempObj.label = $(this).parent().find('label').text();
-                tempObj.value = $(this).val();
-                right[name]   = tempObj;
-            });
-            $('.list-with-button-settings-additional').find('input').each(function() {
-                var name         = $(this).attr('name');
-                var tempObj      = {};
-                tempObj.label    = $(this).parent().find('label').text();
-                tempObj.value    = $(this).val();
-                additional[name] = tempObj;
-            });
-            
-            $('.close-list-with-button-settings-panel').trigger('click');
-            main.left      = left;
-            main.right     = right;
-            obj.main       = main;
-            obj.additional = additional;
-            var jsoned     = JSON.stringify(obj);
-            $('.customize-list-with-edit-button-options[data-item="' + itemID + '"]').parent().find('.hidden-json').remove();
-            $('.customize-list-with-edit-button-options[data-item="' + itemID + '"]').parent().append('<input class="hidden-json" type="hidden" value="' + escapeHtml(jsoned) + '">');
-        }
+        // if (widgetOptionID == 'new') {
+        $('.add-list-with-button-settings-panel .lwbsm-left').find('input').each(function() {
+            var name      = $(this).attr('name');
+            var tempObj   = {};
+            tempObj.label = $(this).parent().find('label').text();
+            tempObj.value = $(this).val();
+            left[name]    = tempObj;
+        });
+        $('.add-list-with-button-settings-panel .lwbsm-right').find('input').each(function() {
+            var name      = $(this).attr('name');
+            var tempObj   = {};
+            tempObj.label = $(this).parent().find('label').text();
+            tempObj.value = $(this).val();
+            right[name]   = tempObj;
+        });
+        $('.list-with-button-settings-additional').find('input').each(function() {
+            var name         = $(this).attr('name');
+            var tempObj      = {};
+            tempObj.label    = $(this).parent().find('label').text();
+            tempObj.value    = $(this).val();
+            additional[name] = tempObj;
+        });
+        
+        $('.close-list-with-button-settings-panel').trigger('click');
+        main.left      = left;
+        main.right     = right;
+        obj.main       = main;
+        obj.additional = additional;
+        var jsoned     = JSON.stringify(obj);
+        $('.customize-list-with-edit-button-options[data-item="' + itemID + '"]').parent().find('.hidden-json').remove();
+        $('.customize-list-with-edit-button-options[data-item="' + itemID + '"]').parent().append('<input name="lweb[data][' + itemID + ']" class="hidden-json" type="hidden" value="' + escapeHtml(jsoned) + '">');
+        // } else {
+
+        // }
     });
 
     $(document).on(clickOrTouchstart, '.customize-list-with-edit-button-options', function(e) {
@@ -68,6 +70,7 @@ $( document ).ready(function() {
                $('select').select2();
                element.toggle();
                spinner.toggle();
+               addIDAndInitializeSortable();
            }
         });
     });
@@ -78,21 +81,24 @@ $( document ).ready(function() {
         var elementRandom    = getRandomNumber();
         var name             = spacesToUnderScoreAndLowercaseWordFilter(picked);
 
+        nameMain       = 'main[' + elementRandom + '][]';
+        nameAdditional = 'additional[' + elementRandom + '][]';
+
         var htmlToAppendLeft =  '<div class="list-with-button-settings-item to-be-removed">' + 
                                     '<label class="truncate-string">' + picked + '</label>' + 
                                     '<i data-closest="lwbsm-left" data-item="item-' + randomNumber + '" class="fa fa-times remove-item float-right m-l-5"></i>' +
-                                    '<input type="text" name="'+ name + '_' + elementRandom + '[]">' + 
+                                    '<input type="text" name="' + nameMain + '">' + 
                                 '</div>';
         var htmlToAppendRight=  '<div class="list-with-button-settings-item to-be-removed">' + 
                                     '<label class="truncate-string">' + picked + '</label>' + 
                                     '<i data-closest="lwbsm-right" data-item="item-' + randomNumber + '" class="fa fa-times remove-item float-right m-l-5"></i>' +
-                                    '<input type="text" name="'+ name + '_' + elementRandom + '[]">' + 
+                                    '<input type="text" name="' + nameMain + '">' + 
                                 '</div>';
 
         var htmlToAppendAdditional = '<div class="list-with-button-settings-item to-be-removed">' +
                                         '<label class="truncate-string">' + picked + '</label>' +
                                         '<i data-closest="list-with-button-settings-additional" class="fa fa-times remove-item float-right m-l-5"></i>' +
-                                        '<input type="text" name="'+ name + '_' + elementRandom + '">' +
+                                        '<input type="text" name="' + nameAdditional + '">' +
                                      '</div>';
 
         var whereTo = $('.list-with-button-select-where-to').val();
@@ -120,7 +126,7 @@ $( document ).ready(function() {
         var item    = data.item;
 
         var otherElement = closest == 'lwbsm-left' ? 'lwbsm-right' : 'lwbsm-left';
-        $('.' + otherElement).find('i[data-item="' + item + '"]').trigger('click');
+        $('.' + otherElement).find('i[data-item="' + item + '"]').closest('.to-be-removed').remove();
     });
 
     $(document).on(clickOrTouchstart, '.close-list-with-button-settings-panel', function(e) {
@@ -169,9 +175,24 @@ $( document ).ready(function() {
     });
 
     $(document).on(clickOrTouchstart, '.widget-type-selector', function(e) {
-        var data = $(this).data();
+        var val = $(this).val();
+        widgetType = 'widget-';
+        switch(val) {
+            case 'PLAIN':
+                widgetType += 'plain';
+                break;
+            case 'LIST':
+                widgetType += 'list';
+                break;
+            case 'TABLE':
+                widgetType += 'table';
+                break;
+            case 'LIST_WEB':
+                widgetType += 'list-with-edit-button';
+                break;
+        }
         $('.modal-body .mc').find('.all-widget-types').hide();
-        $('.modal-body .mc').find('.' + data.widgetType).show();
+        $('.modal-body .mc').find('.' + widgetType).show();
     });
 
     $(document).on(clickOrTouchstart, '.remove-section', function(e) {

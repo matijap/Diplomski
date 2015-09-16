@@ -21,20 +21,11 @@ class Sportalize_Form_Modal extends Sportalize_Form_Base {
             'Description',
             array('Errors'),
             array('HtmlTag', array('tag'  => 'div', 'class' => 'main-div')),
-            array('Label', array('class' => 'main-label')),
+            array('Label', array('class' => 'main-label ')),
             array(array('All' => 'HtmlTag'), array('tag'    => 'div', 'class'   => 'modal-element')),
         );
-        $toBeDecorated = array('Zend_Form_Element_Text', 'Zend_Form_Element_Textarea',
+        $toBeDecorated = array('Zend_Form_Element_Text', 'Zend_Form_Element_Textarea', 'Zend_Form_Element_Radio',
                                'Zend_Form_Element_Select', 'Sportalize_Form_Element_FileUpload');
-
-        $decoratorFile = array(
-            'File',
-            'Description',
-            array('Errors'),
-            array('HtmlTag', array('tag'  => 'div', 'class' => 'main-div')),
-            array('Label', array('class' => 'main-label')),
-            array(array('All' => 'HtmlTag'), array('tag'    => 'div', 'class'   => 'modal-element')),
-        );
 
         foreach ($this->getElements() as $key => $oneElement) {
             if (in_array($oneElement->getType(), $toBeDecorated)) {
