@@ -24,6 +24,10 @@ class Page_Row extends Main_Row {
           return $this->_getListOfDepObjects('UserPage','page',$select);
       }
 
+      public function getWidgetList($select=null) {
+          return $this->_getListOfDepObjects('Widget','page',$select);
+      }
+
       public function getWidgetOptionList($select=null) {
           return $this->_getListOfDepObjects('WidgetOption','linked_page',$select);
       }

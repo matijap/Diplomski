@@ -18,11 +18,30 @@ class Sportalize_View_Helper_FormWidgetLweb extends Zend_View_Helper_FormElement
         if (!$wiod) {
             $wiod = 'new';
         }
-        // fb($data, 'data');
+        // {"main":{"left":{"main[56348][]":{"label":"data","value":"data1"},
+        // "main[70116][]":{"label":"data","value":"data3"},"main[36449][]":{"label":"data","value":"data5"}},"right":{"main[56348][]":{"label":"data","value":"data2"}
+        // ,"main[70116][]":{"label":"data","value":"data4"},"main[36449][]":{"label":"data","value":"data6"}}},"additional":{}}
         $html = '<div class="owls-holder widget-marker sortable-initialize width-95-percent display-inline-block append-into" data-template="list-option-template">';
         $count = count($data);
         $style = $count > 1  ? '' : ' display: none;';
         foreach ($data as $key => $value) {
+            $arrayToBeEncoded = array();
+            if (isset($value['data'])) {
+                foreach ($value['data'] as $placement => $datas) {
+                    foreach ($datas as $k => $oneData) {
+                        if ($placement == Widget::WIDGET_LWEB_PLACEMENT_MAIN) {
+                            $arrayToBeEncoded[strtolower($placement)]['left'][$k]['label'] = $oneData['title'];
+                            $arrayToBeEncoded[strtolower($placement)]['left'][$k]['value'] = $oneData['value_1'];
+                            $arrayToBeEncoded[strtolower($placement)]['right'][$k]['label'] = $oneData['title'];
+                            $arrayToBeEncoded[strtolower($placement)]['right'][$k]['value'] = $oneData['value_2'];
+                        } else {
+                            $arrayToBeEncoded[strtolower($placement)][$k]['label'] = $oneData['title'];
+                            $arrayToBeEncoded[strtolower($placement)][$k]['value'] = $oneData['value_1'];
+                        }
+                    }
+                }
+            }
+            $arrayToBeEncoded = Zend_Json::encode($arrayToBeEncoded);
             $rand1 = Utils::getRandomNumber();
             $rand2 = Utils::getRandomNumber();
             $rand3  = Utils::getRandomNumber();
@@ -47,6 +66,7 @@ class Sportalize_View_Helper_FormWidgetLweb extends Zend_View_Helper_FormElement
                             <i data-closest="widget-marker" style="vertical-align: top;' . $style . '" class="fa fa-times remove-item m-l-5 remove-list-with-button-option"></i>
                             <i data-wiod="' . $key . '" data-item="' . $rand3 . '" class="fa fa-cog customize-list-with-edit-button-options"></i>
                             <i class="fa fa-spinner fa-spin customize-list-with-edit-button-options-spinner" style="display:none"></i>
+                            <input name="lweb[data][' . $rand3 . ']" class="hidden-json" type="hidden" value="' . htmlentities($arrayToBeEncoded) . '">
                             <div class="clear"></div>
                         </div>
                     </div>';

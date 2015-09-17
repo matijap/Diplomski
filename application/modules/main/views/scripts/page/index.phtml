@@ -7,20 +7,30 @@
     }
 ?>
 </div>
-<div style="position: fixed; right: 0; width: 30%; height: 100%; padding: 10px;" class="main-background-color bb">
+<div style="position: fixed; right: 0; width: 30%; height: 100%; padding: 10px;" class="main-background-color bb page-info">
     <h1 class="text-align-center m-t-10"><?php echo $this->page->title; ?></h1>
     <h2 style="margin-top: 10px;"><?php echo $this->translate->_('Widget Customization'); ?></h2>
     <div class="loader-holder m-t-10">
-        <a data-url="/widget/new-widget" data-template="new-widget-template" class="text-align-center display-block styled-button modal-open" href="javascript:void(0)">
+        <a data-url="/widget/new-widget?pageID=<?php echo $this->page->id; ?>" data-template="new-widget-template" class="text-align-center display-block styled-button modal-open" href="javascript:void(0)">
             <?php echo $this->translate->_('New Widget'); ?>
         </a>
         <i class="fa fa-spinner fa-spin text-align-center display-none"></i>
     </div>
-    <h3>You have no active widgets</h3>
-    <h3>Currently active widgets</h3>
-    <ul class="m-t-5">
-        <li><a href="javascript:void(0)">Some Widget</a></li>
-        <li><a href="javascript:void(0)">Some Widget</a></li>
-        <li><a href="javascript:void(0)">Some Widget</a></li>
+    <?php $text = !empty($this->widgets) ? $this->translate->_('Currently active widgets') : $this->translate->_('No active widgets'); ?>
+    
+    <h3 class="m-t-10"><?php echo $text; ?></h3>
+    <ul class="m-t-10">
+    <?php
+    foreach ($this->widgets as $key => $oneWidget) {
+        ?>
+        <li>
+            <a href="javascript:void(0)" class="modal-open" data-url="/widget/new-widget?widgetID=<?php echo $oneWidget->id; ?>" >
+                <?php echo $oneWidget->title; ?>
+            </a>
+        </li>
+        <?php
+    }
+    ?>
     </ul>
 </div>
+<?php

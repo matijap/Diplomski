@@ -25,8 +25,9 @@ class PageController extends Main_BaseController
             $this->_redirect('/');
         }
         $page = Main::buildObject('Page', $this->params['pageID']);
-        $this->view->posts = $page->getPostsByPage(1, $this->user->id);
-        $this->view->form  = new AddCommentForm(array('pageID' => $page->id));
-        $this->view->page  = $page;
+        $this->view->posts   = $page->getPostsByPage(1, $this->user->id);
+        $this->view->form    = new AddCommentForm(array('pageID' => $page->id));
+        $this->view->page    = $page;
+        $this->view->widgets = $page->getWidgetList();
     }
 }

@@ -11,15 +11,21 @@ class WidgetController extends Main_BaseController
 
     public function newWidgetAction() {
         // $this->view->form = $form = new WidgetForm(array('widgetID' => 5));
-        $this->view->form = $form = new WidgetForm();
+        $widgetID = Utils::arrayFetch($this->params, 'widgetID', false);
+        $pageID   = Utils::arrayFetch($this->params, 'pageID', false);
+        $data     = array();
+        if ($widgetID) {
+            $data['widgetID'] = $widgetID;
+        }
+        if ($pageID) {
+            $data['pageID'] = $pageID;
+        }
+        $this->view->form = $form = new WidgetForm($data);
         $response = $this->validateForm($form);
         if ($response['isPost']) {
             if ($response['isValid']) {
-                // fb($_FILES, 'files');
-                // fb($this->params, 'params');
-                $widgetID = Utils::arrayFetch($this->params, 'widgetID', false);
                 if ($widgetID) {
-                    $widget = Main::buildObject('Widget', $this->params);
+                    $widget = Main::buildObject('Widget', $widgetID);
                     $widget->edit($this->params);
                     $this->setNotificationMessage($this->translate->_('Widget updated successfully'));
                                     
@@ -27,7 +33,7 @@ class WidgetController extends Main_BaseController
                     Widget::create($this->params);
                     $this->setNotificationMessage($this->translate->_('Widget created successfully'));
                 }
-                $this->_helper->json(array('status'  => 1,
+                $this->_helper->json(array('status'  => 0,
                                            'url'     => APP_URL . '/'));
             }
         }

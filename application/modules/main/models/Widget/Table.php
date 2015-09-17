@@ -9,6 +9,10 @@ protected $_primary      = array('id');
 protected $_rowClass     = 'Widget';
 
 protected $_referenceMap = array(
+                  'page' => array(
+                    'columns'          => 'page_id',
+                    'refTableClass'    => 'Page_Table',
+                    'refColumns'       => 'id')
                     );
 
 }

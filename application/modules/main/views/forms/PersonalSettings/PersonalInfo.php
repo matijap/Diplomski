@@ -2,12 +2,6 @@
 
 class PersonalSettings_PersonalInfo extends PersonalSettings_PersonalSettingsBaseForm {
 
-    public function __construct() {
-        $this->class   = 'dream-team';
-        
-        parent::__construct();
-    }
-
     public function createElements() {
         parent::createElements();
 

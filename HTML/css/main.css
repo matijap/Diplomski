@@ -860,6 +860,10 @@ header li {
     float: left;
     padding: 10px;
 }
+ .page-info li {
+    font-size: 13px;
+    margin-bottom: 5px;
+ }
 /* Page End */
 /* Main Content My Posts Start */
 #main-panel.my {
@@ -1089,6 +1093,7 @@ a.back-to-galery {
     padding: 10px;
     padding-right: 20px;
     margin-right: 10px;
+    vertical-align: top;
 }
 .personal-settings-container input {
     font-size: 15px;
@@ -1156,6 +1161,18 @@ a.back-to-galery {
 .privacy-settings .privacy-friends-list .select2-container,
 .privacy-settings .privacy-friends .select2-container {
     width: 100% !important;
+}
+.personal-settings-container.avatar-dg {
+    width: 230px;
+}
+.personal-settings-container.avatar-dg img {
+    margin-left: 0px;
+}
+.personal-settings-container.avatar-dg .list-with-button-upload {
+    margin-left: 50px;
+}
+.personal-settings-container .errors li {
+    font-size: 13px;
 }
 /* Personal Settings End */
 /* Favourites Start */

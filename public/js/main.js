@@ -208,10 +208,10 @@ $( document ).ready(function() {
             var rand2 = getRandomNumber(1, 100000);
             var rand3 = getRandomNumber(1, 100000);
             var rand4 = getRandomNumber(1, 100000);
-            $('.modal .change_1').data('trigger', 'ap_' + rand1);
-            $('.modal .change_2').data('trigger', 'ap_' + rand2);
-            $('.modal .change_1').attr('data-trigger', 'ap_' + rand1);
-            $('.modal .change_2').attr('data-trigger', 'ap_' + rand2);
+            $('.new-widget-modal .change_1').data('trigger', 'ap_' + rand1);
+            $('.new-widget-modal .change_2').data('trigger', 'ap_' + rand2);
+            $('.new-widget-modal .change_1').attr('data-trigger', 'ap_' + rand1);
+            $('.new-widget-modal .change_2').attr('data-trigger', 'ap_' + rand2);
             var input   = $('.modal .change_1').closest('.one-widget-list-section').find('input[type="text"]');
             var inputID = input.attr('id');
             var did     = '';
@@ -224,17 +224,20 @@ $( document ).ready(function() {
                 did   = d.id;
             }
 
-            $('.modal .change_1').parent().find('.fa-cog').attr('data-item', rand3);
+            $('.new-widget-modal .change_1').parent().find('.fa-cog').attr('data-item', rand3);
             
-            $('.modal .change_1').attr('name', 'lweb[' + did + '][' + rand3 + '][images][]');
-            $('.modal .change_2').attr('name', 'lweb[' + did + '][' + rand3 + '][images][]');
-            $('.modal .change_1').attr('id', rand1);
-            $('.modal .change_2').attr('id', rand2);
+            $('.new-widget-modal .change_1').attr('name', 'lweb[' + did + '][' + rand3 + '][images][]');
+            $('.new-widget-modal .change_2').attr('name', 'lweb[' + did + '][' + rand3 + '][images][]');
+            $('.new-widget-modal .change_1').attr('id', rand1);
+            $('.new-widget-modal .change_2').attr('id', rand2);
+
+            $('.new-widget-modal .change_1').removeClass('change_1');
+            $('.new-widget-modal .change_2').removeClass('change_2');
             
-            $('.modal .c1').addClass('upload-ap_' + rand1);
-            $('.modal .c2').addClass('upload-ap_' + rand2);
-            $('.modal .c1').removeClass('c1');
-            $('.modal .c2').removeClass('c2');
+            $('.new-widget-modal .c1').addClass('upload-ap_' + rand1);
+            $('.new-widget-modal .c2').addClass('upload-ap_' + rand2);
+            $('.new-widget-modal .c1').removeClass('c1');
+            $('.new-widget-modal .c2').removeClass('c2');
             initUploadButtonsChange();
         }
         if ($('div.widget-list').is(':visible')) {

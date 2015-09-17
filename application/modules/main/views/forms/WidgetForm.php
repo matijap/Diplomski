@@ -3,10 +3,14 @@
 class WidgetForm extends Sportalize_Form_Modal {
 
     public $wid = false;
+    public $pid = false;
 
     public function __construct($data = array()) {
         if (isset($data['widgetID'])) {
             $this->wid = $data['widgetID'];
+        }
+        if (isset($data['pageID'])) {
+            $this->pid = $data['pageID'];
         }
         parent::__construct($data = array());
     }
@@ -32,6 +36,9 @@ class WidgetForm extends Sportalize_Form_Modal {
         ));
         if ($widget) {
             $widgetType->setValue($widget->type);
+        } else {
+            // @todo change after creating all subforms to plain
+            $widgetType->setValue(Widget::WIDGET_TYPE_LIST_WEB);
         }
         $this->addElement($widgetType);
 
@@ -93,9 +100,15 @@ class WidgetForm extends Sportalize_Form_Modal {
             ));
         $this->addElement($closingTag);
 
+        $pageID = false;
         if ($widget) {
             $this->addElement('hidden', 'widgetID', array('value' => $this->wid));
+            $pageID = $widget->page_id;
         }
+        if ($this->pid) {
+            $pageID = $this->pid;
+        }
+        $this->addElement('hidden', 'pageID', array('value' => $pageID));
         $this->addElement('hidden', 'userID', array('value' => $this->user->id));
     }
 

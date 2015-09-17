@@ -168,10 +168,12 @@ class Widget extends Widget_Row
             if ($value['type'] == self::WIDGET_OPTION_TYPE_LIST_WEB_DATA) {
                 $parent = $value['parent_widget_option_id'];
                 $temp = Main::buildObject('WidgetOption', $parent);
+                $return[$temp->parent_widget_option_id]['options'][$value['parent_widget_option_id']]['data'][$value['placement']][$value['id']]['title']   = $value['title'];
                 $return[$temp->parent_widget_option_id]['options'][$value['parent_widget_option_id']]['data'][$value['placement']][$value['id']]['value_1'] = $value['value_1'];
                 $return[$temp->parent_widget_option_id]['options'][$value['parent_widget_option_id']]['data'][$value['placement']][$value['id']]['value_2'] = $value['value_2'];
             }
         }
+        // fb($return);
         return $return;
     }
 
@@ -210,7 +212,58 @@ class Widget extends Widget_Row
         $widgetData = array('type'    => $data['type'],
                             'title'   => $data['title'],
                             'page_id' => 7);
-        $widget = parent::create($widgetData);
-        return $widget;
+        fb($data);
+        switch ($data['type']) {
+            case self::WIDGET_TYPE_LIST_WEB:
+                Widget::createLwebWidget($data);
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+        // $widget = parent::create($widgetData);
+        return false;
+    }
+
+    public function edit($data) {
+        $data = Widget::sortDataArray($data);
+    }
+
+    public static function createLwebWidget($data) {
+        // if (isset($data['lweb']['data'])) {
+        //     foreach ($data['lweb']['data'] as $key => $value) {
+        //         fb($key, 'key');
+        //         fb($value, 'value');
+        //         foreach ($data['lweb'] as $key => $value) {
+        //             if ($key != 'data') {
+        //                 $keyToInsert = Widget::getArrayKeyForInsert($data, $key);
+        //                 fb($keyToInsert, 'keyToInsert');
+        //             }
+        //         }
+
+        //     }
+        // }
+        $data = Widget::sortDataArray($data);
+    }
+
+    public static function sortDataArray($data) {
+        // fb('matchingKey', $matchingKey);
+        $return = false;
+        foreach ($data['lweb']['data'] as $key => $oneOption) {
+            foreach ($data['lweb'] as $k1 => $v1) {
+                if ($k1 != 'data') {
+                    foreach ($v1 as $k2 => $v2) {
+                        if ($key == $k2) {
+                            $data['lweb'][$k1][$k2]['data'] = $oneOption;
+                        }
+                    }
+
+                }
+            }
+        }
+        unset($data['lweb']['data']);
+        fb($data);
+        return $return;
     }
 }
