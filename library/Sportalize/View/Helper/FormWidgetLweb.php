@@ -18,9 +18,7 @@ class Sportalize_View_Helper_FormWidgetLweb extends Zend_View_Helper_FormElement
         if (!$wiod) {
             $wiod = 'new';
         }
-        // {"main":{"left":{"main[56348][]":{"label":"data","value":"data1"},
-        // "main[70116][]":{"label":"data","value":"data3"},"main[36449][]":{"label":"data","value":"data5"}},"right":{"main[56348][]":{"label":"data","value":"data2"}
-        // ,"main[70116][]":{"label":"data","value":"data4"},"main[36449][]":{"label":"data","value":"data6"}}},"additional":{}}
+        
         $html = '<div class="owls-holder widget-marker sortable-initialize width-95-percent display-inline-block append-into" data-template="list-option-template">';
         $count = count($data);
         $style = $count > 1  ? '' : ' display: none;';

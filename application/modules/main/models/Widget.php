@@ -239,8 +239,6 @@ class Widget extends Widget_Row
     public static function createLwebWidget($data, $widgetID) {
 
         $data = Widget::sortDataArray($data);
-        fb($data);
-        fb($_FILES);
         foreach ($data['lweb'] as $elementKey => $elementData) {
             //title is refering to one lweb_list
             $title = $elementData['title_' . $elementKey];
@@ -250,8 +248,9 @@ class Widget extends Widget_Row
                                    'type'      => Widget::WIDGET_OPTION_TYPE_LIST_WEB);
             $lwebList = WidgetOption::create($lwebListArray);
             if (isset($_FILES['lweb']['name'][$elementKey])) {
+                $processedOptionKeys = array();
                 foreach ($_FILES['lweb']['name'][$elementKey] as $optionKey => $optionData) {
-                    $fileNames = Utils::uploadMultiFiles($elementKey . '.' . $optionKey . '.images', Widget::WIDGET_IMAGES_FOLDER, 'lweb', $widgetID);
+                    $fileNames = Utils::uploadMultiFiles($elementKey . '.' . $optionKey . '.images', Widget::WIDGET_IMAGES_FOLDER, 'lweb', $widgetID . '_' . $lwebList->id);
                     $lwebListOptionArray = array('widget_id'               => $widgetID,
                                                  'parent_widget_option_id' => $lwebList->id,
                                                  'image_1'                 => 'widget_football.png',
@@ -267,7 +266,6 @@ class Widget extends Widget_Row
                             }
                         }
                     }
-                    fb('filenames', $fileNames);
                     foreach ($ar as $key => $value) {
                         if (isset($fileNames[$value])) {
                             $lwebListOptionArray['image_' . $value] = $fileNames[$value];
@@ -281,26 +279,35 @@ class Widget extends Widget_Row
                         Widget::createWidgetListOptionData($decoded, $lwebListOption->id, $widgetID);
                     }
                 }
+                $processedOptionKeys[] = $optionKey;
+                //if we are editing existing option, that already contain images, we need to recreate them
+                Widget::createWidgetListOption($elementData, $elementKey, $widgetID, $lwebList, $processedOptionKeys);
             } else {
                 // if no images are sent, we still need to check if there are some data sent
-                foreach ($elementData as $optionKey => $optionData) {
-                    if ($optionKey != 'title_' . $elementKey) {
-                        $lwebListOptionArray = array('widget_id'               => $widgetID,
-                                                     'parent_widget_option_id' => $lwebList->id,
-                                                     'image_1'                 => 'widget_football.png',
-                                                     'image_2'                 => 'widget_football.png',
-                                                     'type'                    => Widget::WIDGET_OPTION_TYPE_LIST_WEB_OPTION,
-                                                    );
-                        if (isset($optionData['temp_images'])) {
-                            $lwebListOptionArray['image_1'] = $optionData['temp_images'][1];
-                            $lwebListOptionArray['image_2'] = $optionData['temp_images'][2];
-                        }    
-                        $lwebListOption = WidgetOption::create($lwebListOptionArray);
-                    
-                        if (isset($optionData['data'])) {
-                            $decoded = Zend_Json::decode($elementData[$optionKey]['data']);
-                            Widget::createWidgetListOptionData($decoded, $lwebListOption->id, $widgetID);
-                        }
+                Widget::createWidgetListOption($elementData, $elementKey, $widgetID, $lwebList);
+            }
+        }
+    }
+
+    public static function createWidgetListOption($elementData, $elementKey, $widgetID, $lwebList, $processedOptionKeys = array()) {
+        foreach ($elementData as $optionKey => $optionData) {
+            if (!in_array($optionKey, $processedOptionKeys)) {
+                if ($optionKey != 'title_' . $elementKey) {
+                    $lwebListOptionArray = array('widget_id'               => $widgetID,
+                                                 'parent_widget_option_id' => $lwebList->id,
+                                                 'image_1'                 => 'widget_football.png',
+                                                 'image_2'                 => 'widget_football.png',
+                                                 'type'                    => Widget::WIDGET_OPTION_TYPE_LIST_WEB_OPTION,
+                                                );
+                    if (isset($optionData['temp_images'])) {
+                        $lwebListOptionArray['image_1'] = $optionData['temp_images'][1];
+                        $lwebListOptionArray['image_2'] = $optionData['temp_images'][2];
+                    }    
+                    $lwebListOption = WidgetOption::create($lwebListOptionArray);
+                
+                    if (isset($optionData['data'])) {
+                        $decoded = Zend_Json::decode($elementData[$optionKey]['data']);
+                        Widget::createWidgetListOptionData($decoded, $lwebListOption->id, $widgetID);
                     }
                 }
             }

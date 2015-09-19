@@ -1,32 +1,39 @@
 <div class="upcoming-games-modal">
     <?php
-    for($i = 1; $i <= 2; $i++) {
-    ?>
-        <div class="home-team">
-            <h2 class="text-align-center"><?php echo $this->lwebOptionData[Widget::WIDGET_LWEB_PLACEMENT_MAIN][0]['value_' . $i]; ?></h2>
-            <img width="50px" height="50px" class="display-block logo" src="img/widget_logo.png" />
-            <?php
-                $count = 0;
-                foreach ($this->lwebOptionData[Widget::WIDGET_LWEB_PLACEMENT_MAIN] as $value) {
-                    if ($count > 0) {
-                ?>  
-                    <div class="club-info">
-                        <h3><?php echo $value['title']; ?>:</h3>&nbsp;
-                        <p><?php echo $value['value_' . $i]; ?></p>
-                    </div>
+    if (!empty($this->lwebOptionData[Widget::WIDGET_LWEB_PLACEMENT_MAIN])) {
+        for($i = 1; $i <= 2; $i++) {
+        ?>
+            <div class="home-team">
+                <h2 class="text-align-center"><?php echo $this->lwebOptionData[Widget::WIDGET_LWEB_PLACEMENT_MAIN][0]['value_' . $i]; ?></h2>
+                <img width="50px" height="50px" class="display-block logo" src="<?php echo APP_URL . '/' . Widget::WIDGET_IMAGES_FOLDER . '/' .  $this->lwebOptionData[Widget::WIDGET_LWEB_PLACEMENT_MAIN][0]['image_' . $i]; ?>" />
                 <?php
+                    $count = 0;
+                    foreach ($this->lwebOptionData[Widget::WIDGET_LWEB_PLACEMENT_MAIN] as $value) {
+                        if ($count > 0) {
+                    ?>  
+                        <div class="club-info">
+                            <h3><?php echo $value['title']; ?>:</h3>&nbsp;
+                            <p><?php echo $value['value_' . $i]; ?></p>
+                        </div>
+                    <?php
+                        }
+                        $count++;
                     }
-                    $count++;
-                }
-            ?>
-        </div>
-    <?php
+                ?>
+            </div>
+        <?php
+        }
+    } else {
+        ?>
+        <h2 class="text-align-center"><?php echo $this->translate->_('No Main Data available'); ?></2>
+        <?php
     }
     ?>
     <div class="clear"></div>
     <div class="match-details text-align-center">
-        <h2>Match Details</h2>
+        <!-- <h2>Match Details</h2> -->
     <?php
+    if (!empty($this->lwebOptionData[Widget::WIDGET_LWEB_PLACEMENT_ADDITIONAL])) {
         foreach($this->lwebOptionData[Widget::WIDGET_LWEB_PLACEMENT_ADDITIONAL] as $value) {
     ?>
         <div class="match-details-info">
@@ -35,7 +42,12 @@
         </div>
         <?php
         }
+    } else {
         ?>
+        <h2 class="text-align-center"><?php echo $this->translate->_('No Additional Data available'); ?></2>
+        <?php
+    }
+    ?>
     </div>
 </div>
 <?php
