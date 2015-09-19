@@ -51,16 +51,20 @@ class Sportalize_View_Helper_FormWidgetLweb extends Zend_View_Helper_FormElement
             $html .='<div class="modal-element to-be-removed">
                         <label class="main-label">' . $translate->_("Option Avatars") . '</label>
                         <div class="main-div">
-                            <input data-trigger="ap_' . $rand1 . '" name="lweb[' . $wiod . '][' . $rand3 . '][' . $name . '][]" id="' . $rand1 . '" type="file" class="list-option-avatar bb pull-left upload-change-it" />
-                            <input data-trigger="ap_' . $rand2 . '" name="lweb[' . $wiod . '][' . $rand3 . '][' . $name . '][]" id="' . $rand2 . '" type="file" class="list-option-avatar bb pull-left upload-change-it m-l-5" />
+                            <input data-trigger="ap_' . $rand1 . '" name="lweb[' . $wiod . '][' . $rand3 . '][' . $name . '][1]" id="' . $rand1 . '" type="file" class="list-option-avatar bb pull-left upload-change-it" />
+                            <input data-trigger="ap_' . $rand2 . '" name="lweb[' . $wiod . '][' . $rand3 . '][' . $name . '][2]" id="' . $rand2 . '" type="file" class="list-option-avatar bb pull-left upload-change-it m-l-5" />
                             <div class="' . $imgClass . ' list-with-button-upload upload-ap_' . $rand1 . '">';
                             if (!$valueIsTemp) {
-                                $html .= '<img src="' . APP_URL . '/' . Widget::WIDGET_IMAGES_FOLDER . '/' . $value['image_1'] . '">';
+                                $path  = APP_URL . '/' . Widget::WIDGET_IMAGES_FOLDER . '/' . $value['image_1'];
+                                $html .= '<img src="' . $path . '">';
+                                $html .= '<input type="hidden" name="lweb[' . $wiod . '][' . $rand3 . '][temp_images][1]" value="' . $value['image_1'] . '" >';
                             }
             $html .=       '</div>
                             <div class="' . $imgClass . ' list-with-button-upload upload-ap_' . $rand2 . '">';
                             if (!$valueIsTemp) {
-                                $html .= '<img src="' . APP_URL . '/' . Widget::WIDGET_IMAGES_FOLDER . '/' . $value['image_2'] . '">';
+                                $path  = APP_URL . '/' . Widget::WIDGET_IMAGES_FOLDER . '/' . $value['image_2'];
+                                $html .= '<img src="' . $path . '">';
+                                $html .= '<input type="hidden" name="lweb[' . $wiod . '][' . $rand3 . '][temp_images][2]" value="' . $value['image_2'] . '" >';
                             }
             $html .=       '</div>
                             <i data-closest="widget-marker" style="vertical-align: top;' . $style . '" class="fa fa-times remove-item m-l-5 remove-list-with-button-option"></i>

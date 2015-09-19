@@ -33,8 +33,8 @@ class WidgetController extends Main_BaseController
                     Widget::create($this->params);
                     $this->setNotificationMessage($this->translate->_('Widget created successfully'));
                 }
-                $this->_helper->json(array('status'  => 0,
-                                           'url'     => APP_URL . '/'));
+                $this->_helper->json(array('status'  => 1,
+                                           'url'     => APP_URL . '/page/index?pageID=' . $pageID));
             }
         }
     }
@@ -43,19 +43,23 @@ class WidgetController extends Main_BaseController
         $tempData = Utils::arrayFetch($this->params, 'tempData', false);
         if (!empty($tempData)) {
             $tempData = Zend_Json::decode($tempData);
-            foreach ($tempData['main'] as $key => $value) {
-                foreach ($value as $k => $v) {
-                    $filter = new Zend_Filter_Digits();
-                    unset($tempData['main'][$key][$k]);
-                    $k = $filter->filter($k);
-                    $tempData['main'][$key][$k] = $v;
+            if (isset($tempData['main'])) {
+                foreach ($tempData['main'] as $key => $value) {
+                    foreach ($value as $k => $v) {
+                        $filter = new Zend_Filter_Digits();
+                        unset($tempData['main'][$key][$k]);
+                        $k = $filter->filter($k);
+                        $tempData['main'][$key][$k] = $v;
+                    }
                 }
             }
-            foreach ($tempData['additional'] as $key => $value) {
-                $filter = new Zend_Filter_Digits();
-                unset($tempData['additional'][$key]);
-                $key = $filter->filter($key);
-                $tempData['additional'][$key] = $value;
+            if (isset($tempData['additional'])) {
+                foreach ($tempData['additional'] as $key => $value) {
+                    $filter = new Zend_Filter_Digits();
+                    unset($tempData['additional'][$key]);
+                    $key = $filter->filter($key);
+                    $tempData['additional'][$key] = $value;
+                }
             }
         }
         $widgetOptionID = $this->params['widgetOptionID'];

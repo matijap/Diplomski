@@ -226,8 +226,8 @@ $( document ).ready(function() {
 
             $('.new-widget-modal .change_1').parent().find('.fa-cog').attr('data-item', rand3);
             
-            $('.new-widget-modal .change_1').attr('name', 'lweb[' + did + '][' + rand3 + '][images][]');
-            $('.new-widget-modal .change_2').attr('name', 'lweb[' + did + '][' + rand3 + '][images][]');
+            $('.new-widget-modal .change_1').attr('name', 'lweb[' + did + '][' + rand3 + '][images][1]');
+            $('.new-widget-modal .change_2').attr('name', 'lweb[' + did + '][' + rand3 + '][images][2]');
             $('.new-widget-modal .change_1').attr('id', rand1);
             $('.new-widget-modal .change_2').attr('id', rand2);
 

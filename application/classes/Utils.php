@@ -61,7 +61,7 @@ class Utils
             if ($file['tmp_name'] != '') {
                 if (is_uploaded_file($file['tmp_name'])) {
                     $file['name'] =  str_replace(' ', '', $file['name']);
-                    $fileName     = Utils::fileExist(WEB_ROOT_PATH . "/" . $uploadFolder . "/" , $fileNamePrefix . $delimeter .$file['name']);
+                    $fileName     = Utils::fileExist(WEB_ROOT_PATH . "/" . $uploadFolder . "/" , $fileNamePrefix . $delimeter . $file['name']);
                     if (!move_uploaded_file($file['tmp_name'], WEB_ROOT_PATH . "/" . $uploadFolder . "/" . $fileName)) {
                         throw new Exception("Could not upload files or images.");
                     } else {
@@ -70,5 +70,50 @@ class Utils
                 }
             }
         }
+    }
+
+    public static function uploadMultiFiles($path, $uploadFolder, $belongsTo = '', $fileNamePrefix = '', $delimeter = '_') {
+        $names = $tempNames = $_FILES;
+        if (!empty($belongsTo)) {
+            $belongsTo = explode('.', $belongsTo);
+            foreach ($belongsTo as $key => $value) {
+                $names     = $names[$value];
+                $tempNames = $tempNames[$value];
+            }
+        }
+        $names     = $names['name'];
+        $tempNames = $tempNames['tmp_name'];
+
+        $path = explode('.', $path);
+        
+        foreach ($path as $key => $value) {
+            $names     = $names[$value];
+            $tempNames = $tempNames[$value];
+        }
+        $namesArray = array();
+        if (is_array($names)) {
+            foreach ($names as $key => $value) {
+                if (is_uploaded_file($tempNames[$key])) {
+                    $value    = str_replace(' ', '', $value);
+                    $fileName = Utils::fileExist(WEB_ROOT_PATH . "/" . $uploadFolder . "/" , $fileNamePrefix . $delimeter . $value);
+                    if (!move_uploaded_file($tempNames[$key], WEB_ROOT_PATH . "/" . $uploadFolder . "/" . $fileName)) {
+                        throw new Exception("Could not upload files or images.");
+                    } else {
+                        $namesArray[$key] = $fileName;
+                    }
+                }
+            }
+        } else {
+            if (is_uploaded_file($tempNames)) {
+                $value    = str_replace(' ', '', $names);
+                $fileName = Utils::fileExist(WEB_ROOT_PATH . "/" . $uploadFolder . "/" , $fileNamePrefix . $delimeter . $names);
+                if (!move_uploaded_file($tempNames, WEB_ROOT_PATH . "/" . $uploadFolder . "/" . $fileName)) {
+                    throw new Exception("Could not upload files or images.");
+                } else {
+                    $namesArray[1] = $fileName;
+                }
+            }
+        }
+        return $namesArray;
     }
 }
