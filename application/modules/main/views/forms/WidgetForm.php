@@ -37,8 +37,7 @@ class WidgetForm extends Sportalize_Form_Modal {
         if ($widget) {
             $widgetType->setValue($widget->type);
         } else {
-            // @todo change after creating all subforms to plain
-            $widgetType->setValue(Widget::WIDGET_TYPE_LIST_WEB);
+            $widgetType->setValue(Widget::WIDGET_TYPE_PLAIN);
         }
         $this->addElement($widgetType);
 
@@ -68,7 +67,7 @@ class WidgetForm extends Sportalize_Form_Modal {
         ));
         $this->addElement($button1);
         
-        $displayNone = 'display-none';
+        $displayNone = 'style="display: none;"';
         if ($widget && $widget->type == Widget::WIDGET_TYPE_LIST_WEB) {
             $displayNone = '';
         }
@@ -85,20 +84,9 @@ class WidgetForm extends Sportalize_Form_Modal {
             'value' => '<hr>'
         ));
         $this->addElement($hr);
-        
-        $openingTag   = new Sportalize_Form_Element_PlainHtml('tag_1', array(
-            'value' => '<div class="widget-settings">'
-        ));
-        $this->addElement($openingTag);
 
-        $lwebForm     = new Widget_Lweb(array('widgetID' => $this->wid));
-        $this->addSubForm($lwebForm, 'lweb');
-
-
-        $closingTag   = new Sportalize_Form_Element_PlainHtml('tag_2', array(
-            'value' => '</div>'
-            ));
-        $this->addElement($closingTag);
+        $widgetSettingsSubform     = new Widget_WidgetSettings(array('widgetID' => $this->wid));
+        $this->addSubForm($widgetSettingsSubform, 'widgetSettingsSubform');
 
         $pageID = false;
         if ($widget) {
@@ -110,14 +98,5 @@ class WidgetForm extends Sportalize_Form_Modal {
         }
         $this->addElement('hidden', 'pageID', array('value' => $pageID));
         $this->addElement('hidden', 'userID', array('value' => $this->user->id));
-    }
-
-    public function redecorate() {
-        parent::redecorate();
-
-        $el = $this->getElement('tag_1');
-        $this->clearDecoratorsAndSetViewHelperOnly($el);
-        $el = $this->getElement('tag_2');
-        $this->clearDecoratorsAndSetViewHelperOnly($el);
     }
 }

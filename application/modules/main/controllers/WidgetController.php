@@ -7,10 +7,12 @@ class WidgetController extends Main_BaseController
     public function getLwebDataAction() {
         $lwebOptionID               = $this->params['lwebOptionID'];
         $this->view->lwebOptionData = Widget::getLwebOptionData($lwebOptionID);
+        $lwebOption             = Main::buildObject('WidgetOption', $lwebOptionID);
+        $widget                 = Main::buildObject('Widget', $lwebOption->widget_id);
+        $this->view->modalTitle = $widget->title;
     }
 
     public function newWidgetAction() {
-        // $this->view->form = $form = new WidgetForm(array('widgetID' => 5));
         $widgetID = Utils::arrayFetch($this->params, 'widgetID', false);
         $pageID   = Utils::arrayFetch($this->params, 'pageID', false);
         $data     = array();
@@ -99,6 +101,12 @@ class WidgetController extends Main_BaseController
     }
 
     public function saveLwebDataAction() {
-
+        $res = Main::fetchRow(Main::select('UserWidgetData')
+                              ->where('user_id = ?', $this->params['userID'])
+                              ->where('title = ?', $this->params['data'])
+                              );
+        if (!$res) {
+            UserWidgetData::create(array('user_id' => $this->params['userID'], 'title' => $this->params['data']));
+        }
     }
 }

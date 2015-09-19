@@ -1,6 +1,7 @@
 $( document ).ready(function() {
     var clickOrTouchstart = getClickOrTouchstart();
-
+    var appurl = getAppUrl();
+    
     $(document).on(clickOrTouchstart, '.lwb-save', function(e) {
         var widgetOptionID = $('.widgetOptionID').val();
         var itemID         = $('.itemID').val();
@@ -76,7 +77,19 @@ $( document ).ready(function() {
     });
 
     $(document).on(clickOrTouchstart, '.add-list-with-button-customize-option', function(e) {
-        var picked           = $('.list-with-button-select').val();
+        var picked           = $('.add-new-lweb-data').val();
+        if (picked != '') {
+            $('.add-new-lweb-data').val('');
+            $.ajax({
+                url: appurl + "/widget/save-lweb-data",
+                data: {'data': picked, 'userID': getUserID()},
+                success: function(result) {
+                    
+                }
+            }); 
+        } else {
+            picked           = $('.list-with-button-select').val();
+        }
         var randomNumber     = getRandomNumber();
         var elementRandom    = getRandomNumber();
         var name             = spacesToUnderScoreAndLowercaseWordFilter(picked);

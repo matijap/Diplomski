@@ -34,12 +34,12 @@ class Widget extends Widget_Row
                    ->join(array('UW' => 'user_widget'), 'UW.widget_id = WI.id', '')
                    ->join(array('WO' => 'widget_option'), 'WO.widget_id = WI.id', '')
                    ->where('UW.user_id = ?', $userID)
-                   ->columns(array( 'WI.id as widget_id', 'WI.display_order as widget_display_order', 'WI.placement as widget_placement', 'WI.type',
+                   ->columns(array( 'WI.id as widget_id', 'UW.display_order as widget_display_order', 'UW.placement as widget_placement', 'WI.type',
                                     'WI.title as widget_title',
                                     'WO.type as widget_option_type', 'WO.parent_widget_option_id', 'WO.title as widget_option_title', 'WO.image_1', 'WO.image_2',
                                     'WO.value_1', 'WO.value_2', 'WO.id as widget_option_id', 'WO.linked_page_id'
                             ))
-                   ->order(array('WI.placement ASC', 'WI.display_order'))
+                   ->order(array('UW.placement ASC', 'UW.display_order'))
                    ->query()->fetchAll();
                    // fb($widgets);
             $return = array();

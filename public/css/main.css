@@ -864,6 +864,10 @@ header li {
     font-size: 13px;
     margin-bottom: 5px;
  }
+ .add-new-lweb-data {
+    width: 192px;
+    margin-top: 10px;
+ }
 /* Page End */
 /* Main Content My Posts Start */
 #main-panel.my {

@@ -1,28 +1,13 @@
 <?php
 
-class Widget_Lweb extends Sportalize_Form_Base {
-
-    public $widgetID = false;
+class Widget_Lweb extends Widget_WidgetSettingsBase {
 
     public function __construct($data = array()) {
-        if (isset($data['widgetID'])) {
-            $this->widgetID = $data['widgetID'];
-        }
-        parent::__construct($data = array());
-    }
-
-    public function init() {
-        parent::init();
-
-        $this->setDisableLoadDefaultDecorators(true);
+        $this->containerClass = 'append-into sortable-initialize';
+        $this->dgClass        = 'widget-list-with-edit-button';
+        $this->widgetBuilt    = Widget::WIDGET_TYPE_LIST_WEB;
         
-        $decorator = array(
-            'FormElements',
-            array(array('b' => 'HtmlTag'), array('tag'  => 'div', 'class' => 'append-into sortable-initialize')),
-            array(array('a' => 'HtmlTag'), array('tag'  => 'div', 'class' => 'widget-list-with-edit-button all-widget-types')),
-        );
-
-        $this->clearDecorators()->setDecorators($decorator);
+        parent::__construct($data);
     }
 
     public function createElements() {
@@ -69,25 +54,6 @@ class Widget_Lweb extends Sportalize_Form_Base {
                 $this->addDisplayGroup($value, 'dg_' . $key);
             }
         } 
-
-        // $this->addElement('text', 'title_1', array(
-        //     'class' => 'main-label bold-text',
-        //     'label' => $this->translate->_('List section title'),
-        // ));
-        // $el1 = new Sportalize_Form_Element_WidgetLweb( 'options_1', array(
-        //     'data' => $data
-        // ));
-        // $this->addElement($el1);
-        // $plus = new Sportalize_Form_Element_PlainHtml( 'plus_1', array(
-        //     'value' => '<i class="fa fa-plus m-r-5 add-new-item pull-right" data-html-template="list-with-edit-button-option-template" data-closest="one-widget-list-section"></i>'
-        // ));
-        // $this->addElement($plus);
-        // $remove = new Sportalize_Form_Element_PlainHtml( 'remove_1', array(
-        //     'value' => '<i data-closest="widget-list-with-edit-button" class="fa fa-times remove-item remove-list-section" style="display: none;"></i>'
-        // ));
-        // $this->addElement($remove);
-        
-        // $this->addDisplayGroup(array('title_1', 'options_1', 'plus_1', 'remove_1'), 'dg1');
 
         parent::createElements();
     }
