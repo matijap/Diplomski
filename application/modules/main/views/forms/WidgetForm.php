@@ -37,7 +37,8 @@ class WidgetForm extends Sportalize_Form_Modal {
         if ($widget) {
             $widgetType->setValue($widget->type);
         } else {
-            $widgetType->setValue(Widget::WIDGET_TYPE_PLAIN);
+            //@todo set here to plain
+            $widgetType->setValue(Widget::WIDGET_TYPE_LIST);
         }
         $this->addElement($widgetType);
 
@@ -54,13 +55,14 @@ class WidgetForm extends Sportalize_Form_Modal {
         ));
         $this->addElement($header);
 
-        $displayNone = 'style="display: none;"';
+        // $displayNone = 'style="display: none;"';
+        $displayNone = '';
         if ($widget && $widget->type == Widget::WIDGET_TYPE_LIST) {
             $displayNone = 'style="display: inline-block;"';
         }
         $button1 = new Sportalize_Form_Element_PlainHtml('button_1', array(
             'value' => '<button data-html-template="list-section-template"
-                            class="add-new-item m-t-10  widget-list all-widget-types blue-button add-list-section"
+                            class="add-new-item m-t-10 widget-list all-widget-types blue-button add-list-section"
                             data-closest="new-widget-modal" ' . $displayNone . '>
                             ' . $this->translate->_('Add new list section') . '
                         </button>'
@@ -69,7 +71,7 @@ class WidgetForm extends Sportalize_Form_Modal {
         
         $displayNone = 'style="display: none;"';
         if ($widget && $widget->type == Widget::WIDGET_TYPE_LIST_WEB) {
-            $displayNone = '';
+            $displayNone = 'style="display: inline-block;"';
         }
         $button2 = new Sportalize_Form_Element_PlainHtml('button_2', array(
             'value' => '<button data-html-template="list-with-edit-button-section-template"

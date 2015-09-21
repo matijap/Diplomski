@@ -27,13 +27,13 @@ class Widget_WidgetSettings extends Sportalize_Form_Base {
     public function createElements() {
         parent::createElements();
 
-        $lwebForm     = new Widget_Lweb(array('widgetID' => $this->widgetID));
-        $this->addSubForm($lwebForm, 'lweb');
+        $plainForm     = new Widget_Plain(array('widgetID' => $this->widgetID));
+        $this->addSubForm($plainForm, 'plainForm');
 
         $listForm     = new Widget_List(array('widgetID' => $this->widgetID));
         $this->addSubForm($listForm, 'listForm');
 
-        $plainForm     = new Widget_Plain(array('widgetID' => $this->widgetID));
-        $this->addSubForm($plainForm, 'plainForm');
+        $lwebForm     = new Widget_Lweb(array('widgetID' => $this->widgetID));
+        $this->addSubForm($lwebForm, 'lweb');
     }
 }

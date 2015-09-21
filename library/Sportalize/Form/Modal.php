@@ -16,22 +16,16 @@ class Sportalize_Form_Modal extends Sportalize_Form_Base {
 
         parent::redecorate();
 
-        $decorator = array(
-            'ViewHelper',
-            'Description',
-            array('Errors'),
-            array('HtmlTag', array('tag'  => 'div', 'class' => 'main-div')),
-            array('Label', array('class' => 'main-label ')),
-            array(array('All' => 'HtmlTag'), array('tag'    => 'div', 'class'   => 'modal-element')),
-        );
+        $decorator     = $this->getDefaultModalDecorators();
         $toBeDecorated = array('Zend_Form_Element_Text', 'Zend_Form_Element_Textarea', 'Zend_Form_Element_Radio',
-                               'Zend_Form_Element_Select', 'Sportalize_Form_Element_FileUpload');
+                               'Zend_Form_Element_Select');
 
         foreach ($this->getElements() as $key => $oneElement) {
             if (in_array($oneElement->getType(), $toBeDecorated)) {
                 $this->clearDecoratorsAndSetDecorator($oneElement, $decorator);
             }
         }
+        $this->redecorateFileUpload();
     }
 
     public function getUserIDElement($fieldName = 'user_id') {

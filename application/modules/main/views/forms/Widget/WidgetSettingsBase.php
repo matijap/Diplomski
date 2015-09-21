@@ -6,6 +6,7 @@ class Widget_WidgetSettingsBase extends Sportalize_Form_Base {
     public $dgClass         = '';
     public $containerClass  = '';
     public $widgetBuilt     = '';
+    public $defaultWidget   = Widget::WIDGET_TYPE_LIST;
 
     public function __construct($data = array()) {
         if (isset($data['widgetID'])) {
@@ -16,7 +17,7 @@ class Widget_WidgetSettingsBase extends Sportalize_Form_Base {
                     $this->dgClass .= ' display-none';
                 }
             } else {
-                if (Widget::WIDGET_TYPE_PLAIN != $this->widgetBuilt) {
+                if ($this->defaultWidget != $this->widgetBuilt) {
                     $this->dgClass .= ' display-none';
                 }
             }
@@ -36,5 +37,28 @@ class Widget_WidgetSettingsBase extends Sportalize_Form_Base {
         );
 
         $this->clearDecorators()->setDecorators($decorator);
+    }
+
+    public function redecorate() {
+        parent::redecorate();
+
+        $decorator     = $this->getDefaultModalDecorators('bold-text');
+        $customElements = array('Sportalize_Form_Element_WidgetLweb', 'Sportalize_Form_Element_WidgetList');
+        foreach ($this->getElements() as $key => $oneElement) {
+            if ($oneElement->getType() == 'Zend_Form_Element_Text') {
+                $this->clearDecoratorsAndSetDecorator($oneElement, $decorator);
+            }
+            if (in_array($oneElement->getType(), $customElements)) {
+                $this->clearDecoratorsAndSetViewHelperOnly($oneElement);
+            }
+        }
+
+        $decorator = array(
+               'FormElements',
+                array('HtmlTag', array('tag'   =>'div','class'  => 'one-widget-list-section to-be-removed'))
+            );
+        foreach ($this->getDisplayGroups() as $key => $oneDisplayGroup) {
+            $this->clearDecoratorsAndSetDecorator($oneDisplayGroup, $decorator);
+        }
     }
 }

@@ -14,7 +14,9 @@ class Widget_Lweb extends Widget_WidgetSettingsBase {
         $data = false;
         if ($this->widgetID) {
             $widget = Main::buildObject('Widget', $this->widgetID);
-            $data   = $widget->getDataForLwebWidget();
+            if ($widget->type == $this->widgetBuilt) {
+                $data   = $widget->getDataForLwebWidget();
+            }
         }
         if (!$data) {
             $data = array(Utils::getRandomNumber() => array('title' => '', 'options' => array()));
@@ -31,7 +33,7 @@ class Widget_Lweb extends Widget_WidgetSettingsBase {
                 ));
                 $this->addElement($title);
                 $createdElements[$optionID][] = $title;
-                $options = new Sportalize_Form_Element_WidgetLweb( 'options_' . $optionID, array(
+                $options = new Sportalize_Form_Element_WidgetLweb('options_' . $optionID, array(
                     'data'     => $oneOption['options'],
                     'wiod'     => $optionID,
                 ));
@@ -61,22 +63,6 @@ class Widget_Lweb extends Widget_WidgetSettingsBase {
     public function redecorate() {
         parent::redecorate();
 
-        $decorator = array(
-            'ViewHelper',
-            'Description',
-            array('Errors'),
-            array('HtmlTag', array('tag'  => 'div', 'class' => 'main-div')),
-            array('Label', array('class' => 'main-label bold-text')),
-            array(array('All' => 'HtmlTag'), array('tag'    => 'div', 'class'   => 'modal-element')),
-        );
-        foreach ($this->getElements() as $key => $oneElement) {
-            if ($oneElement->getType() == 'Zend_Form_Element_Text') {
-                $this->clearDecoratorsAndSetDecorator($oneElement, $decorator);
-            }
-            if ($oneElement->getType() == 'Sportalize_Form_Element_WidgetLweb') {
-                $this->clearDecoratorsAndSetViewHelperOnly($oneElement);
-            }
-        }
         $decorator = array(
                        'FormElements',
                         array('HtmlTag', array('tag'   =>'div','class'  => 'one-widget-list-section to-be-removed'))

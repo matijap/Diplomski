@@ -181,15 +181,10 @@ $( document ).ready(function() {
         var html    = $('.' + data.htmlTemplate).html();
         var closest = data.closest;
         var find    = data.find;
-
         var chars = (closest.indexOf('d') == 0);
 
-        var c = '';
-        if (chars) {
-            c = closest;
-        } else {
-            c = '.' + closest;
-        }
+        //hack to enable selectors that does not start with dot (.), like div.some-class
+        c = chars ? closest : '.' + closest;
 
         var element = $(this).closest(c);
 
@@ -242,16 +237,40 @@ $( document ).ready(function() {
         }
         if ($('div.widget-list').is(':visible')) {
             selector = '.modal .widget-list';
+            var fileTrigger = getRandomNumber(1, 100000);
+            var sectionID   = getRandomNumber(1, 100000);
+            var optionID    = getRandomNumber(1, 100000);
+
+            var input   = $('.modal .t1').closest('.one-widget-list-section').find('.modal-element').first().find('input[type="text"]');
+            var inputID = input.attr('id');
+            var did     = '';
+            if (inputID == 'list-section-title-1') {
+                input.attr('data-id', sectionID);
+                input.attr('name', 'list[' + sectionID + '][title]');
+                did = sectionID;
+            } else {
+                var d = input.data(); 
+                did   = d.id;
+            }
+
+            $('.new-widget-modal .change_1').data('trigger', 'ap_' + fileTrigger);
+            $('.new-widget-modal .change_1').attr('name', 'list[' + did + '][image]');
+            $('.new-widget-modal .c1').addClass('upload-ap_' + fileTrigger);
+            $('.new-widget-modal .c1').removeClass('c1');
+            $('.new-widget-modal .t1').attr('name', 'list[' + did + '][' + optionID + '][value_1]');
+            $('.new-widget-modal .t2').attr('name', 'list[' + did + '][' + optionID + '][value_2]');
+            $('.new-widget-modal .t1').removeClass('t1');
+            $('.new-widget-modal .t2').removeClass('t2');
+            initUploadButtonsChange();
+            $(this).closest(c).find('.fa-times').show();
         }
         if (selector != '') {
             // $('.remove-list-section').hide();
-            $(this).closest(c).find('.fa-times').show();
             if ($(selector).find('.remove-list-section').size() > 1) {
                 $(selector).find('.remove-list-section').show();
             } else {
                 $(selector).find('.remove-list-section').hide();
             }
-            
         } else {
             $(this).closest(c).find('.fa-times').show();
         }

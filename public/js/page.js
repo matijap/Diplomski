@@ -206,6 +206,7 @@ $( document ).ready(function() {
         }
         $('.modal-body .mc').find('.all-widget-types').hide();
         $('.modal-body .mc').find('.' + widgetType).show();
+        initUploadButtonsChange();
     });
 
     $(document).on(clickOrTouchstart, '.remove-section', function(e) {

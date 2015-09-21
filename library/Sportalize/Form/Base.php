@@ -67,4 +67,25 @@ class Sportalize_Form_Base extends Zend_Form {
     public function addUserIDElement() {
         $this->addElement('hidden', 'userID', array('value' => $this->user->id));
     }
+
+    public function getDefaultModalDecorators($labelClass = '', $mainDivClass = '', $modalElementClass = '') {
+        return array(
+            'ViewHelper',
+            'Description',
+            array('Errors'),
+            array('HtmlTag', array('tag'  => 'div', 'class' => 'main-div ' . $mainDivClass)),
+            array('Label', array('class' => 'main-label ' . $labelClass)),
+            array(array('All' => 'HtmlTag'), array('tag'    => 'div', 'class'   => 'modal-element ' . $modalElementClass)),
+        );
+    }
+
+    public function redecorateFileUpload() {
+        $toBeDecorated = array('Sportalize_Form_Element_FileUpload');
+        $decorator     = $this->getDefaultModalDecorators();
+        foreach ($this->getElements() as $key => $oneElement) {
+            if (in_array($oneElement->getType(), $toBeDecorated)) {
+                $this->clearDecoratorsAndSetDecorator($oneElement, $decorator);
+            }
+        }
+    }
 }
