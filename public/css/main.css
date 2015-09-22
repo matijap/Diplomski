@@ -868,6 +868,11 @@ header li {
     width: 192px;
     margin-top: 10px;
  }
+ .remove-widget {
+    margin-right: 150px;
+    font-size: 15px;
+    float: right;
+ }
 /* Page End */
 /* Main Content My Posts Start */
 #main-panel.my {

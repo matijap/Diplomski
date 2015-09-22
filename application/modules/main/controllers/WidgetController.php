@@ -14,7 +14,7 @@ class WidgetController extends Main_BaseController
 
     public function newWidgetAction() {
         $widgetID = Utils::arrayFetch($this->params, 'widgetID', false);
-        $pageID   = Utils::arrayFetch($this->params, 'pageID', false);
+        $pageID   = Utils::arrayFetch($this->params, 'page_id', false);
         $data     = array();
         if ($widgetID) {
             $data['widgetID'] = $widgetID;
@@ -27,15 +27,9 @@ class WidgetController extends Main_BaseController
         $response = $this->validateForm($form);
         if ($response['isPost']) {
             if ($response['isValid']) {
-                if ($widgetID) {
-                    $widget = Main::buildObject('Widget', $widgetID);
-                    $widget->edit($this->params);
-                    $this->setNotificationMessage($this->translate->_('Widget updated successfully'));
-                                    
-                } else {
-                    Widget::create($this->params);
-                    $this->setNotificationMessage($this->translate->_('Widget created successfully'));
-                }
+                $widget = Widget::factory($this->params);
+                $widget->process();
+                $this->setNotificationMessage($this->translate->_('Widget processed successfully'));
                 $this->_helper->json(array('status'  => 1,
                                            'url'     => APP_URL . '/page/index?pageID=' . $pageID));
             }
@@ -108,6 +102,20 @@ class WidgetController extends Main_BaseController
                               );
         if (!$res) {
             UserWidgetData::create(array('user_id' => $this->params['userID'], 'title' => $this->params['data']));
+        }
+    }
+
+    public function deleteWidgetAction() {
+        $this->view->form = $form = new Widget_Delete(array('widgetID' => $this->params['widgetID']));
+        $response         = $this->validateForm($form);
+        if ($response['isPost']) {
+            if ($response['isValid']) {
+                $widget = Main::buildObject('Widget', $this->params['widgetID']);
+                $widget->delete();
+                $this->setNotificationMessage($this->translate->_('Widget deleted successfully'));
+                $this->_helper->json(array('status'  => 1,
+                                           'url'     => APP_URL . '/page/index?pageID=' . $this->params['pageID']));
+            }
         }
     }
 }

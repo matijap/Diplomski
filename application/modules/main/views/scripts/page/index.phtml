@@ -11,7 +11,7 @@
     <h1 class="text-align-center m-t-10"><?php echo $this->page->title; ?></h1>
     <h2 style="margin-top: 10px;"><?php echo $this->translate->_('Widget Customization'); ?></h2>
     <div class="loader-holder m-t-10">
-        <a data-url="/widget/new-widget?pageID=<?php echo $this->page->id; ?>" data-template="new-widget-template" class="text-align-center display-block styled-button modal-open" href="javascript:void(0)">
+        <a data-url="/widget/new-widget?page_id=<?php echo $this->page->id; ?>" data-template="new-widget-template" class="text-align-center display-block styled-button modal-open" href="javascript:void(0)">
             <?php echo $this->translate->_('New Widget'); ?>
         </a>
         <i class="fa fa-spinner fa-spin text-align-center display-none"></i>
@@ -27,6 +27,7 @@
             <a href="javascript:void(0)" class="modal-open" data-url="/widget/new-widget?widgetID=<?php echo $oneWidget->id; ?>" >
                 <?php echo $oneWidget->title; ?>
             </a>
+            <i class="fa fa-times modal-open remove-widget cursor-pointer" data-url="/widget/delete-widget?widgetID=<?php echo $oneWidget->id; ?>"></i>
         </li>
         <?php
     }

@@ -92,6 +92,7 @@ $( document ).ready(function() {
         $( ".modal.fade" ).toggle();
         $( ".modal.fade" ).fadeTo( "fast" , 1, function() {});
         $('.mcl').toggle();
+        $('.modal-footer').find('.submit-modal-form').remove();
         var appurl = getAppUrl();
         var data   = element.data();
         $.ajax({
@@ -99,7 +100,10 @@ $( document ).ready(function() {
             data: {},
             success: function(result) {
                 $('.modal-body .mc').append(result);
-                var title = $('#modal_title').val();
+                var title    = $('#modal_title').val();
+                var template = doesExists('#is_delete') ? 'delete' : 'submit'
+                var button   = $('.' + template + '-modal-template').html();
+                $('.modal-footer').append(button);
                 $('.modal-header-title p').text(title);
                 applyInitFunctions();
             }

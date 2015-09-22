@@ -14,6 +14,7 @@ class Widget_Plain extends Widget_WidgetSettingsBase {
         $this->addElement('textarea', 'value_1', array(
             'placeholder' => $this->translate->_('Enter your widget text here'),
             'maxlength'   => 1024,
+            'belongsTo'   => 'plain'
         ));
     }
 }

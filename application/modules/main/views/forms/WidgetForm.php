@@ -98,7 +98,7 @@ class WidgetForm extends Sportalize_Form_Modal {
         if ($this->pid) {
             $pageID = $this->pid;
         }
-        $this->addElement('hidden', 'pageID', array('value' => $pageID));
+        $this->addElement('hidden', 'page_id', array('value' => $pageID));
         $this->addElement('hidden', 'userID', array('value' => $this->user->id));
     }
 }

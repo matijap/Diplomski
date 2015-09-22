@@ -31,4 +31,8 @@ class Sportalize_Form_Modal extends Sportalize_Form_Base {
     public function getUserIDElement($fieldName = 'user_id') {
         $this->addElement('hidden', $fieldName, array('value' => $this->user->id));
     }
+    
+    public function addDeleteHiddenElement() {
+        $this->addElement('hidden', 'is_delete', array('value' => 1));    
+    }
 }
