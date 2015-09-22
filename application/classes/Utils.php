@@ -106,7 +106,7 @@ class Utils
         } else {
             if (is_uploaded_file($tempNames)) {
                 $value    = str_replace(' ', '', $names);
-                $fileName = Utils::fileExist(WEB_ROOT_PATH . "/" . $uploadFolder . "/" , $fileNamePrefix . $delimeter . $names);
+                $fileName = Utils::fileExist(WEB_ROOT_PATH . "/" . $uploadFolder . "/" , $fileNamePrefix . $delimeter . $value);
                 if (!move_uploaded_file($tempNames, WEB_ROOT_PATH . "/" . $uploadFolder . "/" . $fileName)) {
                     throw new Exception("Could not upload files or images.");
                 } else {

@@ -27,8 +27,8 @@ class Widget_List extends Widget_WidgetSettingsBase {
                                                             'value_2' => ''));
         }
         $createdElements = array();
-        $count           = count($data);
         foreach ($data as $sectionID => $oneListSection) {
+            $count           = count($oneListSection['options']);
             $title = $this->createElement('text', 'title_' . $sectionID, array(
                 'label'     => $this->translate->_('List section title'),
                 'value'     => $oneListSection['title'],
@@ -40,13 +40,25 @@ class Widget_List extends Widget_WidgetSettingsBase {
             $createdElements[$sectionID][] = $title;
 
             $fileUpload = new Sportalize_Form_Element_FileUpload( 'image', array(
-                'label'     => $this->translate->_('List section avatar'),
-                'file'      => $oneListSection['image'],
-                'belongsTo' => 'list[' . $sectionID . ']',
+                'label'      => $this->translate->_('List section avatar'),
+                'file'       => $oneListSection['image'],
+                'belongsTo'  => 'list[' . $sectionID . ']',
+                'customID'   => $sectionID
             ));
             $fileUpload->setMaxFileSize();
+
             $this->addElement($fileUpload);
             $createdElements[$sectionID][] = $fileUpload;
+
+            if (empty($oneListSection['options'])) {
+                $oneListSection['options'] = array(Utils::getRandomNumber() => array('value_1' => '',
+                                                                                     'value_2' => ''));
+            }
+            $tag1 = new Sportalize_Form_Element_PlainHtml( 'tag_1_' . $sectionID, array(
+                'value' => '<div class="owls-holder widget-marker sortable-initialize width-95-percent display-inline-block append-into">'
+            ));
+            $this->addElement($tag1);
+            $createdElements[$sectionID][] = $tag1;
 
             foreach ($oneListSection['options'] as $optionID => $oneOption) {
                 $options = new Sportalize_Form_Element_WidgetList('options_' . $sectionID . '_' . $optionID, array(
@@ -56,12 +68,17 @@ class Widget_List extends Widget_WidgetSettingsBase {
                     'sectionID'   => $sectionID,
                     'printRemove' => $count > 1
                 ));
-                $this->addElement($options);
                 $createdElements[$sectionID][] = $options;
             }
+
+            $tag2 = new Sportalize_Form_Element_PlainHtml( 'tag_2_' . $sectionID, array(
+                'value' => '</div>'
+            ));
+            $this->addElement($tag2);
+            $createdElements[$sectionID][] = $tag2;
             
             $plus = new Sportalize_Form_Element_PlainHtml( 'plus_' . $sectionID, array(
-            'value' => '<i class="fa fa-plus m-r-5 add-new-item" style="vertical-align: top;" data-html-template="list-option-template" data-closest="div.one-widget-list-section"></i>'
+                'value' => '<i class="fa fa-plus m-r-5 add-new-item" style="vertical-align: top;" data-html-template="list-option-template" data-closest="div.one-widget-list-section"></i>'
             ));
             $this->addElement($plus);
             $style = $count > 1  ? '' : 'style="display: none;"';
@@ -71,8 +88,6 @@ class Widget_List extends Widget_WidgetSettingsBase {
             $this->addElement($remove);
             $createdElements[$sectionID][] = $plus;
             $createdElements[$sectionID][] = $remove;
-            
-            $this->addElement($options);
         }
         foreach ($createdElements as $key => $value) {
             $this->addDisplayGroup($value, 'dg_' . $key);
@@ -83,13 +98,23 @@ class Widget_List extends Widget_WidgetSettingsBase {
         parent::redecorate();
 
         $decorator   = $this->getDefaultModalDecorators('', '', 'to-be-removed');
-        $decorator[] = array(array('b' => 'HtmlTag'), array('tag' => 'div', 'class' => 'owls-holder widget-marker sortable-initialize width-95-percent display-inline-block append-into'));
         foreach ($this->getElements() as $key => $oneElement) {
             if ($oneElement->getType() == 'Sportalize_Form_Element_WidgetList') {
                 $this->clearDecoratorsAndSetDecorator($oneElement, $decorator);
             }
         }
-
+        foreach ($this->getSubforms() as $key => $oneSubform) {
+            $decorator = array(
+                'FormElements',
+                array(array('b' => 'HtmlTag'), array('tag'  => 'div', 'class' => '')),
+            );
+            $this->clearDecoratorsAndSetDecorator($oneSubform, $decorator);
+            foreach ($oneSubform->getElements() as $oneElement) {
+                if ($oneElement->getType() == 'Sportalize_Form_Element_WidgetList') {
+                    $this->clearDecoratorsAndSetDecorator($oneElement, $this->getDefaultModalDecorators('', '', 'to-be-removed'));
+                }
+            }
+        }
         $this->redecorateFileUpload();
     }
 }

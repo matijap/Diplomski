@@ -91,7 +91,7 @@ $( document ).ready(function() {
         var element = $(this);
         $( ".modal.fade" ).toggle();
         $( ".modal.fade" ).fadeTo( "fast" , 1, function() {});
-        $('.mcl').toggle();
+        $('.mcl').show();
         $('.modal-footer').find('.submit-modal-form').remove();
         var appurl = getAppUrl();
         var data   = element.data();
@@ -99,7 +99,9 @@ $( document ).ready(function() {
             url: appurl + data.url,
             data: {},
             success: function(result) {
+                $('.mcl').hide();
                 $('.modal-body .mc').append(result);
+                $('.modal-body .mc').show();
                 var title    = $('#modal_title').val();
                 var template = doesExists('#is_delete') ? 'delete' : 'submit'
                 var button   = $('.' + template + '-modal-template').html();
@@ -250,7 +252,7 @@ $( document ).ready(function() {
             var did     = '';
             if (inputID == 'list-section-title-1') {
                 input.attr('data-id', sectionID);
-                input.attr('name', 'list[' + sectionID + '][title]');
+                input.attr('name', 'list[' + sectionID + '][title_' + sectionID + ']');
                 did = sectionID;
             } else {
                 var d = input.data(); 
@@ -269,7 +271,6 @@ $( document ).ready(function() {
             $(this).closest(c).find('.fa-times').show();
         }
         if (selector != '') {
-            // $('.remove-list-section').hide();
             if ($(selector).find('.remove-list-section').size() > 1) {
                 $(selector).find('.remove-list-section').show();
             } else {

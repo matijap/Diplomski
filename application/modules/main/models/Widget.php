@@ -237,11 +237,13 @@ class Widget extends Widget_Row
 
     public function purgeWidgetOptions() {
         $toRemove = array(Widget::WIDGET_OPTION_TYPE_LIST_WEB_DATA,
+                          Widget::WIDGET_OPTION_TYPE_LIST_OPTION,
                           Widget::WIDGET_OPTION_TYPE_LIST_WEB_OPTION,
-                          Widget::WIDGET_OPTION_TYPE_LIST_WEB
+                          Widget::WIDGET_OPTION_TYPE_LIST_WEB,
+                          Widget::WIDGET_OPTION_TYPE_LIST,
                         );
         foreach ($toRemove as $value) {
-            Main::execQuery("DELETE FROM widget_option WHERE type = ? and widget_id = ?;", array($value, $this->id));
+            Main::execQuery("DELETE FROM widget_option WHERE type = ? AND widget_id = ?;", array($value, $this->id));
         }
     }
 
