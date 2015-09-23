@@ -106,7 +106,7 @@ class WidgetController extends Main_BaseController
     }
 
     public function deleteWidgetAction() {
-        $this->view->form = $form = new Widget_Delete(array('widgetID' => $this->params['widgetID']));
+        $this->view->form = $form = new WidgetForms_Delete(array('widgetID' => $this->params['widgetID']));
         $response         = $this->validateForm($form);
         if ($response['isPost']) {
             if ($response['isValid']) {

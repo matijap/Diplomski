@@ -79,13 +79,27 @@
                 <div class="main-div">
                     <input type="text" class="widget-option-and-value bb pull-left t1" />
                     <input type="text" class="widget-option-and-value bb pull-left t2"/>
-                    <i data-closest="widget-marker" class="fa fa-times remove-item m-l-5"></i>
+                    <i data-closest="widget-marker" class="fa fa-times remove-item m-l-5" style="display:none;"></i>
                     <div class="clear"></div>
                 </div>
             </div>
         </div>
         <i class="fa fa-plus m-r-5 add-new-item" style="vertical-align: top;" data-html-template="list-option-template" data-closest="one-widget-list-section"></i>
-        <i data-closest="widget-list" class="fa fa-times remove-item remove-list-section" style="display: none;"></i>
+        <i data-closest="div.widget-list" class="fa fa-times remove-item remove-list-section" style="display: none;"></i>
+    </div>
+</div>
+
+<div class="table-option-template display-none">
+    <div class="modal-element">
+        <label class="main-label" for="list-section-title-1">Option</label>
+        <div class="main-div">
+            <input type="text" class="widget-option-and-value bb pull-left" name="list_option_title_1" id="list-option-title-1"
+                style="width: 85%;" />
+            <i class="fa fa-times remove-section remove-list-option"></i>
+            <i class="fa fa-cog cursor-pointer"></i>
+            <i class="fa fa-spin fa-spinner" style="display:none;"></i>
+            <div class="clear"></div>
+        </div>
     </div>
 </div>
 

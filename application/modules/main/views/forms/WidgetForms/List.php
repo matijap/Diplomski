@@ -1,6 +1,6 @@
 <?php
 
-class Widget_List extends Widget_WidgetSettingsBase {
+class WidgetForms_List extends WidgetForms_WidgetSettingsBase {
 
     public function __construct($data = array()) {
         $this->containerClass = 'append-into sortable-initialize';
@@ -27,8 +27,10 @@ class Widget_List extends Widget_WidgetSettingsBase {
                                                             'value_2' => ''));
         }
         $createdElements = array();
+
+        $sectionsCount = count($data);
         foreach ($data as $sectionID => $oneListSection) {
-            $count           = count($oneListSection['options']);
+            $optionsCount   = count($oneListSection['options']);
             $title = $this->createElement('text', 'title_' . $sectionID, array(
                 'label'     => $this->translate->_('List section title'),
                 'value'     => $oneListSection['title'],
@@ -38,12 +40,14 @@ class Widget_List extends Widget_WidgetSettingsBase {
             $this->addElement($title);
 
             $createdElements[$sectionID][] = $title;
-
-            $fileUpload = new Sportalize_Form_Element_FileUpload( 'image', array(
+            $img = empty($oneListSection['image']) ? '' : Widget::WIDGET_IMAGES_FOLDER . '/' . $oneListSection['image'];
+            fb('bice image', $img);
+            $fileUpload = new Sportalize_Form_Element_FileUpload( 'image_' . $sectionID, array(
                 'label'      => $this->translate->_('List section avatar'),
-                'file'       => $oneListSection['image'],
+                'file'       => $img,
                 'belongsTo'  => 'list[' . $sectionID . ']',
-                'customID'   => $sectionID
+                'customID'   => $sectionID,
+                'value'      => $oneListSection['image'],
             ));
             $fileUpload->setMaxFileSize();
 
@@ -66,7 +70,7 @@ class Widget_List extends Widget_WidgetSettingsBase {
                     'label'       => $this->translate->_('List Option'),
                     'optionID'    => $optionID,
                     'sectionID'   => $sectionID,
-                    'printRemove' => $count > 1
+                    'printRemove' => $optionsCount > 1
                 ));
                 $createdElements[$sectionID][] = $options;
             }
@@ -81,7 +85,7 @@ class Widget_List extends Widget_WidgetSettingsBase {
                 'value' => '<i class="fa fa-plus m-r-5 add-new-item" style="vertical-align: top;" data-html-template="list-option-template" data-closest="div.one-widget-list-section"></i>'
             ));
             $this->addElement($plus);
-            $style = $count > 1  ? '' : 'style="display: none;"';
+            $style = $sectionsCount > 1  ? '' : 'style="display: none;"';
             $remove = new Sportalize_Form_Element_PlainHtml( 'remove_' . $sectionID, array(
                 'value' => '<i data-closest="div.widget-list" class="fa fa-times remove-item remove-list-section" ' . $style . '></i>'
             ));
@@ -101,18 +105,6 @@ class Widget_List extends Widget_WidgetSettingsBase {
         foreach ($this->getElements() as $key => $oneElement) {
             if ($oneElement->getType() == 'Sportalize_Form_Element_WidgetList') {
                 $this->clearDecoratorsAndSetDecorator($oneElement, $decorator);
-            }
-        }
-        foreach ($this->getSubforms() as $key => $oneSubform) {
-            $decorator = array(
-                'FormElements',
-                array(array('b' => 'HtmlTag'), array('tag'  => 'div', 'class' => '')),
-            );
-            $this->clearDecoratorsAndSetDecorator($oneSubform, $decorator);
-            foreach ($oneSubform->getElements() as $oneElement) {
-                if ($oneElement->getType() == 'Sportalize_Form_Element_WidgetList') {
-                    $this->clearDecoratorsAndSetDecorator($oneElement, $this->getDefaultModalDecorators('', '', 'to-be-removed'));
-                }
             }
         }
         $this->redecorateFileUpload();

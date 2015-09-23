@@ -3,7 +3,7 @@
         foreach ($this->oneWidget['options'] as $key => $value) {
             ?>
                 <li class="league-title">
-                    <img class="pull-left widget-sport-type-logo" width="15px" height="15px" class="pull-left" src="<?php echo $value['image']; ?>" />
+                    <img class="pull-left widget-sport-type-logo" width="15px" height="15px" class="pull-left" src="<?php echo APP_URL . '/' . Widget::WIDGET_IMAGES_FOLDER . '/' . $value['image']; ?>" />
                     <h4 class="pull-left"><?php echo $value['title']; ?></h4>
                 </li>
             <?php

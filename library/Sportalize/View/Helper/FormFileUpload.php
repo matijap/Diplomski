@@ -6,8 +6,6 @@ class Sportalize_View_Helper_FormFileUpload extends Zend_View_Helper_FormElement
 {
     public function formFileUpload($name, $value = null, $attribs = null, array $options = null)
     {
-        $info = $this->_getInfo($name, $value, $attribs, $options);
-        extract($info); // name, value, attribs, options
         $file              = isset($attribs['file']) ? $attribs['file'] : '';
         $divWithImageClass = empty($file) ? '' : 'height-50px';
         $class             = isset($attribs['class']) ? $attribs['class'] : '';
@@ -19,6 +17,7 @@ class Sportalize_View_Helper_FormFileUpload extends Zend_View_Helper_FormElement
 
         if (!empty($file)) {
             $xhtml .= '<img src="' . APP_URL . '/' . $file . '" />';
+            $xhtml .= '<input type="hidden" name="' . $name . '" value="' . $value . '">';
         }
                     
         $xhtml .= '</div>';

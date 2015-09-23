@@ -189,9 +189,10 @@ $( document ).ready(function() {
         var find    = data.find;
         var chars = (closest.indexOf('d') == 0);
 
+
         //hack to enable selectors that does not start with dot (.), like div.some-class
         c = chars ? closest : '.' + closest;
-
+        console.log(c);
         var element = $(this).closest(c);
 
         if (typeof find != 'undefined') {
@@ -240,6 +241,11 @@ $( document ).ready(function() {
             $('.new-widget-modal .c1').removeClass('c1');
             $('.new-widget-modal .c2').removeClass('c2');
             initUploadButtonsChange();
+            if ($(this).hasClass('blue-button')) {
+                $('i[data-closest="div.widget-list-with-edit-button"]').show();
+            } else {
+                $(this).closest(c).find('.fa-times').show();
+            }
         }
         if ($('div.widget-list').is(':visible')) {
             selector = '.modal .widget-list';
@@ -268,11 +274,15 @@ $( document ).ready(function() {
             $('.new-widget-modal .t1').removeClass('t1');
             $('.new-widget-modal .t2').removeClass('t2');
             initUploadButtonsChange();
-            $(this).closest(c).find('.fa-times').show();
+            if ($(this).hasClass('blue-button')) {
+                $('i[data-closest="div.widget-list"]').show();
+            } else {
+                $(this).closest(c).find('.fa-times').show();
+            }
         }
         if (selector != '') {
             if ($(selector).find('.remove-list-section').size() > 1) {
-                $(selector).find('.remove-list-section').show();
+                // $(selector).find('.remove-list-section').show();
             } else {
                 $(selector).find('.remove-list-section').hide();
             }

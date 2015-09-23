@@ -1,6 +1,6 @@
 <?php
 
-class Widget_WidgetSettings extends Sportalize_Form_Base {
+class WidgetForms_WidgetSettings extends Sportalize_Form_Base {
 
     public $widgetID = false;
 
@@ -27,13 +27,16 @@ class Widget_WidgetSettings extends Sportalize_Form_Base {
     public function createElements() {
         parent::createElements();
 
-        $plainForm     = new Widget_Plain(array('widgetID' => $this->widgetID));
+        $plainForm     = new WidgetForms_Plain(array('widgetID' => $this->widgetID));
         $this->addSubForm($plainForm, 'plainForm');
 
-        $listForm     = new Widget_List(array('widgetID' => $this->widgetID));
+        $listForm     = new WidgetForms_List(array('widgetID' => $this->widgetID));
         $this->addSubForm($listForm, 'listForm');
 
-        $lwebForm     = new Widget_Lweb(array('widgetID' => $this->widgetID));
+        $tableForm     = new WidgetForms_Table(array('widgetID' => $this->widgetID));
+        $this->addSubForm($tableForm, 'tableForm');
+
+        $lwebForm     = new WidgetForms_Lweb(array('widgetID' => $this->widgetID));
         $this->addSubForm($lwebForm, 'lweb');
     }
 }

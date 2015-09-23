@@ -1,6 +1,6 @@
 <?php
 
-class Widget_Plain extends Widget_WidgetSettingsBase {
+class WidgetForms_Plain extends WidgetForms_WidgetSettingsBase {
 
     public function __construct($data = array()) {
         $this->containerClass = '';

@@ -202,8 +202,8 @@ class Widget extends Widget_Row
         $translate = Zend_Registry::getInstance()->Zend_Translate;
         $return    = array(self::WIDGET_TYPE_PLAIN    => $translate->_('Plain'),
                            self::WIDGET_TYPE_LIST     => $translate->_('List'),
-                           self::WIDGET_TYPE_LIST_WEB => $translate->_('List with edit button'),
                            self::WIDGET_TYPE_TABLE    => $translate->_('Table'),
+                           self::WIDGET_TYPE_LIST_WEB => $translate->_('List with edit button'),
                      );
         if ($includePage) {
             $return[self::WIDGET_TYPE_PAGE] = $translate->_('Page');

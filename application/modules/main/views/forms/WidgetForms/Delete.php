@@ -1,6 +1,6 @@
 <?php
 
-class Widget_Delete extends Sportalize_Form_Modal {
+class WidgetForms_Delete extends Sportalize_Form_Modal {
 
     public $wid;
     public $pid;

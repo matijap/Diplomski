@@ -38,7 +38,7 @@ class WidgetForm extends Sportalize_Form_Modal {
             $widgetType->setValue($widget->type);
         } else {
             //@todo set here to plain
-            $widgetType->setValue(Widget::WIDGET_TYPE_LIST);
+            $widgetType->setValue(Widget::WIDGET_TYPE_TABLE);
         }
         $this->addElement($widgetType);
 
@@ -55,8 +55,7 @@ class WidgetForm extends Sportalize_Form_Modal {
         ));
         $this->addElement($header);
 
-        // $displayNone = 'style="display: none;"';
-        $displayNone = '';
+        $displayNone = 'style="display: none;"';
         if ($widget && $widget->type == Widget::WIDGET_TYPE_LIST) {
             $displayNone = 'style="display: inline-block;"';
         }
@@ -87,7 +86,7 @@ class WidgetForm extends Sportalize_Form_Modal {
         ));
         $this->addElement($hr);
 
-        $widgetSettingsSubform     = new Widget_WidgetSettings(array('widgetID' => $this->wid));
+        $widgetSettingsSubform     = new WidgetForms_WidgetSettings(array('widgetID' => $this->wid));
         $this->addSubForm($widgetSettingsSubform, 'widgetSettingsSubform');
 
         $pageID = false;

@@ -1,12 +1,12 @@
 <?php
 
-class Widget_WidgetSettingsBase extends Sportalize_Form_Base {
+class WidgetForms_WidgetSettingsBase extends Sportalize_Form_Base {
 
     public $widgetID        = false;
     public $dgClass         = '';
     public $containerClass  = '';
     public $widgetBuilt     = '';
-    public $defaultWidget   = Widget::WIDGET_TYPE_LIST;
+    public $defaultWidget   = Widget::WIDGET_TYPE_TABLE;
 
     public function __construct($data = array()) {
         if (isset($data['widgetID'])) {

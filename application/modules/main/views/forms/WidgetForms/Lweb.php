@@ -1,6 +1,6 @@
 <?php
 
-class Widget_Lweb extends Widget_WidgetSettingsBase {
+class WidgetForms_Lweb extends WidgetForms_WidgetSettingsBase {
 
     public function __construct($data = array()) {
         $this->containerClass = 'append-into sortable-initialize';
