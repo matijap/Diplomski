@@ -150,54 +150,6 @@ class Widget extends Widget_Row
         }
     }
 
-    public function getDataForListWidget() {
-        $data   = $this->getWidgetOptionList();
-        $data   = $data->toArray();
-        $return = array();
-        $listID = false;
-
-        foreach ($data as $key => $value) {
-            if ($value['type'] == self::WIDGET_OPTION_TYPE_LIST) {
-                $return[$value['id']]['title'] = $value['title'];
-                $return[$value['id']]['image'] = $value['image_1'];
-                $listID                        = $value['id'];
-            }
-            if ($value['type'] == self::WIDGET_OPTION_TYPE_LIST_OPTION) {
-                $return[$listID]['options'][$value['id']]['value_1'] = $value['value_1'];
-                $return[$listID]['options'][$value['id']]['value_2'] = $value['value_2'];
-            }
-        }
-        // fb($return);
-        return $return;
-    }
-
-    public function getDataForLwebWidget() {
-        $data   = $this->getWidgetOptionList();
-        $data   = $data->toArray();
-        $return = array();
-        $listID = false;
-
-        foreach ($data as $key => $value) {
-            if ($value['type'] == self::WIDGET_OPTION_TYPE_LIST_WEB) {
-                $return[$value['id']]['title'] = $value['title'];
-                $listID = $value['id'];
-            }
-            if ($value['type'] == self::WIDGET_OPTION_TYPE_LIST_WEB_OPTION) {
-                $return[$listID]['options'][$value['id']]['image_1'] = $value['image_1'];
-                $return[$listID]['options'][$value['id']]['image_2'] = $value['image_2'];
-            }
-            if ($value['type'] == self::WIDGET_OPTION_TYPE_LIST_WEB_DATA) {
-                $parent = $value['parent_widget_option_id'];
-                $temp = Main::buildObject('WidgetOption', $parent);
-                $return[$temp->parent_widget_option_id]['options'][$value['parent_widget_option_id']]['data'][$value['placement']][$value['id']]['title']   = $value['title'];
-                $return[$temp->parent_widget_option_id]['options'][$value['parent_widget_option_id']]['data'][$value['placement']][$value['id']]['value_1'] = $value['value_1'];
-                $return[$temp->parent_widget_option_id]['options'][$value['parent_widget_option_id']]['data'][$value['placement']][$value['id']]['value_2'] = $value['value_2'];
-            }
-        }
-        // fb($return);
-        return $return;
-    }
-
     public static function getWidgetTypeMultioptions($includePage = false) {
         $translate = Zend_Registry::getInstance()->Zend_Translate;
         $return    = array(self::WIDGET_TYPE_PLAIN    => $translate->_('Plain'),

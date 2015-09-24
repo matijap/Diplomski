@@ -29,4 +29,38 @@ class WidgetClass_List extends WidgetClass_Abstract {
             }
         }
     }
+
+    public function getData() {
+        if (empty($this->widget)) {
+            return $this->getEmptyData();
+        }
+        $data   = $this->widget->getWidgetOptionList();
+        $data   = $data->toArray();
+        $return = array();
+        $listID = false;
+
+        foreach ($data as $key => $value) {
+            if ($value['type'] == Widget::WIDGET_OPTION_TYPE_LIST) {
+                $return[$value['id']]['title'] = $value['title'];
+                $return[$value['id']]['image'] = $value['image_1'];
+                $listID                        = $value['id'];
+            }
+            if ($value['type'] == Widget::WIDGET_OPTION_TYPE_LIST_OPTION) {
+                $return[$listID]['options'][$value['id']]['value_1'] = $value['value_1'];
+                $return[$listID]['options'][$value['id']]['value_2'] = $value['value_2'];
+            }
+        }
+        return $return;
+    }
+
+    public function getEmptyData() {
+        $data                   = array();
+        $rand                   = Utils::getRandomNumber();
+        $rand2                  = Utils::getRandomNumber();
+        $data[$rand]['title']   = '';
+        $data[$rand]['image']   = '';
+        $data[$rand]['options'] = array($rand2 => array('value_1' => '',
+                                                        'value_2' => ''));
+        return $data;
+    }
 }

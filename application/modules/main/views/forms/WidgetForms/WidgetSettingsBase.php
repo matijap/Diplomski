@@ -7,20 +7,26 @@ class WidgetForms_WidgetSettingsBase extends Sportalize_Form_Base {
     public $containerClass  = '';
     public $widgetBuilt     = '';
     public $defaultWidget   = Widget::WIDGET_TYPE_TABLE;
+    public $data            = array();
 
     public function __construct($data = array()) {
-        if (isset($data['widgetID'])) {
+
+        $widgetClass = Widget::factory(array('type' => $this->widgetBuilt));
+        if (isset($data['widgetID']) && !empty($data['widgetID'])) {
             $this->widgetID = $data['widgetID'];
-            if ($this->widgetID) {
-                $widget = Main::buildObject('Widget', $this->widgetID);
-                if ($widget->type != $this->widgetBuilt) {
-                    $this->dgClass .= ' display-none';
-                }
+            $widget         = Main::buildObject('Widget', $this->widgetID);
+            if ($widget->type != $this->widgetBuilt) {
+                $this->dgClass .= ' display-none';
+                $this->data     = $widgetClass->getEmptyData();
             } else {
-                if ($this->defaultWidget != $this->widgetBuilt) {
-                    $this->dgClass .= ' display-none';
-                }
+                $widgetClass = Widget::factory(array('type' => $widget->type, 'widgetID' => $this->widgetID));
+                $this->data  = $widgetClass->getData();
             }
+        } else {
+            if ($this->defaultWidget != $this->widgetBuilt) {
+                $this->dgClass .= ' display-none';
+            }
+            $this->data  = $widgetClass->getEmptyData();
         }
         parent::__construct($data = array());
     }
@@ -42,11 +48,16 @@ class WidgetForms_WidgetSettingsBase extends Sportalize_Form_Base {
     public function redecorate() {
         parent::redecorate();
 
-        $decorator     = $this->getDefaultModalDecorators('bold-text');
-        $customElements = array('Sportalize_Form_Element_WidgetLweb', 'Sportalize_Form_Element_WidgetList');
+        $decorator         = $this->getDefaultModalDecorators('bold-text');
+        $defaultDecorator  = $this->getDefaultModalDecorators();
+        $customElements    = array('Sportalize_Form_Element_WidgetLweb', 'Sportalize_Form_Element_WidgetList');
+        $regularElements   = array('Zend_Form_Element_Text');
         foreach ($this->getElements() as $key => $oneElement) {
-            if ($oneElement->getType() == 'Zend_Form_Element_Text') {
+            if (in_array($oneElement->getType(), $regularElements)) {
                 $this->clearDecoratorsAndSetDecorator($oneElement, $decorator);
+            }
+            if ($oneElement->getType() == 'Sportalize_Form_Element_WidgetTableData') {
+                $this->clearDecoratorsAndSetDecorator($oneElement, $defaultDecorator);   
             }
             if (in_array($oneElement->getType(), $customElements)) {
                 $this->clearDecoratorsAndSetViewHelperOnly($oneElement);

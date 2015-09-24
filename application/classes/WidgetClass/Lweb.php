@@ -59,7 +59,6 @@ class WidgetClass_Lweb extends WidgetClass_Abstract {
     }
 
     public function createWidgetListOptionData($decoded, $widgetListOptionID, $widgetID) {
-        fb('ulazi da pravi data');
         foreach ($decoded as $placement => $items) {
             $placement = strtoupper($placement);
             $lwebListOptionDataArray = array('widget_id'               => $widgetID,
@@ -129,5 +128,38 @@ class WidgetClass_Lweb extends WidgetClass_Abstract {
             unset($data['lweb']['data']);
         }
         return $data;
+    }
+
+    public function getData() {
+        if (empty($this->widget)) {
+            return $this->getEmptyData();
+        }
+        $data   = $this->widget->getWidgetOptionList();
+        $data   = $data->toArray();
+        $return = array();
+        $listID = false;
+
+        foreach ($data as $key => $value) {
+            if ($value['type'] == Widget::WIDGET_OPTION_TYPE_LIST_WEB) {
+                $return[$value['id']]['title'] = $value['title'];
+                $listID = $value['id'];
+            }
+            if ($value['type'] == Widget::WIDGET_OPTION_TYPE_LIST_WEB_OPTION) {
+                $return[$listID]['options'][$value['id']]['image_1'] = $value['image_1'];
+                $return[$listID]['options'][$value['id']]['image_2'] = $value['image_2'];
+            }
+            if ($value['type'] == Widget::WIDGET_OPTION_TYPE_LIST_WEB_DATA) {
+                $parent = $value['parent_widget_option_id'];
+                $temp   = Main::buildObject('WidgetOption', $parent);
+                $return[$temp->parent_widget_option_id]['options'][$value['parent_widget_option_id']]['data'][$value['placement']][$value['id']]['title']   = $value['title'];
+                $return[$temp->parent_widget_option_id]['options'][$value['parent_widget_option_id']]['data'][$value['placement']][$value['id']]['value_1'] = $value['value_1'];
+                $return[$temp->parent_widget_option_id]['options'][$value['parent_widget_option_id']]['data'][$value['placement']][$value['id']]['value_2'] = $value['value_2'];
+            }
+        }
+        return $return;
+    }
+
+    public function getEmptyData() {
+        return array(Utils::getRandomNumber() => array('title' => '', 'options' => array()));
     }
 }

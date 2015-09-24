@@ -22,7 +22,7 @@ class WidgetController extends Main_BaseController
         if ($pageID) {
             $data['pageID'] = $pageID;
         }
-        // $data['widgetID'] = 3;
+        $data['widgetID'] = 4;
         $this->view->form = $form = new WidgetForm($data);
         $response = $this->validateForm($form);
         if ($response['isPost']) {
@@ -117,5 +117,19 @@ class WidgetController extends Main_BaseController
                                            'url'     => APP_URL . '/page/index?pageID=' . $this->params['pageID']));
             }
         }
+    }
+
+    public function deleteTableDataAction() {
+        fb($this->params);
+        $tableData = Main::buildObject('WidgetTableData', $this->params['id']);
+        if (is_null($tableData->user_id)) {
+            $status  = 0;
+            $message = $this->translate->_('Cannot delete system widget data');
+        } else {
+            $tableData->delete();
+            $status  = 1;
+            $message = $this->translate->_('Widget data deleted successfully');
+        }
+        $this->_helper->json(array('status'  => $status, 'message' => $message));
     }
 }

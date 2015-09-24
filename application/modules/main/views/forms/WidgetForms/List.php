@@ -11,25 +11,10 @@ class WidgetForms_List extends WidgetForms_WidgetSettingsBase {
     }
 
     public function createElements() {
-        $data = array();
-        if ($this->widgetID) {
-            $widget = Main::buildObject('Widget', $this->widgetID);
-            if ($widget->type == $this->widgetBuilt) {
-                $data   = $widget->getDataForListWidget();
-            }
-        }
-        if (!count($data)) {
-            $rand                   = Utils::getRandomNumber();
-            $rand2                  = Utils::getRandomNumber();
-            $data[$rand]['title']   = '';
-            $data[$rand]['image']   = '';
-            $data[$rand]['options'] = array($rand2 => array('value_1' => '',
-                                                            'value_2' => ''));
-        }
         $createdElements = array();
 
-        $sectionsCount = count($data);
-        foreach ($data as $sectionID => $oneListSection) {
+        $sectionsCount = count($this->data);
+        foreach ($this->data as $sectionID => $oneListSection) {
             $optionsCount   = count($oneListSection['options']);
             $title = $this->createElement('text', 'title_' . $sectionID, array(
                 'label'     => $this->translate->_('List section title'),
@@ -41,7 +26,7 @@ class WidgetForms_List extends WidgetForms_WidgetSettingsBase {
 
             $createdElements[$sectionID][] = $title;
             $img = empty($oneListSection['image']) ? '' : Widget::WIDGET_IMAGES_FOLDER . '/' . $oneListSection['image'];
-            fb('bice image', $img);
+
             $fileUpload = new Sportalize_Form_Element_FileUpload( 'image_' . $sectionID, array(
                 'label'      => $this->translate->_('List section avatar'),
                 'file'       => $img,

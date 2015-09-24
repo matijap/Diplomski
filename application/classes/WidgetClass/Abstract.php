@@ -2,7 +2,7 @@
 
 require_once 'Main.php';
 
-class WidgetClass_Abstract {
+abstract class WidgetClass_Abstract {
 
     public $params;
     public $widget = false;
@@ -24,5 +24,9 @@ class WidgetClass_Abstract {
         $this->createWidget();
     }
 
-    public function createWidget(){}
+    abstract function createWidget();
+
+    abstract function getData();
+
+    abstract function getEmptyData();
 }

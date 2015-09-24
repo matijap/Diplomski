@@ -346,10 +346,6 @@ ul.errors {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.widget-table input[type=checkbox] {
-    float: right;
-    margin-right: 100px;
-}
 /* Widgets End */
 
 /* Header Start */
@@ -734,7 +730,23 @@ header li {
 .widget-table .fa-cog,
 .widget-table .fa-spin {
     margin-left: 6px;
-    vertical-align: top;
+    vertical-align: middle;
+    font-size: 15px;
+}
+.widget-table input[type=checkbox] {
+    float: right;
+    margin-right: 10px;
+}
+.remove-table-data {
+    color: red;
+    float: right;
+    margin-right: 90px;
+    margin-top: 3px;
+}
+.widget-table .add-section {
+    position: absolute;
+    top: 3px;
+    right: 0px;
 }
 .widget-table-option-configure {
     position: absolute;

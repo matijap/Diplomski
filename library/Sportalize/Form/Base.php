@@ -32,9 +32,7 @@ class Sportalize_Form_Base extends Zend_Form {
         parent::init();
     }
 
-    public function createElements() {
-
-    }
+    public function createElements() {}
 
     public function redecorate() {
         $this->clearDecorators()->setDecorators(array('FormElements', 'Form'));

@@ -40,6 +40,9 @@ header li:hover {
 .cursor-pointer:hover {
     cursor: pointer;
 }
+.cursor-move:hover {
+    cursor: move;
+}
 /* Header End */
 /* Chat Sidebar Start */
 .chat-search .fa-times:hover {

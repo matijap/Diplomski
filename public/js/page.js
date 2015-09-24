@@ -148,16 +148,41 @@ $( document ).ready(function() {
 
     $(document).on(clickOrTouchstart, '.widget-table .fa-cog', function(e) {
         var element = $(this);
+        var input   = element.parent().find('input[type="hidden"]').val();
+        input       = $.parseJSON(input);
 
         var htmlToAppend = '<div class="widget-table-option-configure">';
         $('.modal #widget-table-data input[type="checkbox"]').each(function() {
             if ($(this).is(':checked')) {
                 var data      = $(this).data();
-                htmlToAppend += '<input type="text" placeholder="' + data.placeholder + '">';
+                var val       = (data.originalShort in input) ? input[data.originalShort] : '';
+                htmlToAppend += '<input type="text" placeholder="' + data.placeholder + '" value="' + val + '">';
             }
         });
         htmlToAppend += "<i class='fa fa-check cursor-pointer'></i><i class='fa fa-times cursor-pointer'></i></div>";
         element.closest('.modal-element').append(htmlToAppend);
+    });
+
+    $(document).on(clickOrTouchstart, '.remove-table-data', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        var element = $(this);
+        var data    = element.data();
+        element.hide();
+        element.parent().find('input').before('<i style="margin-right: 90px; margin-left:0; font-size: 9px; margin-top: 5px;" class="fa fa-spin fa-spinner pull-right"></i>');
+        $.ajax({
+            url: appurl + "/widget/delete-table-data",
+            data: {'id': data.id },
+            success: function(result) {
+                if (result.status) {
+                    element.parent().remove();
+                } else {
+                    element.show();
+                    element.parent().find('.fa-spin').remove();
+                }
+                callNotification(result.message, 'success')
+            }
+        }); 
     });
 
     $(document).on(clickOrTouchstart, '.widget-table-option-configure .fa-times', function(e) {
@@ -175,17 +200,17 @@ $( document ).ready(function() {
         $('.modal #widget-table-data').find('.main-div').find('label').last().find('input').data('placeholder', shortName);
     });
 
-    $(document).on(clickOrTouchstart, '.add-list-option', function(e) {
-        //if this list option does not have remove, that means it is only one in section and should have it after adding new option
-        if ($(this).closest('.modal-element').find('.remove-section').size() == 0) {
-            $(this).closest('.modal-element').find('.add-list-option').before('<i class="fa fa-times remove-section remove-list-option"></i>');
-        }
-        var data = $(this).closest('.widget-marker').data();
-        $(this).closest('.widget-marker').append($('.' + data.template).html());
-        var sortableID = $(this).closest('.widget-marker').attr('id');
-        $(this).remove();
-        initializeSimpleSortable('#' + sortableID, true);
-    });
+    // $(document).on(clickOrTouchstart, '.add-list-option', function(e) {
+    //     //if this list option does not have remove, that means it is only one in section and should have it after adding new option
+    //     if ($(this).closest('.modal-element').find('.remove-section').size() == 0) {
+    //         $(this).closest('.modal-element').find('.add-list-option').before('<i class="fa fa-times remove-section remove-list-option"></i>');
+    //     }
+    //     var data = $(this).closest('.widget-marker').data();
+    //     $(this).closest('.widget-marker').append($('.' + data.template).html());
+    //     var sortableID = $(this).closest('.widget-marker').attr('id');
+    //     $(this).remove();
+    //     initializeSimpleSortable('#' + sortableID, true);
+    // });
 
     $(document).on(clickOrTouchstart, '.widget-type-selector', function(e) {
         var val = $(this).val();
@@ -209,34 +234,34 @@ $( document ).ready(function() {
         initUploadButtonsChange();
     });
 
-    $(document).on(clickOrTouchstart, '.remove-section', function(e) {
-        if ($(this).hasClass('remove-list-option')) {
-            classToRemove = '.modal-element';
+    // $(document).on(clickOrTouchstart, '.remove-section', function(e) {
+    //     if ($(this).hasClass('remove-list-option')) {
+    //         classToRemove = '.modal-element';
             
-            var alreadyAddedPlus = false;
-            // if we try to remove row that contains plus, then plus must be moved one row before current
-            if ($(this).closest(classToRemove).find('.add-list-option').size() > 0) {
-                $(this).closest(classToRemove).prev().find('.clear').before('<i class="fa fa-plus m-l-5 add-list-option"></i>');
-                alreadyAddedPlus = true;
-            }
+    //         var alreadyAddedPlus = false;
+    //         // if we try to remove row that contains plus, then plus must be moved one row before current
+    //         if ($(this).closest(classToRemove).find('.add-list-option').size() > 0) {
+    //             $(this).closest(classToRemove).prev().find('.clear').before('<i class="fa fa-plus m-l-5 add-list-option"></i>');
+    //             alreadyAddedPlus = true;
+    //         }
 
-            // if there are 2 list option fields (total of 4 elements, along with avatar and title),
-            // we need to make sure to remove plus elements from each of them, so that only one plus remain
-            if ($(this).closest('.one-widget-list-section').find('.modal-element').size() == 4) {
-                $(this).closest(classToRemove).prev().find('.remove-section').remove();
-                $(this).closest(classToRemove).next().find('.remove-section').remove();
-                if (!alreadyAddedPlus) {
-                    $(this).closest(classToRemove).prev().find('.clear').before('<i class="fa fa-plus m-l-5 add-list-option"></i>');
-                }
-            }
-        } else {
-            classToRemove = '.one-widget-list-section';
-            var widgetList = $(this).closest('form').find('.widget-settings').find('div.widget-list');
-            if (widgetList.find('.one-widget-list-section').size() == 2) {
-                $(this).closest(classToRemove).prev().find('.widget-list-section-title').next().remove();
-                $(this).closest(classToRemove).next().find('.widget-list-section-title').next().remove();
-            }
-        }
-        $(this).closest(classToRemove).remove();
-    });
+    //         // if there are 2 list option fields (total of 4 elements, along with avatar and title),
+    //         // we need to make sure to remove plus elements from each of them, so that only one plus remain
+    //         if ($(this).closest('.one-widget-list-section').find('.modal-element').size() == 4) {
+    //             $(this).closest(classToRemove).prev().find('.remove-section').remove();
+    //             $(this).closest(classToRemove).next().find('.remove-section').remove();
+    //             if (!alreadyAddedPlus) {
+    //                 $(this).closest(classToRemove).prev().find('.clear').before('<i class="fa fa-plus m-l-5 add-list-option"></i>');
+    //             }
+    //         }
+    //     } else {
+    //         classToRemove = '.one-widget-list-section';
+    //         var widgetList = $(this).closest('form').find('.widget-settings').find('div.widget-list');
+    //         if (widgetList.find('.one-widget-list-section').size() == 2) {
+    //             $(this).closest(classToRemove).prev().find('.widget-list-section-title').next().remove();
+    //             $(this).closest(classToRemove).next().find('.widget-list-section-title').next().remove();
+    //         }
+    //     }
+    //     $(this).closest(classToRemove).remove();
+    // });
 });
