@@ -26,3 +26,7 @@
     if (!defined('RUN_APP')) {
         $application->run();
     }
+
+    function getTranslate() {
+        return Zend_Registry::getInstance()->Zend_Translate;
+    }

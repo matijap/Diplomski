@@ -10,10 +10,13 @@ class Sportalize_View_Helper_FormWidgetTableData extends Zend_View_Helper_FormEl
         $html            = '';
         $loggedUser      = Zend_Registry::get('logged_user');
         $userCreatedData = WidgetTableData::getUserCreatedData($loggedUser->id);
-        fb($userCreatedData);
+
         foreach ($attribs['multioptions'] as $short => $long) {
             $translatedShort = WidgetTableData::translateShort($short);
-            $checked         = array_key_exists($short, $pickedValues) ? 'checked="checked"' : '';
+            $checked         = '';
+            if (is_array($pickedValues)) {
+                $checked         = array_key_exists($short, $pickedValues) ? 'checked="checked"' : '';    
+            }
             $style           = 'style="opacity: 0"';
             $id              = '';
             foreach ($userCreatedData as $key => $value) {

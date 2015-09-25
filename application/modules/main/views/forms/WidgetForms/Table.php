@@ -45,12 +45,17 @@ class WidgetForms_Table extends WidgetForms_WidgetSettingsBase {
         $this->addElement($tableDataTitle);
         $data = new Sportalize_Form_Element_WidgetTableData('table_data', array(
             'multioptions' => WidgetTableData::getMultioptions($this->user->id),
-            'label'        => $this->translate->_('Available data'),
+            'label'        => $this->translate->_('Available Data'),
             'separator'    => '',
             'pickedValues' => $pickedValues
         ));
         $this->addElement($data);
         $this->addDisplayGroup(array('table_data'), 'table_data_dg');
+
+        $newData = new Sportalize_Form_Element_WidgetTableNewData('new_table_data', array(
+            'label'        => $this->translate->_('New Table Data'),
+        ));
+        $this->addElement($newData);
     }
 
     public function redecorate() {

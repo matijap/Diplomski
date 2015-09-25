@@ -41,7 +41,7 @@ class Widget extends Widget_Row
                             ))
                    ->order(array('UW.placement ASC', 'UW.display_order'))
                    ->query()->fetchAll();
-                   // fb($widgets);
+
             $return = array();
             foreach ($widgets as $key => $oneWidget) {
                 $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['type']  = $oneWidget['type'];
@@ -85,8 +85,6 @@ class Widget extends Widget_Row
                     }
                 }
             }
-            // fb($return, 'ws');
-
             return $return;
         } catch(Exception $e) {
             fb($e->getMessage());
@@ -106,9 +104,8 @@ class Widget extends Widget_Row
                 break;
             case self::WIDGET_TYPE_TABLE:
                 return 'table';
-                break;
-            default:
-                return '';
+            case self::WIDGET_TYPE_PLAIN:
+                return 'plain';
                 break;
         }
     }
@@ -123,9 +120,6 @@ class Widget extends Widget_Row
                 break;
             case self::WIDGET_TYPE_LIST:
                 return 'best-scorers';
-                break;
-            default:
-                return '';
                 break;
         }
     }
@@ -193,6 +187,8 @@ class Widget extends Widget_Row
                           Widget::WIDGET_OPTION_TYPE_LIST_WEB_OPTION,
                           Widget::WIDGET_OPTION_TYPE_LIST_WEB,
                           Widget::WIDGET_OPTION_TYPE_LIST,
+                          Widget::WIDGET_OPTION_TYPE_TABLE,
+                          Widget::WIDGET_OPTION_TYPE_PLAIN,
                         );
         foreach ($toRemove as $value) {
             Main::execQuery("DELETE FROM widget_option WHERE type = ? AND widget_id = ?;", array($value, $this->id));

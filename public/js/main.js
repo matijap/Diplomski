@@ -192,7 +192,6 @@ $( document ).ready(function() {
 
         //hack to enable selectors that does not start with dot (.), like div.some-class
         c = chars ? closest : '.' + closest;
-        console.log(c);
         var element = $(this).closest(c);
 
         if (typeof find != 'undefined') {
@@ -279,6 +278,15 @@ $( document ).ready(function() {
             } else {
                 $(this).closest(c).find('.fa-times').show();
             }
+        }
+        if ($('div.widget-table').is(':visible')) {
+            var id = getRandomNumber(1, 100000);
+            $('.new-widget-modal .c1').attr('data-id', id);
+            $('.new-widget-modal .c1').data('id', id);
+            $('.new-widget-modal .c1').attr('name', 'table[' + id + '][value_1]');
+            $('.new-widget-modal .c2').attr('name', 'table[' + id + '][value_2]');
+            $('.new-widget-modal .c1').removeClass('c1');
+            $('.new-widget-modal .c2').removeClass('c2');
         }
         if (selector != '') {
             if ($(selector).find('.remove-list-section').size() > 1) {

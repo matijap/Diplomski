@@ -149,14 +149,19 @@ $( document ).ready(function() {
     $(document).on(clickOrTouchstart, '.widget-table .fa-cog', function(e) {
         var element = $(this);
         var input   = element.parent().find('input[type="hidden"]').val();
-        input       = $.parseJSON(input);
+        if (input != '') {
+            input       = $.parseJSON(input);
+        }
 
         var htmlToAppend = '<div class="widget-table-option-configure">';
         $('.modal #widget-table-data input[type="checkbox"]').each(function() {
             if ($(this).is(':checked')) {
                 var data      = $(this).data();
-                var val       = (data.originalShort in input) ? input[data.originalShort] : '';
-                htmlToAppend += '<input type="text" placeholder="' + data.placeholder + '" value="' + val + '">';
+                var val       = '';
+                if (input != '') {
+                    val       = (data.originalShort in input) ? input[data.originalShort] : '';
+                }
+                htmlToAppend += '<input data-original-short="' + data.originalShort + '" type="text" placeholder="' + data.placeholder + '" value="' + val + '">';
             }
         });
         htmlToAppend += "<i class='fa fa-check cursor-pointer'></i><i class='fa fa-times cursor-pointer'></i></div>";
@@ -188,29 +193,58 @@ $( document ).ready(function() {
     $(document).on(clickOrTouchstart, '.widget-table-option-configure .fa-times', function(e) {
         $(this).parent().remove();
     });
-
-    $(document).on(clickOrTouchstart, '.add-new-widget-table-data', function(e) {
-        var htmlToAppend = '<label>';
-        var fullName     = $(this).parent().find('#widget-table-data-full').val();
-        var shortName    = $(this).parent().find('#widget-table-data-short').val();
-        htmlToAppend    += fullName + ' (' + shortName + ')';
-        htmlToAppend    += '<input type="checkbox" checked="checked" data-placeholder="' + shortName + '"></label>';
-
-        $('.modal #widget-table-data').find('.main-div').append(htmlToAppend);
-        $('.modal #widget-table-data').find('.main-div').find('label').last().find('input').data('placeholder', shortName);
+    $(document).on(clickOrTouchstart, '.widget-table-option-configure .fa-check', function(e) {
+        var element = $(this);
+        element.closest('.modal-element').find('input[type="hidden"]').remove();
+        var arr     = {};
+        element.parent().find('input').each(function() {
+            var input  = $(this);
+            var data   = input.data();
+            var val    = input.val();
+            var short  = data.originalShort;
+            arr[short] = val;
+        });
+        var input  = element.closest('.modal-element').find('input');
+        var data   = input.data();
+        arr        = escapeHtml(JSON.stringify(arr));
+        var hidden = '<input type="hidden" value="' + arr +  '" name="table[' + data.id + '][value_2]">';
+        element.closest('.modal-element').find('.main-div').append(hidden);
+        element.parent().remove();
     });
 
-    // $(document).on(clickOrTouchstart, '.add-list-option', function(e) {
-    //     //if this list option does not have remove, that means it is only one in section and should have it after adding new option
-    //     if ($(this).closest('.modal-element').find('.remove-section').size() == 0) {
-    //         $(this).closest('.modal-element').find('.add-list-option').before('<i class="fa fa-times remove-section remove-list-option"></i>');
-    //     }
-    //     var data = $(this).closest('.widget-marker').data();
-    //     $(this).closest('.widget-marker').append($('.' + data.template).html());
-    //     var sortableID = $(this).closest('.widget-marker').attr('id');
-    //     $(this).remove();
-    //     initializeSimpleSortable('#' + sortableID, true);
-    // });
+    $(document).on(clickOrTouchstart, '.add-new-widget-table-data', function(e) {
+        var element    = $(this);
+        var userID     = getUserID();
+        var longInput  = element.parent().find('#widget-table-data-full');
+        var shortInput = element.parent().find('#widget-table-data-short');
+        
+        var fullName     = longInput.val();
+        var shortName    = shortInput.val();
+        if (fullName == '' || shortName == '') return false;
+        element.hide();
+        element.before('<i class="fa fa-spin fa-spinner" style="font-size: 13px;"></i>');
+        $.ajax({
+            url: appurl + "/widget/add-table-data",
+            data: {'long': fullName, 'short':shortName, 'user_id': userID},
+            success: function(result) {
+                element.parent().find('.fa-spin').remove();
+                element.show();
+                if (result.status == 'success') {
+                    longInput.val('');
+                    shortInput.val('');
+
+                    var htmlToAppend = '<label>';
+                    htmlToAppend    += fullName + ' (' + shortName + ')';
+                    htmlToAppend    += '<i data-id="' + result.id + '" class="fa fa-times cursor-pointer remove-table-data"></i>';
+                    htmlToAppend    += '<input data-original-short="' + shortName + '" type="checkbox" checked="checked" data-placeholder="' + shortName + '"></label>';
+
+                    $('.modal #widget-table-data').find('.main-div').append(htmlToAppend);
+                    $('.modal #widget-table-data').find('.main-div').find('label').last().find('input').data('placeholder', shortName);
+                }
+                callNotification(result.message, result.status)
+            }
+        });
+    });
 
     $(document).on(clickOrTouchstart, '.widget-type-selector', function(e) {
         var val = $(this).val();
@@ -233,35 +267,4 @@ $( document ).ready(function() {
         $('.modal-body .mc').find('.' + widgetType).show();
         initUploadButtonsChange();
     });
-
-    // $(document).on(clickOrTouchstart, '.remove-section', function(e) {
-    //     if ($(this).hasClass('remove-list-option')) {
-    //         classToRemove = '.modal-element';
-            
-    //         var alreadyAddedPlus = false;
-    //         // if we try to remove row that contains plus, then plus must be moved one row before current
-    //         if ($(this).closest(classToRemove).find('.add-list-option').size() > 0) {
-    //             $(this).closest(classToRemove).prev().find('.clear').before('<i class="fa fa-plus m-l-5 add-list-option"></i>');
-    //             alreadyAddedPlus = true;
-    //         }
-
-    //         // if there are 2 list option fields (total of 4 elements, along with avatar and title),
-    //         // we need to make sure to remove plus elements from each of them, so that only one plus remain
-    //         if ($(this).closest('.one-widget-list-section').find('.modal-element').size() == 4) {
-    //             $(this).closest(classToRemove).prev().find('.remove-section').remove();
-    //             $(this).closest(classToRemove).next().find('.remove-section').remove();
-    //             if (!alreadyAddedPlus) {
-    //                 $(this).closest(classToRemove).prev().find('.clear').before('<i class="fa fa-plus m-l-5 add-list-option"></i>');
-    //             }
-    //         }
-    //     } else {
-    //         classToRemove = '.one-widget-list-section';
-    //         var widgetList = $(this).closest('form').find('.widget-settings').find('div.widget-list');
-    //         if (widgetList.find('.one-widget-list-section').size() == 2) {
-    //             $(this).closest(classToRemove).prev().find('.widget-list-section-title').next().remove();
-    //             $(this).closest(classToRemove).next().find('.widget-list-section-title').next().remove();
-    //         }
-    //     }
-    //     $(this).closest(classToRemove).remove();
-    // });
 });

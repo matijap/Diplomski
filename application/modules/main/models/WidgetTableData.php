@@ -89,4 +89,35 @@ class WidgetTableData extends WidgetTableData_Row
                     ->where('user_id = ?', $userID)
                     ->query()->fetchAll();
     }
+
+    public static function checkAvailability($params) {
+        $tableData = Main::fetchRow(Main::select('WidgetTableData')->where('short = ?', $params['short']));
+        $id = false;
+        if ($tableData) {
+            if (is_null($tableData->user_id)) {
+                $message = self::$translate->_('System table data with same short name already exists');
+                $status  = 'error';
+            } else {
+                if ($tableData->user_id == $params['user_id']) {
+                    $message = self::$translate->_('You have already created table data with this short name');
+                    $status  = 'error';
+                } else {
+                    $tableData = WidgetTableData::create($params);
+                    $message = self::$translate->_('Table data added successfully');
+                    $status  = 'success';
+                    $id = $tableData->id;
+                }
+            }
+        } else {
+            $tableData = WidgetTableData::create($params);
+            $message = self::$translate->_('Table data added successfully');
+            $status  = 'success';
+            $id = $tableData->id;
+        }
+        
+        $response['status']  = $status;
+        $response['message'] = $message;
+        $response['id']      = $id;
+        return $response;
+    }
 }

@@ -22,7 +22,7 @@ class WidgetController extends Main_BaseController
         if ($pageID) {
             $data['pageID'] = $pageID;
         }
-        $data['widgetID'] = 4;
+        // $data['widgetID'] = 4;
         $this->view->form = $form = new WidgetForm($data);
         $response = $this->validateForm($form);
         if ($response['isPost']) {
@@ -120,7 +120,6 @@ class WidgetController extends Main_BaseController
     }
 
     public function deleteTableDataAction() {
-        fb($this->params);
         $tableData = Main::buildObject('WidgetTableData', $this->params['id']);
         if (is_null($tableData->user_id)) {
             $status  = 0;
@@ -131,5 +130,15 @@ class WidgetController extends Main_BaseController
             $message = $this->translate->_('Widget data deleted successfully');
         }
         $this->_helper->json(array('status'  => $status, 'message' => $message));
+    }
+
+    public function addTableDataAction() {
+        $response = WidgetTableData::checkAvailability($this->params);
+        $this->_helper->json(array(
+            'status'  => $response['status'],
+            'message' => $response['message'],
+            'id'      => $response['id'],
+            )
+        );
     }
 }
