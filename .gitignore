@@ -8,3 +8,7 @@ public/user_images/post_images
 !public/user_images/post_images/.empty
 public/user_images/widget_images
 !public/user_images/widget_images/.empty
+!public/user_images/widget_images/widget_football.png
+public/user_images/galery
+!public/user_images/galery/.empty
+!public/user_images/galery/galery_empty.jpg

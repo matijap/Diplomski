@@ -1,0 +1,13 @@
+<div id="main-panel" class="bb">
+    <div class="galery-upload m-t-20">
+        <h2><?php echo $this->translate->_('Upload pictures'); ?></h2>
+        <input type="file" class="upload-change-it m-t-10 float-left" id="fileupload" name="files[]" data-url="<?php echo APP_URL; ?>/galery/upload" multiple/>
+        <a class="float-right green-button back-to-galery" href="<?php echo APP_URL; ?>/galery/index"><?php echo $this->translate->_('Back To Galery'); ?></a>
+    </div>
+    <div id="progress">
+        <div class="bar" style="width: 0%;"></div>
+    </div>
+    <hr>
+    <div class="gallery album">
+    </div>
+</div>

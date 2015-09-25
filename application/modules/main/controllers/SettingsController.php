@@ -14,14 +14,10 @@ class SettingsController extends Main_BaseController
                     $user->updateFavouritesAndDreamTeam($this->params);
                     $user->updatePersonalInfo($this->params['personal_info']);
                     $user->updatePrivacySettings($this->params['privacy_settings']);
+                    $user->updateOtherData($this->params['other']);
 
-                    //hacky solution, because file upload is performed only after validation. so form will
-                    //have avatar image set to one before upload occured
-                    // also will handle if country is changed, so will display proper date format
-                    $loc = $this->setLocParam();
-                    $this->setDatePickerFormat($loc);
-                    $this->view->form = new PersonalSettingsForm();
                     $this->setNotificationMessage($this->translate->_('Personal settings saved successfully.'));
+                    $this->_redirect(APP_URL . '/settings/index');
                 }
             }
         }

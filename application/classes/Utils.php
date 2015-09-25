@@ -14,6 +14,10 @@ class Utils
         return rand($min, $max);
     }
 
+    public function generateRandomString($length = 10) {
+        return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+    }
+
     public static function arrayFetch($array, $path, $default = null, $delimiter = '.') {
         $a = $array;
         if (!is_array($path)) {
@@ -61,7 +65,7 @@ class Utils
             if ($file['tmp_name'] != '') {
                 if (is_uploaded_file($file['tmp_name'])) {
                     $file['name'] =  str_replace(' ', '', $file['name']);
-                    $fileName     = Utils::fileExist(WEB_ROOT_PATH . "/" . $uploadFolder . "/" , $fileNamePrefix . $delimeter . $file['name']);
+                    $fileName     = Utils::fileExist(WEB_ROOT_PATH . "/" . $uploadFolder . "/" , $fileNamePrefix . $delimeter . self::generateRandomString());
                     if (!move_uploaded_file($file['tmp_name'], WEB_ROOT_PATH . "/" . $uploadFolder . "/" . $fileName)) {
                         throw new Exception("Could not upload files or images.");
                     } else {
@@ -95,7 +99,7 @@ class Utils
             foreach ($names as $key => $value) {
                 if (is_uploaded_file($tempNames[$key])) {
                     $value    = str_replace(' ', '', $value);
-                    $fileName = Utils::fileExist(WEB_ROOT_PATH . "/" . $uploadFolder . "/" , $fileNamePrefix . $delimeter . $value);
+                    $fileName = Utils::fileExist(WEB_ROOT_PATH . "/" . $uploadFolder . "/" , $fileNamePrefix . $delimeter . self::generateRandomString());
                     if (!move_uploaded_file($tempNames[$key], WEB_ROOT_PATH . "/" . $uploadFolder . "/" . $fileName)) {
                         throw new Exception("Could not upload files or images.");
                     } else {
@@ -106,7 +110,7 @@ class Utils
         } else {
             if (is_uploaded_file($tempNames)) {
                 $value    = str_replace(' ', '', $names);
-                $fileName = Utils::fileExist(WEB_ROOT_PATH . "/" . $uploadFolder . "/" , $fileNamePrefix . $delimeter . $value);
+                $fileName = Utils::fileExist(WEB_ROOT_PATH . "/" . $uploadFolder . "/" , $fileNamePrefix . $delimeter . self::generateRandomString());
                 if (!move_uploaded_file($tempNames, WEB_ROOT_PATH . "/" . $uploadFolder . "/" . $fileName)) {
                     throw new Exception("Could not upload files or images.");
                 } else {

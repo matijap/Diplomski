@@ -241,6 +241,7 @@ class User extends User_Row
             // @todo update user info properly
             // @todo insert default widgets
             // @todo implement default user lists, also that list cannot have name same as is system
+            // @todo set defualt language to serbian
              $select1 = Main::select()
                         ->from(array('PO' => 'post'), '')
                         ->joinLeft(array('CO1' => new Zend_Db_Expr("($commentSelect)")), 'CO1.commented_post_id = PO.id', '')
@@ -499,7 +500,7 @@ class User extends User_Row
     }
 
     public function updatePersonalInfo($params) {
-        $userInfo = Main::fetchRow(Main::select('UserInfo')->where('user_id = ?', $this->id));
+        $userInfo = $this->getUserInfo();
         if ($userInfo) {
             if (!empty($params['date_of_birth'])) {
                 $locale                  = Zend_Registry::get('Zend_Locale');
@@ -571,5 +572,19 @@ class User extends User_Row
             $return[$value['id']] = $value['title'];
         }
         return $return;
+    }
+
+    public function updateOtherData($data) {
+        $userInfo = $this->getUserInfo();
+        $userInfo->edit(array('language_id' => $data['language']));
+    }
+
+    public function getUserInfo() {
+        return Main::fetchRow(Main::select('UserInfo')->where('user_id = ?', $this->id));
+    }
+
+    public function getLanguage() {
+        $userInfo = $this->getUserInfo();
+        return Main::fetchRow(Main::select('Language')->where('id = ?', $userInfo->language_id));
     }
 }

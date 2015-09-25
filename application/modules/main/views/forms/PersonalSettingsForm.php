@@ -9,8 +9,11 @@ class PersonalSettingsForm extends Sportalize_Form_Base {
 
     public function createElements() {
 
-        $personalInfoForm     = new PersonalSettings_PersonalInfo();
+        $personalInfoForm    = new PersonalSettings_PersonalInfo();
         $this->addSubForm($personalInfoForm, 'personal_info');
+
+        $otherForm           = new PersonalSettings_Other();
+        $this->addSubForm($otherForm, 'other');
 
         $privacySettingsForm = new PersonalSettings_PrivacySettings();
         $this->addSubForm($privacySettingsForm, 'privacy_settings');

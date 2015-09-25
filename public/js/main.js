@@ -88,6 +88,7 @@ $( document ).ready(function() {
     });
 
     $(document).on(clickOrTouchstart, '.modal-open', function(event) {
+        event.preventDefault();
         var element = $(this);
         $('.modal-header-title p').text('');
         $( ".modal.fade" ).toggle();
