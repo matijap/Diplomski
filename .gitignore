@@ -1,2 +1,10 @@
 .DS_Store
 temporary/
+public/user_images/avatars
+!public/user_images/avatars/.empty
+public/user_images/page_images
+!public/user_images/page_images/.empty
+public/user_images/post_images
+!public/user_images/post_images/.empty
+public/user_images/widget_images
+!public/user_images/widget_images/.empty

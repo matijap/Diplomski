@@ -8,6 +8,7 @@ class WidgetClass_Lweb extends WidgetClass_Abstract {
         $widgetID = $this->widget->id;
 
         $data = $this->sortDataArray($data);
+
         foreach ($data['lweb'] as $elementKey => $elementData) {
             //title is refering to one lweb_list
             $title = $elementData['title_' . $elementKey];
@@ -41,14 +42,13 @@ class WidgetClass_Lweb extends WidgetClass_Abstract {
                         }
                     }
                     $lwebListOption = WidgetOption::create($lwebListOptionArray);
-                    
                     //now check if this option has any data attached to it
                     if (isset($elementData[$optionKey]['data'])) {
                         $decoded = Zend_Json::decode($elementData[$optionKey]['data']);
                         $this->createWidgetListOptionData($decoded, $lwebListOption->id, $widgetID);
                     }
+                    $processedOptionKeys[] = $optionKey;
                 }
-                $processedOptionKeys[] = $optionKey;
                 //if we are editing existing option, that already contain images, we need to recreate them
                 $this->createWidgetListOption($elementData, $elementKey, $widgetID, $lwebList, $processedOptionKeys);
             } else {
@@ -100,7 +100,6 @@ class WidgetClass_Lweb extends WidgetClass_Abstract {
                         $lwebListOptionArray['image_2'] = $optionData['temp_images'][2];
                     }    
                     $lwebListOption = WidgetOption::create($lwebListOptionArray);
-                
                     if (isset($optionData['data'])) {
                         $decoded = Zend_Json::decode($elementData[$optionKey]['data']);
                         $this->createWidgetListOptionData($decoded, $lwebListOption->id, $widgetID);

@@ -25,6 +25,7 @@ class WidgetForm extends Sportalize_Form_Modal {
         $widget = false;
         if ($this->wid) {
             $widget = Main::buildObject('Widget', $this->wid);
+            $this->setModalTitle($widget->title);
         }
         $widgetTypeMultioptions = Widget::getWidgetTypeMultioptions();
         $widgetType = $this->createElement('radio', 'type', array(
@@ -37,8 +38,7 @@ class WidgetForm extends Sportalize_Form_Modal {
         if ($widget) {
             $widgetType->setValue($widget->type);
         } else {
-            //@todo set here to plain
-            $widgetType->setValue(Widget::WIDGET_TYPE_TABLE);
+            $widgetType->setValue(Widget::WIDGET_TYPE_PLAIN);
         }
         $this->addElement($widgetType);
 

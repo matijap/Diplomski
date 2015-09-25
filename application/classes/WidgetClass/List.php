@@ -13,7 +13,7 @@ class WidgetClass_List extends WidgetClass_Abstract {
               $section->edit(array('image_1' => $oneSection[$imageKey]));
             }
             if (isset($_FILES['list']['name'][$key]) && !empty(isset($_FILES['list']['name'][$key]))) {
-              $fileName = Utils::uploadMultiFiles($key . $imageKey, Widget::WIDGET_IMAGES_FOLDER, 'list', $this->widget->id . '_' . $section->id);
+              $fileName = Utils::uploadMultiFiles($key . '.' . $imageKey, Widget::WIDGET_IMAGES_FOLDER, 'list', $this->widget->id . '_' . $section->id);
               $section->edit(array('image_1' => $fileName[1]));
             }
             foreach ($oneSection as $item => $oneOption) {

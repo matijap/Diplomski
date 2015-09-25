@@ -104,6 +104,7 @@ class Widget extends Widget_Row
                 break;
             case self::WIDGET_TYPE_TABLE:
                 return 'table';
+                break;
             case self::WIDGET_TYPE_PLAIN:
                 return 'plain';
                 break;

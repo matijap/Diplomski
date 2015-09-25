@@ -89,6 +89,7 @@ $( document ).ready(function() {
 
     $(document).on(clickOrTouchstart, '.modal-open', function(event) {
         var element = $(this);
+        $('.modal-header-title p').text('');
         $( ".modal.fade" ).toggle();
         $( ".modal.fade" ).fadeTo( "fast" , 1, function() {});
         $('.mcl').show();
@@ -108,6 +109,7 @@ $( document ).ready(function() {
                 $('.modal-footer').append(button);
                 $('.modal-header-title p').text(title);
                 applyInitFunctions();
+                recalculateModalHeight();
             }
         });
     });
@@ -232,8 +234,13 @@ $( document ).ready(function() {
             $('.new-widget-modal .change_1').attr('id', rand1);
             $('.new-widget-modal .change_2').attr('id', rand2);
 
+            $('.new-widget-modal .h1').attr('name', 'lweb[' + did + '][' + rand3 + ']');
+            $('.new-widget-modal .h1').removeClass('h1');
+
             $('.new-widget-modal .change_1').removeClass('change_1');
             $('.new-widget-modal .change_2').removeClass('change_2');
+            $('.new-widget-modal a.change_1').removeClass('change_1');
+            $('.new-widget-modal a.change_2').removeClass('change_2');
             
             $('.new-widget-modal .c1').addClass('upload-ap_' + rand1);
             $('.new-widget-modal .c2').addClass('upload-ap_' + rand2);
@@ -265,13 +272,18 @@ $( document ).ready(function() {
             }
 
             $('.new-widget-modal .change_1').data('trigger', 'ap_' + fileTrigger);
-            $('.new-widget-modal .change_1').attr('name', 'list[' + did + '][image]');
+            $('.new-widget-modal .change_1').attr('id', fileTrigger);
+            $('.new-widget-modal .change_1').attr('name', 'list[' + did + '][image_' + did + ']');
             $('.new-widget-modal .c1').addClass('upload-ap_' + fileTrigger);
             $('.new-widget-modal .c1').removeClass('c1');
             $('.new-widget-modal .t1').attr('name', 'list[' + did + '][' + optionID + '][value_1]');
             $('.new-widget-modal .t2').attr('name', 'list[' + did + '][' + optionID + '][value_2]');
             $('.new-widget-modal .t1').removeClass('t1');
             $('.new-widget-modal .t2').removeClass('t2');
+
+            $('.new-widget-modal .change_1').removeClass('change_1');
+            $('.new-widget-modal a.change_1').removeClass('change_1');
+
             initUploadButtonsChange();
             if ($(this).hasClass('blue-button')) {
                 $('i[data-closest="div.widget-list"]').show();
@@ -297,6 +309,7 @@ $( document ).ready(function() {
         } else {
             $(this).closest(c).find('.fa-times').show();
         }
+        recalculateModalHeight();
     });
 
     $(document).on(clickOrTouchstart, '.remove-item', function(e) {
@@ -387,6 +400,7 @@ $( document ).ready(function() {
             divWithImage.addClass('height-50px');
         }
         divWithImage.parent().find('ul').remove();
+        recalculateModalHeight();
     });
 
     $(document).on(clickOrTouchstart, '.submit-modal-form', function(e) {

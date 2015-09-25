@@ -6,7 +6,7 @@ class WidgetForms_WidgetSettingsBase extends Sportalize_Form_Base {
     public $dgClass         = '';
     public $containerClass  = '';
     public $widgetBuilt     = '';
-    public $defaultWidget   = Widget::WIDGET_TYPE_TABLE;
+    public $defaultWidget   = Widget::WIDGET_TYPE_PLAIN;
     public $data            = array();
 
     public function __construct($data = array()) {

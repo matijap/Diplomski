@@ -16,7 +16,7 @@
         </a>
         <i class="fa fa-spinner fa-spin text-align-center display-none"></i>
     </div>
-    <?php $text = !empty($this->widgets) ? $this->translate->_('Currently active widgets') : $this->translate->_('No active widgets'); ?>
+    <?php $text = count($this->widgets) ? $this->translate->_('Currently active widgets') : $this->translate->_('No active widgets'); ?>
     
     <h3 class="m-t-10"><?php echo $text; ?></h3>
     <ul class="m-t-10">
