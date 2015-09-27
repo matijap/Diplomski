@@ -25,9 +25,11 @@ class Galery extends Galery_Row
         return Galery::getThumbnail($this->id);
     }
 
-    public static function uploadImage() {
-        if (isset($_FILES['files'])) {
-            
-        }
+    public function uploadImage() {
+        $fileName = Utils::uploadMultiFiles('0', self::GALERY_IMAGES_FOLDER, 'files', $this->id);
+        Image::create(array(
+            'galery_id' => $this->id,
+            'url'       => $fileName[1],
+        ));
     }
 }

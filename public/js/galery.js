@@ -2,6 +2,14 @@ $( document ).ready(function() {
     var clickOrTouchstart = getClickOrTouchstart();
 
     var commentGalleryClass = '.galery-overlay';
+     
+    $('.gallery.album a').simpleLightbox({
+        appendTarget: $('.galery-image'),
+        closeOnOverlayClick: false,
+        nextOnImageClick: false,
+    });
+
+    
     $(document).on(clickOrTouchstart, '.gallery.album a', function(e) {
         $(commentGalleryClass).show();
         var toClear = setInterval(function() {
@@ -9,6 +17,7 @@ $( document ).ready(function() {
             if (typeof id != undefined) {
                 pullCommentsForPicture(id);
                 clearInterval(toClear);
+                $(commentGalleryClass).find('form').find('#commented_image_id').val(id);
             }
         }, 100);
         
@@ -36,23 +45,23 @@ $( document ).ready(function() {
         $('.post-comment-list').html('');
         $('.post-comment-textarea').hide();
         $('.submit-comment').hide();
-        setTimeout(function() {
-            $.ajax({url: "ajax/galeryComments.php", success: function(result){
+        appurl = getAppUrl();
+        $.ajax({
+            url: appurl + "/galery/get-image-comments",
+            data: {'imageID': pictureID },
+            success: function(result) {
                 $('.post-comment-list').html(result);
+                $('.post-comment-list').append('<div class="show-more-post-comments">' + 
+                                                '<i class="fa fa-toggle-down"></i>' +
+                                                '</div>')
                 adjustCommentTextWidth();
-            }});
-            $('.fa-spin').remove();
-            $('.slbArrow').show();
-            $('.post-comment-textarea').show();
-            $('.submit-comment').show();
-        }, 300);
+                $('.fa-spin').remove();
+                $('.slbArrow').show();
+                $('.post-comment-textarea').show();
+                $('.submit-comment').show();
+            }
+        });
     }
-
-    $('.gallery.album a').simpleLightbox({
-        appendTarget: $('.galery-image'),
-        closeOnOverlayClick: false,
-        nextOnImageClick: false,
-    });
 
     $('#fileupload').fileupload({
         dataType: 'json',

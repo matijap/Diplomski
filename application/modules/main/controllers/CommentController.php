@@ -16,9 +16,9 @@ class CommentController extends Main_BaseController
     }
 
     public function submitCommentAction() {
-        if (!isset($this->params['commented_post_id'])) {
+        if (!isset($this->params['commented_post_id']) && !isset($this->params['commented_image_id'])) {
             $status              = self::NOTIFICATION_ERROR;
-            $notificationMessage = $this->translate->_('Post ID not set.');
+            $notificationMessage = $this->translate->_('Post or Image ID not set.');
         } else {
             $comment             = Comment::create($this->params);
             $status              = self::NOTIFICATION_SUCCESS;
@@ -28,6 +28,9 @@ class CommentController extends Main_BaseController
         $redirectURL = '/';
         if (isset($this->params['page_id'])) {
             $redirectURL = 'page/index?pageID=' . $this->params['page_id'];
+        }
+        if (isset($this->params['commented_image_id'])) {
+            $redirectURL = 'galery/galery-image?galeryID=1';
         }
         $this->_redirect($redirectURL);
     }

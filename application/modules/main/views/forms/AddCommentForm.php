@@ -2,12 +2,15 @@
 
 class AddCommentForm extends Sportalize_Form_Base {
     
-    public $pageID = false;
+    public $pageID   = false;
+    public $isImage  = false;
 
     public function __construct($data = array()) {
         if (isset($data['pageID'])) {
             $this->pageID = $data['pageID'];
         }
+
+        $this->isImage = isset($data['isImage']);
         parent::__construct($data);
     }
     public function init() {
@@ -30,12 +33,16 @@ class AddCommentForm extends Sportalize_Form_Base {
             'value' => $this->translate->_('Submit'),
             'class' => 'submit-comment'
         ));
-
-        $this->addElement('hidden', 'commented_post_id', array('value' => 0, 'class' => 'form_postID'));
-        $this->addElement('hidden', 'parent_comment_id', array('value' => 0, 'class' => 'form_commentID'));
+        
         $this->addElement('hidden', 'commenter_id', array('value' => $this->user->id, 'class' => 'form_commenterID'));
         if ($this->pageID) {
             $this->addElement('hidden', 'page_id', array('value' => 7));
+        }
+        if ($this->isImage) {
+            $this->addElement('hidden', 'commented_image_id', array('value' => 0, 'class' => 'form_imageID'));
+        } else {
+            $this->addElement('hidden', 'commented_post_id', array('value' => 0, 'class' => 'form_postID'));
+            $this->addElement('hidden', 'parent_comment_id', array('value' => 0, 'class' => 'form_commentID'));    
         }
     }
 

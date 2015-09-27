@@ -191,7 +191,7 @@
                             '<div class="slbWrap">' +
                                 '<div class="slbContentOuter">' +
                                     '<div class="slbContent"></div>' +
-                                    '<button type="button" title="' + o.closeBtnCaption + '" class="slbCloseBtn ' + o.closeBtnClass + '">×</button>' +
+                                    '<button type="button" title="' + o.closeBtnCaption + '" class="slbCloseBtn ' + o.closeBtnClass + '">x</button>' +
                                 '</div>' +
                             '</div>' +
                         '</div>' +

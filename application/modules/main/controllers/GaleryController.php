@@ -4,6 +4,21 @@ require_once 'BaseController.php';
 
 class GaleryController extends Main_BaseController
 {
+    public $galery;
+    public $image;
+
+    public function preDispatch() {
+        parent::preDispatch();
+        $galeryID = Utils::arrayFetch($this->params, 'galeryID', false);
+        if ($galeryID) {
+            $this->galery = Main::buildObject('Galery', $this->params['galeryID']);
+        }
+        $imageID = Utils::arrayFetch($this->params, 'imageID', false);
+        if ($imageID) {
+            $this->image = Main::buildObject('Image', $this->params['imageID']);
+        }
+    }
+
     public function indexAction() {
         $this->view->galeries = $this->user->getGaleryList();
     }
@@ -39,9 +54,15 @@ class GaleryController extends Main_BaseController
         }
     }
     public function galeryImageAction() {
+        $this->view->images  = $this->galery->getImageList();
+        $this->view->form    = new AddCommentForm(array('isImage' => true));
     }
 
     public function uploadAction() {
-        Galery::uploadImage();
+        $this->galery->uploadImage();
+    }
+
+    public function getImageCommentsAction() {
+        $this->view->comments = $this->image->getCommentsForImage($this->user->id);
     }
 }
