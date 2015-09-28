@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.21)
 # Database: sportalize
-# Generation Time: 2015-09-11 20:37:55 +0000
+# Generation Time: 2015-09-28 20:06:26 +0000
 # ************************************************************
 
 
@@ -330,6 +330,41 @@ CREATE TABLE `dream_team` (
 
 
 
+# Dump of table favourite_item
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `favourite_item`;
+
+CREATE TABLE `favourite_item` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  `name` varchar(256) DEFAULT NULL,
+  `page_id` int(11) unsigned DEFAULT NULL,
+  `type` enum('PLAYER','TEAM') DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_fi_pa` (`page_id`),
+  CONSTRAINT `FK_fi_pa` FOREIGN KEY (`page_id`) REFERENCES `page` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Dump of table friend_list
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `friend_list`;
+
+CREATE TABLE `friend_list` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `is_system` tinyint(1) DEFAULT '0',
+  `title` varchar(256) DEFAULT NULL,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_fl_us` (`user_id`),
+  CONSTRAINT `FK_fl_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
 # Dump of table galery
 # ------------------------------------------------------------
 
@@ -362,6 +397,30 @@ CREATE TABLE `image` (
 
 
 
+# Dump of table language
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `language`;
+
+CREATE TABLE `language` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) DEFAULT NULL,
+  `file` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `language` WRITE;
+/*!40000 ALTER TABLE `language` DISABLE KEYS */;
+
+INSERT INTO `language` (`id`, `name`, `file`)
+VALUES
+  (1,'ENGLISH','en'),
+  (2,'SERBIAN','sr');
+
+/*!40000 ALTER TABLE `language` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 # Dump of table menu_link
 # ------------------------------------------------------------
 
@@ -373,6 +432,7 @@ CREATE TABLE `menu_link` (
   `url` varchar(256) DEFAULT NULL,
   `parent_menu_link_id` int(11) unsigned DEFAULT NULL,
   `display_order` int(11) DEFAULT NULL,
+  `class` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_ml_ml` (`parent_menu_link_id`),
   CONSTRAINT `FK_ml_ml` FOREIGN KEY (`parent_menu_link_id`) REFERENCES `menu_link` (`id`)
@@ -381,21 +441,22 @@ CREATE TABLE `menu_link` (
 LOCK TABLES `menu_link` WRITE;
 /*!40000 ALTER TABLE `menu_link` DISABLE KEYS */;
 
-INSERT INTO `menu_link` (`id`, `title`, `url`, `parent_menu_link_id`, `display_order`)
+INSERT INTO `menu_link` (`id`, `title`, `url`, `parent_menu_link_id`, `display_order`, `class`)
 VALUES
-  (1,'NOTIFICATIONS','javascript:void(0)',NULL,1),
-  (2,'REFRESH_ME','/',NULL,2),
-  (3,'MY_POSTS','/index/profile',NULL,3),
-  (4,'GAMES','javascript:void(0)',NULL,4),
-  (5,'MORE','javascript:void(0)',NULL,5),
-  (6,'FANTASY','javascript:void(0)',4,1),
-  (7,'QUIZ','javascript:void(0)',4,2),
-  (8,'VIRTUAL_BOOKING','javascript:void(0)',4,3),
-  (9,'NEW_PAGE','javascript:void(0)',5,1),
-  (10,'GALERY','javascript:void(0)',5,2),
-  (11,'PERSONAL_SETTINGS','/settings/index',5,3),
-  (12,'FAVORITES','javascript:void(0)',5,4),
-  (13,'SIGN_OUT','/login/index/sign-out',5,5);
+  (1,'NOTIFICATIONS','javascript:void(0)',NULL,1,NULL),
+  (2,'REFRESH_ME','/',NULL,2,NULL),
+  (3,'MY_POSTS','/index/profile',NULL,3,NULL),
+  (4,'GAMES','javascript:void(0)',NULL,4,NULL),
+  (5,'MORE','javascript:void(0)',NULL,5,NULL),
+  (6,'FANTASY','javascript:void(0)',4,1,NULL),
+  (7,'QUIZ','javascript:void(0)',4,2,NULL),
+  (8,'VIRTUAL_BOOKING','javascript:void(0)',4,3,NULL),
+  (9,'NEW_PAGE','javascript:void(0)',5,1,'modal-open'),
+  (10,'GALERY','galery/index',5,3,NULL),
+  (11,'PERSONAL_SETTINGS','settings/index',5,4,NULL),
+  (12,'FAVORITES','javascript:void(0)',5,5,NULL),
+  (13,'SIGN_OUT','login/index/sign-out',5,6,NULL),
+  (14,'MY_PAGES','javascript:void(0)',5,2,NULL);
 
 /*!40000 ALTER TABLE `menu_link` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -463,6 +524,24 @@ CREATE TABLE `post` (
 
 
 
+# Dump of table privacy_setting
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `privacy_setting`;
+
+CREATE TABLE `privacy_setting` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  `setting` enum('ALL','FRIENDS_OF_FRIENDS','FRIENDS_ONLY','SPECIFIC_LISTS','SPECIFIC_FRIENDS','NONE') DEFAULT NULL,
+  `type` enum('POST','PROFILE','GALERY') DEFAULT NULL,
+  `options` varchar(1024) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_ps_us` (`user_id`),
+  CONSTRAINT `FK_ps_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
 # Dump of table sport
 # ------------------------------------------------------------
 
@@ -480,12 +559,12 @@ LOCK TABLES `sport` WRITE;
 
 INSERT INTO `sport` (`id`, `field_players`, `name`)
 VALUES
-  (1,11,'Football'),
-  (2,5,'Basketball'),
-  (3,7,'Waterpolo'),
-  (4,6,'Voleyball'),
-  (5,6,'Handball'),
-  (6,1,'Tenis');
+  (1,11,'FOOTBALL'),
+  (2,5,'BASKETBALL'),
+  (3,7,'WATERPOLO'),
+  (4,6,'VOLEYBALL'),
+  (5,6,'HANDBALL'),
+  (6,1,'TENIS');
 
 /*!40000 ALTER TABLE `sport` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -503,8 +582,6 @@ CREATE TABLE `user` (
   `token` varchar(256) DEFAULT NULL,
   `token_time_generation` int(11) DEFAULT NULL,
   `activated` tinyint(1) DEFAULT '0',
-  `first_name` varchar(256) DEFAULT NULL,
-  `last_name` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -525,10 +602,13 @@ CREATE TABLE `user_info` (
   `city` varchar(256) DEFAULT NULL,
   `country_id` int(11) unsigned NOT NULL,
   `avatar` varchar(256) DEFAULT NULL,
+  `language_id` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_ui_us` (`user_id`),
   KEY `FK_ui_co` (`country_id`),
+  KEY `FK_ui_la` (`language_id`),
   CONSTRAINT `FK_ui_co` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`),
+  CONSTRAINT `FK_ui_la` FOREIGN KEY (`language_id`) REFERENCES `language` (`id`),
   CONSTRAINT `FK_ui_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -618,11 +698,29 @@ CREATE TABLE `user_widget` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned DEFAULT NULL,
   `widget_id` int(11) unsigned DEFAULT NULL,
+  `placement` enum('LEFT','RIGHT') DEFAULT NULL,
+  `display_order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_uw_us` (`user_id`),
   KEY `FK_uw` (`widget_id`),
   CONSTRAINT `FK_uw` FOREIGN KEY (`widget_id`) REFERENCES `widget` (`id`),
   CONSTRAINT `FK_uw_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Dump of table user_widget_data
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user_widget_data`;
+
+CREATE TABLE `user_widget_data` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  `title` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_uwd_us` (`user_id`),
+  CONSTRAINT `FK_uwd_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -636,11 +734,11 @@ CREATE TABLE `widget` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(256) DEFAULT NULL,
   `is_system` tinyint(1) DEFAULT '0',
-  `page_id` int(11) DEFAULT NULL,
+  `page_id` int(11) unsigned DEFAULT NULL,
   `type` enum('PAGE','PLAIN','LIST','TABLE','LIST_WEB') DEFAULT NULL,
-  `display_order` int(11) DEFAULT NULL,
-  `placement` enum('LEFT','RIGHT') DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FK_wi_pa` (`page_id`),
+  CONSTRAINT `FK_wi_pa` FOREIGN KEY (`page_id`) REFERENCES `page` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -670,6 +768,23 @@ CREATE TABLE `widget_option` (
   CONSTRAINT `FK_wo_pa` FOREIGN KEY (`linked_page_id`) REFERENCES `page` (`id`),
   CONSTRAINT `FK_wo_wi` FOREIGN KEY (`widget_id`) REFERENCES `widget` (`id`),
   CONSTRAINT `FK_wo_wo1` FOREIGN KEY (`parent_widget_option_id`) REFERENCES `widget_option` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Dump of table widget_table_data
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `widget_table_data`;
+
+CREATE TABLE `widget_table_data` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  `short` varchar(10) DEFAULT NULL,
+  `long` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_wtd_us` (`user_id`),
+  CONSTRAINT `FK_wtd_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
