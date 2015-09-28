@@ -1,0 +1,39 @@
+<div id="main-panel" class="bb fantasy">
+    <div class="main-background-color one-personal-settings-section">
+        <h3 class="text-align-center m-b-10"><?php echo $this->translate->_('Current favorites'); ?></h3>
+        <table class="table">
+            <tr>
+                <th><?php echo $this->translate->_('Page Name'); ?></th>
+                <th><?php echo $this->translate->_('Widget Settings'); ?></th>
+                <th><?php echo $this->translate->_('Unlike'); ?></th>
+                <th><?php echo $this->translate->_('Show in favorite pages widget?'); ?></th>
+            </tr>
+            <?php
+            foreach ($this->favoritePages as $onePage) {
+                ?>
+                <tr>
+                    <td>
+                        <a href="<?php echo APP_URL; ?>/page/index/pageID/<?php echo $onePage['id']; ?>">
+                            <?php echo $onePage['title']; ?>
+                        </a>
+                    </td>
+                    <td>
+                        <a data-url="/widget/configure-widget-for-user/pageID/<?php echo $onePage['id']; ?>" class="blue-button modal-open" href="javascript:void(0)">
+                            <i class="fa fa-cog"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="blue-button unfavorite-page" href="javascript:void(0)">
+                            <i class="fa fa-heartbeat"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <input class="show-in-widget-favorite cursor-pointer" type="checkbox">
+                    </td>
+                </tr>
+                <?php
+            }
+            ?>
+        </table>
+    </div>
+</div>

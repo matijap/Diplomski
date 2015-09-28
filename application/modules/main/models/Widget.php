@@ -21,6 +21,7 @@ class Widget extends Widget_Row
 
     const WIDGET_PLACEMENT_LEFT              = 'LEFT';
     const WIDGET_PLACEMENT_RIGHT             = 'RIGHT';
+    const WIDGET_PLACEMENT_DO_NOT_SHOW       = 'DO_NOT_SHOW';
 
     const WIDGET_LWEB_PLACEMENT_MAIN         = 'MAIN';
     const WIDGET_LWEB_PLACEMENT_ADDITIONAL   = 'ADDITIONAL';
@@ -34,6 +35,7 @@ class Widget extends Widget_Row
                    ->join(array('UW' => 'user_widget'), 'UW.widget_id = WI.id', '')
                    ->join(array('WO' => 'widget_option'), 'WO.widget_id = WI.id', '')
                    ->where('UW.user_id = ?', $userID)
+                   ->where('UW.placement != ?', self::WIDGET_PLACEMENT_DO_NOT_SHOW)
                    ->columns(array( 'WI.id as widget_id', 'UW.display_order as widget_display_order', 'UW.placement as widget_placement', 'WI.type',
                                     'WI.title as widget_title',
                                     'WO.type as widget_option_type', 'WO.parent_widget_option_id', 'WO.title as widget_option_title', 'WO.image_1', 'WO.image_2',
@@ -220,5 +222,13 @@ class Widget extends Widget_Row
         $this->purgeWidgetOptions();
         Main::execQuery("DELETE FROM user_widget WHERE widget_id = ?", $this->id);
         parent::delete();
+    }
+
+    public static function getPlacementMultioptions() {
+        return array(
+            self::WIDGET_PLACEMENT_LEFT        => self::$translate->_('Left'),
+            self::WIDGET_PLACEMENT_RIGHT       => self::$translate->_('Right'),
+            self::WIDGET_PLACEMENT_DO_NOT_SHOW => self::$translate->_('Do Not Show'),
+        );
     }
 }

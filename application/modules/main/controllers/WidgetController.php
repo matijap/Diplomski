@@ -141,4 +141,17 @@ class WidgetController extends Main_BaseController
             )
         );
     }
+
+    public function configureWidgetForUserAction() {
+        $this->view->form = $form = new WidgetForms_ConfigureForUser(array('pageID' =>$this->params['pageID']));
+        $response         = $this->validateForm($form);
+        if ($response['isPost']) {
+            if ($response['isValid']) {
+                $this->user->reconfigureWidgets($this->params['widgets']);
+                $this->setNotificationMessage($this->translate->_('Widgets configured successfully'));
+                $this->_helper->json(array('status'  => 1,
+                                           'url'     => APP_URL . '/favorites/index'));
+            }
+        }
+    }
 }

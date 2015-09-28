@@ -587,4 +587,11 @@ class User extends User_Row
         $userInfo = $this->getUserInfo();
         return Main::fetchRow(Main::select('Language')->where('id = ?', $userInfo->language_id));
     }
+
+    public function reconfigureWidgets($params) {
+        foreach ($params as $widgetID => $placement) {
+            $widget = Main::fetchRow(Main::select('UserWidget')->where('widget_id = ?', $widgetID)->where('user_id = ?', $this->id));
+            $widget->edit(array('placement' => $placement));
+        }
+    }
 }

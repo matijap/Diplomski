@@ -115,5 +115,16 @@ class Page extends Page_Row
         // return false;
         return $paginator;
     }
+
+    public function gatherWidgetsForPage() {
+        $widgets = Main::select()
+                ->from(array('WI' => 'widget'), '')
+                ->joinLeft(array('UW' => 'user_widget'), 'WI.id = UW.widget_id', '')
+                ->where('WI.page_id = ?', $this->id)
+                ->columns(array('WI.id', 'WI.title', 'UW.placement'))
+                ->group('WI.id')
+                ->query()->fetchAll();
+        return $widgets;
+    }
     
 }

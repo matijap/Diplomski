@@ -12,6 +12,10 @@ class User_Row extends Main_Row {
           return $this->_getListOfDepObjects('DreamTeam','user',$select);
       }
 
+      public function getExFavoritePagesList($select=null) {
+          return $this->_getListOfDepObjects('ExFavoritePages','user',$select);
+      }
+
       public function getFriendListList($select=null) {
           return $this->_getListOfDepObjects('FriendList','user',$select);
       }
