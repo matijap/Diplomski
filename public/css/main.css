@@ -1055,7 +1055,6 @@ header li {
     height: 91%;
     position: fixed;
     overflow-y: scroll;
-    text-align: center;
 }
 .galery-image {
     position: absolute;
@@ -1083,6 +1082,11 @@ header li {
     font-size: 50px;
     margin-top: 50px;
     margin-bottom: 50px;
+}
+.galery-comment-holder .one-post-actions-holder .fa-spinner {
+    font-size: 20px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 .slbCaption {
     display: none;

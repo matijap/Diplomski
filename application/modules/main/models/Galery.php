@@ -27,9 +27,16 @@ class Galery extends Galery_Row
 
     public function uploadImage() {
         $fileName = Utils::uploadMultiFiles('0', self::GALERY_IMAGES_FOLDER, 'files', $this->id);
-        Image::create(array(
-            'galery_id' => $this->id,
-            'url'       => $fileName[1],
-        ));
+        $allowed  = array('jpg', 'png', 'gif');
+        $ext      = pathinfo($fileName[1], PATHINFO_EXTENSION);
+        if (in_array($ext, $allowed)) {
+          Image::create(array(
+              'galery_id' => $this->id,
+              'url'       => $fileName[1],
+          ));
+          return $fileName;
+        } else {
+          throw new Exception("Error Processing Request", 1);
+        }
     }
 }

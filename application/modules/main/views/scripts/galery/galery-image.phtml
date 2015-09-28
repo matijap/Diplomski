@@ -14,7 +14,7 @@
             ?>
             <a title="<?php echo $oneImage->id; ?>" href="<?php echo APP_URL . '/' . Galery::GALERY_IMAGES_FOLDER . '/' . $oneImage->url; ?>" class="main-background-color one-galery-item">
                 <div class="remove-galery-item">
-                    <i class="fa fa-times"></i>
+                    <i class="fa fa-times modal-open" data-url="/galery/delete-image?imageID=<?php echo $oneImage->id; ?>"></i>
                 </div>
                 <img src="<?php echo APP_URL . '/' . Galery::GALERY_IMAGES_FOLDER . '/' . $oneImage->url; ?>" >
             </a>

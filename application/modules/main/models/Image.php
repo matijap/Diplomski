@@ -15,4 +15,22 @@ class Image extends Image_Row
                     ->query()->fetchAll();
         return $comments;
     }
+
+    public function delete() {
+        $comments = Main::select()
+                    ->from('comment')
+                    ->where('commented_image_id = ?', $this->id)
+                    ->columns(array('id'))
+                    ->query()->fetchAll(PDO::FETCH_COLUMN);
+
+        Main::execQuery("DELETE FROM user_like WHERE comment_id IN (?)", array(implode(',', $comments)));
+        Main::execQuery("DELETE FROM comment WHERE id IN (?)", array(implode(',', $comments)));
+        $url = $this->url;
+        $unlink = parent::delete();
+        if ($unlink) {
+            shell_exec('chmod -R 0777 ' . WEB_ROOT_PATH . '/' . Galery::GALERY_IMAGES_FOLDER . '/' . $url);
+            $unlink = unlink(WEB_ROOT_PATH . '/' . Galery::GALERY_IMAGES_FOLDER . '/' . $url);    
+        }
+        return $unlink;
+    }
 }

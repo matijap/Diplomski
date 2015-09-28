@@ -72,7 +72,11 @@ $( document ).ready(function() {
             });
             setTimeout(function() {
                 location.reload();
-            }, 700);
+            }, 500);
+        },
+        fail: function (e, data) {
+            $('.choose-upload').hide();
+            $('<p class="m-t-10" />').text('Error occured while uploading file. Please check extension.').appendTo('.galery-upload');
         },
         progressall: function (e, data) {
             var progress = parseInt(data.loaded / data.total * 100, 10);
