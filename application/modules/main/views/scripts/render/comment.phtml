@@ -4,13 +4,15 @@
     </div>
     <div class="one-post-actions-holder" id="<?php echo $this->oneComment['comment_id']; ?>" >
         <a class="like-or-unlike-comment" <?php echo empty($this->oneComment['user_like']) ? '': 'style="display: none;"'; ?> href="javascript:void(0)">
-            <i class="fa fa-heart"></i>
+            <i class="fa fa-thumbs-up"></i>
         </a>
         <a class="like-or-unlike-comment" <?php echo empty($this->oneComment['user_like']) ? 'style="display: none;"': ''; ?> href="javascript:void(0)">
-            <i class="fa fa-heartbeat"></i>
+            <i class="fa fa-thumbs-down"></i>
         </a>
-        <a class="reply-to-comment" href="javascript:void(0)"><i class="fa fa-reply"></i></a>
+        <a class="favorite-or-unfavorite-comment" <?php echo empty($this->oneComment['comment_favorite']) ? '': 'style="display: none;"'; ?> href="javascript:void(0)"><i class="fa fa-heart"></i></a>
+        <a class="favorite-or-unfavorite-comment" <?php echo empty($this->oneComment['comment_favorite']) ? 'style="display: none;"': ''; ?> href="javascript:void(0)"><i class="fa fa-heartbeat"></i></a>
         <a class="forward-comment" href="javascript:void(0)"><i class="fa fa-forward"></i></a>
+        <a class="reply-to-comment" href="javascript:void(0)"><i class="fa fa-reply"></i></a>
         <a class="report-comment" href="javascript:void(0)"><i class="fa fa-warning"></i></a>
     </div>
     <div class="one-post-comment-text">

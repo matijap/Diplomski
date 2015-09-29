@@ -53,4 +53,34 @@ class Post extends Post_Row
         }
         return $toReturn;
     }
+
+    public function likeOrUnlikePost($userID) {
+        $userLike = Main::fetchRow(Main::select('UserLike')->where('user_id = ?', $userID)->where('post_id = ?', $this->id));
+        if ($userLike) {
+            $userLike->delete();
+            $message = self::$translate->_('Post unliked');
+        } else {
+            UserLike::create(array(
+                'user_id' => $userID,
+                'post_id' => $this->id,
+            ));
+            $message = self::$translate->_('Post liked');
+        }
+        return $message;
+    }
+
+    public function favoriteOrUnfavoritePost($userID) {
+        $userFavorite = Main::fetchRow(Main::select('UserFavorite')->where('user_id = ?', $userID)->where('post_id = ?', $this->id));
+        if ($userFavorite) {
+            $userFavorite->delete();
+            $message = self::$translate->_('Post unfavorited');
+        } else {
+            UserFavorite::create(array(
+                'user_id' => $userID,
+                'post_id' => $this->id,
+            ));
+            $message = self::$translate->_('Post favorited');
+        }
+        return $message;
+    }
 }

@@ -51,4 +51,19 @@ class Comment extends Comment_Row
 
         return $result;
     }
+
+    public function favoriteOrUnfavoriteComment($userID) {
+        $userFavorite = Main::fetchRow(Main::select('UserFavorite')->where('user_id = ?', $userID)->where('comment_id = ?', $this->id));
+        if ($userFavorite) {
+            $userFavorite->delete();
+            $message = self::$translate->_('Comment unfavorited');
+        } else {
+            UserFavorite::create(array(
+                'user_id'    => $userID,
+                'comment_id' => $this->id,
+            ));
+            $message = self::$translate->_('Comment favorited');
+        }
+        return $message;
+    }
 }

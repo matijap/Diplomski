@@ -33,13 +33,14 @@ class Widget extends Widget_Row
             $widgets = Main::select()
                    ->from(array('WI' => 'widget'), '')
                    ->join(array('UW' => 'user_widget'), 'UW.widget_id = WI.id', '')
+                   ->join(array('UP' => 'user_page'), 'UW.user_id = UP.user_id AND UP.show_in_favorite_pages_widget = 1', '')
                    ->join(array('WO' => 'widget_option'), 'WO.widget_id = WI.id', '')
                    ->where('UW.user_id = ?', $userID)
                    ->where('UW.placement != ?', self::WIDGET_PLACEMENT_DO_NOT_SHOW)
                    ->columns(array( 'WI.id as widget_id', 'UW.display_order as widget_display_order', 'UW.placement as widget_placement', 'WI.type',
                                     'WI.title as widget_title',
                                     'WO.type as widget_option_type', 'WO.parent_widget_option_id', 'WO.title as widget_option_title', 'WO.image_1', 'WO.image_2',
-                                    'WO.value_1', 'WO.value_2', 'WO.id as widget_option_id', 'WO.linked_page_id'
+                                    'WO.value_1', 'WO.value_2', 'WO.id as widget_option_id', 'UP.page_id as linked_page_id'
                             ))
                    ->order(array('UW.placement ASC', 'UW.display_order'))
                    ->query()->fetchAll();
@@ -53,6 +54,7 @@ class Widget extends Widget_Row
                 }
                 if ($oneWidget['type'] == self::WIDGET_TYPE_PAGE) {
                     $page = Main::buildObject('Page', $oneWidget['linked_page_id']);
+                    $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['options'][$oneWidget['linked_page_id']]['id']    = $page->id;
                     $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['options'][$oneWidget['linked_page_id']]['title'] = $page->title;
                     $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['options'][$oneWidget['linked_page_id']]['image'] = $page->logo;
                 }

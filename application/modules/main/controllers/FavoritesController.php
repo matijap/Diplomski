@@ -6,16 +6,24 @@ class FavoritesController extends Main_BaseController
 {
     public function indexAction() {
         $this->view->favoritePages   = $this->user->getPageList();
-        $this->view->exFavoritePages = $this->user->getExFavoritePagesList();
-        $likes                       = $this->user->getUserLikeList();
-        $this->view->commentLikes    = array();
-        $this->view->postLikes       = array();
-        foreach ($likes as $oneLike) {
-            if (!is_null($oneLike->comment_id)) {
-                $this->view->commentLikes = $oneLike;
-            } else {
-                $this->view->postLikes    = $oneLike;
-            }
-        }
+        $this->view->exFavoritePages = $this->user->getExFavoritePages();
+        
+        $favorites                   = $this->user->getUserFavoritedItems();
+
+        $this->view->commentFavorites = $favorites['comment'];
+        fb($favorites['comment']);
+        $this->view->postFavorites    = $favorites['post'];
+    }
+
+    public function likeOrUnlikePageAction() {
+        $page   = Main::buildObject('Page', $this->params['pageID']);
+        $return = $page->likeOrUnlike($this->user->id);
+        $this->_helper->json($return);
+    }
+
+    public function showOrHideInFavoritePagesWidgetAction() {
+        $page   = Main::buildObject('Page', $this->params['pageID']);
+        $return = $page->showOrHideInFavoritePagesWidget($this->user->id);
+        $this->_helper->json(array('message' => $return));
     }
 }

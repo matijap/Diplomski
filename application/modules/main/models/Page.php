@@ -126,5 +126,58 @@ class Page extends Page_Row
                 ->query()->fetchAll();
         return $widgets;
     }
-    
+
+    public function likeOrUnlike($userID) {
+        $userPage = Main::fetchRow(Main::select('UserPage')->where('user_id = ?', $userID)->where('page_id = ?', $this->id));
+        $return   = array();
+        if ($userPage) {
+            $userPage->delete();
+            ExFavoritePages::create(array('user_id' => $userID, 'page_id' => $this->id));
+            $return['message'] = self::$translate->_('Page unfavorited successfully');
+            $return['html'] =  '<tr>
+                                    <td>
+                                        <a href="' . APP_URL . '/page/index/pageID/' . $this->id . '">' . $this->title . '</a>
+                                    </td>
+                                    <td>
+                                        <a data-id="' . $this->id . '" class="blue-button favourite-page-back" href="#"><i class="fa fa-heart"></i></a>
+                                    </td>
+                                </tr>';
+        } else {
+            UserPage::create(array('user_id' => $userID, 'page_id' => $this->id));
+            $exFavorite = Main::fetchRow(Main::select('ExFavoritePages')->where('user_id = ?', $userID)->where('page_id = ?', $this->id));
+            if ($exFavorite) {
+                $exFavorite->delete();
+            }
+            $return['message'] = self::$translate->_('Page favorited successfully');
+            $return['html'] =  '<tr>
+                                    <td>
+                                        <a href="' . APP_URL . '/page/index/pageID/' . $this->id . '">
+                                            ' . $this->title . '
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a data-url="/widget/configure-widget-for-user/pageID/' . $this->id . '" class="blue-button modal-open" href="javascript:void(0)">
+                                            <i class="fa fa-cog"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="blue-button unfavorite-page" data-id="' . $this->id . '" href="javascript:void(0)">
+                                            <i class="fa fa-heartbeat"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <input data-id="' . $this->id . '" checked="checked" class="show-in-widget-favorite cursor-pointer" type="checkbox">
+                                    </td>
+                                </tr>';
+        }
+        return $return;
+    }
+
+    public function showOrHideInFavoritePagesWidget($userID) {
+        $userPage = Main::fetchRow(Main::select('UserPage')->where('user_id = ?', $userID)->where('page_id = ?', $this->id));
+        $newValue = $userPage->show_in_favorite_pages_widget == 1 ? 0 : 1;
+        $userPage->edit(array('show_in_favorite_pages_widget' => $newValue));
+        $message  = $newValue ? self::$translate->_('Page will appear in favorite pages widget') : self::$translate->_('Page will no longer appear in favorite pages widget');
+        return $message;
+    }
 }

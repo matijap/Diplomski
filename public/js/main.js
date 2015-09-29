@@ -370,14 +370,72 @@ $( document ).ready(function() {
             url: appurl + '/comment/like-or-unlike-comment',
             data: {'commentID': id},
             success: function(result) {
-                if (element.find('.fa').hasClass('fa-heart')) {
+                if (element.find('.fa').hasClass('fa-thumbs-up')) {
                     //parent() here refers to a link holding icon, while parent variable is comment holder
-                    parent.find('.fa-heartbeat').parent().show();
+                    parent.find('.fa-thumbs-down').parent().show();
                 } else {
-                    parent.find('.fa-heart').parent().show();
+                    parent.find('.fa-thumbs-up').parent().show();
                 }
                 parent.find('.fa-spin').remove();
                 element.closest('.one-post-comment').find('.like-count').text(result.message);
+            }
+        });
+    });
+
+    $(document).on(clickOrTouchstart, '.one-post-actions-holder .favorite-or-unfavorite-comment', function(e) {
+        var element   = $(this);
+        var parent    = element.parent();
+        var commentID = parent.attr('id');
+        var userID    = getUserID();
+        element.hide();
+        element.after('<i class="fa fa-spin fa-spinner"></i>');
+        $.ajax({
+            url: appurl + '/comment/favorite-or-unfavorite-comment',
+            data: {'commentID': commentID, 'userID': userID},
+            success: function(result) {
+                var sufix = element.find('.fa').hasClass('fa-heart') ? 'beat': '';
+                element.parent().find('.fa-spinner').remove();
+                var e = element.parent().find('.favorite-or-unfavorite-comment .fa-heart' + sufix).parent();
+                e.show();
+                callNotification(result.message, 'success');
+            }
+        });
+    });
+
+    $(document).on(clickOrTouchstart, '.post-header .like-or-unlike-post', function(e) {
+        var element = $(this);
+        var postID  = element.closest('.one-post').attr('id');
+        var userID  = getUserID();
+        element.hide();
+        element.after('<i class="fa fa-spin fa-spinner"></i>');
+        $.ajax({
+            url: appurl + '/index/like-or-unlike-post',
+            data: {'postID': postID, 'userID': userID},
+            success: function(result) {
+                var sufix = element.hasClass('fa-thumbs-up') ? 'down': 'up';
+                element.parent().find('.fa-spinner').remove();
+                var e = element.parent().find('.like-or-unlike-post.fa-thumbs-' + sufix);
+                e.show();
+                callNotification(result.message, 'success');
+            }
+        });
+    });
+
+    $(document).on(clickOrTouchstart, '.post-header .favorite-or-unfavorite-post', function(e) {
+        var element = $(this);
+        var postID  = element.closest('.one-post').attr('id');
+        var userID  = getUserID();
+        element.hide();
+        element.after('<i class="fa fa-spin fa-spinner"></i>');
+        $.ajax({
+            url: appurl + '/index/favorite-or-unfavorite-post',
+            data: {'postID': postID, 'userID': userID},
+            success: function(result) {
+                var sufix = element.hasClass('fa-heart') ? 'beat': '';
+                element.parent().find('.fa-spinner').remove();
+                var e = element.parent().find('.favorite-or-unfavorite-post.fa-heart' + sufix);
+                e.show();
+                callNotification(result.message, 'success');
             }
         });
     });

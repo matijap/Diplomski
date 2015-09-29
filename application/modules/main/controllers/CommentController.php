@@ -38,10 +38,14 @@ class CommentController extends Main_BaseController
     public function likeOrUnlikeCommentAction() {
         $comment = $this->comment->likeOrUnlike($this->user->id);
         $this->_helper->json(array('message' => $comment->likes . ' ' . $this->translate->_('Likes')));
-        $this->_helper->json(array('message' => 'test'));
     }
 
     public function loadMoreCommentsAction() {
         $this->view->comments = $this->comment->loadNextComments($this->user->id);
+    }
+
+    public function favoriteOrUnfavoriteCommentAction() {
+        $message = $this->comment->favoriteOrUnfavoriteComment($this->user->id);
+        $this->_helper->json(array('message' => $message));
     }
 }

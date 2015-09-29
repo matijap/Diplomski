@@ -174,8 +174,9 @@ class User extends User_Row
 
         $allPages = Main::select()
                    ->from(array('PA' => 'page'), '')
-                   ->where('id IN (?)', $pgs)
-                   ->columns(array('PA.id', 'PA.title', 'PA.logo'))
+                   ->join(array('UP' => 'user_page'), 'PA.id = UP.page_id', '')
+                   ->where('PA.id IN (?)', $pgs)
+                   ->columns(array('PA.id', 'PA.title', 'PA.logo', 'UP.show_in_favorite_pages_widget'))
                    ->query()->fetchAll();
 
         return $allPages;
@@ -186,7 +187,7 @@ class User extends User_Row
                      'CO1.text as comment_text', 'CO1.date as comment_date', 'CO1.id as comment_id',
                      'CO1.parent_comment_id as parent_comment_id', 'CO1.forwarded', 'CO1.likes',
                      'CO1.first_name as commenter_first_name', 'CO1.last_name as commenter_last_name', 'PO.post_type as post_type',
-                     'PO.video as post_video', 'PO.image as post_image',
+                     'PO.video as post_video', 'PO.image as post_image', 'UL.id as post_like', 'UF.id as post_favorite', 'CO1.comment_favorite'
                     );
         if ($includeUlid) {
             $return[] = 'CO1.ulid as user_like';
@@ -221,6 +222,7 @@ class User extends User_Row
                 ->from(array('CO1' => 'comment'), '')
                 ->join(array('PO' => 'post'), 'CO1.commented_post_id = PO.id', '')
                 ->joinLeft(array('UL' => 'user_like'), 'UL.comment_id = CO1.id AND UL.user_id = ' .  $this->id, '')
+                ->joinLeft(array('UF' => 'user_favorite'), 'UF.comment_id = CO1.id AND UF.user_id = ' .  $this->id, '')
                 ->joinLeft(array('US' => 'user'), 'CO1.commenter_id = US.id', '')
                 ->joinLeft(array('UI' => 'user_info'), 'UI.user_id = US.id', '')
                 ->where("
@@ -233,7 +235,7 @@ class User extends User_Row
                 ->order(array('CO1.commented_post_id', 'CO1.date DESC', 'CO1.id DESC', ))
                 ->columns(array('CO1.id', 'CO1.text', 'CO1.commented_post_id', 'CO1.date',
                                 'UL.id as ulid', 'CO1.parent_comment_id', 'CO1.forwarded',
-                                'CO1.likes', 'UI.first_name', 'UI.last_name'));
+                                'CO1.likes', 'UI.first_name', 'UI.last_name', 'UF.id as comment_favorite'));
                 // fb("$commentSelect");
             
             // @todo Implement that when user registers, automatically favourited system page, and have one post with comment (as a welcome)
@@ -245,6 +247,8 @@ class User extends User_Row
              $select1 = Main::select()
                         ->from(array('PO' => 'post'), '')
                         ->joinLeft(array('CO1' => new Zend_Db_Expr("($commentSelect)")), 'CO1.commented_post_id = PO.id', '')
+                        ->joinLeft(array('UL' => 'user_like'), 'UL.post_id = PO.id', '')
+                        ->joinLeft(array('UF' => 'user_favorite'), 'UF.post_id = PO.id', '')
                         ->where('PO.user_id IN (?)', $friendIDS)
                         ->columns($commentColumnsToBeFetched);
 
@@ -253,6 +257,8 @@ class User extends User_Row
                 $select2 = Main::select()
                             ->from(array('PO' => 'post'), '')
                             ->joinLeft(array('CO1' => new Zend_Db_Expr("($commentSelect)")), 'CO1.commented_post_id = PO.id', '')
+                            ->joinLeft(array('UL' => 'user_like'), 'UL.post_id = PO.id', '')
+                            ->joinLeft(array('UF' => 'user_favorite'), 'UF.post_id = PO.id', '')
                             ->where('PO.page_id IN (?)', $pageIDS)
                             ->columns($commentColumnsToBeFetched);
             }
@@ -264,7 +270,7 @@ class User extends User_Row
                         ->columns(array('post_title', 'post_text', 'post_id', 'post_date', 'post_type', 'post_video', 'post_image',
                                         'comment_text', 'comment_date', 'comment_id', 
                                         'commenter_first_name', 'commenter_last_name', 'likes', 'forwarded', 'user_like',
-                                        'parent_comment_id',
+                                        'parent_comment_id', 'post_like', 'post_favorite', 'comment_favorite'
                                     ))
                         ->order(array('post_date DESC', 'comment_date DESC'))
                         ->query()->fetchAll();
@@ -272,13 +278,15 @@ class User extends User_Row
             $return = array();
             foreach ($mainSelect as $key => $onePost) {
                 // fb($onePost);
-                $return[$onePost['post_id']]['post_id'] = $onePost['post_id'];
-                $return[$onePost['post_id']]['title']   = $onePost['post_title'];
-                $return[$onePost['post_id']]['text']    = $onePost['post_text'];
-                $return[$onePost['post_id']]['date']    = $onePost['post_date'];
-                $return[$onePost['post_id']]['type']    = $onePost['post_type'];
-                $return[$onePost['post_id']]['video']   = $onePost['post_video'];
-                $return[$onePost['post_id']]['image']   = $onePost['post_image'];
+                $return[$onePost['post_id']]['post_id']       = $onePost['post_id'];
+                $return[$onePost['post_id']]['title']         = $onePost['post_title'];
+                $return[$onePost['post_id']]['text']          = $onePost['post_text'];
+                $return[$onePost['post_id']]['date']          = $onePost['post_date'];
+                $return[$onePost['post_id']]['type']          = $onePost['post_type'];
+                $return[$onePost['post_id']]['video']         = $onePost['post_video'];
+                $return[$onePost['post_id']]['image']         = $onePost['post_image'];
+                $return[$onePost['post_id']]['post_like']     = $onePost['post_like'];
+                $return[$onePost['post_id']]['post_favorite'] = $onePost['post_favorite'];
                 if (!empty($onePost['comment_id'])) {
                     $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['comment_id']        = $onePost['comment_id'];
                     $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['text']              = $onePost['comment_text'];
@@ -287,9 +295,10 @@ class User extends User_Row
                     $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['likes']             = $onePost['likes'];
                     $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['date']              = $onePost['comment_date'];
                     $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['user_like']         = $onePost['user_like'];
+                    $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['comment_favorite']  = $onePost['comment_favorite'];
                 }
             }
-
+            // fb($return);
             $paginator = Zend_Paginator::factory($return);
             $paginator->setCurrentPageNumber($page);
             $paginator->setItemCountPerPage(User::INDEX_PAGE_POST_LIMIT);
@@ -591,7 +600,46 @@ class User extends User_Row
     public function reconfigureWidgets($params) {
         foreach ($params as $widgetID => $placement) {
             $widget = Main::fetchRow(Main::select('UserWidget')->where('widget_id = ?', $widgetID)->where('user_id = ?', $this->id));
-            $widget->edit(array('placement' => $placement));
+            if ($widget) {
+                $widget->edit(array('placement' => $placement));
+            } else {
+                $params['widget_id'] = $widgetID;
+                $params['user_id']   = $this->id;
+                $params['placement'] = $placement;
+                UserWidget::create($params);
+            }
         }
+    }
+
+    public function getExFavoritePages() {
+        $pages = Main::select()
+                ->from(array('EFP' => 'ex_favorite_pages'), '')
+                ->join(array('PA' => 'page'), 'EFP.page_id = PA.id', '')
+                ->where('EFP.user_id = ?', $this->id)
+                ->columns(array('PA.id', 'PA.title'))
+                ->query()->fetchAll();
+        return $pages;
+    }
+
+    public function getUserFavoritedItems() {
+        $items =  Main::select()
+                    ->from(array('UF' => 'user_favorite'))
+                    ->joinLeft(array('PO' => 'post'), 'UF.post_id = PO.id', '')
+                    ->joinLeft(array('CO' => 'comment'), 'UF.comment_id = CO.id', '')
+                    ->columns(array('PO.id as post_id', 'CO.id as comment_id', 'PO.text as post_text', 'CO.text as comment_text'))
+                    ->where('UF.user_id = ?', $this->id)
+                    ->query()->fetchAll();
+
+        $return            = array();
+        $return['post']    = array();
+        $return['comment'] = array();
+        foreach ($items as $oneItem) {
+            if (!empty($oneItem['post_id'])) {
+                $return['post'][$oneItem['post_id']] = $oneItem;
+            } else {
+                $return['comment'][$oneItem['comment_id']] = $oneItem;
+            }
+        }
+        return $return;
     }
 }

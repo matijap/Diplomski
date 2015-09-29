@@ -19,4 +19,16 @@ class IndexController extends Main_BaseController
         $this->view->posts = $user->getPostsByUser();
         $this->view->form  = new AddCommentForm();
     }
+
+    public function likeOrUnlikePostAction() {
+        $post    = Main::buildObject('Post', $this->params['postID']);
+        $message = $post->likeOrUnlikePost($this->params['userID']);
+        $this->_helper->json(array('message' => $message));
+    }
+
+    public function favoriteOrUnfavoritePostAction() {
+        $post    = Main::buildObject('Post', $this->params['postID']);
+        $message = $post->favoriteOrUnfavoritePost($this->params['userID']);
+        $this->_helper->json(array('message' => $message));
+    }
 }

@@ -1,9 +1,11 @@
  <div class="one-post video main-background-color" id="<?php echo $this->onePost['post_id']; ?>">
     <div class="post-header bb widget-header-color">
         <div class="post-header-close">
-            <i class="fa fa-thumbs-up"></i>
+            <i class="fa fa-thumbs-up like-or-unlike-post" <?php echo empty($this->onePost['post_like']) ? '' : 'style="display:none";' ; ?> ></i>
+            <i class="fa fa-thumbs-down like-or-unlike-post" <?php echo empty($this->onePost['post_like']) ? 'style="display:none";' : '' ; ?> ></i>
+            <i class="fa fa-heart favorite-or-unfavorite-post" <?php echo empty($this->onePost['post_favorite']) ? '' : 'style="display:none";' ; ?>></i>
+            <i class="fa fa-heartbeat favorite-or-unfavorite-post" <?php echo empty($this->onePost['post_favorite']) ? 'style="display:none"' : '' ; ?>></i>
             <i class="fa fa-forward"></i>
-            <i class="fa fa-heart"></i>
         </div>
         <div class="post-header-title bb">
             <h2 class="truncate-string"><?php echo $this->onePost['title']; ?></h2>

@@ -8,8 +8,9 @@ class Image extends Image_Row
         $comments = Main::select()
                     ->from(array('CO' => 'comment'), '')
                     ->joinLeft(array('UL' => 'user_like'), 'CO.id = UL.comment_id AND UL.user_id = ' . $loggedUserID, '')
+                    ->joinLeft(array('UF' => 'user_favorite'), 'CO.id = UF.comment_id AND UF.user_id = ' . $loggedUserID, '')
                     ->where('commented_image_id = ?', $this->id)
-                    ->columns(array('CO.text', 'CO.forwarded', 'CO.likes', 'CO.date', 'CO.id as comment_id', 'UL.id AS user_like'))
+                    ->columns(array('CO.text', 'CO.forwarded', 'CO.likes', 'CO.date', 'CO.id as comment_id', 'UL.id AS user_like', 'UF.id as comment_favorite'))
                     ->limit(5)
                     ->order('CO.date DESC')
                     ->query()->fetchAll();

@@ -462,6 +462,7 @@ header li {
 }
 .post-header-close .fa {
     width: 40px;
+    display: inline-block;
 }
 .post-actions {
     width: 100px;
@@ -546,7 +547,7 @@ header li {
     right: 0;
     top: 0;
     font-size: 20px;
-    width: 100px;
+    width: 118px;
     padding: 5px;
     color: white;
 }

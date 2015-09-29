@@ -36,6 +36,10 @@ class User_Row extends Main_Row {
           return $this->_getListOfDepObjects('PrivacySetting','user',$select);
       }
 
+      public function getUserFavoriteList($select=null) {
+          return $this->_getListOfDepObjects('UserFavorite','user',$select);
+      }
+
       public function getUserInfoList($select=null) {
           return $this->_getListOfDepObjects('UserInfo','user',$select);
       }
