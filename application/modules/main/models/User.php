@@ -327,6 +327,7 @@ class User extends User_Row
             ->from(array('CO1' => 'comment'), '')
             ->join(array('PO' => 'post'), 'CO1.commented_post_id = PO.id', '')
             ->joinLeft(array('UL' => 'user_like'), 'UL.comment_id = CO1.id AND UL.user_id = ' .  $this->id, '')
+            ->joinLeft(array('UF' => 'user_favorite'), 'UF.comment_id = CO1.id AND UF.user_id = ' .  $this->id, '')
             ->joinLeft(array('US' => 'user'), 'CO1.commenter_id = US.id', '')
             ->joinLeft(array('UI' => 'user_info'), 'UI.user_id = US.id', '')
             ->where("
@@ -338,12 +339,14 @@ class User extends User_Row
             ->order(array('CO1.commented_post_id', 'CO1.date DESC', 'CO1.id DESC', ))
             ->columns(array('CO1.id', 'CO1.text', 'CO1.commented_post_id', 'CO1.date',
                             'UL.id as ulid', 'CO1.parent_comment_id', 'CO1.forwarded',
-                            'CO1.likes', 'UI.first_name', 'UI.last_name'));
+                            'CO1.likes', 'UI.first_name', 'UI.last_name', 'UF.id as comment_favorite'));
 
         
         $posts = Main::select()
                     ->from(array('PO' => 'post'), '')
                     ->joinLeft(array('CO1' => new Zend_Db_Expr("($commentSelect)")), 'CO1.commented_post_id = PO.id', '')
+                    ->joinLeft(array('UL' => 'user_like'), 'UL.post_id = PO.id', '')
+                    ->joinLeft(array('UF' => 'user_favorite'), 'UF.post_id = PO.id', '')
                     ->where('PO.user_id = ?', $this->id)
                     ->columns($commentColumnsToBeFetched)
                     ->query()->fetchAll();
@@ -654,6 +657,7 @@ class User extends User_Row
         $items =  Main::select()
                     ->from(array('UF' => 'user_favorite'))
                     ->join(array('CO' => 'comment'), 'UF.comment_id = CO.id', '')
+                    ->join(array('UI' => 'user_info'), 'UI.user_id = CO.commenter_id', '')
                     ->columns(array('CO.id as comment_id', 'CO.text as comment_text'));
         if ($searchType == 'comment') {
             $sort    = Utils::arrayFetch($searchParams, 'sort', false);
