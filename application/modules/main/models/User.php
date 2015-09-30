@@ -9,6 +9,8 @@ class User extends User_Row
     const FRIEND_STATUS_PENDING  = 'PENDING';
     const FRIEND_STATUS_ACCEPTED = 'ACCEPTED';
 
+    const SPORTALIZE_USER_ID     = 1;
+
     public function generateToken() {
         $string = $this->email . '_' . time();
         return Utils::encrypt($string);
@@ -130,7 +132,16 @@ class User extends User_Row
 
     public static function create($data, $tableName = false) {
         $data['password'] = Utils::encrypt($data['password']);
-        return parent::create($data, $tableName);
+        $user             = parent::create($data, $tableName);
+        PrivacySetting::createDefaultPrivacySetting($user->id);
+
+        UserPage::create(array('user_id' => $user->id, 'page_id' => Page::SPORTALIZE_PAGE_ID));
+        UserUser::create(array('user_id' => $user->id, 'friend_id' => self::SPORTALIZE_USER_ID, 'status' => self::FRIEND_STATUS_ACCEPTED));
+        UserInfo::create(array('user_id' => $user->id, 'country_id' => 1, 'language_id' => 1, 'role_id' => 2));
+
+        Widget::createDefaultUserWidget($user->id);
+        
+        return $user;
     }
 
     public function getFriendList($includeSelf = true, $idOnly = false) {
@@ -242,12 +253,6 @@ class User extends User_Row
                                 'CO1.likes', 'UI.first_name', 'UI.last_name', 'UF.id as comment_favorite'));
                 // fb("$commentSelect");
             
-            // @todo Implement that when user registers, automatically favourited system page, and have one post with comment (as a welcome)
-            // @todo create default privacy settings
-            // @todo update user info properly
-            // @todo insert default widgets
-            // @todo implement default user lists, also that list cannot have name same as is system
-            // @todo set defualt language to serbian
              $select1 = Main::select()
                         ->from(array('PO' => 'post'), '')
                         ->joinLeft(array('CO1' => new Zend_Db_Expr("($commentSelect)")), 'CO1.commented_post_id = PO.id', '')

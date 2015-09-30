@@ -33,6 +33,11 @@ class Widget extends Widget_Row
     const WIDGET_TITLE_BEST_SCORERS         = 'BEST_SCORERS';
     const WIDGET_TITLE_PREMIER_LEAGUE_TABLE = 'LEAGUE_TABLE';
 
+    const WIDGET_ID_FAVORITE_PAGES          = 1;
+    const WIDGET_ID_UPCOMING_GAMES          = 2;
+    const WIDGET_ID_BEST_SCORERS            = 3;
+    const WIDGET_ID_LEAGUE_TABLE            = 4;
+
     public static function gatherAllWidgetsForUser($userID) {
         try {
             $widgets = Main::select()
@@ -54,8 +59,8 @@ class Widget extends Widget_Row
             foreach ($widgets as $key => $oneWidget) {
                 $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['type']  = $oneWidget['type'];
                 if ($oneWidget['is_system']) {
-                    $title = self::getSystemWidgetTitleTranslations($oneWidget['title']);
-                    $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['title'] = $title;
+                    $titles = self::getSystemWidgetTitleTranslations();
+                    $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['title'] = $titles[$oneWidget['widget_title']];
                 } else {
                     $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['title'] = $oneWidget['widget_title'];    
                 }
@@ -246,10 +251,17 @@ class Widget extends Widget_Row
 
     public static function getSystemWidgetTitleTranslations() {
         return array(
-            self::WIDGET_TITLE_FAVORITE_PAGES       = self::$translate->_('Favorite pages'),
-            self::WIDGET_TITLE_UPCOMING_GAMES       = self::$translate->_('Upcoming games'),
-            self::WIDGET_TITLE_BEST_SCORERS         = self::$translate->_('Best Scorers'),
-            self::WIDGET_TITLE_PREMIER_LEAGUE_TABLE = self::$translate->_('Premier League Table'),
+            self::WIDGET_TITLE_FAVORITE_PAGES       => self::$translate->_('Favorite pages'),
+            self::WIDGET_TITLE_UPCOMING_GAMES       => self::$translate->_('Upcoming games'),
+            self::WIDGET_TITLE_BEST_SCORERS         => self::$translate->_('Best Scorers'),
+            self::WIDGET_TITLE_PREMIER_LEAGUE_TABLE => self::$translate->_('Premier League Table'),
         );
+    }
+
+    public static function createDefaultUserWidget($userID) {
+        UserWidget::create(array('user_id' => $userID, 'widget_id' => Widget::WIDGET_ID_FAVORITE_PAGES, 'placement' => Widget::WIDGET_PLACEMENT_LEFT, 'display_order' => 1));
+        UserWidget::create(array('user_id' => $userID, 'widget_id' => Widget::WIDGET_ID_UPCOMING_GAMES, 'placement' => Widget::WIDGET_PLACEMENT_LEFT, 'display_order' => 2));
+        UserWidget::create(array('user_id' => $userID, 'widget_id' => Widget::WIDGET_ID_BEST_SCORERS, 'placement' => Widget::WIDGET_PLACEMENT_RIGHT, 'display_order' => 1));
+        UserWidget::create(array('user_id' => $userID, 'widget_id' => Widget::WIDGET_ID_LEAGUE_TABLE, 'placement' => Widget::WIDGET_PLACEMENT_RIGHT, 'display_order' => 2));
     }
 }

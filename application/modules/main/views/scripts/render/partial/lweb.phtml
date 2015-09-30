@@ -11,9 +11,9 @@
             <li class="matches-list">
                 <div>
                     <div class="teams-holder">
-                        <img width="20px" height="20px" class="pull-left" src="<?php echo APP_URL . $v['image_1']; ?>" />
+                        <img width="20px" height="20px" class="pull-left" src="<?php echo APP_URL . '/' . Widget::WIDGET_IMAGES_FOLDER . '/' . $v['image_1']; ?>" />
                         <p class="pull-left">-</p>
-                        <img width="20px" height="20px" class="pull-left" src="<?php echo APP_URL . $v['image_2']; ?>" />
+                        <img width="20px" height="20px" class="pull-left" src="<?php echo APP_URL . '/' . Widget::WIDGET_IMAGES_FOLDER . '/' . $v['image_2']; ?>" />
                     </div>
                     <i data-template="upcoming-games-template" class="fa fa-pencil-square-o modal-open" data-url="/main/widget/get-lweb-data/lwebOptionID/<?php echo $k; ?>"></i>
                 </div>

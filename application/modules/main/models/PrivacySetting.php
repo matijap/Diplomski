@@ -27,4 +27,10 @@ class PrivacySetting extends PrivacySetting_Row
         );
     }
 
+    public static function createDefaultPrivacySetting($userID) {
+        PrivacySetting::create(array('user_id' => $userID, 'type' => PrivacySetting::PRIVACY_TYPE_POST, 'setting' => PrivacySetting::PRIVACY_SETTING_ALL));
+        PrivacySetting::create(array('user_id' => $userID, 'type' => PrivacySetting::PRIVACY_TYPE_PROFILE, 'setting' => PrivacySetting::PRIVACY_SETTING_ALL));
+        PrivacySetting::create(array('user_id' => $userID, 'type' => PrivacySetting::PRIVACY_TYPE_GALERY, 'setting' => PrivacySetting::PRIVACY_SETTING_ALL));
+    }
+
 }

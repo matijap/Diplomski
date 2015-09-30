@@ -9,7 +9,13 @@ class WidgetController extends Main_BaseController
         $this->view->lwebOptionData = Widget::getLwebOptionData($lwebOptionID);
         $lwebOption             = Main::buildObject('WidgetOption', $lwebOptionID);
         $widget                 = Main::buildObject('Widget', $lwebOption->widget_id);
-        $this->view->modalTitle = $widget->title;
+        if ($widget->is_system) {
+            $titles = Widget::getSystemWidgetTitleTranslations();
+            $title  = $titles[$widget->title];
+        } else {
+            $title = $widget->title;
+        }
+        $this->view->modalTitle = $title;
     }
 
     public function newWidgetAction() {

@@ -18,7 +18,7 @@ class Main_BaseController extends Sportalize_Controller_Action
         $this->view->userID             = $this->user->id;
         $this->_helper->layout->setLayout('main');
         Zend_Registry::set('logged_user', $this->user);
-        
+
         $this->view->links = MenuLink::fetchMenuLinks();
         if ($this->request->isXmlHttpRequest()) {
             $this->isXHR = TRUE;
@@ -26,7 +26,7 @@ class Main_BaseController extends Sportalize_Controller_Action
         }
         $this->view->friends = $this->user->getFriendList();
         $loc = $this->setLocParam();
-        $this->setDatePickerFormat($loc);
+        $this->setDatePickerFormat($loc); 
 
         $language  = $this->user->getLanguage();
         $translate = new Zend_Translate('gettext', APPLICATION_PATH . '/languages/' . $language->file . '.mo', $loc, array('disableNotices' => true));

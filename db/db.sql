@@ -522,7 +522,7 @@ LOCK TABLES `page` WRITE;
 
 INSERT INTO `page` (`id`, `title`, `user_id`, `logo`, `type`)
 VALUES
-  (1,'Sportalize',1,NULL,'OTHER');
+  (1,'Sportalize',1,'widget_football.png','OTHER');
 
 /*!40000 ALTER TABLE `page` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -900,11 +900,12 @@ VALUES
   (2,2,'SUB_LIST_WEB_OPTION',1,NULL,NULL,NULL,NULL,NULL,1,'widget_football.png','widget_football.png'),
   (3,2,'SUB_LIST_WEB_DATA',2,NULL,'Name','Red Star Belgrade','Partizan Belgrade','MAIN',1,NULL,NULL),
   (4,2,'SUB_LIST_WEB_DATA',2,NULL,'Venue','Stadion Rajko Mitic','','ADDITIONAL',1,NULL,NULL),
-  (5,3,'SUB_LIST',NULL,NULL,'Premier League',NULL,NULL,NULL,1,NULL,NULL),
+  (5,3,'SUB_LIST',NULL,NULL,'Premier League',NULL,NULL,NULL,1,'widget_football.png',NULL),
   (6,3,'SUB_LIST_OPTION',5,NULL,NULL,'Wayne Rooney','10',NULL,1,NULL,NULL),
   (7,3,'SUB_LIST_OPTION',5,NULL,NULL,'Edin Hazard','9',NULL,2,NULL,NULL),
-  (8,4,'SUB_TABLE',NULL,NULL,NULL,'Manchester United','[\"W\":\"5\"]',NULL,1,NULL,NULL),
-  (9,4,'SUB_TABLE',NULL,NULL,NULL,'Manchester City','[\"W\":\"4\"]',NULL,2,NULL,NULL);
+  (8,4,'SUB_TABLE',NULL,NULL,NULL,'Manchester United','{\"W\":\"5\"}',NULL,1,NULL,NULL),
+  (9,4,'SUB_TABLE',NULL,NULL,NULL,'Manchester City','{\"W\":\"4\"}',NULL,2,NULL,NULL);
+  (10,1,'SUB_PAGE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `widget_option` ENABLE KEYS */;
 UNLOCK TABLES;

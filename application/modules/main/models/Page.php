@@ -12,6 +12,8 @@ class Page extends Page_Row
 
     const PAGE_IMAGES_FOLDER = 'user_images/page_images';
 
+    const SPORTALIZE_PAGE_ID = 1;
+
     public static function getAvailablePlayers() {
         return Page::getAvailablePages(Page::PAGE_TYPE_PLAYER);
     }
@@ -66,6 +68,7 @@ class Page extends Page_Row
             ->from(array('CO1' => 'comment'), '')
             ->join(array('PO' => 'post'), 'CO1.commented_post_id = PO.id', '')
             ->joinLeft(array('UL' => 'user_like'), 'UL.comment_id = CO1.id AND UL.user_id = ' .  $userWatching, '')
+            ->joinLeft(array('UF' => 'user_favorite'), 'UF.comment_id = CO1.id AND UF.user_id = ' .  $userWatching, '')
             ->joinLeft(array('US' => 'user'), 'CO1.commenter_id = US.id', '')
             ->joinLeft(array('UI' => 'user_info'), 'UI.user_id = US.id', '')
             ->where("
@@ -77,12 +80,14 @@ class Page extends Page_Row
             ->order(array('CO1.commented_post_id', 'CO1.date DESC', 'CO1.id DESC', ))
             ->columns(array('CO1.id', 'CO1.text', 'CO1.commented_post_id', 'CO1.date',
                             'UL.id as ulid', 'CO1.parent_comment_id', 'CO1.forwarded',
-                            'CO1.likes', 'UI.first_name', 'UI.last_name'));
+                            'CO1.likes', 'UI.first_name', 'UI.last_name', 'UF.id as comment_favorite'));
 
         
         $posts = Main::select()
                     ->from(array('PO' => 'post'), '')
                     ->joinLeft(array('CO1' => new Zend_Db_Expr("($commentSelect)")), 'CO1.commented_post_id = PO.id', '')
+                    ->joinLeft(array('UL' => 'user_like'), 'UL.post_id = PO.id', '')
+                    ->joinLeft(array('UF' => 'user_favorite'), 'UF.post_id = PO.id', '')
                     ->where('PO.page_id = ?', $this->id)
                     ->columns($commentColumnsToBeFetched)
                     ->query()->fetchAll();
@@ -121,7 +126,7 @@ class Page extends Page_Row
                 ->from(array('WI' => 'widget'), '')
                 ->joinLeft(array('UW' => 'user_widget'), 'WI.id = UW.widget_id', '')
                 ->where('WI.page_id = ?', $this->id)
-                ->columns(array('WI.id', 'WI.title', 'UW.placement'))
+                ->columns(array('WI.id', 'WI.title', 'UW.placement', 'WI.is_system'))
                 ->group('WI.id')
                 ->query()->fetchAll();
         return $widgets;

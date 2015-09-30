@@ -17,12 +17,18 @@ class WidgetForms_ConfigureForUser extends Sportalize_Form_Modal {
         $title   = vsprintf($this->translate->_('Configure %s widgets'), array($page->title));
         $this->setModalTitle($title);
 
-        $widgets = $page->gatherWidgetsForPage();;
+        $widgets = $page->gatherWidgetsForPage();
         
         foreach ($widgets as $oneWidget) {
+            if ($oneWidget['is_system']) {
+                $titles = Widget::getSystemWidgetTitleTranslations();
+                $title  = $titles[$oneWidget['title']];
+            } else {
+                $title = $oneWidget['title'];
+            }
             $this->addElement('radio', $oneWidget['id'], array(
                 'multioptions' => Widget::getPlacementMultioptions(),
-                'label'        => $oneWidget['title'],
+                'label'        => $title,
                 'separator'    => ' ',
                 'class'        => 'm-l-5',
                 'label_class'  => 'm-r-10',
