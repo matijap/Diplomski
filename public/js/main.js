@@ -108,6 +108,9 @@ $( document ).ready(function() {
                 var template = doesExists('#is_delete') ? 'delete' : 'submit'
                 var button   = $('.' + template + '-modal-template').html();
                 $('.modal-footer').append(button);
+                if (doesExists('#hide_submit')) {
+                    $('.submit-modal-form').hide();
+                }
                 $('.modal-header-title p').text(title);
                 applyInitFunctions();
                 recalculateModalHeight();

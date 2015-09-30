@@ -621,24 +621,56 @@ class User extends User_Row
         return $pages;
     }
 
-    public function getUserFavoritedItems() {
+    public function getUserFavoritedItems($searchParams = array()) {
         $items =  Main::select()
                     ->from(array('UF' => 'user_favorite'))
-                    ->joinLeft(array('PO' => 'post'), 'UF.post_id = PO.id', '')
-                    ->joinLeft(array('CO' => 'comment'), 'UF.comment_id = CO.id', '')
-                    ->columns(array('PO.id as post_id', 'CO.id as comment_id', 'PO.text as post_text', 'CO.text as comment_text'))
-                    ->where('UF.user_id = ?', $this->id)
-                    ->query()->fetchAll();
+                    ->join(array('PO' => 'post'), 'UF.post_id = PO.id', '')
+                    ->join(array('UI' => 'user_info'), 'UI.user_id = PO.user_id', '')
+                    ->columns(array('PO.id as post_id', 'PO.text as post_text', 'PO.date', 'PO.title', 'UI.first_name', 'UI.last_name'))
+                    ->where('UF.user_id = ?', $this->id);
+        $searchType   = Utils::arrayFetch($searchParams, 'search_type', false);
+        if ($searchType == 'post') {
+            $sort    = Utils::arrayFetch($searchParams, 'sort', false);
+            $filter  = Utils::arrayFetch($searchParams, 'filter', false);
+            if ($sort) {
+                $items->order(array($sort));
+            }
+            if ($filter) {
+                $items->where('PO.text LIKE ?', '%' . $filter . '%');
+                $items->orWhere('PO.title LIKE ?', '%' . $filter . '%');
+                $items->orWhere('UI.first_name LIKE ?', '%' . $filter . '%');
+                $items->orWhere('UI.last_name LIKE ?', '%' . $filter . '%');
+            }
+        }
+
+        $items = $items->query()->fetchAll();
 
         $return            = array();
         $return['post']    = array();
         $return['comment'] = array();
         foreach ($items as $oneItem) {
-            if (!empty($oneItem['post_id'])) {
-                $return['post'][$oneItem['post_id']] = $oneItem;
-            } else {
-                $return['comment'][$oneItem['comment_id']] = $oneItem;
+            $return['post'][$oneItem['post_id']] = $oneItem;
+        }
+        $items =  Main::select()
+                    ->from(array('UF' => 'user_favorite'))
+                    ->join(array('CO' => 'comment'), 'UF.comment_id = CO.id', '')
+                    ->columns(array('CO.id as comment_id', 'CO.text as comment_text'));
+        if ($searchType == 'comment') {
+            $sort    = Utils::arrayFetch($searchParams, 'sort', false);
+            $filter  = Utils::arrayFetch($searchParams, 'filter', false);
+            if ($sort) {
+                $items->order(array($sort));
             }
+            if ($filter) {
+                $items->where('CO.text LIKE ?', '%' . $filter . '%');
+                $items->orWhere('UI.first_name LIKE ?', '%' . $filter . '%');
+                $items->orWhere('UI.last_name LIKE ?', '%' . $filter . '%');
+            }
+        }
+        $items = $items->where('UF.user_id = ?', $this->id)
+                        ->query()->fetchAll();
+        foreach ($items as $oneItem) {
+            $return['comment'][$oneItem['comment_id']] = $oneItem;
         }
         return $return;
     }

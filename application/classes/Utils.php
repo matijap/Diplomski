@@ -123,4 +123,12 @@ class Utils
         }
         return $namesArray;
     }
+
+    public static function timestampToLocale($timestamp) {
+        $loc       = Zend_Registry::isRegistered('loc') ? Zend_Registry::get('loc') : 'en_US';
+        $locale    = Zend_Registry::get('Zend_Locale');
+        $date      = new Zend_Date($timestamp, Zend_Date::TIMESTAMP, $locale);
+        $list      = Zend_Locale::getTranslationList('Date', $loc);
+        return $date->get($list['short']);
+    }
 }

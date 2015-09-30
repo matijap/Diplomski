@@ -1,0 +1,35 @@
+<form method="POST" action="<?php echo APP_URL; ?>/favorites/post-or-comment-detailed">
+    <?php $value = empty($this->post) ? $this->comment->id : $this->post->id; ?>
+    <?php $name  = empty($this->post) ? 'commentID' : 'postID'; ?>
+    <input type="hidden" value="<?php echo $value; ?>" name="<?php echo $name; ?>">
+</form>
+<input type="hidden" id="is_delete" value="1">
+<?php
+    echo $this->partial('render/post-or-comment-detail.phtml', array(
+        'object' => empty($this->post) ? $this->comment : $this->post, 'translate' => $this->translate
+    ));
+    if (!empty($this->post)) {
+    ?>
+        <input type="hidden" id="modal_title" value="<?php echo $this->post->title; ?>">
+        <?php
+        if ($this->post->post_type == Post::POST_TYPE_IMAGE) {
+            ?>
+                <div class="modal-element">
+                    <label class="main-label"><?php echo $this->translate->_('Image'); ?></label>
+                    <div class="main-div">
+                        <img style="width: 100%;" src="<?php echo $this->post->image; ?>" />
+                    </div>
+                </div>
+            <?php
+        }
+        if ($this->post->post_type == Post::POST_TYPE_VIDEO) {
+            ?>
+                <div class="modal-element">
+                    <label class="main-label"><?php echo $this->translate->_('Video'); ?></label>
+                    <div class="main-div">
+                        <iframe width="400" height="250" src="http://www.youtube.com/embed/<?php echo $this->post->video; ?>"></iframe>
+                    </div>
+                </div>
+            <?php
+        }
+    }

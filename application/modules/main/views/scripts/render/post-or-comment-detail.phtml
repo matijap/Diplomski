@@ -1,0 +1,40 @@
+<div class="modal-element">
+    <label class="main-label"><?php echo $this->translate->_('Text'); ?></label>
+    <div class="main-div">
+        <p>
+            <?php echo $this->object->text; ?>
+        </p>
+    </div>
+</div>
+<div class="modal-element">
+    <label class="main-label"><?php echo $this->translate->_('Author'); ?></label>
+    <div class="main-div">
+        <p>
+            <?php echo $this->object->getPostAuthor(); ?>
+        </p>
+    </div>
+</div>
+<div class="modal-element">
+    <label class="main-label"><?php echo $this->translate->_('Date'); ?></label>
+    <div class="main-div">
+        <p>
+            <?php echo Utils::timestampToLocale($this->object->date); ?>
+        </p>
+    </div>
+</div>
+<div class="modal-element">
+    <label class="main-label"><?php echo $this->translate->_('Likes'); ?></label>
+    <div class="main-div">
+        <p>
+            <?php echo $this->object->getLikesCount(); ?>
+        </p>
+    </div>
+</div>
+<div class="modal-element">
+    <label class="main-label"><?php echo $this->translate->_('Favorites'); ?></label>
+    <div class="main-div">
+        <p>
+            <?php echo $this->object->getFavoritesCount(); ?>
+        </p>
+    </div>
+</div>

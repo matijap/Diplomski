@@ -1181,6 +1181,10 @@ a.back-to-galery {
     vertical-align: top;
     padding-top: 13px;
 }
+.add-dream-team-container input[type="submit"].blue-button {
+    height: 35px;
+    padding-top: 4px;
+}
 .remove-dream-team {
     position: absolute;
     right: 20px;

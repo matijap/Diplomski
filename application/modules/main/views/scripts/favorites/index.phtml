@@ -61,28 +61,23 @@
     <div class="main-background-color one-personal-settings-section">
         <h2 class="widget-header-color display-inline-block"><?php echo $this->translate->_('Favorite posts'); ?></h2>
         <div class="display-inline-block add-dream-team-container">
-            <select class="width-200px add-dream-team-sport">
-                <option value="11"><?php echo $this->translate->_('Date (ascending)'); ?></option>
-                <option value="5"><?php echo $this->translate->_('Date (descending)'); ?></option>
-                <option value="7"><?php echo $this->translate->_('Post Author First Name (ascending)'); ?></option>
-                <option value="7"><?php echo $this->translate->_('Post Author First Name (descending)'); ?></option>
-                <option value="7"><?php echo $this->translate->_('Post Author Last Name (ascending)'); ?></option>
-                <option value="7"><?php echo $this->translate->_('Post Author Last Name (descending)'); ?></option>
-                <option value="7"><?php echo $this->translate->_('Title (ascending)'); ?></option>
-                <option value="7"><?php echo $this->translate->_('Title (descending)'); ?></option>
-            </select>
-            <input type="text" class="search-favourite-content" placeholder="<?php echo $this->translate->_('Search post content, title or author'); ?>">
-            <a class="blue-button" href="javascript:void(0)"><?php echo $this->translate->_('Search'); ?></a>
+            <?php echo $this->searchPostsForm; ?>
         </div>
         <div class="clear"></div>
         <div class="p-10">
         <?php
+        $flag = empty($this->postFavorites);
         foreach ($this->postFavorites as $onePost) {
         ?>
-            <div class="display-inline-block width-200px favorite-post-container">
+            <div class="display-inline-block width-200px favorite-post-container modal-open" data-url="/favorites/post-or-comment-detailed/postID/<?php echo $onePost['post_id']; ?>">
                 <p class="truncate-string"><?php echo $onePost['post_text']; ?></p>
             </div>
         <?php
+        }
+        if ($flag) {
+            ?>
+            <p><?php echo $this->translate->_('No posts found'); ?></p>
+            <?php
         }
         ?>
         </div>
@@ -90,23 +85,23 @@
     <div class="main-background-color one-personal-settings-section">
         <h2 class="widget-header-color display-inline-block"><?php echo $this->translate->_('Favorite comments'); ?></h2>
         <div class="display-inline-block add-dream-team-container">
-            <select class="width-200px add-dream-team-sport">
-                <option value="11"><?php echo $this->translate->_('Date (ascending)'); ?></option>
-                <option value="5"><?php echo $this->translate->_('Date (descending)'); ?></option>
-                <option value="7"><?php echo $this->translate->_('Text'); ?></option>
-            </select>
-            <input type="text" class="search-favourite-content" placeholder="<?php echo $this->translate->_('Search post content, title or author'); ?>">
-            <a class="blue-button" href="javascript:void(0)"><?php echo $this->translate->_('Search'); ?></a>
+            <?php echo $this->searchCommentsForm; ?>
         </div>
         <div class="clear"></div>
         <div class="p-10">
         <?php
+        $flag = empty($this->commentFavorites);
         foreach ($this->commentFavorites as $oneComment) {
         ?>
-            <div class="display-inline-block width-200px favorite-post-container">
+            <div class="display-inline-block width-200px favorite-post-container modal-open" data-url="/favorites/post-or-comment-detailed/commentID/<?php echo $oneComment['comment_id']; ?>">
                 <p class="truncate-string"><?php echo $oneComment['comment_text']; ?></p>
             </div>
         <?php
+        }
+        if ($flag) {
+            ?>
+            <p><?php echo $this->translate->_('No comments found'); ?></p>
+            <?php
         }
         ?>
         </div>

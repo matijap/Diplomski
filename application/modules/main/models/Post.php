@@ -83,4 +83,30 @@ class Post extends Post_Row
         }
         return $message;
     }
+
+    public function getLikesCount() {
+        return Main::select()
+            ->from(array('PO' => 'post'), '')
+            ->join(array('UL' => 'user_like'), 'PO.id = UL.post_id', '')
+            ->where('PO.id = ?', $this->id)
+            ->columns(array('COUNT(UL.id)'))
+            ->query()->fetchColumn();
+    }
+    public function getFavoritesCount() {
+        return Main::select()
+            ->from(array('PO' => 'post'), '')
+            ->join(array('UF' => 'user_favorite'), 'PO.id = UF.post_id', '')
+            ->where('PO.id = ?', $this->id)
+            ->columns(array('COUNT(UF.id)'))
+            ->query()->fetchColumn();
+    }
+
+    public function getPostAuthor() {
+        return Main::select()
+            ->from(array('PO' => 'post'), '')
+            ->join(array('UI' => 'user_info'), 'UI.user_id = PO.user_id', '')
+            ->columns(array('CONCAT(UI.first_name, " ", UI.last_name) as post_author'))
+            ->where('PO.id = ?', $this->id)
+            ->query()->fetchColumn();
+    }
 }

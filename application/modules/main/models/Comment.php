@@ -66,4 +66,25 @@ class Comment extends Comment_Row
         }
         return $message;
     }
+
+    public function getLikesCount() {
+        return $this->likes;
+    }
+    public function getFavoritesCount() {
+        return Main::select()
+            ->from(array('CO' => 'comment'), '')
+            ->join(array('UF' => 'user_favorite'), 'CO.id = UF.comment_id', '')
+            ->where('CO.id = ?', $this->id)
+            ->columns(array('COUNT(UF.id)'))
+            ->query()->fetchColumn();
+    }
+
+    public function getPostAuthor() {
+        return Main::select()
+            ->from(array('CO' => 'comment'), '')
+            ->join(array('UI' => 'user_info'), 'UI.user_id = CO.commenter_id', '')
+            ->where('CO.id = ?', $this->id)
+            ->columns(array('CONCAT(UI.first_name, " ", UI.last_name) as post_author'))
+            ->query()->fetchColumn();
+    }
 }
