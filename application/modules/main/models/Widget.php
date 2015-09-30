@@ -28,6 +28,11 @@ class Widget extends Widget_Row
 
     const WIDGET_IMAGES_FOLDER               = 'user_images/widget_images';
 
+    const WIDGET_TITLE_FAVORITE_PAGES       = 'FAVORITE_PAGES';
+    const WIDGET_TITLE_UPCOMING_GAMES       = 'UPCOMING_GAMES';
+    const WIDGET_TITLE_BEST_SCORERS         = 'BEST_SCORERS';
+    const WIDGET_TITLE_PREMIER_LEAGUE_TABLE = 'LEAGUE_TABLE';
+
     public static function gatherAllWidgetsForUser($userID) {
         try {
             $widgets = Main::select()
@@ -38,7 +43,7 @@ class Widget extends Widget_Row
                    ->where('UW.user_id = ?', $userID)
                    ->where('UW.placement != ?', self::WIDGET_PLACEMENT_DO_NOT_SHOW)
                    ->columns(array( 'WI.id as widget_id', 'UW.display_order as widget_display_order', 'UW.placement as widget_placement', 'WI.type',
-                                    'WI.title as widget_title',
+                                    'WI.title as widget_title', 'WI.is_system',
                                     'WO.type as widget_option_type', 'WO.parent_widget_option_id', 'WO.title as widget_option_title', 'WO.image_1', 'WO.image_2',
                                     'WO.value_1', 'WO.value_2', 'WO.id as widget_option_id', 'UP.page_id as linked_page_id'
                             ))
@@ -48,7 +53,12 @@ class Widget extends Widget_Row
             $return = array();
             foreach ($widgets as $key => $oneWidget) {
                 $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['type']  = $oneWidget['type'];
-                $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['title'] = $oneWidget['widget_title'];
+                if ($oneWidget['is_system']) {
+                    $title = self::getSystemWidgetTitleTranslations($oneWidget['title']);
+                    $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['title'] = $title;
+                } else {
+                    $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['title'] = $oneWidget['widget_title'];    
+                }
                 if ($oneWidget['type'] == self::WIDGET_TYPE_PLAIN) {
                     $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['value'] = $oneWidget['value_1'];
                 }
@@ -231,6 +241,15 @@ class Widget extends Widget_Row
             self::WIDGET_PLACEMENT_LEFT        => self::$translate->_('Left'),
             self::WIDGET_PLACEMENT_RIGHT       => self::$translate->_('Right'),
             self::WIDGET_PLACEMENT_DO_NOT_SHOW => self::$translate->_('Do Not Show'),
+        );
+    }
+
+    public static function getSystemWidgetTitleTranslations() {
+        return array(
+            self::WIDGET_TITLE_FAVORITE_PAGES       = self::$translate->_('Favorite pages'),
+            self::WIDGET_TITLE_UPCOMING_GAMES       = self::$translate->_('Upcoming games'),
+            self::WIDGET_TITLE_BEST_SCORERS         = self::$translate->_('Best Scorers'),
+            self::WIDGET_TITLE_PREMIER_LEAGUE_TABLE = self::$translate->_('Premier League Table'),
         );
     }
 }

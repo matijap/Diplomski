@@ -19,6 +19,11 @@ protected $_referenceMap = array(
                     'refTableClass'    => 'Language_Table',
                     'refColumns'       => 'id'),
 
+                  'role' => array(
+                    'columns'          => 'role_id',
+                    'refTableClass'    => 'Role_Table',
+                    'refColumns'       => 'id'),
+
                   'user' => array(
                     'columns'          => 'user_id',
                     'refTableClass'    => 'User_Table',

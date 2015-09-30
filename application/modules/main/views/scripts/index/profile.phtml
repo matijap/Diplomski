@@ -5,3 +5,20 @@
         }
     ?>
 </div>
+<div id="about" class="my main-background-color">
+<?php
+if ($this->watcher != $this->watched->id) {
+    $userInfo = $this->watched->getUserInfo();
+    ?>
+    <div class="position-relative">
+        <h1 class="m-b-20"><?php echo $userInfo->first_name . ' ' . $userInfo->last_name; ?></h1>
+        <div class="loader-holder">
+            <a class="text-align-center display-block send-friend-request styled-button" href="javascript:void(0)">Send Friend Request</a>
+            <i class="fa fa-spinner fa-spin text-align-center display-none"></i>
+        </div>
+        <div data-user-id="<?php echo $this->watched->id;?>" class="profile-availability"></div>
+    </div>
+    <?php
+}
+?>
+</div>

@@ -6,6 +6,9 @@ class User extends User_Row
     const MAX_LINK_DURATION     = 600;
     const INDEX_PAGE_POST_LIMIT = 10;
 
+    const FRIEND_STATUS_PENDING  = 'PENDING';
+    const FRIEND_STATUS_ACCEPTED = 'ACCEPTED';
+
     public function generateToken() {
         $string = $this->email . '_' . time();
         return Utils::encrypt($string);
@@ -134,6 +137,7 @@ class User extends User_Row
         $friends = Main::select()
                     ->from(array('UU' => 'user_user'), '')
                     ->where('UU.user_id = ?', $this->id)
+                    ->where('UU.status = ?', self::FRIEND_STATUS_ACCEPTED)
                     ->orWhere('UU.friend_id = ?', $this->id)
                     ->columns(array('UU.user_id', 'UU.friend_id'))
                     ->query()->fetchAll();

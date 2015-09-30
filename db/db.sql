@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.21)
 # Database: sportalize
-# Generation Time: 2015-09-28 20:06:26 +0000
+# Generation Time: 2015-09-30 21:46:16 +0000
 # ************************************************************
 
 
@@ -47,6 +47,16 @@ CREATE TABLE `comment` (
   CONSTRAINT `FK_co_us` FOREIGN KEY (`commenter_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `comment` WRITE;
+/*!40000 ALTER TABLE `comment` DISABLE KEYS */;
+
+INSERT INTO `comment` (`id`, `commenter_id`, `parent_comment_id`, `type`, `commented_post_id`, `commented_image_id`, `date`, `text`, `forwarded`, `likes`)
+VALUES
+  (1,1,NULL,'POST',1,NULL,1434363010,'You can view comments!',0,0),
+  (2,1,NULL,'POST',2,NULL,1434363010,'Comments are everywhere!',0,0);
+
+/*!40000 ALTER TABLE `comment` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table country
@@ -330,6 +340,24 @@ CREATE TABLE `dream_team` (
 
 
 
+# Dump of table ex_favorite_pages
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `ex_favorite_pages`;
+
+CREATE TABLE `ex_favorite_pages` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  `page_id` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_efp_pa` (`page_id`),
+  KEY `FK_us_pa` (`user_id`),
+  CONSTRAINT `FK_efp_pa` FOREIGN KEY (`page_id`) REFERENCES `page` (`id`),
+  CONSTRAINT `FK_us_pa` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
 # Dump of table favourite_item
 # ------------------------------------------------------------
 
@@ -363,6 +391,17 @@ CREATE TABLE `friend_list` (
   CONSTRAINT `FK_fl_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `friend_list` WRITE;
+/*!40000 ALTER TABLE `friend_list` DISABLE KEYS */;
+
+INSERT INTO `friend_list` (`id`, `is_system`, `title`, `user_id`)
+VALUES
+  (1,1,'WORK',NULL),
+  (2,1,'FAMILY',NULL),
+  (3,1,'BEST_FRIENDS',NULL);
+
+/*!40000 ALTER TABLE `friend_list` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table galery
@@ -454,7 +493,7 @@ VALUES
   (9,'NEW_PAGE','javascript:void(0)',5,1,'modal-open'),
   (10,'GALERY','galery/index',5,3,NULL),
   (11,'PERSONAL_SETTINGS','settings/index',5,4,NULL),
-  (12,'FAVORITES','javascript:void(0)',5,5,NULL),
+  (12,'FAVORITES','favorites/index',5,5,NULL),
   (13,'SIGN_OUT','login/index/sign-out',5,6,NULL),
   (14,'MY_PAGES','javascript:void(0)',5,2,NULL);
 
@@ -470,30 +509,23 @@ DROP TABLE IF EXISTS `page`;
 CREATE TABLE `page` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(256) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
+  `user_id` int(11) unsigned DEFAULT NULL,
   `logo` varchar(256) DEFAULT NULL,
   `type` enum('PLAYER','TEAM','SPORT','OTHER','LEAGUE') DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-
-# Dump of table page_widget
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `page_widget`;
-
-CREATE TABLE `page_widget` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `page_id` int(11) unsigned DEFAULT NULL,
-  `widget_id` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_pw_pa` (`page_id`),
-  KEY `FK_pw_wi` (`widget_id`),
-  CONSTRAINT `FK_pw_pa` FOREIGN KEY (`page_id`) REFERENCES `page` (`id`),
-  CONSTRAINT `FK_pw_wi` FOREIGN KEY (`widget_id`) REFERENCES `widget` (`id`)
+  KEY `FK_pa_us` (`user_id`),
+  CONSTRAINT `FK_pa_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `page` WRITE;
+/*!40000 ALTER TABLE `page` DISABLE KEYS */;
+
+INSERT INTO `page` (`id`, `title`, `user_id`, `logo`, `type`)
+VALUES
+  (1,'Sportalize',1,NULL,'OTHER');
+
+/*!40000 ALTER TABLE `page` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table post
@@ -522,6 +554,16 @@ CREATE TABLE `post` (
   CONSTRAINT `FK_po_us1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `post` WRITE;
+/*!40000 ALTER TABLE `post` DISABLE KEYS */;
+
+INSERT INTO `post` (`id`, `user_id`, `page_id`, `original_user_id`, `title`, `text`, `original_page_id`, `image`, `date`, `video`, `post_type`)
+VALUES
+  (1,NULL,1,NULL,'Welcome to Sportalize!','As a demo, this is automated post by official Sportalize Page.',NULL,NULL,1434363010,NULL,'TEXT'),
+  (2,1,NULL,NULL,'Welcome to Sportalize!','You can also receive updates from your friends - you are friend with Sportalize user!',NULL,NULL,1434363010,NULL,'TEXT');
+
+/*!40000 ALTER TABLE `post` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table privacy_setting
@@ -540,6 +582,29 @@ CREATE TABLE `privacy_setting` (
   CONSTRAINT `FK_ps_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+
+# Dump of table role
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `role`;
+
+CREATE TABLE `role` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `role` WRITE;
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+
+INSERT INTO `role` (`id`, `name`)
+VALUES
+  (1,'ADMIN'),
+  (2,'USER');
+
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table sport
@@ -585,6 +650,36 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+
+INSERT INTO `user` (`id`, `email`, `password`, `token`, `token_time_generation`, `activated`)
+VALUES
+  (1,'admin@sportalize.com','945896b5bbe0a412751ce0bd6468239b92f4a3d0e1d36fe6ed673d498f1e6289',NULL,NULL,1);
+
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table user_favorite
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user_favorite`;
+
+CREATE TABLE `user_favorite` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  `comment_id` int(11) unsigned DEFAULT NULL,
+  `post_id` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_uf_us` (`user_id`),
+  KEY `FK_uf_co` (`comment_id`),
+  KEY `FK_uf_po` (`post_id`),
+  CONSTRAINT `FK_uf_co` FOREIGN KEY (`comment_id`) REFERENCES `comment` (`id`),
+  CONSTRAINT `FK_uf_po` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`),
+  CONSTRAINT `FK_uf_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 
 # Dump of table user_info
@@ -603,15 +698,27 @@ CREATE TABLE `user_info` (
   `country_id` int(11) unsigned NOT NULL,
   `avatar` varchar(256) DEFAULT NULL,
   `language_id` int(11) unsigned DEFAULT NULL,
+  `role_id` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_ui_us` (`user_id`),
   KEY `FK_ui_co` (`country_id`),
   KEY `FK_ui_la` (`language_id`),
+  KEY `FK_ui_ro` (`role_id`),
   CONSTRAINT `FK_ui_co` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`),
   CONSTRAINT `FK_ui_la` FOREIGN KEY (`language_id`) REFERENCES `language` (`id`),
+  CONSTRAINT `FK_ui_ro` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
   CONSTRAINT `FK_ui_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `user_info` WRITE;
+/*!40000 ALTER TABLE `user_info` DISABLE KEYS */;
+
+INSERT INTO `user_info` (`id`, `user_id`, `first_name`, `last_name`, `date_of_birth`, `phone`, `city`, `country_id`, `avatar`, `language_id`, `role_id`)
+VALUES
+  (7,1,'Sportalize','Admin',NULL,NULL,NULL,1,NULL,1,1);
+
+/*!40000 ALTER TABLE `user_info` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table user_like
@@ -644,6 +751,7 @@ CREATE TABLE `user_page` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned DEFAULT NULL,
   `page_id` int(11) unsigned DEFAULT NULL,
+  `show_in_favorite_pages_widget` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `FK_up_us` (`user_id`),
   KEY `FK_up_pa` (`page_id`),
@@ -680,6 +788,7 @@ CREATE TABLE `user_user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned DEFAULT NULL,
   `friend_id` int(11) unsigned DEFAULT NULL,
+  `status` enum('PENDING','ACCEPTED') DEFAULT 'PENDING',
   PRIMARY KEY (`id`),
   KEY `FK_uu_u1` (`user_id`),
   KEY `FK_uu_u2` (`friend_id`),
@@ -698,7 +807,7 @@ CREATE TABLE `user_widget` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned DEFAULT NULL,
   `widget_id` int(11) unsigned DEFAULT NULL,
-  `placement` enum('LEFT','RIGHT') DEFAULT NULL,
+  `placement` enum('LEFT','RIGHT','DO_NOT_SHOW') DEFAULT NULL,
   `display_order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_uw_us` (`user_id`),
@@ -741,6 +850,18 @@ CREATE TABLE `widget` (
   CONSTRAINT `FK_wi_pa` FOREIGN KEY (`page_id`) REFERENCES `page` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `widget` WRITE;
+/*!40000 ALTER TABLE `widget` DISABLE KEYS */;
+
+INSERT INTO `widget` (`id`, `title`, `is_system`, `page_id`, `type`)
+VALUES
+  (1,'FAVORITE_PAGES',1,1,'PAGE'),
+  (2,'UPCOMING_GAMES',1,1,'LIST_WEB'),
+  (3,'BEST_SCORERS',1,1,'LIST'),
+  (4,'LEAGUE_TABLE',1,1,'TABLE');
+
+/*!40000 ALTER TABLE `widget` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table widget_option
@@ -770,6 +891,23 @@ CREATE TABLE `widget_option` (
   CONSTRAINT `FK_wo_wo1` FOREIGN KEY (`parent_widget_option_id`) REFERENCES `widget_option` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `widget_option` WRITE;
+/*!40000 ALTER TABLE `widget_option` DISABLE KEYS */;
+
+INSERT INTO `widget_option` (`id`, `widget_id`, `type`, `parent_widget_option_id`, `linked_page_id`, `title`, `value_1`, `value_2`, `placement`, `display_order`, `image_1`, `image_2`)
+VALUES
+  (1,2,'SUB_LIST_WEB',NULL,NULL,'Football',NULL,NULL,NULL,1,NULL,NULL),
+  (2,2,'SUB_LIST_WEB_OPTION',1,NULL,NULL,NULL,NULL,NULL,1,'widget_football.png','widget_football.png'),
+  (3,2,'SUB_LIST_WEB_DATA',2,NULL,'Name','Red Star Belgrade','Partizan Belgrade','MAIN',1,NULL,NULL),
+  (4,2,'SUB_LIST_WEB_DATA',2,NULL,'Venue','Stadion Rajko Mitic','','ADDITIONAL',1,NULL,NULL),
+  (5,3,'SUB_LIST',NULL,NULL,'Premier League',NULL,NULL,NULL,1,NULL,NULL),
+  (6,3,'SUB_LIST_OPTION',5,NULL,NULL,'Wayne Rooney','10',NULL,1,NULL,NULL),
+  (7,3,'SUB_LIST_OPTION',5,NULL,NULL,'Edin Hazard','9',NULL,2,NULL,NULL),
+  (8,4,'SUB_TABLE',NULL,NULL,NULL,'Manchester United','[\"W\":\"5\"]',NULL,1,NULL,NULL),
+  (9,4,'SUB_TABLE',NULL,NULL,NULL,'Manchester City','[\"W\":\"4\"]',NULL,2,NULL,NULL);
+
+/*!40000 ALTER TABLE `widget_option` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table widget_table_data
@@ -787,6 +925,24 @@ CREATE TABLE `widget_table_data` (
   CONSTRAINT `FK_wtd_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `widget_table_data` WRITE;
+/*!40000 ALTER TABLE `widget_table_data` DISABLE KEYS */;
+
+INSERT INTO `widget_table_data` (`id`, `user_id`, `short`, `long`)
+VALUES
+  (2,NULL,'GF','GOALS_FOR'),
+  (3,NULL,'GA','GOALS_AGAINST'),
+  (4,NULL,'PT','POINTS'),
+  (5,NULL,'GD','GOALS_DIFFERENCE'),
+  (6,NULL,'RB','REBOUNDS'),
+  (7,NULL,'AS','ASSISTS'),
+  (8,NULL,'ST','STEALS'),
+  (9,NULL,'W','WINS'),
+  (10,NULL,'L','LOSES'),
+  (11,NULL,'D','DRAWS');
+
+/*!40000 ALTER TABLE `widget_table_data` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 

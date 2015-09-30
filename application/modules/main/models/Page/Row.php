@@ -12,10 +12,6 @@ class Page_Row extends Main_Row {
           return $this->_getListOfDepObjects('FavouriteItem','page',$select);
       }
 
-      public function getPageWidgetList($select=null) {
-          return $this->_getListOfDepObjects('PageWidget','page',$select);
-      }
-
     public function getPostPageList($select=null) {
         return $this->_getListOfDepObjects('Post','page',$select);
     }

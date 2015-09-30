@@ -360,6 +360,20 @@ $( document ).ready(function() {
                 element.removeClass('online');
             }
         });
+        if (doesExists('.profile-availability')) {
+            var element    = $('.profile-availability');
+            var d          = element.data();
+            var addedClass = false;
+            $.each(data, function(o, onePerson) {
+                if (d.userId == onePerson.userID) {
+                    element.addClass('online');
+                    addedClass = true;
+                }
+                if (!addedClass) {
+                    element.removeClass('online');
+                }
+            });
+        }
     });
     
     

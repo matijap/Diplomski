@@ -93,7 +93,6 @@ io.on("connection", function (client) {
 
     // will trigger it when person loads the page
     client.on("person_browse", function(data) {
-        console.log('aa');
         var data = JSON.parse(data);
         var index = -1;
         for (var i in onlineUsers) {

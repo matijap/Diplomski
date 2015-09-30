@@ -15,9 +15,11 @@ class IndexController extends Main_BaseController
             $this->setNotificationMessage($this->translate->_('User ID not sent.'), Sportalize_Controller_Action::NOTIFICATION_ERROR);
             $this->_redirect('/');
         }
-        $user              = Main::buildObject('User', $this->params['userID']);
-        $this->view->posts = $user->getPostsByUser();
-        $this->view->form  = new AddCommentForm();
+        $user                = Main::buildObject('User', $this->params['userID']);
+        $this->view->posts   = $user->getPostsByUser();
+        $this->view->form    = new AddCommentForm();
+        $this->view->watcher = $this->user->id;
+        $this->view->watched = $user;
     }
 
     public function likeOrUnlikePostAction() {
