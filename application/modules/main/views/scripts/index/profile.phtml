@@ -7,13 +7,25 @@
 </div>
 <div id="about" class="my main-background-color">
 <?php
-if ($this->watcher != $this->watched->id) {
+    if ($this->watcher->id != $this->watched->id) {
     $userInfo = $this->watched->getUserInfo();
+    $data     = User::makeButtonDecision($this->watcher, $this->watched);
     ?>
     <div class="position-relative">
         <h1 class="m-b-20"><?php echo $userInfo->first_name . ' ' . $userInfo->last_name; ?></h1>
         <div class="loader-holder">
-            <a class="text-align-center display-block send-friend-request styled-button" href="javascript:void(0)">Send Friend Request</a>
+            <a data-send-friend-request-text="<?php echo $this->translate->_('Send Friend Request'); ?>"
+               data-send-friend-request-url="/index/send-friend-request"
+               data-withdraw-friend-request-text="<?php echo $this->translate->_('Withdraw Request'); ?>"
+               data-withdraw-friend-request-url="/index/withdraw-friend-request"
+               data-accept-friend-request-text="<?php echo $this->translate->_('Accept Request'); ?>"
+               data-accept-friend-request-url="/index/accept-friend-request"
+               data-remove-friend-text="<?php echo $this->translate->_('Remove Friend'); ?>"
+               data-remove-friend-url="/index/remove-friend"
+               data-current-state="<?php echo $data['current_state']; ?>"
+               class="friend-request-action text-align-center display-block styled-button" href="javascript:void(0)">
+               <?php echo $data['text']; ?>
+            </a>
             <i class="fa fa-spinner fa-spin text-align-center display-none"></i>
         </div>
         <div data-user-id="<?php echo $this->watched->id;?>" class="profile-availability"></div>
@@ -22,3 +34,4 @@ if ($this->watcher != $this->watched->id) {
 }
 ?>
 </div>
+<input type="hidden" value="<?php echo $this->watched->id; ?>" class="watched-user-id">

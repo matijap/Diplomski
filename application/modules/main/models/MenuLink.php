@@ -51,4 +51,31 @@ class MenuLink extends MenuLink_Row
                      self::MENU_LINK_SIGN_OUT          => $translate->_('Sign Out'),
                      );
     }
+
+    public static function addNotificationsSubmenu($notifications) {
+        $return = array();
+        foreach ($notifications as $key => $oneNotification) {
+            $return[$key]['title']    = $oneNotification['text'];
+            $return[$key]['url']      = 'javascript:void(0)';
+            $return[$key]['class']    = '';
+            
+            if (!empty($oneNotification['post_id'])) {
+                $return[$key]['class']    = 'modal-open';
+                $return[$key]['data-url'] = '/favorites/post-or-comment-detailed/postID/' . $oneNotification['post_id'] . '/viewonly/true';
+            }
+            if (!empty($oneNotification['notifier_id'])) {
+                $notifier = Main::fetchRow(Main::select('UserInfo')->where('user_id = ?', $oneNotification['notifier_id']));
+                $return[$key]['title']                = $notifier->first_name . ' ' . $notifier->last_name . ' ' . $oneNotification['text'];
+                $return[$key]['is_user_notification'] = 1;
+            }
+        }
+
+        return $return;
+    }
+
+    public static function translateMenuLink($title) {
+        $translatedMenuLinks = MenuLink::getTranslatedMenuTitles();
+        $translate = Utils::arrayFetch($translatedMenuLinks, $title, $title);
+        return $translate;
+    }
 }

@@ -161,15 +161,47 @@ $( document ).ready(function() {
         }
     });
 
-    $(document).on(clickOrTouchstart, '.send-friend-request', function() {
-        var element = $(this);
+    $(document).on(clickOrTouchstart, '.friend-request-action', function() {
+        var element       = $(this);
+        var data          = element.data();
         element.hide();
         toggleBetweenClasses('#about .fa-spinner', 'display-none', 'display-block');
-        setTimeout(function() {
-            toggleBetweenClasses('#about .fa-spinner', 'display-none', 'display-block');
-            element.html('Sent<i class="fa fa-check-circle"></i>');
-            element.show();
-        }, 1000);
+        var userID        = getUserID();
+        var requestSentTo = $('.watched-user-id').val();
+        var currentState = data.currentState;
+        var url       = '';
+        var text      = '';
+        var nextState = '';
+        if (currentState == 'send') {
+            url       = data.sendFriendRequestUrl;
+            text      = data.withdrawFriendRequestText;
+            nextState = 'withdraw';
+        }
+        if (currentState == 'withdraw') {
+            url       = data.withdrawFriendRequestUrl;
+            text      = data.sendFriendRequestText;
+            nextState = 'send';
+        }
+        if (currentState == 'accept') {
+            url       = data.acceptFriendRequestUrl;
+            text      = data.removeFriendText;
+            nextState = 'remove';
+        }
+        if (currentState == 'remove') {
+            url       = data.removeFriendUrl;
+            text      = data.sendFriendRequestText;
+            nextState = 'send';
+        }
+        $.ajax({
+            url: appurl + url,
+            data: {'userID': userID, 'requestSentTo': requestSentTo},
+            success: function(result) {
+                toggleBetweenClasses('#about .fa-spinner', 'display-none', 'display-block');
+                element.html(text);
+                element.show();
+                element.data('current-state', nextState);
+            }
+        });
     });
 
     $(document).on(clickOrTouchstart, '.choose-upload', function(e) {
@@ -534,5 +566,22 @@ $( document ).ready(function() {
             }
         }
     }
-    
+
+    var ajaxSent = false;
+    $(document).on('mouseover', '.main-link-li:first-of-type', function(e) {
+        if (!ajaxSent) {
+            if (doesExists('.fa-exclamation')) {
+                ajaxSent   = true;
+                var userID = getUserID();
+                $.ajax({
+                    url: appurl + '/index/mark-all-notifications',
+                    data: {'userID': userID},
+                    success: function(result) {
+                        ajaxSent = false;
+                        $('.fa-exclamation').remove();
+                    }
+                });
+            }
+        }
+    });
 });

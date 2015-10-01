@@ -11,6 +11,8 @@ class User extends User_Row
 
     const SPORTALIZE_USER_ID     = 1;
 
+    const MAX_OLD_NOTIFICATIONS  = 5;
+
     public function generateToken() {
         $string = $this->email . '_' . time();
         return Utils::encrypt($string);
@@ -190,6 +192,7 @@ class User extends User_Row
         $allPages = Main::select()
                    ->from(array('PA' => 'page'), '')
                    ->join(array('UP' => 'user_page'), 'PA.id = UP.page_id', '')
+                   ->where('UP.user_id = ?', $this->id)
                    ->where('PA.id IN (?)', $pgs)
                    ->columns(array('PA.id', 'PA.title', 'PA.logo', 'UP.show_in_favorite_pages_widget'))
                    ->query()->fetchAll();
@@ -686,5 +689,124 @@ class User extends User_Row
             $return['comment'][$oneItem['comment_id']] = $oneItem;
         }
         return $return;
+    }
+
+    public function getNotifications() {
+        $notifications =  Main::select()
+                            ->from('notification')
+                            ->where('user_id = ?', $this->id)
+                            ->where('status = ?', Notification::STATUS_NEW)
+                            ->order('id DESC')
+                            ->query()->fetchAll();
+        $count = count($notifications);
+        $notificationsOld = array();
+        if ($count < self::MAX_OLD_NOTIFICATIONS) {
+            $diff = $count - self::MAX_OLD_NOTIFICATIONS;
+            $notificationsOld =  Main::select()
+                                ->from('notification')
+                                ->where('user_id = ?', $this->id)
+                                ->where('status = ?', Notification::STATUS_SEEN)
+                                ->limit($diff)
+                                ->order('id DESC')
+                                ->query()->fetchAll();
+        }
+        return array_merge($notifications, $notificationsOld);
+    }
+
+    public function hasNewNotifications() {
+        return Main::select()
+                ->from('notification')
+                ->where('user_id = ?', $this->id)
+                ->where('status = ?', Notification::STATUS_NEW)
+                ->columns(array('COUNT(id)'))
+                ->query()->fetchColumn();
+    }
+
+    public function markAllNotificationsAsSeen() {
+        Main::execQuery('UPDATE notification SET status = "SEEN" WHERE user_id = ? AND type != ?', array($this->id, Notification::TYPE_FRIEND_REQUEST));
+    }
+
+    public function sendFriendRequest($userID) {
+        $data = array(
+            'user_id'     => $userID,
+            'notifier_id' => $this->id,
+            'text'        => ' ' . self::$translate->_('sent you a friend request'),
+            'type'        => Notification::TYPE_FRIEND_REQUEST,
+        );
+        Notification::create($data);
+    }
+
+    public function isFriendRequestSent($userID) {
+        return Main::select()
+            ->from('notification')
+            ->where('notifier_id = ?', $this->id)
+            ->where('user_id = ?', $userID)
+            ->where('status = ?', Notification::STATUS_NEW)
+            ->where('type = ?', Notification::TYPE_FRIEND_REQUEST)
+            ->columns(array('COUNT(id)'))
+            ->query()->fetchColumn();
+    }
+
+    public function isFriendRequestReceived($userID) {
+        return Main::select()
+            ->from('notification')
+            ->where('user_id = ?', $this->id)
+            ->where('notifier_id = ?', $userID)
+            ->where('status = ?', Notification::STATUS_NEW)
+            ->where('type = ?', Notification::TYPE_FRIEND_REQUEST)
+            ->columns(array('COUNT(id)'))
+            ->query()->fetchColumn();
+    }
+
+    public function areFriends($userID) {
+        return Main::select()
+                ->from('user_user')
+                ->where('user_id = ' . $this->id . ' AND friend_id = ' . $userID)
+                ->orWhere('user_id = ' . $userID . ' AND friend_id = ' . $this->id)
+                ->where('status = ?', self::FRIEND_STATUS_ACCEPTED)
+                ->columns(array('COUNT(id)'))
+                ->query()->fetchColumn();
+    }
+
+    public function withdrawFriendRequest($userID) {
+        Main::execQuery("DELETE FROM notification WHERE user_id = ? AND notifier_id = ?", array($userID, $this->id));
+    }
+
+    public static function makeButtonDecision($userWatching, $userWatched) {
+        $data = array();
+        $isFriendRequestSent     = $userWatching->isFriendRequestSent($userWatched->id);
+        $isFriendRequestReceived = $userWatching->isFriendRequestReceived($userWatched->id);
+        $areFriends              = $userWatching->areFriends($userWatched->id);
+
+
+        $data['text']          = self::$translate->_('Send Friend Request');
+        $data['current_state'] = 'send';
+        if ($isFriendRequestSent) {
+            $data['current_state'] = 'withdraw';
+            $data['text']          = self::$translate->_('Withdraw Request');
+        }
+        if ($isFriendRequestReceived) {
+            $data['current_state'] = 'accept';
+            $data['text']          = self::$translate->_('Accept Request');
+        }
+        if ($areFriends) {
+            $data['current_state'] = 'remove';
+            $data['text']          = self::$translate->_('Remove Friend');
+        }
+        return $data;
+    }
+
+    public function acceptFriendRequest($userID) {
+        $notification = Main::fetchRow(Main::select('Notification')->where('user_id = ?', $this->id)->where('notifier_id = ?', $userID));
+        $notification->edit(array('status' => Notification::STATUS_SEEN));
+        UserUser::create(array('user_id' => $this->id, 'friend_id' => $userID, 'status' => self::FRIEND_STATUS_ACCEPTED));
+    }
+
+    public function removeFriend($userID) {
+        $userUser = Main::fetchRow(Main::select('UserUser')->where('user_id = ?', $this->id)->where('friend_id = ?', $userID));
+        if (!$userUser) {
+            $userUser = Main::fetchRow(Main::select('UserUser')->where('friend_id = ?', $this->id)->where('user_id = ?', $userID));
+        }
+        $userUser->delete();
     }
 }

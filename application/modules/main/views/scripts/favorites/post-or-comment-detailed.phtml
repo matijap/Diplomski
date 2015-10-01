@@ -3,10 +3,19 @@
     <?php $name  = empty($this->post) ? 'commentID' : 'postID'; ?>
     <input type="hidden" value="<?php echo $value; ?>" name="<?php echo $name; ?>">
 </form>
-<input type="hidden" id="is_delete" value="1">
 <?php
+if ($this->viewOnly) {
+    ?>
+    <input type="hidden" id="hide_submit" value="1">
+    <?php
+} else {
+    ?>
+    <input type="hidden" id="is_delete" value="1">
+    <?php
+}
     echo $this->partial('render/post-or-comment-detail.phtml', array(
-        'object' => empty($this->post) ? $this->comment : $this->post, 'translate' => $this->translate
+        'object'    => empty($this->post) ? $this->comment : $this->post,
+        'translate' => $this->translate,
     ));
     if (!empty($this->post)) {
     ?>

@@ -1,0 +1,61 @@
+<?php
+$oneSublink = $this->oneSublink;
+$dataUrl = '';
+if ($oneSublink['title'] == MenuLink::MENU_LINK_NEW_PAGE) {
+    $dataUrl = 'data-url="/page/new-page"';
+}
+if (isset($oneSublink['data-url'])) {
+    $dataUrl = 'data-url="' . $oneSublink['data-url'] . '"';
+}
+$pages = false;
+if ($oneSublink['title'] == MenuLink::MENU_LINK_MY_PAGES) {
+    $pages = $this->user->getUserPages();
+    if (!$pages) {
+        $oneSublink['class'] = 'display-none';
+    }
+}
+?>
+<li <?php echo $dataUrl ?> class="cc sublink-li-1 bb main-background-color <?php echo $oneSublink['class']; ?>">
+<?php
+    $link = $oneSublink['url'] != 'javascript:void(0)' ? APP_URL . '/' . $oneSublink['url'] : $oneSublink['url'];
+    if (isset($oneSublink['is_user_notification'])) {
+        ?>
+        <div class="person-avatar pull-left">
+            <img src="img/silhouette.png">
+        </div>
+        <p class="pull-left">
+            <a href="javascript:void(0)">
+                <?php echo $oneSublink['title']; ?>
+            </a>
+        </p>
+        <?php
+    } else {
+?>
+        <a href="<?php echo $link; ?>"><?php echo MenuLink::translateMenuLink($oneSublink['title']); ?>
+            <?php
+            if ($pages) {
+            ?>
+                <i class="fa fa-chevron-right"></i>
+            <?php
+            }
+            ?>
+        </a>
+        <?php
+        if ($pages) {
+            ?>
+            <ul class="sublink-ul sublink-ul-2">
+            <?php
+            foreach ($pages as $key => $value) {
+                echo $this->partial('includes/sublink-2.phtml', array(
+                                            'key'   => $key,
+                                            'value' => $value
+                                        ));
+            }
+            ?>
+            </ul>
+            <?php
+        }
+    }
+    ?>
+</li>
+<?php

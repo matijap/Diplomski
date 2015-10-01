@@ -18,7 +18,7 @@ class IndexController extends Main_BaseController
         $user                = Main::buildObject('User', $this->params['userID']);
         $this->view->posts   = $user->getPostsByUser();
         $this->view->form    = new AddCommentForm();
-        $this->view->watcher = $this->user->id;
+        $this->view->watcher = $this->user;
         $this->view->watched = $user;
     }
 
@@ -32,5 +32,30 @@ class IndexController extends Main_BaseController
         $post    = Main::buildObject('Post', $this->params['postID']);
         $message = $post->favoriteOrUnfavoritePost($this->params['userID']);
         $this->_helper->json(array('message' => $message));
+    }
+
+    public function markAllNotificationsAction() {
+        $user = Main::buildObject('User', $this->params['userID']);
+        $user->markAllNotificationsAsSeen();
+    }
+
+    public function sendFriendRequestAction() {
+        $user = Main::buildObject('User', $this->params['userID']);
+        $user->sendFriendRequest($this->params['requestSentTo']);
+    }
+
+    public function withdrawFriendRequestAction() {
+        $user = Main::buildObject('User', $this->params['userID']);
+        $user->withdrawFriendRequest($this->params['requestSentTo']);
+    }
+
+    public function acceptFriendRequestAction() {
+        $user = Main::buildObject('User', $this->params['userID']);
+        $user->acceptFriendRequest($this->params['requestSentTo']);
+    }
+
+    public function removeFriendAction() {
+        $user = Main::buildObject('User', $this->params['userID']);
+        $user->removeFriend($this->params['requestSentTo']);   
     }
 }

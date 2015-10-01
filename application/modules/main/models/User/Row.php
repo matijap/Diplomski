@@ -24,6 +24,14 @@ class User_Row extends Main_Row {
           return $this->_getListOfDepObjects('Galery','user',$select);
       }
 
+    public function getNotificationUserList($select=null) {
+        return $this->_getListOfDepObjects('Notification','user',$select);
+    }
+
+    public function getNotificationUserUserList($select=null) {
+        return $this->_getListOfDepObjects('Notification','user',$select);
+    }
+
       public function getPageList($select=null) {
           return $this->_getListOfDepObjects('Page','user',$select);
       }

@@ -37,8 +37,9 @@ class FavoritesController extends Main_BaseController
     }
 
     public function postOrCommentDetailedAction() {
-        $postID    = Utils::arrayFetch($this->params, 'postID', false);
-        $commentID = Utils::arrayFetch($this->params, 'commentID', false);
+        $postID               = Utils::arrayFetch($this->params, 'postID', false);
+        $commentID            = Utils::arrayFetch($this->params, 'commentID', false);
+        $this->view->viewOnly = Utils::arrayFetch($this->params, 'viewonly', false);
         if ($postID) {
             $this->view->post = Main::buildObject('Post', $postID);
         } else {

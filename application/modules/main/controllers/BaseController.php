@@ -32,6 +32,7 @@ class Main_BaseController extends Sportalize_Controller_Action
         $translate = new Zend_Translate('gettext', APPLICATION_PATH . '/languages/' . $language->file . '.mo', $loc, array('disableNotices' => true));
         $translate->setLocale($loc);
         Zend_Registry::set('Zend_Translate', $translate);
+        $this->view->notifications = $this->user->getNotifications();
     }
 
     public function setNotificationMessage($message, $status = Sportalize_Controller_Action::NOTIFICATION_SUCCESS) {

@@ -35,58 +35,27 @@
                             if ($oneLink['title'] == MenuLink::MENU_LINK_MY_POSTS) {
                                 $oneLink['url'] = $oneLink['url'] . '?userID=' . $this->userID;
                             }
+                            if ($oneLink['title'] == MenuLink::MENU_LINK_NOTIFICATIONS) {
+                                $oneLink['sublinks'] = MenuLink::addNotificationsSubmenu($this->notifications);
+                            }
+                            
                         ?>
                             <a href="<?php echo $oneLink['url'] ?>"><?php echo $translatedMenuLinks[$oneLink['title']]; ?></a>
                             <?php
+                            if ($this->user->hasNewNotifications() && $oneLink['title'] == MenuLink::MENU_LINK_NOTIFICATIONS) {
+                                ?>
+                                <i class="fa fa-exclamation"></i>
+                                <?php
+                            }
                             if (isset($oneLink['sublinks'])) {
                                 ?>
-                                <ul class="sublink-ul sublink-ul-1">
+                                <ul class="sublink-ul sublink-ul-1 <?php echo $oneLink['class']?> ">
                                 <?php
                                 foreach ($oneLink['sublinks'] as $oneSublink) {
-                                    $dataUrl = '';
-                                    if ($oneSublink['title'] == MenuLink::MENU_LINK_NEW_PAGE) {
-                                        $dataUrl = 'data-url="/page/new-page"';
-                                    }
-                                    $pages = false;
-                                    if ($oneSublink['title'] == MenuLink::MENU_LINK_MY_PAGES) {
-                                        $pages = $this->user->getUserPages();
-                                        if (!$pages) {
-                                            $oneSublink['class'] = 'display-none';
-                                        }
-                                    }
-                                    ?>
-                                    <li <?php echo $dataUrl ?> class="cc sublink-li-1 bb main-background-color <?php echo $oneSublink['class']; ?>">
-                                    <?php $link = $oneSublink['url'] != 'javascript:void(0)' ? APP_URL . '/' .$oneSublink['url'] : $oneSublink['url']; ?>
-                                        <a href="<?php echo $link; ?>"><?php echo $translatedMenuLinks[$oneSublink['title']]; ?>
-                                            <?php
-                                            if ($pages) {
-                                            ?>
-                                                <i class="fa fa-chevron-right"></i>
-                                            <?php
-                                            }
-                                            ?>
-                                        </a>
-                                        <?php
-                                        if ($pages) {
-                                            ?>
-                                            <ul class="sublink-ul sublink-ul-2">
-                                            <?php
-                                            foreach ($pages as $key => $value) {
-                                                ?>
-                                                <li class="main-background-color sublink-li-2">
-                                                    <a href="<?php echo APP_URL; ?>/page/index?pageID=<?php echo $key; ?>">
-                                                        <?php echo $value; ?>
-                                                    </a>
-                                                </li>
-                                                <?php
-                                            }
-                                            ?>
-                                            </ul>
-                                            <?php
-                                        }
-                                        ?>
-                                    </li>
-                                    <?php
+                                    echo $this->partial('includes/sublink-1.phtml', array(
+                                        'oneSublink' => $oneSublink,
+                                        'user'       => $this->user
+                                    ));
                                 }
                                 ?>
                                 </ul>
