@@ -106,7 +106,47 @@ io.on("connection", function (client) {
             obj.id     = client.id;
             obj.userID = data.userID;
             onlineUsers.push(obj);
-            io.emit('set_online', onlineUsers);
         }
     });
+    client.on("user_online", function(data) {
+        setTimeout(function() {
+            var friendList = data.friendList;
+            //iterating through friend list sent from php. this will notify all friends that person came online
+            for (var i = 0, len = friendList.length; i < len; i++) {
+                var currentID = friendList[i];
+                for (var it in onlineUsers) {
+                    if (onlineUsers[it].userID == currentID) {
+                        io.sockets.connected[onlineUsers[it].id].emit('set_online', onlineUsers);
+                    }
+                    if (onlineUsers[it].userID == data.userID) {
+                        io.sockets.connected[onlineUsers[it].id].emit('set_online', onlineUsers);            
+                    }
+                }
+            }
+            
+        }, 3000);
+    });
+
+    client.on("add_notification", function(data) {
+        var data = JSON.parse(data);
+        if (data.notification == 'friend') {
+            var clientID = getCliendIDForUserID(data.requestSentTo);
+            if (clientID) {
+                var obj        = new Object;
+                obj.notifierID = data.userID;
+                obj.type       = data.notification;
+                io.sockets.connected[clientID].emit('add_friend_notification', obj);
+            }
+        }
+    });
+
+    function getCliendIDForUserID(userID) {
+        var clientID = false;
+        for (var i in onlineUsers) {
+            if (onlineUsers[i].userID == userID) {
+                clientID = onlineUsers[i].id;
+            }
+        }
+        return clientID;
+    }
 });

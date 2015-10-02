@@ -29,7 +29,9 @@ class ElephantConnect {
 
     public function initializePersonOnline() {
         $this->emitLocation = 'user_online';
-        // $this->_send(array('userID' => $this->userID));
+        $user       = Main::buildObject('User', $this->userID);
+        $friendList = $user->getFriendList(false, true);
+        $this->_send(array('userID' => $this->userID, 'friendList' => $friendList));
     }
     
 }

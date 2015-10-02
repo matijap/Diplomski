@@ -28,7 +28,6 @@ class WidgetController extends Main_BaseController
         if ($pageID) {
             $data['pageID'] = $pageID;
         }
-        // $data['widgetID'] = 4;
         $this->view->form = $form = new WidgetForm($data);
         $response = $this->validateForm($form);
         if ($response['isPost']) {

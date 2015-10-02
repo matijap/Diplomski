@@ -13,6 +13,7 @@ class Page extends Page_Row
     const PAGE_IMAGES_FOLDER = 'user_images/page_images';
 
     const SPORTALIZE_PAGE_ID = 1;
+    const DEFAULT_LOGO       = 'ball.jpg';
 
     public static function getAvailablePlayers() {
         return Page::getAvailablePages(Page::PAGE_TYPE_PLAYER);
@@ -41,8 +42,11 @@ class Page extends Page_Row
 
     public static function create($params, $tableName = false) {
         $page = parent::create($params); 
-
-        $fileName = Utils::uploadFile('logo', Page::PAGE_IMAGES_FOLDER, $page->id);
+        if (isset($_FILES['logo'])) {
+            $fileName = Utils::uploadFile('logo', Page::PAGE_IMAGES_FOLDER, $page->id);
+        } else {
+            $fileName = self::DEFAULT_LOGO;
+        }
         if ($fileName) {
             $page->edit(array('logo' => $fileName));
         }
@@ -133,47 +137,63 @@ class Page extends Page_Row
     }
 
     public function likeOrUnlike($userID) {
-        $userPage = Main::fetchRow(Main::select('UserPage')->where('user_id = ?', $userID)->where('page_id = ?', $this->id));
+        $ids = $this->getPageWidgetIDs();
         $return   = array();
-        if ($userPage) {
-            $userPage->delete();
-            ExFavoritePages::create(array('user_id' => $userID, 'page_id' => $this->id));
-            $return['message'] = self::$translate->_('Page unfavorited successfully');
-            $return['html'] =  '<tr>
-                                    <td>
-                                        <a href="' . APP_URL . '/page/index/pageID/' . $this->id . '">' . $this->title . '</a>
-                                    </td>
-                                    <td>
-                                        <a data-id="' . $this->id . '" class="blue-button favourite-page-back" href="#"><i class="fa fa-heart"></i></a>
-                                    </td>
-                                </tr>';
-        } else {
-            UserPage::create(array('user_id' => $userID, 'page_id' => $this->id));
-            $exFavorite = Main::fetchRow(Main::select('ExFavoritePages')->where('user_id = ?', $userID)->where('page_id = ?', $this->id));
-            if ($exFavorite) {
-                $exFavorite->delete();
+        if ($this->id != self::SPORTALIZE_PAGE_ID) {
+            $userPage = Main::fetchRow(Main::select('UserPage')->where('user_id = ?', $userID)->where('page_id = ?', $this->id));
+            if ($userPage) {
+                $userPage->delete();
+                ExFavoritePages::create(array('user_id' => $userID, 'page_id' => $this->id));
+                $return['status']  = 'success';
+                $return['message'] = self::$translate->_('Page unfavorited successfully');
+                $return['html'] =  '<tr>
+                                        <td>
+                                            <a href="' . APP_URL . '/page/index/pageID/' . $this->id . '">' . $this->title . '</a>
+                                        </td>
+                                        <td>
+                                            <a data-id="' . $this->id . '" class="blue-button favourite-page-back" href="#"><i class="fa fa-heart"></i></a>
+                                        </td>
+                                    </tr>';
+                Main::execQuery('DELETE FROM user_widget WHERE widget_id IN (?)', array(implode(',', $ids)));
+            } else {
+                UserPage::create(array('user_id' => $userID, 'page_id' => $this->id));
+                $exFavorite = Main::fetchRow(Main::select('ExFavoritePages')->where('user_id = ?', $userID)->where('page_id = ?', $this->id));
+                if ($exFavorite) {
+                    $exFavorite->delete();
+                }
+                $return['status']  = 'success';
+                $return['message'] = self::$translate->_('Page favorited successfully');
+                $return['html'] =  '<tr>
+                                        <td>
+                                            <a href="' . APP_URL . '/page/index/pageID/' . $this->id . '">
+                                                ' . $this->title . '
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a data-url="/widget/configure-widget-for-user/pageID/' . $this->id . '" class="blue-button modal-open" href="javascript:void(0)">
+                                                <i class="fa fa-cog"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a class="blue-button unfavorite-page" data-id="' . $this->id . '" href="javascript:void(0)">
+                                                <i class="fa fa-heartbeat"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <input data-id="' . $this->id . '" checked="checked" class="show-in-widget-favorite cursor-pointer" type="checkbox">
+                                        </td>
+                                    </tr>';
+                foreach ($ids as $oneID) {
+                    UserWidget::create(array(
+                        'user_id'   => $userID,
+                        'widget_id' => $oneID,
+                        'placement' => Widget::WIDGET_PLACEMENT_RIGHT,
+                    ));
+                }
             }
-            $return['message'] = self::$translate->_('Page favorited successfully');
-            $return['html'] =  '<tr>
-                                    <td>
-                                        <a href="' . APP_URL . '/page/index/pageID/' . $this->id . '">
-                                            ' . $this->title . '
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a data-url="/widget/configure-widget-for-user/pageID/' . $this->id . '" class="blue-button modal-open" href="javascript:void(0)">
-                                            <i class="fa fa-cog"></i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a class="blue-button unfavorite-page" data-id="' . $this->id . '" href="javascript:void(0)">
-                                            <i class="fa fa-heartbeat"></i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <input data-id="' . $this->id . '" checked="checked" class="show-in-widget-favorite cursor-pointer" type="checkbox">
-                                    </td>
-                                </tr>';
+        } else {
+            $return['status']  = 'error';
+            $return['message'] = self::$translate->_('Cannot unlike system page');
         }
         return $return;
     }
@@ -184,5 +204,34 @@ class Page extends Page_Row
         $userPage->edit(array('show_in_favorite_pages_widget' => $newValue));
         $message  = $newValue ? self::$translate->_('Page will appear in favorite pages widget') : self::$translate->_('Page will no longer appear in favorite pages widget');
         return $message;
+    }
+
+    public function getUser() {
+        return Main::fetchRow(Main::select('User')->where('id = ?', $this->user_id));
+    }
+
+    public function getLikesCount() {
+        return Main::select()
+                ->from('user_page', '')
+                ->where('page_id = ?', $this->id)
+                ->columns('COUNT(id)')
+                ->query()->fetchColumn();
+    }
+
+    public function isLikedByUser($userID) {
+        return Main::select()
+                ->from('user_page', '')
+                ->where('page_id = ?', $this->id)
+                ->where('user_id = ?', $userID)
+                ->columns('COUNT(id)')
+                ->query()->fetchColumn();
+    }
+
+    public function getPageWidgetIDs() {
+        return Main::select()
+                ->from('widget', '')
+                ->where('page_id = ?', $this->id)
+                ->columns('id')
+                ->query()->fetchAll(PDO::FETCH_COLUMN);
     }
 }

@@ -8,7 +8,20 @@
 ?>
 </div>
 <div style="position: fixed; right: 0; width: 30%; height: 100%; padding: 10px;" class="main-background-color bb page-info">
+    <?php 
+    if (!$this->watcherSameAsOwner) {
+        $sufix = $this->page->isLikedByUser($this->watcher->id) ? 'beat' : ''; ?>
+        <p class="text-align-center like-or-unlike-page cursor-pointer" data-id=<?php echo $this->page->id; ?>>
+            <i class="fa fa-heart<?php echo $sufix; ?>"></i>
+        </p>
+    <?php
+    }
+    ?>
     <h1 class="text-align-center m-t-10"><?php echo $this->page->title; ?></h1>
+    <p class="text-align-center m-t-5"><?php echo $this->translate->_('Likes'); ?>:&nbsp;<?php echo $this->page->getLikesCount(); ?></p>
+    <?php
+    if ($this->watcherSameAsOwner) {
+    ?>
     <h2 style="margin-top: 10px;"><?php echo $this->translate->_('Widget Customization'); ?></h2>
     <div class="loader-holder m-t-10">
         <a data-url="/widget/new-widget?page_id=<?php echo $this->page->id; ?>" data-template="new-widget-template" class="text-align-center display-block styled-button modal-open" href="javascript:void(0)">
@@ -16,18 +29,28 @@
         </a>
         <i class="fa fa-spinner fa-spin text-align-center display-none"></i>
     </div>
+    <?php 
+    }
+    ?>
     <?php $text = count($this->widgets) ? $this->translate->_('Currently active widgets') : $this->translate->_('No active widgets'); ?>
     
     <h3 class="m-t-10"><?php echo $text; ?></h3>
     <ul class="m-t-10">
     <?php
     foreach ($this->widgets as $key => $oneWidget) {
+        $class = $this->watcherSameAsOwner ? 'modal-open' : '';
         ?>
         <li>
-            <a href="javascript:void(0)" class="modal-open" data-url="/widget/new-widget?widgetID=<?php echo $oneWidget->id; ?>" >
+            <a href="javascript:void(0)" class="<?php echo $class; ?>" data-url="/widget/new-widget?widgetID=<?php echo $oneWidget->id; ?>" >
                 <?php echo Widget::translate($oneWidget->title); ?>
             </a>
+            <?php
+            if ($this->watcherSameAsOwner) {
+            ?>
             <i class="fa fa-times modal-open remove-widget cursor-pointer" data-url="/widget/delete-widget?widgetID=<?php echo $oneWidget->id; ?>"></i>
+            <?php
+            }
+            ?>
         </li>
         <?php
     }

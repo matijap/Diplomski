@@ -40,22 +40,35 @@ class IndexController extends Main_BaseController
     }
 
     public function sendFriendRequestAction() {
-        $user = Main::buildObject('User', $this->params['userID']);
-        $user->sendFriendRequest($this->params['requestSentTo']);
+        $user    = Main::buildObject('User', $this->params['userID']);
+        $status  = $user->sendFriendRequest($this->params['requestSentTo']);
+        $message = $status ? '' : $this->translate->_('This person has already sent friend request to you. Please refresh the page');
+        $this->_helper->json(array('status' => $status, 'message' => $message));
     }
 
     public function withdrawFriendRequestAction() {
-        $user = Main::buildObject('User', $this->params['userID']);
-        $user->withdrawFriendRequest($this->params['requestSentTo']);
+        $user    = Main::buildObject('User', $this->params['userID']);
+        $status  = $user->withdrawFriendRequest($this->params['requestSentTo']);
+        $message = $status ? '' : $this->translate->_('This person has already accepted your friend request. Please refresh the page');
+        $this->_helper->json(array('status' => $status, 'message' => $message));
     }
 
     public function acceptFriendRequestAction() {
-        $user = Main::buildObject('User', $this->params['userID']);
-        $user->acceptFriendRequest($this->params['requestSentTo']);
+        $user    = Main::buildObject('User', $this->params['userID']);
+        $status  = $user->acceptFriendRequest($this->params['requestSentTo']);
+        $message = $status ? '' : $this->translate->_('This person has withdrawn friend request. Please refresh the page');
+        $this->_helper->json(array('status' => $status, 'message' => $message));
     }
 
     public function removeFriendAction() {
-        $user = Main::buildObject('User', $this->params['userID']);
-        $user->removeFriend($this->params['requestSentTo']);   
+        $user    = Main::buildObject('User', $this->params['userID']);
+        $status  = $user->removeFriend($this->params['requestSentTo']);
+        $message = $status ? '' : $this->translate->_('This person has already removed you from the friends. Please refresh the page');
+        $this->_helper->json(array('status' => $status, 'message' => $message));
+    }
+
+    public function getHtmlForNotificationAction() {
+        $this->view->type = $this->params['type'];
+        $this->view->notifier = Main::buildObject('User', $this->params['notifierID']);
     }
 }

@@ -25,7 +25,7 @@ class WidgetForm extends Sportalize_Form_Modal {
         $widget = false;
         if ($this->wid) {
             $widget = Main::buildObject('Widget', $this->wid);
-            $this->setModalTitle($widget->title);
+            $this->setModalTitle(Widget::translate($widget->title));
         }
         $widgetTypeMultioptions = Widget::getWidgetTypeMultioptions();
         $widgetType = $this->createElement('radio', 'type', array(

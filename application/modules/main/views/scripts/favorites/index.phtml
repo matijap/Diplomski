@@ -24,9 +24,15 @@
                             </a>
                         </td>
                         <td>
+                            <?php
+                            if ($onePage['id'] != Page::SPORTALIZE_PAGE_ID) {
+                            ?>
                             <a class="blue-button unfavorite-page" data-id="<?php echo $onePage['id']; ?>" href="javascript:void(0)">
                                 <i class="fa fa-heartbeat"></i>
                             </a>
+                            <?php
+                            }
+                            ?>
                         </td>
                         <td>
                             <?php $checked = $onePage['show_in_favorite_pages_widget'] ? 'checked="checked"' : ''; ?>

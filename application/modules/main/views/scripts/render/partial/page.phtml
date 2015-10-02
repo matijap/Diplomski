@@ -4,7 +4,7 @@
         foreach ($this->oneWidget['options'] as $key => $value) {
             ?>
             <li>
-                <a href="<?php echo APP_URL . '/page/index/pageID/' . $value['id']; ?>">
+                <a href="<?php echo APP_URL . '/page/index?pageID=' . $value['id']; ?>">
                     <img width="20px" height="20px" class="pull-left" src="<?php echo APP_URL . '/' . Page::PAGE_IMAGES_FOLDER . '/' . $value['image']; ?>" />
                     <span class="pull-left"><?php echo $value['title']; ?></span>
                 </a>

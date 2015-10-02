@@ -26,6 +26,12 @@ class Post extends Post_Row
             unset($data['image_url']);
             unset($_FILES["image_upload"]);
         }
+        $pageID = Utils::arrayFetch($data, 'page_id', false);
+        if ($pageID == '_E_' || !$pageID) {
+            unset($data['page_id']);
+        } else {
+            unset($data['user_id']);
+        }
         $post = parent::create($data);
         if ($data['post_type'] == self::POST_TYPE_IMAGE) {
             unset($data['video']);

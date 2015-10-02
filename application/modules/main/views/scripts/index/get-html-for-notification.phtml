@@ -1,0 +1,18 @@
+<?php
+    if ($this->type == 'friend') {
+        $userInfo = $this->notifier->getUserInfo();
+        ?>
+        <li class="cc sublink-li-1 bb main-background-color">
+            <div class="person-avatar pull-left">
+                <img src="<?php echo APP_URL . '/' . UserInfo::AVATAR_IMAGES_FOLDER . '/' . $userInfo->avatar;?>">
+            </div>
+            <p class="pull-left">
+                <a href="<?php echo APP_URL;?>/index/profile?userID=<?php echo $this->notifier->id; ?>">
+                    <?php echo $userInfo->first_name . ' ' . $userInfo->last_name . ' ' . $this->translate->_('has sent you a friend request') ; ?>
+                </a>
+            </p>
+        </li>
+        <?php
+    }
+?>
+<?php

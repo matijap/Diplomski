@@ -173,9 +173,15 @@ $( document ).ready(function() {
         var text      = '';
         var nextState = '';
         if (currentState == 'send') {
-            url       = data.sendFriendRequestUrl;
-            text      = data.withdrawFriendRequestText;
-            nextState = 'withdraw';
+            url               = data.sendFriendRequestUrl;
+            text              = data.withdrawFriendRequestText;
+            nextState         = 'withdraw';
+            var d             = new Object;
+            d.userID          = getUserID();
+            d.requestSentTo   = requestSentTo;
+            d.notification    = 'friend';
+            var data          = JSON.stringify(d);
+            socket.emit('add_notification', data);
         }
         if (currentState == 'withdraw') {
             url       = data.withdrawFriendRequestUrl;
@@ -197,9 +203,13 @@ $( document ).ready(function() {
             data: {'userID': userID, 'requestSentTo': requestSentTo},
             success: function(result) {
                 toggleBetweenClasses('#about .fa-spinner', 'display-none', 'display-block');
-                element.html(text);
                 element.show();
-                element.data('current-state', nextState);
+                if (!result.status) {
+                    callNotification(result.message, 'error');
+                } else {
+                    element.html(text);
+                    element.data('current-state', nextState);
+                }
             }
         });
     });
@@ -407,6 +417,21 @@ $( document ).ready(function() {
             });
         }
     });
+    
+    socket.on('add_friend_notification', function(data) {
+        $.ajax({
+            url: appurl + '/index/get-html-for-notification',
+            data: {'notifierID': data.notifierID, 'type':data.type},
+            success: function(result) {
+                $('.main-link-li:first-of-type ul').prepend(result);
+                if (!doesExists('.fa-exclamation')) {
+                    $('.main-link-li:first-of-type').find('.sublink-ul-1').before('<i class="fa fa-exclamation"></i>');
+                }
+                callNotification($('.new-notification-message').val(), 'success');
+            }
+        });
+    });
+
     
     
     $(document).on(clickOrTouchstart, '.like-or-unlike-comment', function(e) {

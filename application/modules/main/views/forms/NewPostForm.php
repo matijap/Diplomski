@@ -20,6 +20,20 @@ class NewPostForm extends Sportalize_Form_Modal {
             'class'        => 'width-100px'
         ));
 
+        $userPages = $this->user->getUserPages();
+        if(!empty($userPages)) {
+            $multioptions = array();
+            $multioptions['_E_'] = $this->translate->_('Pick page');
+            foreach ($userPages as $key => $value) {
+                $multioptions[$key] = $value;
+            }
+            $this->addElement('select', 'page_id', array(
+                'label'        => $this->translate->_('Or post as a page'),
+                'multioptions' => $multioptions,
+                'class'        => 'width-100px'
+            ));
+        }
+
         $this->addElement('text', 'title', array(
             'label' => $this->translate->_('Title')
         ));

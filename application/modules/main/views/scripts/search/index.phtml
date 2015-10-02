@@ -69,13 +69,13 @@ if (!empty($this->message)) {
                             </div>
                             <p class="pull-left m-l-5">
                                 <a href="<?php echo APP_URL; ?>/page/index?pageID=<?php echo $onePage['id']; ?>">
-                                    <?php echo $onePerson['name']; ?>
+                                    <?php echo $onePage['title']; ?>
                                 </a>
                             </p>
                             <div class="clear"></div>
                         </div>
                     <?php
-                if ($count == 5 || $count == count($this->people)) {
+                if ($count == 5 || $count == count($this->pages)) {
                     ?>
                     </div>
                     <?php

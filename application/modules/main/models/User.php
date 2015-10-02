@@ -137,9 +137,22 @@ class User extends User_Row
         $user             = parent::create($data, $tableName);
         PrivacySetting::createDefaultPrivacySetting($user->id);
 
-        UserPage::create(array('user_id' => $user->id, 'page_id' => Page::SPORTALIZE_PAGE_ID));
-        UserUser::create(array('user_id' => $user->id, 'friend_id' => self::SPORTALIZE_USER_ID, 'status' => self::FRIEND_STATUS_ACCEPTED));
-        UserInfo::create(array('user_id' => $user->id, 'country_id' => 1, 'language_id' => 1, 'role_id' => 2));
+        UserPage::create(array(
+            'user_id' => $user->id,
+            'page_id' => Page::SPORTALIZE_PAGE_ID,
+        ));
+        UserUser::create(array(
+            'user_id'   => $user->id,
+            'friend_id' => self::SPORTALIZE_USER_ID,
+            'status'    => self::FRIEND_STATUS_ACCEPTED
+        ));
+        UserInfo::create(array(
+            'user_id'     => $user->id,
+            'country_id'  => 1,
+            'language_id' => 1,
+            'role_id'     => 2,
+            'avatar'      => UserInfo::DEFAULT_AVATAR
+        ));
 
         Widget::createDefaultUserWidget($user->id);
         
@@ -727,13 +740,19 @@ class User extends User_Row
     }
 
     public function sendFriendRequest($userID) {
-        $data = array(
-            'user_id'     => $userID,
-            'notifier_id' => $this->id,
-            'text'        => ' ' . self::$translate->_('sent you a friend request'),
-            'type'        => Notification::TYPE_FRIEND_REQUEST,
-        );
-        Notification::create($data);
+        $receiver    = Main::buildObject('User', $userID);
+        $alreadySent = $receiver->isFriendRequestSent($this->id);
+        if (!$alreadySent) {
+            $data = array(
+                'user_id'     => $userID,
+                'notifier_id' => $this->id,
+                'text'        => ' ' . self::$translate->_('sent you a friend request'),
+                'type'        => Notification::TYPE_FRIEND_REQUEST,
+            );
+            return Notification::create($data);
+        } else {
+            return false;
+        }
     }
 
     public function isFriendRequestSent($userID) {
@@ -769,7 +788,13 @@ class User extends User_Row
     }
 
     public function withdrawFriendRequest($userID) {
-        Main::execQuery("DELETE FROM notification WHERE user_id = ? AND notifier_id = ?", array($userID, $this->id));
+        $areFriends = $this->areFriends($userID);
+        if (!$areFriends) {
+            Main::execQuery("DELETE FROM notification WHERE user_id = ? AND notifier_id = ?", array($userID, $this->id));
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static function makeButtonDecision($userWatching, $userWatched) {
@@ -797,16 +822,29 @@ class User extends User_Row
     }
 
     public function acceptFriendRequest($userID) {
-        $notification = Main::fetchRow(Main::select('Notification')->where('user_id = ?', $this->id)->where('notifier_id = ?', $userID));
-        $notification->edit(array('status' => Notification::STATUS_SEEN));
-        UserUser::create(array('user_id' => $this->id, 'friend_id' => $userID, 'status' => self::FRIEND_STATUS_ACCEPTED));
+        $notifier = Main::buildObject('User', $userID);
+        $friendRequestSent = $notifier->isFriendRequestSent($this->id);
+        if ($friendRequestSent) {
+            $notification = Main::fetchRow(Main::select('Notification')->where('user_id = ?', $this->id)->where('notifier_id = ?', $userID));
+            $notification->edit(array('status' => Notification::STATUS_SEEN));
+            UserUser::create(array('user_id' => $this->id, 'friend_id' => $userID, 'status' => self::FRIEND_STATUS_ACCEPTED));
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function removeFriend($userID) {
-        $userUser = Main::fetchRow(Main::select('UserUser')->where('user_id = ?', $this->id)->where('friend_id = ?', $userID));
-        if (!$userUser) {
-            $userUser = Main::fetchRow(Main::select('UserUser')->where('friend_id = ?', $this->id)->where('user_id = ?', $userID));
+        $areFriends = $this->areFriends($userID);
+        if ($areFriends) {
+            $userUser = Main::fetchRow(Main::select('UserUser')->where('user_id = ?', $this->id)->where('friend_id = ?', $userID));
+            if (!$userUser) {
+                $userUser = Main::fetchRow(Main::select('UserUser')->where('friend_id = ?', $this->id)->where('user_id = ?', $userID));
+            }
+            $userUser->delete();
+            return true;
+        } else {
+            return false;
         }
-        $userUser->delete();
     }
 }

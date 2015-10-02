@@ -267,4 +267,31 @@ $( document ).ready(function() {
         $('.modal-body .mc').find('.' + widgetType).show();
         initUploadButtonsChange();
     });
+
+    $(document).on(clickOrTouchstart, '.like-or-unlike-page', function(e) {
+        var element = $(this);
+        element.append('<i class="fa fa-spin fa-spinner"></i>');
+        var sufix = element.find('.fa-heart').size() == 1 ? 'beat' : '';
+        appurl      = getAppUrl();
+        var data    = element.data();
+        var pageID  = data.id;
+        element.find('.fa-heart').hide();
+        element.find('.fa-heartbeat').hide();
+        $.ajax({
+            url: appurl + "/favorites/like-or-unlike-page",
+            data: {'pageID': pageID},
+            success: function(result) {
+                callNotification(result.message, result.status);
+                element.find('.fa-spinner').remove();
+                if (result.status == 'success') {
+                    element.find('.fa-heart').remove();
+                    element.find('.fa-heartbeat').remove();
+                    element.append('<i class="fa fa-heart' + sufix + '"></i>');
+                } else {
+                    element.find('.fa-heart').show();
+                    element.find('.fa-heartbeat').show();
+                }
+           }
+        });
+    });
 });
