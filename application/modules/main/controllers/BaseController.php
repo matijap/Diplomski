@@ -33,6 +33,8 @@ class Main_BaseController extends Sportalize_Controller_Action
         $translate->setLocale($loc);
         Zend_Registry::set('Zend_Translate', $translate);
         $this->view->notifications = $this->user->getNotifications();
+        $search                 = Utils::arrayFetch($this->params, 'global_search', '');
+        $this->view->searchForm = new SearchForm(array('search' => $search));
     }
 
     public function setNotificationMessage($message, $status = Sportalize_Controller_Action::NOTIFICATION_SUCCESS) {

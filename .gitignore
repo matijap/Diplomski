@@ -2,8 +2,10 @@
 temporary/
 public/user_images/avatars
 !public/user_images/avatars/.empty
+!public/user_images/avatars/silhouette.png
 public/user_images/page_images
 !public/user_images/page_images/.empty
+!public/user_images/page_images/ball.jpg
 public/user_images/post_images
 !public/user_images/post_images/.empty
 public/user_images/widget_images

@@ -53,6 +53,24 @@ a.display-none {
 ul.errors {
     margin-top: 5px;
 }
+.global-search {
+    position: absolute;
+    width: 195px;
+    height: 65px;
+    font-size: 22px;
+}
+.global-search::-webkit-input-placeholder {
+    font-size: 11px;
+    padding-top: 5px;
+}
+.global-search::-moz-placeholder {
+    font-size: 11px;
+}
+.global-search-icon {
+    position: absolute;
+    top: 25px;
+    left: 174px;
+}
 /* Utility Classes Start */
 .truncate-string {
     white-space: nowrap;
@@ -1229,3 +1247,15 @@ a.back-to-galery {
     padding: 5px;
 }
 /* Favourites End */
+/* Search Start */
+.one-search-container .person-avatar {
+    width: 50px;
+}
+.one-search-container p {
+    padding-top: 13px;
+}
+.one-search-container {
+    width: 250px;
+    float: left;
+}
+/* Search End */

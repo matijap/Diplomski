@@ -584,4 +584,7 @@ $( document ).ready(function() {
             }
         }
     });
+    $(document).on(clickOrTouchstart, '.global-search-icon', function(e) {
+        $(this).closest('form').submit();
+    });
 });

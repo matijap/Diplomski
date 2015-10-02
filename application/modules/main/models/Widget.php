@@ -43,7 +43,7 @@ class Widget extends Widget_Row
             $widgets = Main::select()
                    ->from(array('WI' => 'widget'), '')
                    ->join(array('UW' => 'user_widget'), 'UW.widget_id = WI.id', '')
-                   ->join(array('UP' => 'user_page'), 'UW.user_id = UP.user_id AND UP.show_in_favorite_pages_widget = 1', '')
+                   ->joinLeft(array('UP' => 'user_page'), 'UW.user_id = UP.user_id AND UP.show_in_favorite_pages_widget = 1', '')
                    ->join(array('WO' => 'widget_option'), 'WO.widget_id = WI.id', '')
                    ->where('UW.user_id = ?', $userID)
                    ->where('UW.placement != ?', self::WIDGET_PLACEMENT_DO_NOT_SHOW)
@@ -58,20 +58,17 @@ class Widget extends Widget_Row
             $return = array();
             foreach ($widgets as $key => $oneWidget) {
                 $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['type']  = $oneWidget['type'];
-                if ($oneWidget['is_system']) {
-                    $titles = self::getSystemWidgetTitleTranslations();
-                    $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['title'] = $titles[$oneWidget['widget_title']];
-                } else {
-                    $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['title'] = $oneWidget['widget_title'];    
-                }
+                $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['title'] = Widget::translate($oneWidget['widget_title']);
                 if ($oneWidget['type'] == self::WIDGET_TYPE_PLAIN) {
                     $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['value'] = $oneWidget['value_1'];
                 }
                 if ($oneWidget['type'] == self::WIDGET_TYPE_PAGE) {
-                    $page = Main::buildObject('Page', $oneWidget['linked_page_id']);
-                    $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['options'][$oneWidget['linked_page_id']]['id']    = $page->id;
-                    $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['options'][$oneWidget['linked_page_id']]['title'] = $page->title;
-                    $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['options'][$oneWidget['linked_page_id']]['image'] = $page->logo;
+                    if (!empty($oneWidget['linked_page_id'])) {
+                        $page = Main::buildObject('Page', $oneWidget['linked_page_id']);
+                        $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['options'][$oneWidget['linked_page_id']]['id']    = $page->id;
+                        $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['options'][$oneWidget['linked_page_id']]['title'] = $page->title;
+                        $return[$oneWidget['widget_placement']][$oneWidget['widget_id']]['options'][$oneWidget['linked_page_id']]['image'] = $page->logo;
+                    }
                 }
                 if ($oneWidget['type'] == self::WIDGET_TYPE_LIST) {
                     if ($oneWidget['widget_option_type'] == self::WIDGET_OPTION_TYPE_LIST) {
@@ -104,10 +101,16 @@ class Widget extends Widget_Row
                     }
                 }
             }
+            fb($return);
             return $return;
         } catch(Exception $e) {
             fb($e->getMessage());
         }
+    }
+
+    public static function translate($title) {
+        $titles = self::getSystemWidgetTitleTranslations();
+        return Utils::arrayFetch($titles, $title, $title);
     }
 
     public static function getFileNameToRender($type) {

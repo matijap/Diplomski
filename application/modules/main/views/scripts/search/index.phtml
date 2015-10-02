@@ -1,0 +1,99 @@
+<div id="main-panel" class="bb fantasy">
+<?php
+if (!empty($this->message)) {
+    ?>
+    <h2><?php echo $this->message; ?></h2>
+    <?php
+} else {
+    ?>
+    <div class="main-background-color one-personal-settings-section">
+        <h2 class="widget-header-color display-inline-block"><?php echo $this->translate->_('People'); ?></h2>
+        <div class="p-10">
+        <?php
+        $count = 1;
+        if (!empty($this->people)) {
+            foreach ($this->people as $onePerson) {
+                if ($count == 1) {
+                    ?>
+                    <div class="one-search-container">
+                    <?php
+                }
+                    ?>
+                        <div class="m-b-10">
+                            <div class="person-avatar pull-left">
+                                <img src="<?php echo APP_URL . '/' . UserInfo::AVATAR_IMAGES_FOLDER . '/' . $onePerson['avatar']; ?>">
+                            </div>
+                            <p class="pull-left m-l-5">
+                                <a href="<?php echo APP_URL; ?>/index/profile?userID=<?php echo $onePerson['id']; ?>">
+                                    <?php echo $onePerson['name']; ?>
+                                </a>
+                            </p>
+                            <div class="clear"></div>
+                        </div>
+                    <?php
+                if ($count == 5 || $count == count($this->people)) {
+                    ?>
+                    </div>
+                    <?php
+                    $count = 1;
+                } else {
+                    $count++;
+                }
+            }
+        } else {
+            ?>
+            <p><?php echo $this->translate->_('No results found') ?></p>
+            <?php
+        }
+        ?>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="main-background-color one-personal-settings-section m-t-20">
+        <h2 class="widget-header-color display-inline-block"><?php echo $this->translate->_('Pages'); ?></h2>
+        <div class="p-10">
+        <?php
+        $count = 1;
+        if (!empty($this->pages)) {
+            foreach ($this->pages as $onePage) {
+                if ($count == 1) {
+                    ?>
+                    <div class="one-search-container">
+                    <?php
+                }
+                    ?>
+                        <div class="m-b-10">
+                            <div class="person-avatar pull-left">
+                                <img src="<?php echo APP_URL . '/' . Page::PAGE_IMAGES_FOLDER . '/' . $onePage['logo']; ?>">
+                            </div>
+                            <p class="pull-left m-l-5">
+                                <a href="<?php echo APP_URL; ?>/page/index?pageID=<?php echo $onePage['id']; ?>">
+                                    <?php echo $onePerson['name']; ?>
+                                </a>
+                            </p>
+                            <div class="clear"></div>
+                        </div>
+                    <?php
+                if ($count == 5 || $count == count($this->people)) {
+                    ?>
+                    </div>
+                    <?php
+                    $count = 1;
+                } else {
+                    $count++;
+                }
+            }
+        } else {
+            ?>
+            <p><?php echo $this->translate->_('No results found') ?></p>
+            <?php
+        }
+        ?>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <?php
+}
+?>
+</div>

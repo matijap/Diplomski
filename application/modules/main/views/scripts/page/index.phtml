@@ -25,7 +25,7 @@
         ?>
         <li>
             <a href="javascript:void(0)" class="modal-open" data-url="/widget/new-widget?widgetID=<?php echo $oneWidget->id; ?>" >
-                <?php echo $oneWidget->title; ?>
+                <?php echo Widget::translate($oneWidget->title); ?>
             </a>
             <i class="fa fa-times modal-open remove-widget cursor-pointer" data-url="/widget/delete-widget?widgetID=<?php echo $oneWidget->id; ?>"></i>
         </li>
