@@ -49,10 +49,11 @@ class PersonalSettings_PersonalInfo extends PersonalSettings_PersonalSettingsBas
             ));
         $this->addDisplayGroup(array('email'), 'email_dg');
 
-        $dob    = $userInfo[0]->date_of_birth;
+        $dob = $userInfo[0]->date_of_birth;
+        $dob = empty($dob) ? time() : $dob;
         $locale = Zend_Registry::get('Zend_Locale');
-        $date   = new Zend_Date($dob, Zend_Date::TIMESTAMP, $locale);
-        $list   = Zend_Locale::getTranslationList('Date', $this->loc);
+            $date   = new Zend_Date($dob, Zend_Date::TIMESTAMP, $locale);
+            $list   = Zend_Locale::getTranslationList('Date', $this->loc);
         $this->addElement('text', 'date_of_birth', array(
             'label'     => $this->translate->_('Date Of Birth'),
             'class'     => 'datepicker',

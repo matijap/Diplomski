@@ -101,7 +101,6 @@ class Widget extends Widget_Row
                     }
                 }
             }
-            fb($return);
             return $return;
         } catch(Exception $e) {
             fb($e->getMessage());
