@@ -61,18 +61,32 @@ class Post extends Post_Row
     }
 
     public function likeOrUnlikePost($userID) {
+        $return   = array();
         $userLike = Main::fetchRow(Main::select('UserLike')->where('user_id = ?', $userID)->where('post_id = ?', $this->id));
+        $user     = Main::buildObject('User', $userID);
+        $userInfo = $user->getUserInfo();
         if ($userLike) {
             $userLike->delete();
-            $message = self::$translate->_('Post unliked');
+            $return['message'] = self::$translate->_('Post unliked');
+            $return['action']  = 'unlike';
         } else {
             UserLike::create(array(
                 'user_id' => $userID,
                 'post_id' => $this->id,
             ));
-            $message = self::$translate->_('Post liked');
+            $return['message']         = self::$translate->_('Post liked');
+            $return['messageToAuthor'] = $userInfo->getFullName() . ' ' . self::$translate->_('likes your post');
+            if (!empty($this->user_id)) {
+                $postAuthor = $this->user_id;
+            } else {
+                $page       = Main::buildObject('Page', $this->page_id);
+                $postAuthor = $page->user_id;
+                $return['messageToAuthor'] .= ' ' . self::$translate->_('for') . ' ' . $page->title;
+            }
+            $return['postAuthor'] = $postAuthor;
+            $return['action']     = 'like';
         }
-        return $message;
+        return $return;
     }
 
     public function favoriteOrUnfavoritePost($userID) {

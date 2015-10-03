@@ -334,8 +334,7 @@ class User extends User_Row
         }
     }
 
-    public function getPostsByUser($page = 1) {
-
+    public function getPostsByUser($page = 1, $watcherID) {
         $commentColumnsToBeFetched = User::getColumnsToBeFetched();
         $subQuery = Main::select()
                     ->from(array('CO2' => 'comment'), '')
@@ -351,8 +350,8 @@ class User extends User_Row
         $commentSelect = Main::select()
             ->from(array('CO1' => 'comment'), '')
             ->join(array('PO' => 'post'), 'CO1.commented_post_id = PO.id', '')
-            ->joinLeft(array('UL' => 'user_like'), 'UL.comment_id = CO1.id AND UL.user_id = ' .  $this->id, '')
-            ->joinLeft(array('UF' => 'user_favorite'), 'UF.comment_id = CO1.id AND UF.user_id = ' .  $this->id, '')
+            ->joinLeft(array('UL' => 'user_like'), 'UL.comment_id = CO1.id AND UL.user_id = ' .  $watcherID, '')
+            ->joinLeft(array('UF' => 'user_favorite'), 'UF.comment_id = CO1.id AND UF.user_id = ' .  $watcherID, '')
             ->joinLeft(array('US' => 'user'), 'CO1.commenter_id = US.id', '')
             ->joinLeft(array('UI' => 'user_info'), 'UI.user_id = US.id', '')
             ->where("
@@ -366,11 +365,10 @@ class User extends User_Row
                             'UL.id as ulid', 'CO1.parent_comment_id', 'CO1.forwarded',
                             'CO1.likes', 'UI.first_name', 'UI.last_name', 'UF.id as comment_favorite'));
 
-        
         $posts = Main::select()
                     ->from(array('PO' => 'post'), '')
                     ->joinLeft(array('CO1' => new Zend_Db_Expr("($commentSelect)")), 'CO1.commented_post_id = PO.id', '')
-                    ->joinLeft(array('UL' => 'user_like'), 'UL.post_id = PO.id', '')
+                    ->joinLeft(array('UL' => 'user_like'), 'UL.post_id = PO.id AND UL.user_id = ' .  $watcherID, '')
                     ->joinLeft(array('UF' => 'user_favorite'), 'UF.post_id = PO.id', '')
                     ->where('PO.user_id = ?', $this->id)
                     ->columns($commentColumnsToBeFetched)
@@ -379,13 +377,14 @@ class User extends User_Row
         $return = array();
         foreach ($posts as $key => $onePost) {
             // fb($onePost);
-            $return[$onePost['post_id']]['post_id'] = $onePost['post_id'];
-            $return[$onePost['post_id']]['title']   = $onePost['post_title'];
-            $return[$onePost['post_id']]['text']    = $onePost['post_text'];
-            $return[$onePost['post_id']]['date']    = $onePost['post_date'];
-            $return[$onePost['post_id']]['type']    = $onePost['post_type'];
-            $return[$onePost['post_id']]['video']   = $onePost['post_video'];
-            $return[$onePost['post_id']]['image']   = $onePost['post_image'];
+            $return[$onePost['post_id']]['post_id']   = $onePost['post_id'];
+            $return[$onePost['post_id']]['title']     = $onePost['post_title'];
+            $return[$onePost['post_id']]['text']      = $onePost['post_text'];
+            $return[$onePost['post_id']]['date']      = $onePost['post_date'];
+            $return[$onePost['post_id']]['type']      = $onePost['post_type'];
+            $return[$onePost['post_id']]['video']     = $onePost['post_video'];
+            $return[$onePost['post_id']]['image']     = $onePost['post_image'];
+            $return[$onePost['post_id']]['post_like'] = $onePost['post_like'];
             if (!empty($onePost['comment_id'])) {
                 $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['comment_id']        = $onePost['comment_id'];
                 $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['text']              = $onePost['comment_text'];
@@ -395,8 +394,7 @@ class User extends User_Row
                 $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['date']              = $onePost['comment_date'];
                 $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['user_like']         = $onePost['user_like'];
             }
-        }        
-
+        }
         // fb($return);
         $paginator = Zend_Paginator::factory($return);
         $paginator->setCurrentPageNumber($page);
@@ -790,7 +788,9 @@ class User extends User_Row
     public function withdrawFriendRequest($userID) {
         $areFriends = $this->areFriends($userID);
         if (!$areFriends) {
-            Main::execQuery("DELETE FROM notification WHERE user_id = ? AND notifier_id = ?", array($userID, $this->id));
+            Main::execQuery("DELETE FROM notification WHERE user_id = ? AND notifier_id = ? AND status = ?", array(
+                $userID, $this->id, Notification::STATUS_NEW
+            ));
             return true;
         } else {
             return false;
@@ -825,9 +825,16 @@ class User extends User_Row
         $notifier = Main::buildObject('User', $userID);
         $friendRequestSent = $notifier->isFriendRequestSent($this->id);
         if ($friendRequestSent) {
-            $notification = Main::fetchRow(Main::select('Notification')->where('user_id = ?', $this->id)->where('notifier_id = ?', $userID));
+            $notification = Main::fetchRow(Main::select('Notification')
+                ->where('user_id = ?', $this->id)
+                ->where('notifier_id = ?', $userID)
+                ->where('status = ?', Notification::STATUS_NEW)
+            );
             $notification->edit(array('status' => Notification::STATUS_SEEN));
             UserUser::create(array('user_id' => $this->id, 'friend_id' => $userID, 'status' => self::FRIEND_STATUS_ACCEPTED));
+            $c = new ElephantConnect(array('userID' => $this->id));
+            $c->notifyThatFriendRequestIsAccepted(array('toNotify' => $userID));
+
             return true;
         } else {
             return false;

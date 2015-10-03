@@ -1,4 +1,7 @@
  <div class="one-post video main-background-color" id="<?php echo $this->onePost['post_id']; ?>">
+ <?php
+ fb($this->onePost);
+ ?>
     <div class="post-header bb widget-header-color">
         <div class="post-header-close">
             <i class="fa fa-thumbs-up like-or-unlike-post" <?php echo empty($this->onePost['post_like']) ? '' : 'style="display:none";' ; ?> ></i>

@@ -23,12 +23,18 @@ class Comment extends Comment_Row
     public function likeOrUnlike($userID) {
         $userLike = Main::fetchRow(Main::select('UserLike')->where('user_id = ?', $userID)->where('comment_id = ?', $this->id));
         $likes    = $userLike ? $this->likes - 1 : $this->likes + 1;
+        $return   = array();
         if ($userLike) {
             $userLike->delete();
+            $return['action']        = 'unlike';
+            $return['commentAuthor'] = $this->commenter_id;
         } else {
             UserLike::create(array('comment_id' => $this->id, 'user_id' => $userID));
+            $return['action'] = 'like';
         }
-        return $this->edit(array('likes' => $likes));
+        $this->edit(array('likes' => $likes));
+        $return['comment'] = $this;
+        return $return;
     }
 
     public function loadNextComments($loggedUserID, $imageID = false) {

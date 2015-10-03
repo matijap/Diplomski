@@ -16,7 +16,7 @@ class IndexController extends Main_BaseController
             $this->_redirect('/');
         }
         $user                = Main::buildObject('User', $this->params['userID']);
-        $this->view->posts   = $user->getPostsByUser();
+        $this->view->posts   = $user->getPostsByUser(1, $this->user->id);
         $this->view->form    = new AddCommentForm();
         $this->view->watcher = $this->user;
         $this->view->watched = $user;
@@ -24,8 +24,8 @@ class IndexController extends Main_BaseController
 
     public function likeOrUnlikePostAction() {
         $post    = Main::buildObject('Post', $this->params['postID']);
-        $message = $post->likeOrUnlikePost($this->params['userID']);
-        $this->_helper->json(array('message' => $message));
+        $return  = $post->likeOrUnlikePost($this->params['userID']);
+        $this->_helper->json($return);
     }
 
     public function favoriteOrUnfavoritePostAction() {
@@ -68,7 +68,8 @@ class IndexController extends Main_BaseController
     }
 
     public function getHtmlForNotificationAction() {
-        $this->view->type = $this->params['type'];
+        $this->view->type     = $this->params['type'];
+        $this->view->postID   = Utils::arrayFetch($this->params, 'postID', false);
         $this->view->notifier = Main::buildObject('User', $this->params['notifierID']);
     }
 }

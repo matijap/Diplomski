@@ -8,6 +8,7 @@ class ElephantConnect {
     public $elephant      = false;
     public $userID        = false;
     private $emitLocation = false;
+    public $translate;
 
     public function __construct($data = array()) {
         $config         = Zend_Registry::get('config');
@@ -17,6 +18,7 @@ class ElephantConnect {
         if (isset($data['userID'])) {
             $this->userID = $data['userID'];
         }
+        $this->translate = Zend_Registry::getInstance()->Zend_Translate;
         return $this;
     }
 
@@ -32,6 +34,14 @@ class ElephantConnect {
         $user       = Main::buildObject('User', $this->userID);
         $friendList = $user->getFriendList(false, true);
         $this->_send(array('userID' => $this->userID, 'friendList' => $friendList));
+    }
+
+    public function notifyThatFriendRequestIsAccepted($toNotify) {
+        $this->emitLocation = 'notify_accepted_friend_request';
+        $toNotifyUser       = Main::buildObject('User', $toNotify);
+        $userInfo           = $toNotifyUser->getUserInfo();
+        $text               = $userInfo->getFullName() . ' ' . $this->translate->_('accepted your friend request');
+        $this->_send(array('toNotify' => $toNotifyUser->id, 'text' => $text));
     }
     
 }

@@ -166,22 +166,18 @@ $( document ).ready(function() {
         var data          = element.data();
         element.hide();
         toggleBetweenClasses('#about .fa-spinner', 'display-none', 'display-block');
-        var userID        = getUserID();
-        var requestSentTo = $('.watched-user-id').val();
-        var currentState = data.currentState;
-        var url       = '';
-        var text      = '';
-        var nextState = '';
+        var userID           = getUserID();
+        var requestSentTo    = $('.watched-user-id').val();
+        var currentState     = data.currentState;
+        var url              = '';
+        var text             = '';
+        var nextState        = '';
+        var notifyForRequest = false;
         if (currentState == 'send') {
             url               = data.sendFriendRequestUrl;
             text              = data.withdrawFriendRequestText;
             nextState         = 'withdraw';
-            var d             = new Object;
-            d.userID          = getUserID();
-            d.requestSentTo   = requestSentTo;
-            d.notification    = 'friend';
-            var data          = JSON.stringify(d);
-            socket.emit('add_notification', data);
+            notifyForRequest  = true;
         }
         if (currentState == 'withdraw') {
             url       = data.withdrawFriendRequestUrl;
@@ -209,6 +205,14 @@ $( document ).ready(function() {
                 } else {
                     element.html(text);
                     element.data('current-state', nextState);
+                    if (notifyForRequest) {
+                        var d             = new Object;
+                        d.userID          = getUserID();
+                        d.requestSentTo   = requestSentTo;
+                        d.notification    = 'friend';
+                        var data          = JSON.stringify(d);
+                        socket.emit('add_notification', data);
+                    }
                 }
             }
         });
@@ -432,6 +436,34 @@ $( document ).ready(function() {
         });
     });
 
+    socket.on('post_liked', function(data) {
+        $.ajax({
+            url: appurl + '/index/get-html-for-notification',
+            data: {'notifierID': data.notifierID, 'type':data.type, 'postID': data.postID},
+            success: function(result) {
+                $('.main-link-li:first-of-type ul').prepend(result);
+                if (!doesExists('.fa-exclamation')) {
+                    $('.main-link-li:first-of-type').find('.sublink-ul-1').before('<i class="fa fa-exclamation"></i>');
+                }
+                callNotification(data.message, 'success');
+            }
+        });
+    });
+
+    socket.on('comment_liked', function(data) {
+        $.ajax({
+            url: appurl + '/index/get-html-for-notification',
+            data: {'notifierID': data.notifierID, 'type':data.type, 'commentID': data.commentID},
+            success: function(result) {
+                $('.main-link-li:first-of-type ul').prepend(result);
+                if (!doesExists('.fa-exclamation')) {
+                    $('.main-link-li:first-of-type').find('.sublink-ul-1').before('<i class="fa fa-exclamation"></i>');
+                }
+                callNotification($('.new-notification-message').val(), 'success');
+            }
+        });
+    });
+
     
     
     $(document).on(clickOrTouchstart, '.like-or-unlike-comment', function(e) {
@@ -451,7 +483,17 @@ $( document ).ready(function() {
                     parent.find('.fa-thumbs-up').parent().show();
                 }
                 parent.find('.fa-spin').remove();
+                console.log(result);
                 element.closest('.one-post-comment').find('.like-count').text(result.message);
+                if (result.action == 'like') {
+                    var d             = new Object;
+                    d.notification    = 'commentlike';
+                    d.commentAuthor   = result.commentAuthor;
+                    d.notifierID      = getUserID();
+                    d.commentID       = id;
+                    var data          = JSON.stringify(d);
+                    socket.emit('add_notification', data);
+                }
             }
         });
     });
@@ -491,6 +533,16 @@ $( document ).ready(function() {
                 var e = element.parent().find('.like-or-unlike-post.fa-thumbs-' + sufix);
                 e.show();
                 callNotification(result.message, 'success');
+                if (result.action == 'like') {
+                    var d             = new Object;
+                    d.notification    = 'postlike';
+                    d.message         = result.messageToAuthor;
+                    d.postAuthor      = result.postAuthor;
+                    d.notifierID      = userID;
+                    d.postID          = postID;
+                    var data          = JSON.stringify(d);
+                    socket.emit('add_notification', data);
+                }
             }
         });
     });
@@ -612,4 +664,9 @@ $( document ).ready(function() {
     $(document).on(clickOrTouchstart, '.global-search-icon', function(e) {
         $(this).closest('form').submit();
     });
+
+    socket.on('friend_request_accepted', function(data) {
+        callNotification(data.text, 'success');
+    });
+    
 });

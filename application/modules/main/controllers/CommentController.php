@@ -36,8 +36,12 @@ class CommentController extends Main_BaseController
     }
 
     public function likeOrUnlikeCommentAction() {
-        $comment = $this->comment->likeOrUnlike($this->user->id);
-        $this->_helper->json(array('message' => $comment->likes . ' ' . $this->translate->_('Likes')));
+        $return            = $this->comment->likeOrUnlike($this->user->id);
+        $comment           = $return['comment'];
+        unset($return['comment']);
+        $return['message'] = $comment->likes . ' ' . $this->translate->_('Likes');
+        fb($return);
+        $this->_helper->json($return);
     }
 
     public function loadMoreCommentsAction() {

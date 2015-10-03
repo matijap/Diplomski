@@ -131,12 +131,27 @@ io.on("connection", function (client) {
         var data = JSON.parse(data);
         if (data.notification == 'friend') {
             var clientID = getCliendIDForUserID(data.requestSentTo);
-            if (clientID) {
-                var obj        = new Object;
-                obj.notifierID = data.userID;
-                obj.type       = data.notification;
-                io.sockets.connected[clientID].emit('add_friend_notification', obj);
-            }
+            var obj        = new Object;
+            obj.notifierID = data.userID;
+            obj.type       = data.notification;
+            sendToView(clientID, 'add_friend_notification', obj);
+        }
+        if (data.notification == 'postlike') {
+            var clientID   = getCliendIDForUserID(data.postAuthor);
+            var obj        = new Object;
+            obj.notifierID = data.notifierID;
+            obj.message    = data.message;
+            obj.postID     = data.postID;
+            obj.type       = 'postlike';
+            sendToView(clientID, 'post_liked', obj);
+        }
+        if (data.notification == 'commentlike') {
+            var clientID   = getCliendIDForUserID(data.commentAuthor);
+            var obj        = new Object;
+            obj.notifierID = data.notifierID;
+            obj.postID     = data.commentID;
+            obj.type       = 'commentlike';
+            sendToView(clientID, 'comment_liked', obj);
         }
     });
 
@@ -149,4 +164,18 @@ io.on("connection", function (client) {
         }
         return clientID;
     }
+
+    function sendToView(clientID, action, data) {
+        if (clientID) {
+            io.sockets.connected[clientID].emit(action, data);
+        }
+    }
+
+    client.on("notify_accepted_friend_request", function(data) {
+        var clientID = getCliendIDForUserID(data.toNotify);
+        var obj      = new Object;
+        obj.text     = data.text;
+        sendToView(clientID, 'friend_request_accepted', obj);
+    });
+    
 });

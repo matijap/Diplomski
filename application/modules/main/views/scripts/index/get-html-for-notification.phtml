@@ -1,6 +1,6 @@
 <?php
+    $userInfo = $this->notifier->getUserInfo();
     if ($this->type == 'friend') {
-        $userInfo = $this->notifier->getUserInfo();
         ?>
         <li class="cc sublink-li-1 bb main-background-color">
             <div class="person-avatar pull-left">
@@ -8,7 +8,35 @@
             </div>
             <p class="pull-left">
                 <a href="<?php echo APP_URL;?>/index/profile?userID=<?php echo $this->notifier->id; ?>">
-                    <?php echo $userInfo->first_name . ' ' . $userInfo->last_name . ' ' . $this->translate->_('has sent you a friend request') ; ?>
+                    <?php echo $userInfo->getFullName(). ' ' . $this->translate->_('has sent you a friend request') ; ?>
+                </a>
+            </p>
+        </li>
+        <?php
+    }
+    if ($this->type == 'postlike') {
+        ?>
+        <li data-url='/favorites/post-or-comment-detailed?postID=<?php echo $this->postID; ?>&viewonly=true' class="cc sublink-li-1 bb main-background-color modal-open">
+            <div class="person-avatar pull-left">
+                <img src="<?php echo APP_URL . '/' . UserInfo::AVATAR_IMAGES_FOLDER . '/' . $userInfo->avatar;?>">
+            </div>
+            <p class="pull-left">
+                <a href="javascript:void(0)">
+                    <?php echo $userInfo->getFullName() . ' ' . $this->translate->_('likes your post') ; ?>
+                </a>
+            </p>
+        </li>
+        <?php
+    }
+    if ($this->type == 'commentlike') {
+        ?>
+        <li data-url='/favorites/post-or-comment-detailed?commentID=<?php echo $this->commentID; ?>&viewonly=true' class="cc sublink-li-1 bb main-background-color modal-open">
+            <div class="person-avatar pull-left">
+                <img src="<?php echo APP_URL . '/' . UserInfo::AVATAR_IMAGES_FOLDER . '/' . $userInfo->avatar;?>">
+            </div>
+            <p class="pull-left">
+                <a href="javascript:void(0)">
+                    <?php echo $userInfo->getFullName() . ' ' . $this->translate->_('likes your comment') ; ?>
                 </a>
             </p>
         </li>
