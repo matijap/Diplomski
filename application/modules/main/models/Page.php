@@ -75,6 +75,8 @@ class Page extends Page_Row
             ->joinLeft(array('UF' => 'user_favorite'), 'UF.comment_id = CO1.id AND UF.user_id = ' .  $userWatching, '')
             ->joinLeft(array('US' => 'user'), 'CO1.commenter_id = US.id', '')
             ->joinLeft(array('UI' => 'user_info'), 'UI.user_id = US.id', '')
+            ->joinLeft(array('CO2' => 'comment'), 'CO1.parent_comment_id = CO2.id', '')
+            ->joinLeft(array('UI2' => 'user_info'), 'UI2.user_id = CO2.commenter_id', '')
             ->where("
                 (($subQueryForCount 
                 ) - " . (Comment::COMMENT_SHOW_LIMIT + 1) . ")
@@ -84,7 +86,10 @@ class Page extends Page_Row
             ->order(array('CO1.commented_post_id', 'CO1.date DESC', 'CO1.id DESC', ))
             ->columns(array('CO1.id', 'CO1.text', 'CO1.commented_post_id', 'CO1.date',
                             'UL.id as ulid', 'CO1.parent_comment_id', 'CO1.forwarded',
-                            'CO1.likes', 'UI.first_name', 'UI.last_name', 'UF.id as comment_favorite'));
+                            'CO1.likes', 'UI.first_name', 'UI.last_name', 'UF.id as comment_favorite',
+                            'CONCAT(UI2.first_name, " ", UI2.last_name) as reply_to_name', 'CO2.commenter_id as reply_to_id',
+                            'UI.avatar', 'UI.user_id as commenter_id'
+                            ));
 
         $postFromPagesArray = $commentColumnsToBeFetched;
         $postFromPagesArray[] = 'PAG.title as post_author';
@@ -114,6 +119,7 @@ class Page extends Page_Row
             $return[$onePost['post_id']]['page_id']              = $onePost['page_id'];
             $return[$onePost['post_id']]['post_author']          = $onePost['post_author'];
             $return[$onePost['post_id']]['original_post_author'] = $onePost['original_post_author'];
+            $return[$onePost['post_id']]['post_like']            = $onePost['post_like'];
             if (!empty($onePost['comment_id'])) {
                 $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['comment_id']        = $onePost['comment_id'];
                 $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['text']              = $onePost['comment_text'];
@@ -122,6 +128,10 @@ class Page extends Page_Row
                 $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['likes']             = $onePost['likes'];
                 $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['date']              = $onePost['comment_date'];
                 $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['user_like']         = $onePost['user_like'];
+                $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['reply_to_name']     = $onePost['reply_to_name'];
+                $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['reply_to_id']       = $onePost['reply_to_id'];
+                $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['avatar']            = $onePost['avatar'];
+                $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['commenter_id']      = $onePost['commenter_id'];
             }
         }        
 

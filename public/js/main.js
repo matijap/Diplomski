@@ -690,4 +690,13 @@ $( document ).ready(function() {
             }
         });
     });
+
+    $(document).on(clickOrTouchstart, '.change-big-logo', function(e) {
+        $('#big_logo').trigger('click');
+    });
+
+    $(document).on('change', '#big_logo', function(e) {
+        $(this).closest('form').submit();
+    });
+    
 });

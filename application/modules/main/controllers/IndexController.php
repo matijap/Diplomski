@@ -15,11 +15,12 @@ class IndexController extends Main_BaseController
             $this->setNotificationMessage($this->translate->_('User ID not sent.'), Sportalize_Controller_Action::NOTIFICATION_ERROR);
             $this->_redirect('/');
         }
-        $user                = Main::buildObject('User', $this->params['userID']);
-        $this->view->posts   = $user->getPostsByUser(1, $this->user->id);
-        $this->view->form    = new AddCommentForm();
-        $this->view->watcher = $this->user;
-        $this->view->watched = $user;
+        $user                          = Main::buildObject('User', $this->params['userID']);
+        $this->view->posts             = $user->getPostsByUser(1, $this->user->id);
+        $this->view->form              = new AddCommentForm();
+        $this->view->watcher           = $this->user;
+        $this->view->watched           = $user;
+        $this->view->bigLogoChangeForm = new BigLogoChangeForm();
     }
 
     public function likeOrUnlikePostAction() {
@@ -62,8 +63,13 @@ class IndexController extends Main_BaseController
 
     public function removeFriendAction() {
         $user    = Main::buildObject('User', $this->params['userID']);
-        $status  = $user->removeFriend($this->params['requestSentTo']);
-        $message = $status ? '' : $this->translate->_('This person has already removed you from the friends. Please refresh the page');
+        if ($this->params['requestSentTo'] != User::SPORTALIZE_USER_ID) {
+            $status  = $user->removeFriend($this->params['requestSentTo']);
+            $message = $status ? '' : $this->translate->_('This person has already removed you from the friends. Please refresh the page');
+        } else {
+            $status  = false;
+            $message = $this->translate->_('Can not remove system admin from friends');
+        }
         $this->_helper->json(array('status' => $status, 'message' => $message));
     }
 
@@ -89,5 +95,11 @@ class IndexController extends Main_BaseController
         }
         $strings[] = $this->translate->_(' forwarded successfully');
         $this->setNotificationMessage(Utils::mergeStrings($strings));
+    }
+
+    public function changeBigLogoAction() {
+        $this->user->changeBigLogo();
+        $this->setNotificationMessage($this->translate->_('Big logo changed successfully'));
+        $this->_redirect(APP_URL . '/index/profile?userID=' . $this->user->id);
     }
 }

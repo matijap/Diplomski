@@ -8,16 +8,20 @@
               'watcher'   => $this->watcher,
             ));
         }
+        $userInfo = $this->watched->getUserInfo();
     ?>
 </div>
 <div id="about" class="my main-background-color">
-<?php
-    if ($this->watcher->id != $this->watched->id) {
-    $userInfo = $this->watched->getUserInfo();
-    $data     = User::makeButtonDecision($this->watcher, $this->watched);
-    ?>
+    <?php $class = $this->watcher->id != $this->watched->id ? '' : 'change-big-logo cursor-pointer'; ?>
+    <img class="big-logo <?php echo $class; ?>" src="<?php echo APP_URL . '/' . UserInfo::LOGOS_IMAGES_FOLDER .  '/' . $userInfo->big_logo; ?>">
+    <?php echo $this->bigLogoChangeForm; ?>
+
     <div class="position-relative">
         <h1 class="m-b-20"><?php echo $userInfo->first_name . ' ' . $userInfo->last_name; ?></h1>
+        <?php
+        if ($this->watcher->id != $this->watched->id) {
+          $data     = User::makeButtonDecision($this->watcher, $this->watched);
+          ?>
         <div class="loader-holder">
             <a data-send-friend-request-text="<?php echo $this->translate->_('Send Friend Request'); ?>"
                data-send-friend-request-url="/index/send-friend-request"
@@ -33,10 +37,140 @@
             </a>
             <i class="fa fa-spinner fa-spin text-align-center display-none"></i>
         </div>
+        <?php
+      }
+      ?>
         <div data-user-id="<?php echo $this->watched->id;?>" class="profile-availability"></div>
     </div>
+    <h2 class="text-align-center"><?php echo $this->translate->_('Personal Info'); ?></h2>
+    <div class="one-about-me-holder bb">
+        <p class="pull-left"><?php echo $this->translate->_('Email'); ?>:</p>
+        <p class="pull-left bold-text"><?php echo $this->watched->email; ?></p>
+        <div class="clear"></div>
+    </div>
     <?php
-}
-?>
+    if (!empty($userInfo->date_of_birth)) {
+    ?>
+    <div class="one-about-me-holder bb">
+        <p class="pull-left"><?php echo $this->translate->_('Date Of Birth'); ?>:</p>
+        <p class="pull-left bold-text"><?php echo Utils::timestampToLocale($userInfo->date_of_birth); ?></p>
+        <div class="clear"></div>
+    </div>
+    <?php
+    }
+    ?>
+    <?php
+    if (!empty($userInfo->city)) {
+    ?>
+    <div class="one-about-me-holder bb">
+        <p class="pull-left"><?php echo $this->translate->_('City'); ?>:</p>
+        <p class="pull-left bold-text"><?php echo $userInfo->city; ?></p>
+        <div class="clear"></div>
+    </div>
+    <?php
+    }
+    ?>
+    <div class="one-about-me-holder bb">
+        <p class="pull-left"><?php echo $this->translate->_('Country'); ?>:</p>
+        <p class="pull-left bold-text"><?php echo $userInfo->getCountryName(); ?></p>
+        <div class="clear"></div>
+    </div>
+    <?php
+    if (!empty($userInfo->phone)) {
+    ?>
+    <div class="one-about-me-holder bb">
+        <p class="pull-left"><?php echo $this->translate->_('Phone'); ?>:</p>
+        <p class="pull-left bold-text"><?php echo $userInfo->phone; ?></p>
+        <div class="clear"></div>
+    </div>
+    <?php
+    }
+    ?>
+    <hr>
+    <h2 class="text-align-center m-t-20"><?php echo $this->translate->_('Favourites'); ?></h2>
+    <?php
+    $sports = $this->watched->getFavouriteSports(true);
+    if (!empty($sports)) {
+        $sports = Sport::extractSportNamesAndMergeIntoString($sports);
+        ?>
+     <div class="one-about-me-holder bb">
+          <p class="pull-left"><?php echo $this->translate->_('Sports'); ?>:</p>
+          <p class="pull-left bold-text"><?php echo $sports; ?></p>
+          <div class="clear"></div>
+      </div>
+        <?php
+    }
+    $favoritePlayers = $this->watched->getFavoritePlayersForView();
+    if (!empty($favoritePlayers)) {
+      ?>
+        <div class="one-about-me-holder bb">
+            <p class="pull-left"><?php echo $this->translate->_('Players'); ?>:</p>
+            <p class="pull-left bold-text">
+            <?php
+            foreach ($favoritePlayers as $oneFavoritePlayer) {
+              $url = isset($oneFavoritePlayer['page_id']) ?
+              APP_URL . '/page/index?pageID=' . $oneFavoritePlayer['page_id'] :
+              'javascript:void(0)'
+              ?>
+                <a href="<?php echo $url; ?>"><?php echo $oneFavoritePlayer['name']; ?></a>
+              <?php
+            }
+            ?>
+            </p>
+            <div class="clear"></div>
+        </div>
+      <?php
+    }
+    $favoriteTeams = $this->watched->getFavoriteTeamsForView();
+    if (!empty($favoriteTeams)) {
+      ?>
+        <div class="one-about-me-holder bb">
+            <p class="pull-left"><?php echo $this->translate->_('Teams'); ?>:</p>
+            <p class="pull-left bold-text">
+            <?php
+            foreach ($favoriteTeams as $oneFavoriteTeam) {
+              $url = isset($oneFavoriteTeam['page_id']) ?
+              APP_URL . '/page/index?pageID=' . $oneFavoriteTeam['page_id'] :
+              'javascript:void(0)'
+              ?>
+                <a href="<?php echo $url; ?>"><?php echo $oneFavoriteTeam['name']; ?></a>
+              <?php
+            }
+            ?>
+            </p>
+            <div class="clear"></div>
+        </div>
+      <?php
+    }
+    ?>
+    <hr>
+    <h2 class="text-align-center m-t-20"><?php echo $this->translate->_('Dream Teams'); ?></h2>
+    <?php
+    $dreamTeams = $this->watched->getDreamTeams();
+    if (!empty($dreamTeams)) {
+        foreach ($dreamTeams as $oneDreamTeam) {
+          ?>
+            <div class="dream-team-display">
+                <div class="dream-team-sport">
+                    <p class="cursor-pointer"><?php echo $oneDreamTeam['name']; ?></p>
+                    <i class="fa fa-chevron-down cursor-pointer"></i>
+                    <i class="fa fa-chevron-up cursor-pointer" style="display:none;"></i>
+                </div>
+                <div class="dream-team-display-team" style="display:none;">
+                    <ul>
+                    <?php
+                    $decoded = Zend_Json::decode($oneDreamTeam['data']);
+                    foreach($decoded as $oneData) { ?>
+                        <li><?php echo $oneData; ?></li>
+                      <?php
+                      }
+                      ?>
+                    </ul>
+                </div>
+            </div>
+          <?php
+        }
+    }
+    ?>
 </div>
 <input type="hidden" value="<?php echo $this->watched->id; ?>" class="watched-user-id">

@@ -156,13 +156,15 @@ class Post extends Post_Row
     }
 
     public function forward($userID) {
+        $originalUserID = empty($this->original_user_id) ? $this->user_id : $this->original_user_id;
+        $originalPageID = empty($this->original_page_id) ? $this->page_id : $this->original_page_id;
         $data = array(
             'user_id'          => $userID,
             'page_id'          => NULL,
-            'original_user_id' => $this->user_id,
+            'original_user_id' => $originalUserID,
             'title'            => $this->title,
             'text'             => $this->text,
-            'original_page_id' => $this->original_page_id,
+            'original_page_id' => $originalPageID,
             'image'            => $this->image,
             'date'             => time(),
             'video'            => $this->video,

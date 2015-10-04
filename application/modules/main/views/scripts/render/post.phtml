@@ -17,15 +17,25 @@
     <div class="post-body bb">
     <div>
         <p class="post-details">
-            <span><?php echo $this->translate->_('By'); ?></span>
-            :<?php echo $this->onePost['post_author']; ?>
+            <?php
+            $url = !empty($this->onePost['user_id']) ?
+             '/index/profile?userID=' . $this->onePost['user_id'] :
+             '/page/index?pageID=' . $this->onePost['page_id'];
+            ?>
+            <span><?php echo $this->translate->_('By'); ?></span>:
+            <a href="<?php echo APP_URL . $url; ?>"><?php echo $this->onePost['post_author']; ?></a>
         </p>
         <?php
         if (!empty($this->onePost['original_post_author'])) {
         ?>
         <p class="post-details">
+            <?php
+            $url = !empty($this->onePost['original_user_id']) ?
+             '/index/profile?userID=' . $this->onePost['original_user_id'] :
+             '/page/index?pageID=' . $this->onePost['original_page_id'];
+            ?>
             <span><?php echo $this->translate->_('Originaly posted by'); ?></span>:
-            <?php echo $this->onePost['original_post_author']; ?>
+            <a href="<?php echo APP_URL . $url; ?>"><?php echo $this->onePost['original_post_author']; ?></a>
         </p>
         <?php
         }

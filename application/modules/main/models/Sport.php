@@ -51,4 +51,13 @@ class Sport extends Sport_Row
         }
         return $return;
     }
+
+    public static function extractSportNamesAndMergeIntoString($sports) {
+        $translated = Sport::getTranslatedSports();
+        $return     = array();
+        foreach ($sports as $oneSport) {
+            $return[] = $translated[$oneSport['name']];
+        }
+        return Utils::mergeStrings($return, ', ');
+    }
 }

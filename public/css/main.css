@@ -600,6 +600,10 @@ header li {
 .post-details span {
     font-weight: bold;
 }
+.reply-to-link {
+    font-size: 10px;
+    margin-top: 3px;
+}
 /* One Post End */
 
 /* Modal Start */
@@ -1236,6 +1240,12 @@ a.back-to-galery {
 }
 .personal-settings-container .errors li {
     font-size: 13px;
+}
+.submit-personal-settings-button {
+    width: 100px;
+    height: 50px;
+    margin-bottom: 10px;
+    float: right;
 }
 /* Personal Settings End */
 /* Favourites Start */

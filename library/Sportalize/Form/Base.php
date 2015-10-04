@@ -45,6 +45,9 @@ class Sportalize_Form_Base extends Zend_Form {
             if ($oneElement->getType() == 'Zend_Form_Element_Select') {
                 $oneElement->setRegisterInArrayValidator(false);
             }
+            if ($oneElement->getType() == 'Zend_Form_Element_File') {
+                $this->clearDecoratorsAndSetDecorator($oneElement, $this->getDefaultFileDecorators());
+            }
         }
     }
 
@@ -74,6 +77,13 @@ class Sportalize_Form_Base extends Zend_Form {
             array('HtmlTag', array('tag'  => 'div', 'class' => 'main-div ' . $mainDivClass)),
             array('Label', array('class' => 'main-label ' . $labelClass)),
             array(array('All' => 'HtmlTag'), array('tag'    => 'div', 'class'   => 'modal-element ' . $modalElementClass)),
+        );
+    }
+
+    public function getDefaultFileDecorators() {
+        return array(
+            'File',
+            'Errors',
         );
     }
 
