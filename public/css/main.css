@@ -594,6 +594,11 @@ header li {
     display: inline-block;
     font-size: 11px;
     padding: 0;
+    border-right: 1px solid black;
+    padding-right: 3px;
+}
+.post-details span {
+    font-weight: bold;
 }
 /* One Post End */
 

@@ -98,7 +98,7 @@ class Comment extends Comment_Row
         $data = array(
             'user_id'          => $userID,
             'page_id'          => NULL,
-            'original_user_id' => NULL,
+            'original_user_id' => $this->commenter_id,
             'title'            => '',
             'text'             => $this->text,
             'original_page_id' => NULL,
@@ -106,6 +106,7 @@ class Comment extends Comment_Row
             'date'             => time(),
             'video'            => NULL,
             'post_type'        => Post::POST_TYPE_TEXT,
+            'date'             => time()
         );
         $newPost = Main::createNewObject('Post', $data);
         $newPost->save();

@@ -86,28 +86,34 @@ class Page extends Page_Row
                             'UL.id as ulid', 'CO1.parent_comment_id', 'CO1.forwarded',
                             'CO1.likes', 'UI.first_name', 'UI.last_name', 'UF.id as comment_favorite'));
 
-        
+        $postFromPagesArray = $commentColumnsToBeFetched;
+        $postFromPagesArray[] = 'PAG.title as post_author';
+        $postFromPagesArray[] = 'PAG2.title as original_post_author';
         $posts = Main::select()
                     ->from(array('PO' => 'post'), '')
                     ->joinLeft(array('CO1' => new Zend_Db_Expr("($commentSelect)")), 'CO1.commented_post_id = PO.id', '')
                     ->joinLeft(array('UL' => 'user_like'), 'UL.post_id = PO.id', '')
                     ->joinLeft(array('UF' => 'user_favorite'), 'UF.post_id = PO.id', '')
+                    ->joinLeft(array('PAG' => 'page'), 'PO.page_id = PAG.id ', '')
+                    ->joinLeft(array('PAG2' => 'page'), 'PO.original_page_id = PAG2.id ', '')
                     ->where('PO.page_id = ?', $this->id)
-                    ->columns($commentColumnsToBeFetched)
+                    ->columns($postFromPagesArray)
                     ->query()->fetchAll();
 
         $return = array();
         foreach ($posts as $key => $onePost) {
             // fb($onePost);
-            $return[$onePost['post_id']]['post_id'] = $onePost['post_id'];
-            $return[$onePost['post_id']]['title']   = $onePost['post_title'];
-            $return[$onePost['post_id']]['text']    = $onePost['post_text'];
-            $return[$onePost['post_id']]['date']    = $onePost['post_date'];
-            $return[$onePost['post_id']]['type']    = $onePost['post_type'];
-            $return[$onePost['post_id']]['video']   = $onePost['post_video'];
-            $return[$onePost['post_id']]['image']   = $onePost['post_image'];
-            $return[$onePost['post_id']]['user_id'] = $onePost['user_id'];
-            $return[$onePost['post_id']]['page_id'] = $onePost['page_id'];
+            $return[$onePost['post_id']]['post_id']              = $onePost['post_id'];
+            $return[$onePost['post_id']]['title']                = $onePost['post_title'];
+            $return[$onePost['post_id']]['text']                 = $onePost['post_text'];
+            $return[$onePost['post_id']]['date']                 = $onePost['post_date'];
+            $return[$onePost['post_id']]['type']                 = $onePost['post_type'];
+            $return[$onePost['post_id']]['video']                = $onePost['post_video'];
+            $return[$onePost['post_id']]['image']                = $onePost['post_image'];
+            $return[$onePost['post_id']]['user_id']              = $onePost['user_id'];
+            $return[$onePost['post_id']]['page_id']              = $onePost['page_id'];
+            $return[$onePost['post_id']]['post_author']          = $onePost['post_author'];
+            $return[$onePost['post_id']]['original_post_author'] = $onePost['original_post_author'];
             if (!empty($onePost['comment_id'])) {
                 $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['comment_id']        = $onePost['comment_id'];
                 $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['text']              = $onePost['comment_text'];

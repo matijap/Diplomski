@@ -20,9 +20,24 @@
             <span><?php echo $this->translate->_('By'); ?></span>
             :<?php echo $this->onePost['post_author']; ?>
         </p>
-        <p class="post-details">By :test test</p>
-        <p class="post-details">Likes :<?php //echo $this->onePost['post_like_count']; ?></p>
-        <p class="post-details">15.06.1987</p>
+        <?php
+        if (!empty($this->onePost['original_post_author'])) {
+        ?>
+        <p class="post-details">
+            <span><?php echo $this->translate->_('Originaly posted by'); ?></span>:
+            <?php echo $this->onePost['original_post_author']; ?>
+        </p>
+        <?php
+        }
+        ?>
+        <p class="post-details">
+            <span><?php echo $this->translate->_('Likes'); ?></span>:
+            <?php echo Post::getPostLikesCount($this->onePost['post_id']); ?>
+        </p>
+        <p class="post-details">
+            <span><?php echo $this->translate->_('Posted'); ?></span>:
+            <?php echo Utils::timestampToLocale($this->onePost['date']); ?>
+        </p>
     </div>
     <?php
         if ($this->onePost['type'] == Post::POST_TYPE_VIDEO) {
