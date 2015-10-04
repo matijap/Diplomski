@@ -2,7 +2,12 @@
 <?php
     if (!empty($this->posts)) {
         foreach ($this->posts as $key => $onePost) {
-            echo $this->partial('render/post.phtml', array('onePost' => $onePost, 'translate' => $this->translate, 'form' => $this->form));
+            echo $this->partial('render/post.phtml', array(
+                'onePost'   => $onePost,
+                'translate' => $this->translate,
+                'form'      => $this->form,
+                'watcher'   => $this->watcher,
+            ));
         }
     }
 ?>

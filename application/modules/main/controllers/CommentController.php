@@ -40,7 +40,6 @@ class CommentController extends Main_BaseController
         $comment           = $return['comment'];
         unset($return['comment']);
         $return['message'] = $comment->likes . ' ' . $this->translate->_('Likes');
-        fb($return);
         $this->_helper->json($return);
     }
 

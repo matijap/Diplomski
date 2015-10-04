@@ -218,7 +218,8 @@ class User extends User_Row
                      'CO1.text as comment_text', 'CO1.date as comment_date', 'CO1.id as comment_id',
                      'CO1.parent_comment_id as parent_comment_id', 'CO1.forwarded', 'CO1.likes',
                      'CO1.first_name as commenter_first_name', 'CO1.last_name as commenter_last_name', 'PO.post_type as post_type',
-                     'PO.video as post_video', 'PO.image as post_image', 'UL.id as post_like', 'UF.id as post_favorite', 'CO1.comment_favorite'
+                     'PO.video as post_video', 'PO.image as post_image', 'UL.id as post_like', 'UF.id as post_favorite', 'CO1.comment_favorite',
+                     'PO.user_id', 'PO.page_id'
                     );
         if ($includeUlid) {
             $return[] = 'CO1.ulid as user_like';
@@ -268,24 +269,49 @@ class User extends User_Row
                                 'UL.id as ulid', 'CO1.parent_comment_id', 'CO1.forwarded',
                                 'CO1.likes', 'UI.first_name', 'UI.last_name', 'UF.id as comment_favorite'));
                 // fb("$commentSelect");
-            
-             $select1 = Main::select()
+            $postFromFriendsArray = $commentColumnsToBeFetched;
+            $postFromFriendsArray[] = 'CONCAT(UI5.first_name, " ", UI5.last_name) as post_author';
+            $postFromFriendsArray[] = 'COUNT(UL3.id) as post_like_count';
+            // $postFromFriendsArray[] = 'UL.id as kurac';
+            // $postFromFriendsArray[] = 'UL3.id as kurac2';
+            $select1 = Main::select()
                         ->from(array('PO' => 'post'), '')
                         ->joinLeft(array('CO1' => new Zend_Db_Expr("($commentSelect)")), 'CO1.commented_post_id = PO.id', '')
-                        ->joinLeft(array('UL' => 'user_like'), 'UL.post_id = PO.id', '')
+                        ->joinLeft(array('UL' => 'user_like'), 'UL.post_id = PO.id AND UL.user_id = ' . $this->id, '')
+                        ->joinLeft(array('UL3' => 'user_like'), 'UL3.post_id = PO.id', '')
                         ->joinLeft(array('UF' => 'user_favorite'), 'UF.post_id = PO.id', '')
+                        ->joinLeft(array('UI5' => 'user_info'), 'UI5.user_id = PO.user_id', '')
                         ->where('PO.user_id IN (?)', $friendIDS)
-                        ->columns($commentColumnsToBeFetched);
+                        ->columns($postFromFriendsArray);
+
+                        //    $test = Main::select()
+                        // ->from(array('PO' => 'post'), '')
+                        // // ->joinLeft(array('CO1' => new Zend_Db_Expr("($commentSelect)")), 'CO1.commented_post_id = PO.id', '')
+                        // ->joinLeft(array('UL' => 'user_like'), 'UL.post_id = PO.id AND UL.user_id = ' . $this->id, '')
+                        // ->join(array('UL3' => 'user_like'), 'UL3.post_id = PO.id', '')
+                        // // ->joinLeft(array('UF' => 'user_favorite'), 'UF.post_id = PO.id', '')
+                        // // ->join(array('UI' => 'user_info'), 'UI.user_id = PO.user_id', '')
+                        // ->where('PO.user_id IN (?)', $friendIDS)
+                        // ->columns(array('PO.id', 'COUNT(UL3.id)'))
+                        // ->query()->fetchAll();
+                        // fb($test);
 
             $select2 = false;
             if (!empty($pageIDS)) {
+                $postFromPagesArray = $commentColumnsToBeFetched;
+                $postFromPagesArray[] = 'PAG.title as post_author';
+                $postFromPagesArray[] = 'COUNT(UL3.id) as post_like_count';
+                // $postFromPagesArray[] = 'UL.id as kurac';
+                // $postFromPagesArray[] = 'UL3.id as kurac2';
                 $select2 = Main::select()
                             ->from(array('PO' => 'post'), '')
                             ->joinLeft(array('CO1' => new Zend_Db_Expr("($commentSelect)")), 'CO1.commented_post_id = PO.id', '')
-                            ->joinLeft(array('UL' => 'user_like'), 'UL.post_id = PO.id', '')
+                            ->joinLeft(array('UL' => 'user_like'), 'UL.post_id = PO.id AND UL.user_id = ' . $this->id, '')
+                            ->joinLeft(array('UL3' => 'user_like'), 'UL3.post_id = PO.id', '')
                             ->joinLeft(array('UF' => 'user_favorite'), 'UF.post_id = PO.id', '')
+                            ->joinLeft(array('PAG' => 'page'), 'PO.page_id = PAG.id ', '')
                             ->where('PO.page_id IN (?)', $pageIDS)
-                            ->columns($commentColumnsToBeFetched);
+                            ->columns($postFromPagesArray);
             }
 
             $union = Main::select()->union(array($select1, $select2));
@@ -295,23 +321,30 @@ class User extends User_Row
                         ->columns(array('post_title', 'post_text', 'post_id', 'post_date', 'post_type', 'post_video', 'post_image',
                                         'comment_text', 'comment_date', 'comment_id', 
                                         'commenter_first_name', 'commenter_last_name', 'likes', 'forwarded', 'user_like',
-                                        'parent_comment_id', 'post_like', 'post_favorite', 'comment_favorite'
+                                        'parent_comment_id', 'post_like', 'post_favorite', 'comment_favorite', 'user_id', 'page_id',
+                                        'post_author', 
+                                        'post_like_count',
+                                        // 'kurac', 'kurac2'
                                     ))
                         ->order(array('post_date DESC', 'comment_date DESC'))
                         ->query()->fetchAll();
-
+fb($mainSelect);
             $return = array();
             foreach ($mainSelect as $key => $onePost) {
                 // fb($onePost);
-                $return[$onePost['post_id']]['post_id']       = $onePost['post_id'];
-                $return[$onePost['post_id']]['title']         = $onePost['post_title'];
-                $return[$onePost['post_id']]['text']          = $onePost['post_text'];
-                $return[$onePost['post_id']]['date']          = $onePost['post_date'];
-                $return[$onePost['post_id']]['type']          = $onePost['post_type'];
-                $return[$onePost['post_id']]['video']         = $onePost['post_video'];
-                $return[$onePost['post_id']]['image']         = $onePost['post_image'];
-                $return[$onePost['post_id']]['post_like']     = $onePost['post_like'];
-                $return[$onePost['post_id']]['post_favorite'] = $onePost['post_favorite'];
+                $return[$onePost['post_id']]['post_id']         = $onePost['post_id'];
+                $return[$onePost['post_id']]['title']           = $onePost['post_title'];
+                $return[$onePost['post_id']]['text']            = $onePost['post_text'];
+                $return[$onePost['post_id']]['date']            = $onePost['post_date'];
+                $return[$onePost['post_id']]['type']            = $onePost['post_type'];
+                $return[$onePost['post_id']]['video']           = $onePost['post_video'];
+                $return[$onePost['post_id']]['image']           = $onePost['post_image'];
+                $return[$onePost['post_id']]['post_like']       = $onePost['post_like'];
+                $return[$onePost['post_id']]['post_favorite']   = $onePost['post_favorite'];
+                $return[$onePost['post_id']]['user_id']         = $onePost['user_id'];
+                $return[$onePost['post_id']]['page_id']         = $onePost['page_id'];
+                $return[$onePost['post_id']]['post_author']     = $onePost['post_author'];
+                // $return[$onePost['post_id']]['post_like_count'] = $onePost['post_like_count'];
                 if (!empty($onePost['comment_id'])) {
                     $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['comment_id']        = $onePost['comment_id'];
                     $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['text']              = $onePost['comment_text'];
@@ -385,6 +418,8 @@ class User extends User_Row
             $return[$onePost['post_id']]['video']     = $onePost['post_video'];
             $return[$onePost['post_id']]['image']     = $onePost['post_image'];
             $return[$onePost['post_id']]['post_like'] = $onePost['post_like'];
+            $return[$onePost['post_id']]['user_id']   = $onePost['user_id'];
+            $return[$onePost['post_id']]['page_id']   = $onePost['page_id'];
             if (!empty($onePost['comment_id'])) {
                 $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['comment_id']        = $onePost['comment_id'];
                 $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['text']              = $onePost['comment_text'];

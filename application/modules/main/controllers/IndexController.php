@@ -72,4 +72,22 @@ class IndexController extends Main_BaseController
         $this->view->postID   = Utils::arrayFetch($this->params, 'postID', false);
         $this->view->notifier = Main::buildObject('User', $this->params['notifierID']);
     }
+
+    public function forwardPostOrCommentAction() {
+        $postOrComment = Utils::arrayFetch($this->params, 'postOrComment');
+        $objectID      = Utils::arrayFetch($this->params, 'objectID');
+        $userID        = Utils::arrayFetch($this->params, 'userID');
+        $strings       = array();
+        if ($postOrComment == 'post') {
+            $strings[] = $this->translate->_('Post');
+            $post      = Main::buildObject('Post', $objectID);
+            $post->forward($userID);
+        } else {
+            $strings[] = $this->translate->_('Comment');
+            $comment   = Main::buildObject('Comment', $objectID);
+            $comment->forward($userID);
+        }
+        $strings[] = $this->translate->_(' forwarded successfully');
+        $this->setNotificationMessage(Utils::mergeStrings($strings));
+    }
 }

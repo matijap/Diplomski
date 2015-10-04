@@ -131,4 +131,8 @@ class Utils
         $list      = Zend_Locale::getTranslationList('Date', $loc);
         return $date->get($list['short']);
     }
+
+    public static function mergeStrings($strings, $delimeter = ' ') {
+        return implode($delimeter, $strings);
+    }
 }

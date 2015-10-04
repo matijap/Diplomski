@@ -106,6 +106,8 @@ class Page extends Page_Row
             $return[$onePost['post_id']]['type']    = $onePost['post_type'];
             $return[$onePost['post_id']]['video']   = $onePost['post_video'];
             $return[$onePost['post_id']]['image']   = $onePost['post_image'];
+            $return[$onePost['post_id']]['user_id'] = $onePost['user_id'];
+            $return[$onePost['post_id']]['page_id'] = $onePost['page_id'];
             if (!empty($onePost['comment_id'])) {
                 $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['comment_id']        = $onePost['comment_id'];
                 $return[$onePost['post_id']]['comments'][$onePost['comment_id']]['text']              = $onePost['comment_text'];

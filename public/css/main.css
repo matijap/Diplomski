@@ -590,6 +590,11 @@ header li {
 .show-more-post-comments {
     height: 30px;
 }
+.post-body p.post-details {
+    display: inline-block;
+    font-size: 11px;
+    padding: 0;
+}
 /* One Post End */
 
 /* Modal Start */

@@ -93,4 +93,21 @@ class Comment extends Comment_Row
             ->columns(array('CONCAT(UI.first_name, " ", UI.last_name) as post_author'))
             ->query()->fetchColumn();
     }
+
+    public function forward($userID) {
+        $data = array(
+            'user_id'          => $userID,
+            'page_id'          => NULL,
+            'original_user_id' => NULL,
+            'title'            => '',
+            'text'             => $this->text,
+            'original_page_id' => NULL,
+            'image'            => NULL,
+            'date'             => time(),
+            'video'            => NULL,
+            'post_type'        => Post::POST_TYPE_TEXT,
+        );
+        $newPost = Main::createNewObject('Post', $data);
+        $newPost->save();
+    }
 }

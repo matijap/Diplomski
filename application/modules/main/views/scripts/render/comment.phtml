@@ -11,7 +11,7 @@
         </a>
         <a class="favorite-or-unfavorite-comment" <?php echo empty($this->oneComment['comment_favorite']) ? '': 'style="display: none;"'; ?> href="javascript:void(0)"><i class="fa fa-heart"></i></a>
         <a class="favorite-or-unfavorite-comment" <?php echo empty($this->oneComment['comment_favorite']) ? 'style="display: none;"': ''; ?> href="javascript:void(0)"><i class="fa fa-heartbeat"></i></a>
-        <a class="forward-comment" href="javascript:void(0)"><i class="fa fa-forward"></i></a>
+        <a data-comment-id=<?php echo $this->oneComment['comment_id']; ?> class="forward-comment post-or-comment-forward pc" href="javascript:void(0)"><i class="fa fa-forward"></i></a>
         <a class="reply-to-comment" href="javascript:void(0)"><i class="fa fa-reply"></i></a>
         <a class="report-comment" href="javascript:void(0)"><i class="fa fa-warning"></i></a>
     </div>

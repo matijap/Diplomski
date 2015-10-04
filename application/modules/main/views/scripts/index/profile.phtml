@@ -1,7 +1,12 @@
 <div id="main-panel" class="bb my">
     <?php
         foreach ($this->posts as $onePost) {
-            echo $this->partial('render/post.phtml', array('onePost' => $onePost, 'translate' => $this->translate, 'form' => $this->form));
+            echo $this->partial('render/post.phtml', array(
+              'onePost'   => $onePost,
+              'translate' => $this->translate,
+              'form'      => $this->form,
+              'watcher'   => $this->watcher,
+            ));
         }
     ?>
 </div>

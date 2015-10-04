@@ -669,4 +669,25 @@ $( document ).ready(function() {
         callNotification(data.text, 'success');
     });
     
+    $(document).on(clickOrTouchstart, '.post-or-comment-forward', function(e) {
+        var element = $(this).hide();
+        var data    = element.data();
+        element.hide();
+        element.before('<i class="fa fa-spin fa-spinner"></i>');
+        var postOrComment = '';
+        if (element.hasClass('pf')) {
+            objectID      = data.postId;
+            postOrComment = 'post';
+        } else {
+            objectID      = data.commentId;
+            postOrComment = 'comment';
+        }
+        $.ajax({
+            url: appurl + '/index/forward-post-or-comment',
+            data: {'userID': getUserID(), 'objectID': objectID, 'postOrComment': postOrComment},
+            success: function(result) {
+                window.location.reload();
+            }
+        });
+    });
 });

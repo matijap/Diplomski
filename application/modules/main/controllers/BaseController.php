@@ -2,6 +2,9 @@
 
 class Main_BaseController extends Sportalize_Controller_Action
 {
+    public $user;
+    public $watcher;
+    
     public function preDispatch() {
         parent::preDispatch();
         if(!Zend_Auth::getInstance()->hasIdentity()) {
@@ -16,6 +19,7 @@ class Main_BaseController extends Sportalize_Controller_Action
         $info                           = Zend_Auth::getInstance()->getIdentity();
         $this->user = $this->view->user = Main::fetchRow("User", Main::select("User")->where("email = ?", $info->email));
         $this->view->userID             = $this->user->id;
+        $this->view->watcher            = $this->user;
         $this->_helper->layout->setLayout('main');
         Zend_Registry::set('logged_user', $this->user);
 

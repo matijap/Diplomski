@@ -105,10 +105,13 @@ class Post extends Post_Row
     }
 
     public function getLikesCount() {
+        return Post::getPostLikesCount($this->id);
+    }
+    public static function getPostLikesCount($postID) {
         return Main::select()
             ->from(array('PO' => 'post'), '')
             ->join(array('UL' => 'user_like'), 'PO.id = UL.post_id', '')
-            ->where('PO.id = ?', $this->id)
+            ->where('PO.id = ?', $postID)
             ->columns(array('COUNT(UL.id)'))
             ->query()->fetchColumn();
     }
@@ -122,11 +125,50 @@ class Post extends Post_Row
     }
 
     public function getPostAuthor() {
-        return Main::select()
-            ->from(array('PO' => 'post'), '')
-            ->join(array('UI' => 'user_info'), 'UI.user_id = PO.user_id', '')
-            ->columns(array('CONCAT(UI.first_name, " ", UI.last_name) as post_author'))
-            ->where('PO.id = ?', $this->id)
-            ->query()->fetchColumn();
+        return Post::getAuthorForPost($postID, $post);
+    }
+
+    public static function getAuthorForPost($postID, $post = NULL) {
+        $post = is_null($post) ? Main::buildObject('Post', $postID) : $post;
+        if (!empty($post->user_id)) {
+            $return = Main::select()
+                ->from(array('PO' => 'post'), '')
+                ->join(array('UI' => 'user_info'), 'UI.user_id = PO.user_id', '')
+                ->columns(array('CONCAT(UI.first_name, " ", UI.last_name) as post_author'))
+                ->where('PO.id = ?', $post->id)
+                ->query()->fetchColumn();
+        } else {
+            $page   = Main::buildObject('Page', $post->page_id);
+            $return = $page->title;
+        }
+        return $return;
+    }
+
+    public static function determineIfForwardShouldBeVisible($watcherID, $userID = null, $pageID = null) {
+        $return;
+        if (!empty($userID)) {
+            $return = $userID != $watcherID;
+        } else {
+            $page = Main::buildObject('Page', $pageID);
+            $return = $page->user_id != $watcherID;
+        }
+        return $return;
+    }
+
+    public function forward($userID) {
+        $data = array(
+            'user_id'          => $userID,
+            'page_id'          => NULL,
+            'original_user_id' => $this->user_id,
+            'title'            => $this->title,
+            'text'             => $this->text,
+            'original_page_id' => $this->original_page_id,
+            'image'            => $this->image,
+            'date'             => time(),
+            'video'            => $this->video,
+            'post_type'        => $this->post_type,
+        );
+        $newPost = Main::createNewObject('Post', $data);
+        $newPost->save();
     }
 }

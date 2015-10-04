@@ -1,20 +1,29 @@
  <div class="one-post video main-background-color" id="<?php echo $this->onePost['post_id']; ?>">
- <?php
- fb($this->onePost);
- ?>
+ <?php //fb($this->onePost); ?>
     <div class="post-header bb widget-header-color">
         <div class="post-header-close">
             <i class="fa fa-thumbs-up like-or-unlike-post" <?php echo empty($this->onePost['post_like']) ? '' : 'style="display:none";' ; ?> ></i>
             <i class="fa fa-thumbs-down like-or-unlike-post" <?php echo empty($this->onePost['post_like']) ? 'style="display:none";' : '' ; ?> ></i>
             <i class="fa fa-heart favorite-or-unfavorite-post" <?php echo empty($this->onePost['post_favorite']) ? '' : 'style="display:none";' ; ?>></i>
             <i class="fa fa-heartbeat favorite-or-unfavorite-post" <?php echo empty($this->onePost['post_favorite']) ? 'style="display:none"' : '' ; ?>></i>
-            <i class="fa fa-forward"></i>
+            <?php if (Post::determineIfForwardShouldBeVisible($this->watcher->id, $this->onePost['user_id'], $this->onePost['page_id'])) { ?>
+            <i data-post-id="<?php echo $this->onePost['post_id']; ?>" class="fa fa-forward post-or-comment-forward pf"></i>
+            <?php } ?>
         </div>
         <div class="post-header-title bb">
             <h2 class="truncate-string"><?php echo $this->onePost['title']; ?></h2>
         </div>
     </div>
     <div class="post-body bb">
+    <div>
+        <p class="post-details">
+            <span><?php echo $this->translate->_('By'); ?></span>
+            :<?php echo $this->onePost['post_author']; ?>
+        </p>
+        <p class="post-details">By :test test</p>
+        <p class="post-details">Likes :<?php //echo $this->onePost['post_like_count']; ?></p>
+        <p class="post-details">15.06.1987</p>
+    </div>
     <?php
         if ($this->onePost['type'] == Post::POST_TYPE_VIDEO) {
         ?>
