@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.21)
 # Database: sportalize
-# Generation Time: 2015-09-30 21:46:16 +0000
+# Generation Time: 2015-10-05 19:55:48 +0000
 # ************************************************************
 
 
@@ -45,7 +45,7 @@ CREATE TABLE `comment` (
   CONSTRAINT `FK_co_im` FOREIGN KEY (`commented_image_id`) REFERENCES `image` (`id`),
   CONSTRAINT `FK_co_po` FOREIGN KEY (`commented_post_id`) REFERENCES `post` (`id`),
   CONSTRAINT `FK_co_us` FOREIGN KEY (`commenter_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
@@ -57,7 +57,6 @@ VALUES
 
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
-
 
 # Dump of table country
 # ------------------------------------------------------------
@@ -336,7 +335,7 @@ CREATE TABLE `dream_team` (
   PRIMARY KEY (`id`),
   KEY `FK_dt_us` (`user_id`),
   CONSTRAINT `FK_dt_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -371,8 +370,10 @@ CREATE TABLE `favourite_item` (
   `type` enum('PLAYER','TEAM') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_fi_pa` (`page_id`),
+  KEY `FK_fa_us` (`user_id`),
+  CONSTRAINT `FK_fa_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FK_fi_pa` FOREIGN KEY (`page_id`) REFERENCES `page` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -389,7 +390,7 @@ CREATE TABLE `friend_list` (
   PRIMARY KEY (`id`),
   KEY `FK_fl_us` (`user_id`),
   CONSTRAINT `FK_fl_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `friend_list` WRITE;
 /*!40000 ALTER TABLE `friend_list` DISABLE KEYS */;
@@ -416,7 +417,7 @@ CREATE TABLE `galery` (
   PRIMARY KEY (`id`),
   KEY `FK_ga_us` (`user_id`),
   CONSTRAINT `FK_ga_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -432,7 +433,7 @@ CREATE TABLE `image` (
   PRIMARY KEY (`id`),
   KEY `FK_im_ga` (`galery_id`),
   CONSTRAINT `FK_im_ga` FOREIGN KEY (`galery_id`) REFERENCES `galery` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -446,7 +447,7 @@ CREATE TABLE `language` (
   `name` varchar(256) DEFAULT NULL,
   `file` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `language` WRITE;
 /*!40000 ALTER TABLE `language` DISABLE KEYS */;
@@ -475,14 +476,14 @@ CREATE TABLE `menu_link` (
   PRIMARY KEY (`id`),
   KEY `FK_ml_ml` (`parent_menu_link_id`),
   CONSTRAINT `FK_ml_ml` FOREIGN KEY (`parent_menu_link_id`) REFERENCES `menu_link` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `menu_link` WRITE;
 /*!40000 ALTER TABLE `menu_link` DISABLE KEYS */;
 
 INSERT INTO `menu_link` (`id`, `title`, `url`, `parent_menu_link_id`, `display_order`, `class`)
 VALUES
-  (1,'NOTIFICATIONS','javascript:void(0)',NULL,1,NULL),
+  (1,'NOTIFICATIONS','javascript:void(0)',NULL,1,'notifications-menu'),
   (2,'REFRESH_ME','/',NULL,2,NULL),
   (3,'MY_POSTS','/index/profile',NULL,3,NULL),
   (4,'GAMES','javascript:void(0)',NULL,4,NULL),
@@ -501,6 +502,30 @@ VALUES
 UNLOCK TABLES;
 
 
+# Dump of table notification
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `notification`;
+
+CREATE TABLE `notification` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  `notifier_id` int(11) unsigned DEFAULT NULL,
+  `text` varchar(256) DEFAULT NULL,
+  `post_id` int(11) unsigned DEFAULT NULL,
+  `status` enum('NEW','SEEN') DEFAULT 'NEW',
+  `type` enum('FRIEND_REQUEST','OTHER') DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_no_no` (`user_id`),
+  KEY `FK_no_po` (`post_id`),
+  KEY `FK_not_no` (`notifier_id`),
+  CONSTRAINT `FK_no_po` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`),
+  CONSTRAINT `FK_no_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `FK_not_no` FOREIGN KEY (`notifier_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 # Dump of table page
 # ------------------------------------------------------------
 
@@ -515,14 +540,14 @@ CREATE TABLE `page` (
   PRIMARY KEY (`id`),
   KEY `FK_pa_us` (`user_id`),
   CONSTRAINT `FK_pa_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `page` WRITE;
 /*!40000 ALTER TABLE `page` DISABLE KEYS */;
 
 INSERT INTO `page` (`id`, `title`, `user_id`, `logo`, `type`)
 VALUES
-  (1,'Sportalize',1,'widget_football.png','OTHER');
+  (1,'Sportalize',1,'ball.jpg','OTHER');
 
 /*!40000 ALTER TABLE `page` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -548,11 +573,13 @@ CREATE TABLE `post` (
   PRIMARY KEY (`id`),
   KEY `FK_po_us1` (`user_id`),
   KEY `FK_po_pa1` (`page_id`),
+  KEY `FK_po_orus` (`original_user_id`),
+  KEY `FK_po_orpa` (`original_page_id`),
+  CONSTRAINT `FK_po_orpa` FOREIGN KEY (`original_page_id`) REFERENCES `page` (`id`),
+  CONSTRAINT `FK_po_orus` FOREIGN KEY (`original_user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FK_po_pa` FOREIGN KEY (`page_id`) REFERENCES `page` (`id`),
-  CONSTRAINT `FK_po_pa1` FOREIGN KEY (`page_id`) REFERENCES `page` (`id`),
-  CONSTRAINT `FK_po_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `FK_po_us1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `FK_po_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
@@ -580,7 +607,7 @@ CREATE TABLE `privacy_setting` (
   PRIMARY KEY (`id`),
   KEY `FK_ps_us` (`user_id`),
   CONSTRAINT `FK_ps_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -593,7 +620,7 @@ CREATE TABLE `role` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
@@ -617,7 +644,7 @@ CREATE TABLE `sport` (
   `field_players` int(11) DEFAULT NULL,
   `name` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `sport` WRITE;
 /*!40000 ALTER TABLE `sport` DISABLE KEYS */;
@@ -648,7 +675,7 @@ CREATE TABLE `user` (
   `token_time_generation` int(11) DEFAULT NULL,
   `activated` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
@@ -699,6 +726,7 @@ CREATE TABLE `user_info` (
   `avatar` varchar(256) DEFAULT NULL,
   `language_id` int(11) unsigned DEFAULT NULL,
   `role_id` int(11) unsigned DEFAULT NULL,
+  `big_logo` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_ui_us` (`user_id`),
   KEY `FK_ui_co` (`country_id`),
@@ -708,14 +736,14 @@ CREATE TABLE `user_info` (
   CONSTRAINT `FK_ui_la` FOREIGN KEY (`language_id`) REFERENCES `language` (`id`),
   CONSTRAINT `FK_ui_ro` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
   CONSTRAINT `FK_ui_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `user_info` WRITE;
 /*!40000 ALTER TABLE `user_info` DISABLE KEYS */;
 
-INSERT INTO `user_info` (`id`, `user_id`, `first_name`, `last_name`, `date_of_birth`, `phone`, `city`, `country_id`, `avatar`, `language_id`, `role_id`)
+INSERT INTO `user_info` (`id`, `user_id`, `first_name`, `last_name`, `date_of_birth`, `phone`, `city`, `country_id`, `avatar`, `language_id`, `role_id`, `big_logo`)
 VALUES
-  (7,1,'Sportalize','Admin',NULL,NULL,NULL,1,NULL,1,1);
+  (1,1,'Sportalize','Admin',NULL,NULL,NULL,1,'silhouette.png',1,1,NULL);
 
 /*!40000 ALTER TABLE `user_info` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -794,7 +822,7 @@ CREATE TABLE `user_user` (
   KEY `FK_uu_u2` (`friend_id`),
   CONSTRAINT `FK_uu_u1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FK_uu_u2` FOREIGN KEY (`friend_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -814,7 +842,7 @@ CREATE TABLE `user_widget` (
   KEY `FK_uw` (`widget_id`),
   CONSTRAINT `FK_uw` FOREIGN KEY (`widget_id`) REFERENCES `widget` (`id`),
   CONSTRAINT `FK_uw_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -830,7 +858,7 @@ CREATE TABLE `user_widget_data` (
   PRIMARY KEY (`id`),
   KEY `FK_uwd_us` (`user_id`),
   CONSTRAINT `FK_uwd_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -848,7 +876,7 @@ CREATE TABLE `widget` (
   PRIMARY KEY (`id`),
   KEY `FK_wi_pa` (`page_id`),
   CONSTRAINT `FK_wi_pa` FOREIGN KEY (`page_id`) REFERENCES `page` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `widget` WRITE;
 /*!40000 ALTER TABLE `widget` DISABLE KEYS */;
@@ -889,7 +917,7 @@ CREATE TABLE `widget_option` (
   CONSTRAINT `FK_wo_pa` FOREIGN KEY (`linked_page_id`) REFERENCES `page` (`id`),
   CONSTRAINT `FK_wo_wi` FOREIGN KEY (`widget_id`) REFERENCES `widget` (`id`),
   CONSTRAINT `FK_wo_wo1` FOREIGN KEY (`parent_widget_option_id`) REFERENCES `widget_option` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `widget_option` WRITE;
 /*!40000 ALTER TABLE `widget_option` DISABLE KEYS */;
@@ -904,8 +932,8 @@ VALUES
   (6,3,'SUB_LIST_OPTION',5,NULL,NULL,'Wayne Rooney','10',NULL,1,NULL,NULL),
   (7,3,'SUB_LIST_OPTION',5,NULL,NULL,'Edin Hazard','9',NULL,2,NULL,NULL),
   (8,4,'SUB_TABLE',NULL,NULL,NULL,'Manchester United','{\"W\":\"5\"}',NULL,1,NULL,NULL),
-  (9,4,'SUB_TABLE',NULL,NULL,NULL,'Manchester City','{\"W\":\"4\"}',NULL,2,NULL,NULL);
-  (10,1,'SUB_PAGE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+  (9,4,'SUB_TABLE',NULL,NULL,NULL,'Manchester City','{\"W\":\"4\"}',NULL,2,NULL,NULL),
+  (10,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `widget_option` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -924,7 +952,7 @@ CREATE TABLE `widget_table_data` (
   PRIMARY KEY (`id`),
   KEY `FK_wtd_us` (`user_id`),
   CONSTRAINT `FK_wtd_us` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `widget_table_data` WRITE;
 /*!40000 ALTER TABLE `widget_table_data` DISABLE KEYS */;

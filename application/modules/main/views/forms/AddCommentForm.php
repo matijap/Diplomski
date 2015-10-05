@@ -36,7 +36,7 @@ class AddCommentForm extends Sportalize_Form_Base {
         
         $this->addElement('hidden', 'commenter_id', array('value' => $this->user->id, 'class' => 'form_commenterID'));
         if ($this->pageID) {
-            $this->addElement('hidden', 'page_id', array('value' => 7));
+            $this->addElement('hidden', 'page_id', array('value' => $this->pageID));
         }
         if ($this->isImage) {
             $this->addElement('hidden', 'commented_image_id', array('value' => 0, 'class' => 'form_imageID'));
