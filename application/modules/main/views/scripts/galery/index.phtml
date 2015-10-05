@@ -1,10 +1,12 @@
 <div id="main-panel" class="bb fantasy">
+    <?php if ($this->watcher->id == $this->watched->id) { ?>
     <div class="galery-upload m-t-20">
         <h2><?php echo $this->translate->_('Welcome to your albums!'); ?></h2>
         <button class="blue-button m-t-10 modal-open" data-url="/galery/create-galery">
             <?php echo $this->translate->_('Create album'); ?>
         </button>
     </div>
+    <?php } ?>
     <hr>
     <div class="gallery">
     <?php
@@ -17,9 +19,11 @@
             ?>
                 <a title="<?php echo $oneGalery->title; ?>"
                 href="<?php echo APP_URL; ?>/galery/galery-image?galeryID=<?php echo $oneGalery->id; ?>" class="main-background-color one-galery-item">
+                    <?php if ($this->watcher->id == $this->watched->id) { ?>
                     <div class="remove-galery-item">
                         <i class="fa fa-times modal-open" data-url="<?php echo '/galery/delete-galery?galeryID=' . $oneGalery->id; ?>"></i>
                     </div>
+                    <?php } ?>
                     <img src="<?php echo APP_URL . '/' . Galery::getThumbnail($oneGalery->id);?>" >
                     <p style="position:absolute; top: 172px; left: 10px;"><?php echo $oneGalery->title; ?></p>
                 </a>

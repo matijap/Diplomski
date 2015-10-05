@@ -1,0 +1,11 @@
+<div id="main-panel" class="bb fantasy">
+<?php
+    echo $this->partial('render/list-data.phtml', array(
+                        'object'       => $this->allFriends,
+                        'title'        => $this->translate->_('All friends'),
+                        'personOrPage' => 'person',
+                        'translate'    => $this->translate
+        ));
+?>
+</div>
+<?php

@@ -105,4 +105,8 @@ class IndexController extends Main_BaseController
         $this->setNotificationMessage($message, $status);
         $this->_redirect(APP_URL . '/index/profile?userID=' . $this->user->id);
     }
+
+    public function friendsAction() {
+        $this->view->allFriends = $friends = Search::findPeople('', $this->user->id, $this->user->id);
+    }
 }

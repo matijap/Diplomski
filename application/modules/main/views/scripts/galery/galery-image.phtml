@@ -1,8 +1,10 @@
 <div id="main-panel" class="bb">
     <div class="galery-upload m-t-20">
+        <?php if ($this->watcher->id == $this->watched->id) { ?>
         <h2><?php echo $this->translate->_('Upload pictures'); ?></h2>
         <input type="file" class="upload-change-it m-t-10 float-left" id="fileupload" name="files[]" data-url="<?php echo APP_URL; ?>/galery/upload/galeryID/<?php echo $this->galeryID; ?>" multiple/>
-        <a class="float-right green-button back-to-galery" href="<?php echo APP_URL; ?>/galery/index"><?php echo $this->translate->_('Back To Galery'); ?></a>
+        <?php } ?>
+        <a class="float-right green-button back-to-galery" href="<?php echo APP_URL; ?>/galery/index?watchedID=<?php echo $this->watched->id; ?>"><?php echo $this->translate->_('Back To Galery'); ?></a>
     </div>
     <div id="progress">
         <div class="bar" style="width: 0%;"></div>
@@ -13,9 +15,11 @@
         foreach ($this->images as $oneImage) {
             ?>
             <a title="<?php echo $oneImage->id; ?>" href="<?php echo APP_URL . '/' . Galery::GALERY_IMAGES_FOLDER . '/' . $oneImage->url; ?>" class="main-background-color one-galery-item">
+                <?php if ($this->watcher->id == $this->watched->id) { ?>
                 <div class="remove-galery-item">
                     <i class="fa fa-times modal-open" data-url="/galery/delete-image?imageID=<?php echo $oneImage->id; ?>"></i>
                 </div>
+                <?php } ?>
                 <img src="<?php echo APP_URL . '/' . Galery::GALERY_IMAGES_FOLDER . '/' . $oneImage->url; ?>" >
             </a>
             <?php

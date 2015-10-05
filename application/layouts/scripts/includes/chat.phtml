@@ -6,6 +6,7 @@
     </div>
     <?php
         foreach ($this->friends as $key => $value) {
+            fb('ovo je value', $value);
             if ($value['id'] != $this->userID) {
         ?>
                 <div class="one-chat-person offline" id="<?php echo $value['id']; ?>">

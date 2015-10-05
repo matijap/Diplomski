@@ -22,7 +22,10 @@ class GaleryController extends Main_BaseController
     }
 
     public function indexAction() {
-        $this->view->galeries = $this->user->getGaleryList();
+        $watched              = Utils::arrayFetch($this->params, 'watchedID', $this->user->id);
+        $watchedUser          = Main::buildObject('User', $watched);
+        $this->view->galeries = $watchedUser->getGaleryList();
+        $this->view->watched  = $watchedUser;
     }
 
     public function deleteGaleryAction() {
@@ -58,6 +61,8 @@ class GaleryController extends Main_BaseController
     public function galeryImageAction() {
         $this->view->images  = $this->galery->getImageList();
         $this->view->form    = new AddCommentForm(array('isImage' => true));
+        $watchedUser         = Main::buildObject('User', $this->galery->user_id);
+        $this->view->watched = $watchedUser;
     }
 
     public function uploadAction() {

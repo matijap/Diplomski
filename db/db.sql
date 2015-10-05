@@ -743,7 +743,7 @@ LOCK TABLES `user_info` WRITE;
 
 INSERT INTO `user_info` (`id`, `user_id`, `first_name`, `last_name`, `date_of_birth`, `phone`, `city`, `country_id`, `avatar`, `language_id`, `role_id`, `big_logo`)
 VALUES
-  (1,1,'Sportalize','Admin',NULL,NULL,NULL,1,'silhouette.png',1,1,NULL);
+  (1,1,'Sportalize','Admin',NULL,NULL,NULL,1,'silhouette.png',1,1,'ball.jpg');
 
 /*!40000 ALTER TABLE `user_info` ENABLE KEYS */;
 UNLOCK TABLES;
