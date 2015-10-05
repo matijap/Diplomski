@@ -42,8 +42,8 @@ class AddCommentForm extends Sportalize_Form_Base {
             $this->addElement('hidden', 'commented_image_id', array('value' => 0, 'class' => 'form_imageID'));
         } else {
             $this->addElement('hidden', 'commented_post_id', array('value' => 0, 'class' => 'form_postID'));
-            $this->addElement('hidden', 'parent_comment_id', array('value' => 0, 'class' => 'form_commentID'));    
         }
+        $this->addElement('hidden', 'parent_comment_id', array('value' => 0, 'class' => 'form_commentID'));  
     }
 
     public function redecorate() {

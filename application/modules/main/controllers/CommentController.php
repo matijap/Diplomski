@@ -30,7 +30,8 @@ class CommentController extends Main_BaseController
             $redirectURL = 'page/index?pageID=' . $this->params['page_id'];
         }
         if (isset($this->params['commented_image_id'])) {
-            $redirectURL = 'galery/galery-image?galeryID=1';
+            $image = Main::buildObject('Image', $this->params['commented_image_id']);
+            $redirectURL = 'galery/galery-image?galeryID=' . $image->galery_id;
         }
         $this->_redirect($redirectURL);
     }

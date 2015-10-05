@@ -10,7 +10,8 @@ class Galery_Create extends Sportalize_Form_Modal {
 
     public function createElements() {
         $this->addElement('text', 'title', array(
-            'label' => $this->translate->_('Title')
+            'label'    => $this->translate->_('Title'),
+            'required' => true,
         ));
         $this->getUserIDElement();
     }

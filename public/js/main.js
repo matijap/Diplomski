@@ -569,7 +569,12 @@ $( document ).ready(function() {
         var element = $(this);
         var parent  = element.parent();
         var id      = parent.attr('id');
-        var form = element.closest('.one-post').find('form');
+        var closest = element.closest('.one-post');
+
+        if (doesExists('.galery-comment-holder')) {
+            closest = element.closest('.galery-comment-holder');
+        }
+        var form = closest.find('form');
         form.find('.form_commentID').val(id);
         form.find('textarea').trigger('focus');
     });
