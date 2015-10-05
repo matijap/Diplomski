@@ -149,7 +149,7 @@ io.on("connection", function (client) {
             var clientID   = getCliendIDForUserID(data.commentAuthor);
             var obj        = new Object;
             obj.notifierID = data.notifierID;
-            obj.postID     = data.commentID;
+            obj.commentID  = data.commentID;
             obj.type       = 'commentlike';
             sendToView(clientID, 'comment_liked', obj);
         }

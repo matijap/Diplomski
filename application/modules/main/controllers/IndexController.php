@@ -74,9 +74,10 @@ class IndexController extends Main_BaseController
     }
 
     public function getHtmlForNotificationAction() {
-        $this->view->type     = $this->params['type'];
-        $this->view->postID   = Utils::arrayFetch($this->params, 'postID', false);
-        $this->view->notifier = Main::buildObject('User', $this->params['notifierID']);
+        $this->view->type      = $this->params['type'];
+        $this->view->postID    = Utils::arrayFetch($this->params, 'postID', false);
+        $this->view->commentID = Utils::arrayFetch($this->params, 'commentID', false);
+        $this->view->notifier  = Main::buildObject('User', $this->params['notifierID']);
     }
 
     public function forwardPostOrCommentAction() {
@@ -98,8 +99,10 @@ class IndexController extends Main_BaseController
     }
 
     public function changeBigLogoAction() {
-        $this->user->changeBigLogo();
-        $this->setNotificationMessage($this->translate->_('Big logo changed successfully'));
+        $status = $this->user->changeBigLogo();
+        $message = $status ? $this->translate->_('Big logo changed successfully') : $this->translate->_('Unable to change logo');
+        $status  = $status ? Sportalize_Controller_Action::NOTIFICATION_SUCCESS : Sportalize_Controller_Action::NOTIFICATION_ERROR;
+        $this->setNotificationMessage($message, $status);
         $this->_redirect(APP_URL . '/index/profile?userID=' . $this->user->id);
     }
 }

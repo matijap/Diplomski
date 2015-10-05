@@ -962,10 +962,16 @@ class User extends User_Row
     }
 
     public function changeBigLogo() {
-        $userInfo = $this->getUserInfo();
-        $fileName = Utils::uploadFile('big_logo', UserInfo::LOGOS_IMAGES_FOLDER, $userInfo->id);
-        if ($fileName) {
-            $userInfo->edit(array('big_logo' => $fileName));
+        $return = false;
+        $ext      = pathinfo($_FILES['big_logo']['name'], PATHINFO_EXTENSION);
+        if (in_array($ext, array('jpg, gif, png'))) {
+            $userInfo = $this->getUserInfo();
+            $fileName = Utils::uploadFile('big_logo', UserInfo::LOGOS_IMAGES_FOLDER, $userInfo->id);
+            if ($fileName) {
+                $userInfo->edit(array('big_logo' => $fileName));
+                $return = true;
+            }
         }
+        return $return;
     }
 }

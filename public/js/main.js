@@ -483,7 +483,6 @@ $( document ).ready(function() {
                     parent.find('.fa-thumbs-up').parent().show();
                 }
                 parent.find('.fa-spin').remove();
-                console.log(result);
                 element.closest('.one-post-comment').find('.like-count').text(result.message);
                 if (result.action == 'like') {
                     var d             = new Object;

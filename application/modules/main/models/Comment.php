@@ -27,10 +27,10 @@ class Comment extends Comment_Row
         if ($userLike) {
             $userLike->delete();
             $return['action']        = 'unlike';
-            $return['commentAuthor'] = $this->commenter_id;
         } else {
             UserLike::create(array('comment_id' => $this->id, 'user_id' => $userID));
             $return['action'] = 'like';
+            $return['commentAuthor'] = $this->commenter_id;
         }
         $this->edit(array('likes' => $likes));
         $return['comment'] = $this;
