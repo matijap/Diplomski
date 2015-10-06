@@ -183,7 +183,7 @@ class User extends User_Row
                     ->from(array('U' => 'user'), '')
                     ->join(array('UI' => 'user_info'), 'UI.user_id = U.id', '')
                     ->where('U.id IN (?)', $filtered)
-                    ->columns(array('U.id', 'UI.first_name', 'UI.last_name'))
+                    ->columns(array('U.id', 'UI.first_name', 'UI.last_name', 'UI.avatar'))
                     ->query()->fetchAll();
         return $allFriends;
     }
@@ -970,6 +970,56 @@ class User extends User_Row
             if ($fileName) {
                 $userInfo->edit(array('big_logo' => $fileName));
                 $return = true;
+            }
+        }
+        return $return;
+    }
+
+    public function getOtherFriendLists($type = false) {
+        $friendLists = Main::select()
+        ->from(array('FL' => 'friend_list'), '')
+        ->join(array('UFL' => 'user_friend_list'), 'FL.id = UFL.friend_list_id', '')
+        ->join(array('UI' => 'user_info'), 'UI.user_id = UFL.friend_id', '')
+        ->columns(array('FL.title', 'CONCAT(UI.first_name, " ", UI.last_name) as name',
+                        'UI.user_id as id', 'UI.avatar', 'FL.is_system', 'FL.id as list_id'));
+        
+        if ($type) {
+            $friendLists->where('FL.title = ?', $type)
+                        ->where('FL.user_id = ?', $this->id);
+        }
+        $friendLists = $friendLists->query()->fetchAll();
+        
+        $return = array();
+        $count = 0;
+        foreach ($friendLists as $oneFriendList) {
+            $title = FriendList::getTranslated($oneFriendList['title']);
+            $return[$title][$count]['name']         = $oneFriendList['name'];
+            $return[$title][$count]['id']           = $oneFriendList['id'];
+            $return[$title][$count]['avatar']       = $oneFriendList['avatar'];
+            $return[$title]['options']['list_id']   = $oneFriendList['list_id'];
+            $return[$title]['options']['is_system'] = $oneFriendList['is_system'];
+            $count++;
+        }
+        $friendLists = Main::select()
+            ->from(array('FL' => 'friend_list'), '')
+            ->where('FL.user_id = ' . $this->id . ' OR FL.is_system = 1')
+            ->columns(array('FL.title', 'FL.is_system', 'FL.id as list_id'))
+            ->query()->fetchAll();
+        foreach ($friendLists as $value) {
+            $title = FriendList::getTranslated($value['title']);
+            $found = false;
+            foreach ($return as $listTitle => $v) {
+                if ($listTitle == $title) {
+                    $found = true;
+                }
+            }
+            if (!$found) {
+                $return[$title] = array(
+                    'options' => array(
+                        'list_id'   => $value['list_id'],
+                        'is_system' => $value['is_system'],
+                    )
+                );
             }
         }
         return $return;

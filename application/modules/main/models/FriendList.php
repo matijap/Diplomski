@@ -17,6 +17,15 @@ class FriendList extends FriendList_Row
         $array = array(self::FRIEND_LIST_WORK         => $translate->_('Work'),
                        self::FRIEND_LIST_FAMILY       => $translate->_('Family'),
                        self::FRIEND_LIST_BEST_FRIENDS => $translate->_('Best Friends'));
-        return $array[$constant];
+        return Utils::arrayFetch($array, $constant, $constant);
+    }
+
+    public function delete() {
+        if ($this->is_system) {
+            return false;
+        }
+        Main::execQuery('DELETE FROM user_friend_list WHERE friend_list_id = ?', array($this->id));
+        parent::delete();
+        return true;
     }
 }

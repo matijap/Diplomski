@@ -8,6 +8,10 @@ class Post_Row extends Main_Row {
           return $this->_getListOfDepObjects('Comment','commented_post',$select);
       }
 
+      public function getNotificationList($select=null) {
+          return $this->_getListOfDepObjects('Notification','post',$select);
+      }
+
       public function getUserFavoriteList($select=null) {
           return $this->_getListOfDepObjects('UserFavorite','post',$select);
       }

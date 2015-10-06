@@ -702,5 +702,27 @@ $( document ).ready(function() {
     $(document).on('change', '#big_logo', function(e) {
         $(this).closest('form').submit();
     });
-    
+
+    $(document).on(clickOrTouchstart, '.add-friends-into-list', function(e) {
+        e.preventDefault();
+        var element = $(this);
+        var select  = element.parent().find('select');
+        element.hide();
+        element.parent().append('<i class="fa fa-spin fa-spinner"></i>');
+        var friendListID = element.parent().find('.friend-list-id').val();
+        $.ajax({
+            url: appurl + '/index/add-friends-into-list',
+            data: {'users': select.val(), 'friendListID' :friendListID},
+            success: function(result) {
+                if (!result.status) {
+                    callNotification(result.message, 'error');
+                    element.show();
+                    element.parent().find('.fa').remove();
+                } else {
+                    window.location = result.url;
+                }
+
+            }
+        });
+    });
 });

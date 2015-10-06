@@ -16,6 +16,10 @@ class User_Row extends Main_Row {
           return $this->_getListOfDepObjects('ExFavoritePages','user',$select);
       }
 
+      public function getFavouriteItemList($select=null) {
+          return $this->_getListOfDepObjects('FavouriteItem','user',$select);
+      }
+
       public function getFriendListList($select=null) {
           return $this->_getListOfDepObjects('FriendList','user',$select);
       }
@@ -28,19 +32,19 @@ class User_Row extends Main_Row {
         return $this->_getListOfDepObjects('Notification','user',$select);
     }
 
-    public function getNotificationUserUserList($select=null) {
-        return $this->_getListOfDepObjects('Notification','user',$select);
+    public function getNotificationUserNotifierList($select=null) {
+        return $this->_getListOfDepObjects('Notification','notifier',$select);
     }
 
       public function getPageList($select=null) {
           return $this->_getListOfDepObjects('Page','user',$select);
       }
 
-    public function getPostUserList($select=null) {
-        return $this->_getListOfDepObjects('Post','user',$select);
+    public function getPostOriginalUserList($select=null) {
+        return $this->_getListOfDepObjects('Post','original_user',$select);
     }
 
-    public function getPostUserUserList($select=null) {
+    public function getPostOriginalUserUserList($select=null) {
         return $this->_getListOfDepObjects('Post','user',$select);
     }
 
@@ -50,6 +54,10 @@ class User_Row extends Main_Row {
 
       public function getUserFavoriteList($select=null) {
           return $this->_getListOfDepObjects('UserFavorite','user',$select);
+      }
+
+      public function getUserFriendListList($select=null) {
+          return $this->_getListOfDepObjects('UserFriendList','friend',$select);
       }
 
       public function getUserInfoList($select=null) {

@@ -1,6 +1,6 @@
 <?php
 
-class Galery_ImageDelete extends Sportalize_Form_Modal {
+class Galery_ImageDelete extends DeleteItemForm {
 
     public $imd;
 
@@ -18,11 +18,6 @@ class Galery_ImageDelete extends Sportalize_Form_Modal {
 
     public function createElements() {
         $this->addElement('hidden', 'imageID', array('value' => $this->imd));
-
-        $message = new Sportalize_Form_Element_PlainHtml('hr', array(
-            'value' => '<p>' . $this->translate->_('Are you sure that you want to delete this image?') . '</p>'
-        ));
-        $this->addElement($message);
-        $this->addDeleteHiddenElement();
+        $this->addWarningText($this->translate->_('Are you sure that you want to delete this image?'));
     }
 }

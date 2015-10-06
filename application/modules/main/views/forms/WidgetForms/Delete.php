@@ -1,6 +1,6 @@
 <?php
 
-class WidgetForms_Delete extends Sportalize_Form_Modal {
+class WidgetForms_Delete extends DeleteItemForm {
 
     public $wid;
     public $pid;
@@ -23,10 +23,6 @@ class WidgetForms_Delete extends Sportalize_Form_Modal {
         $this->addElement('hidden', 'pageID', array('value' => $this->pid));
         $this->addElement('hidden', 'widgetID', array('value' => $this->wid));
 
-        $message = new Sportalize_Form_Element_PlainHtml('hr', array(
-            'value' => '<p>' . $this->translate->_('Are you sure that you want to delete this widget?') . '</p>'
-        ));
-        $this->addElement($message);
-        $this->addDeleteHiddenElement();
+        $this->addWarningMessage('Are you sure that you want to delete this widget?');
     }
 }

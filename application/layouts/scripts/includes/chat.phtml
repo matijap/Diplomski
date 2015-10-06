@@ -6,16 +6,15 @@
     </div>
     <?php
         foreach ($this->friends as $key => $value) {
-            fb('ovo je value', $value);
             if ($value['id'] != $this->userID) {
         ?>
                 <div class="one-chat-person offline" id="<?php echo $value['id']; ?>">
                     <div class="chat-avatar">
-                        <img src="<?php echo APP_URL; ?>/img/silhouette.png" />
+                        <img src="<?php echo Utils::generateUrl(array(APP_URL, UserInfo::AVATAR_IMAGES_FOLDER, $value['avatar'])); ?>" />
                     </div>
                     <div class="chat-availability bb"></div>
                         <div class="chat-person-name">
-                        <p class="truncate-string"><?php echo $value['first_name'] . ' ' . $value['last_name']; ?></p>
+                        <p class="truncate-string"><?php echo Utils::mergeStrings(array($value['first_name'], $value['last_name'])); ?></p>
                     </div>
                 </div>
         <?php 

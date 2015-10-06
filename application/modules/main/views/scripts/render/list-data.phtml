@@ -1,43 +1,68 @@
-<?php $object = $this->object; ?>
-<div class="main-background-color one-personal-settings-section">
+<?php
+$object      = $this->object;
+$options     = Utils::arrayFetch($this, 'options', array());
+$printDelete = Utils::arrayFetch($options, 'print_delete', false);
+$dataUrl     = Utils::arrayFetch($options, 'data-url', false);
+$form        = Utils::arrayFetch($this, 'form', false);
+
+?>
+<div class="main-background-color one-personal-settings-section position-relative">
     <h2 class="widget-header-color display-inline-block"><?php echo $this->title; ?></h2>
+    <div class="display-inline-block">
+    <?php
+    if ($form) {
+        echo $form;
+    }
+    ?>
+    </div>
+    <?php
+    if ($printDelete) {
+    ?>
+    <i data-url="<?php echo $dataUrl; ?>" class="modal-open fa fa-times cursor-pointer remove-friend-list" style="color:red;"></i>
+    <?php
+    }
+    ?>
     <div class="p-10">
     <?php
     $count = 1;
-    if (!empty($object)) {
-        foreach ($object as $oneObject) {
-            $urlLogo = $this->personOrPage == 'person' ?
-            '/' . UserInfo::AVATAR_IMAGES_FOLDER . '/' . $oneObject['avatar'] :
-            '/' . Page::PAGE_IMAGES_FOLDER . '/' . $oneObject['logo'];
-            $urlPage = $this->personOrPage == 'person' ?
-            '/index/profile?userID=' . $oneObject['id'] :
-            '/page/index?pageID=' . $oneObject['id'];
-            $name = $this->personOrPage == 'person' ? $oneObject['name'] : $oneObject['title'];
-            if ($count == 1) {
-                ?>
-                <div class="one-search-container">
-                <?php
-            }
-                ?>
-                    <div class="m-b-10">
-                        <div class="person-avatar pull-left">
-                            <img src="<?php echo APP_URL . $urlLogo ?>">
+    
+    if (!empty($object) && key($object) !== 'options') {
+        unset($object['options']);
+        foreach ($object as $key => $oneObject) {
+            if ($key !== 'options') {
+                $urlLogo = $this->personOrPage == 'person' ?
+                '/' . UserInfo::AVATAR_IMAGES_FOLDER . '/' . $oneObject['avatar'] :
+                '/' . Page::PAGE_IMAGES_FOLDER . '/' . $oneObject['logo'];
+                $urlPage = $this->personOrPage == 'person' ?
+                '/index/profile?userID=' . $oneObject['id'] :
+                '/page/index?pageID=' . $oneObject['id'];
+                $name = $this->personOrPage == 'person' ? $oneObject['name'] : $oneObject['title'];
+                if ($count == 1) {
+                    ?>
+                    <div class="one-search-container">
+                    <?php
+                }
+                    ?>
+                        <div class="m-b-10">
+                            <div class="person-avatar pull-left">
+                                <img src="<?php echo APP_URL . $urlLogo ?>">
+                            </div>
+                            <p class="pull-left m-l-5">
+                                <a href="<?php echo APP_URL . $urlPage; ?>">
+                                    <?php echo $name; ?>
+                                </a>
+                            </p>
+                            <div class="clear"></div>
                         </div>
-                        <p class="pull-left m-l-5">
-                            <a href="<?php echo APP_URL . $urlPage; ?>">
-                                <?php echo $name; ?>
-                            </a>
-                        </p>
-                        <div class="clear"></div>
+                    <?php
+                if ($count == 5 || $count == count($object)) {
+                    ?>
                     </div>
-                <?php
-            if ($count == 5 || $count == count($object)) {
-                ?>
-                </div>
-                <?php
-                $count = 1;
-            } else {
-                $count++;
+                    <?php
+                    $count = 1;
+                } else {
+                    $count++;
+                }
             }
         }
     } else {
@@ -49,3 +74,4 @@
     </div>
     <div class="clear"></div>
 </div>
+<?php

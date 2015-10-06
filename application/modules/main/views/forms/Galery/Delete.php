@@ -1,6 +1,6 @@
 <?php
 
-class Galery_Delete extends Sportalize_Form_Modal {
+class Galery_Delete extends DeleteItemForm {
 
     public $gid;
 
@@ -20,11 +20,7 @@ class Galery_Delete extends Sportalize_Form_Modal {
     public function createElements() {
         $this->addElement('hidden', 'galeryID', array('value' => $this->gid));
 
-        $message = new Sportalize_Form_Element_PlainHtml('hr', array(
-            'value' => '<p>' . $this->translate->_('Are you sure that you want to delete this galery? All pictures
-                associated with this galery will be removed too.') . '</p>'
-        ));
-        $this->addElement($message);
-        $this->addDeleteHiddenElement();
+        $this->addWarningText($this->translate->_('Are you sure that you want to delete this galery? All pictures
+                associated with this galery will be removed too.'));
     }
 }

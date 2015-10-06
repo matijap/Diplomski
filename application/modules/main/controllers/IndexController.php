@@ -107,6 +107,63 @@ class IndexController extends Main_BaseController
     }
 
     public function friendsAction() {
+        $this->view->form       = $form = new CreateFriendListForm();
         $this->view->allFriends = $friends = Search::findPeople('', $this->user->id, $this->user->id);
+        $this->view->otherLists = $this->user->getOtherFriendLists();
+        $response               = $this->validateForm($form);
+        if ($response['isPost']) {
+            $list = Main::fetchRow(Main::select('FriendList')->where('LOWER(title) = ?', strtolower($this->params['title'])));
+            if ($response['isValid'] && !$list) {
+                FriendList::create(array(
+                    'title'   => $this->params['title'],
+                    'user_id' => $this->user->id, 
+                ));
+                $this->setNotificationMessage($this->translate->_('Friend list created successfully'));
+                $this->_redirect(APP_URL . '/index/friends');
+            } else {
+                $this->setNotificationMessage($this->translate->_('Friend list name invalid. Either empty provided, or already exists'),
+                    Sportalize_Controller_Action::NOTIFICATION_ERROR);
+            }
+        }
+    }
+
+    public function deleteFriendListAction() {
+        $this->view->form = $form = new DeleteFriendListForm(array('listID' => $this->params['listID']));
+
+        $response         = $this->validateForm($form);
+        if ($response['isPost']) {
+            if ($response['isValid']) {
+                $friendList = Main::buildObject('FriendList', $this->params['listID']);
+                $friendList->delete();
+                $this->setNotificationMessage($this->translate->_('Friend list deleted successfully'));
+                $this->_helper->json(array('status' => 1, 'url' => APP_URL . '/index/friends'));
+            }
+        }
+    }
+
+    public function addFriendsIntoListAction() {
+        $users   = Utils::arrayFetch($this->params, 'users', array());
+        $status  = '';
+        $message = '';
+        $url     = '';
+        if ($users) {
+            foreach ($users as $oneUser) {
+                $ufl = UserFriendList::create(array(
+                    'friend_id'      => $oneUser,
+                    'friend_list_id' => $this->params['friendListID'],
+                ));
+                $ufl->save();
+            }
+            $status = 1;
+            $this->setNotificationMessage('Friends added to list successfully');
+            $url     = APP_URL . '/index/friends';
+        } else {
+            $status  = 0;
+            $message = '';
+        }
+        $this->_helper->json(array('status'  => $status,
+                                   'message' => $message,
+                                   'url'     => $url
+                                   ));
     }
 }

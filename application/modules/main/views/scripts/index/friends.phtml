@@ -1,4 +1,6 @@
 <div id="main-panel" class="bb fantasy">
+<?php echo $this->form; ?>
+<hr>
 <?php
     echo $this->partial('render/list-data.phtml', array(
                         'object'       => $this->allFriends,
@@ -6,6 +8,21 @@
                         'personOrPage' => 'person',
                         'translate'    => $this->translate
         ));
+
+    foreach ($this->otherLists as $friendListTitle => $oneFriendList) {
+        echo $this->partial('render/list-data.phtml', array(
+                        'object'       => $oneFriendList,
+                        'title'        => $friendListTitle,
+                        'personOrPage' => 'person',
+                        'translate'    => $this->translate,
+                        'options'      => array(
+                                'is_system'    => $oneFriendList['options']['is_system'],
+                                'print_delete' => !$oneFriendList['options']['is_system'],
+                                'data-url'     => '/index/delete-friend-list?listID=' . $oneFriendList['options']['list_id']
+                            ),
+                        'form'         => new AddFriendIntoListForm(array('listID' => $oneFriendList['options']['list_id'])),
+        ));
+    }
 ?>
 </div>
 <?php

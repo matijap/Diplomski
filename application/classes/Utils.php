@@ -135,4 +135,8 @@ class Utils
     public static function mergeStrings($strings, $delimeter = ' ') {
         return implode($delimeter, $strings);
     }
+
+    public static function generateUrl($parts) {
+        return Utils::mergeStrings($parts, '/');
+    }
 }
