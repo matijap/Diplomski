@@ -13,7 +13,8 @@ class Page extends Page_Row
     const PAGE_IMAGES_FOLDER = 'user_images/page_images';
 
     const SPORTALIZE_PAGE_ID = 1;
-    const DEFAULT_LOGO       = 'ball.jpg';
+    const DEFAULT_LOGO       = 'widget_football.png';
+    const DEFAULT_BIG_LOGO   = 'ball.jpg';
 
     public static function getAvailablePlayers() {
         return Page::getAvailablePages(Page::PAGE_TYPE_PLAYER);
@@ -48,7 +49,7 @@ class Page extends Page_Row
             $fileName = self::DEFAULT_LOGO;
         }
         if ($fileName) {
-            $page->edit(array('logo' => $fileName));
+            $page->edit(array('logo' => $fileName, 'big_logo' => self::DEFAULT_BIG_LOGO));
         }
 
         return $page;
@@ -251,5 +252,18 @@ class Page extends Page_Row
                 ->where('page_id = ?', $this->id)
                 ->columns('id')
                 ->query()->fetchAll(PDO::FETCH_COLUMN);
+    }
+
+    public function changeBigLogo() {
+        $return = false;
+        $ext    = pathinfo($_FILES['big_logo']['name'], PATHINFO_EXTENSION);
+        if (in_array($ext, array('jpg', 'gif', 'png', 'jpeg'))) {
+            $fileName = Utils::uploadFile('big_logo', self::PAGE_IMAGES_FOLDER, $this->id . '_big');
+            if ($fileName) {
+                $this->edit(array('big_logo' => $fileName));
+                $return = true;
+            }
+        }
+        return $return;
     }
 }

@@ -21,6 +21,11 @@ class NewPageForm extends Sportalize_Form_Modal {
             'required' => true
         ));
 
+        $this->addElement('text', 'description', array(
+            'label'    => $this->translate->_('Description'),
+            'required' => true
+        ));
+
         $fileUpload = new Sportalize_Form_Element_FileUpload( 'logo', array(
             'label' => $this->translate->_('Logo'),
         ));

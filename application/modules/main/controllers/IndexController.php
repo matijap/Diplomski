@@ -99,11 +99,20 @@ class IndexController extends Main_BaseController
     }
 
     public function changeBigLogoAction() {
-        $status = $this->user->changeBigLogo();
+        $pageID  = Utils::arrayFetch($this->params, 'pageID', false);
+        if ($pageID) {
+            $page     = Main::buildObject('Page', $pageID);
+            $status   = $page->changeBigLogo();
+            $redirect = '/page/index?pageID=' . $pageID;
+        } else {
+            $status   = $this->user->changeBigLogo();
+            $redirect = '/index/profile?userID=' . $this->user->id;
+        }
+        
         $message = $status ? $this->translate->_('Big logo changed successfully') : $this->translate->_('Unable to change logo');
         $status  = $status ? Sportalize_Controller_Action::NOTIFICATION_SUCCESS : Sportalize_Controller_Action::NOTIFICATION_ERROR;
         $this->setNotificationMessage($message, $status);
-        $this->_redirect(APP_URL . '/index/profile?userID=' . $this->user->id);
+        $this->_redirect(APP_URL . $redirect);
     }
 
     public function friendsAction() {

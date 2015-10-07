@@ -13,6 +13,10 @@
 ?>
 </div>
 <div style="position: fixed; right: 0; width: 30%; height: 100%; padding: 10px;" class="main-background-color bb page-info">
+    <?php $class = $this->watcher->id != $this->page->user_id ? '' : 'change-big-logo cursor-pointer'; ?>
+    <img class="big-logo <?php echo $class; ?>" src="<?php echo APP_URL . '/' . Page::PAGE_IMAGES_FOLDER .  '/' . $this->page->big_logo; ?>">
+    <?php echo $this->bigLogoChangeForm; ?>
+
     <?php 
     if (!$this->watcherSameAsOwner) {
         $sufix = $this->page->isLikedByUser($this->watcher->id) ? 'beat' : ''; ?>
@@ -22,7 +26,8 @@
     <?php
     }
     ?>
-    <h1 class="text-align-center m-t-10"><?php echo $this->page->title; ?></h1>
+    <?php $class = $this->watcherSameAsOwner ? 'modal-open cursor-pointer' : ''; ?>
+    <h1 data-url="/page/change-page-data?pageID=<?php echo $this->page->id; ?>" class="text-align-center m-t-10 <?php echo $class; ?>"><?php echo $this->page->title; ?></h1>
     <p class="text-align-center m-t-5"><?php echo $this->translate->_('Likes'); ?>:&nbsp;<?php echo $this->page->getLikesCount(); ?></p>
     <?php
     if ($this->watcherSameAsOwner) {
@@ -61,5 +66,9 @@
     }
     ?>
     </ul>
+    <?php $class = $this->watcherSameAsOwner ? 'modal-open cursor-pointer' : ''; ?>
+    <p data-url="/page/change-page-data?pageID=<?php echo $this->page->id; ?>" class="page-description <?php echo $class; ?>">
+        <?php echo $this->page->description; ?>
+    </p>
 </div>
 <?php

@@ -968,7 +968,7 @@ class User extends User_Row
     public function changeBigLogo() {
         $return = false;
         $ext      = pathinfo($_FILES['big_logo']['name'], PATHINFO_EXTENSION);
-        if (in_array($ext, array('jpg, gif, png'))) {
+        if (in_array($ext, array('jpg', 'gif', 'png', 'jpeg'))) {
             $userInfo = $this->getUserInfo();
             $fileName = Utils::uploadFile('big_logo', UserInfo::LOGOS_IMAGES_FOLDER, $userInfo->id);
             if ($fileName) {

@@ -36,7 +36,7 @@ class AddFriendIntoListForm extends Sportalize_Form_Base {
                             ->from('user_friend_list', 'friend_id')
                             ->where('friend_list_id = ?', $this->lid)
                             ->query()->fetchAll(PDO::FETCH_COLUMN);
-                            fb($allFriendsInList);
+
         foreach ($friends as $oneFriend) {
             if (!in_array($oneFriend['id'], $allFriendsInList)) {
                 $return[$oneFriend['id']] = Utils::mergeStrings(array($oneFriend['first_name'], $oneFriend['last_name']));
