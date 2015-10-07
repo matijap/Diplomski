@@ -15,19 +15,25 @@
         <h2><?php echo $this->translate->_('You do not have created galeries'); ?></h2>
         <?php
     } else {
-        foreach ($this->galeries as $oneGalery) {
-            ?>
-                <a title="<?php echo $oneGalery->title; ?>"
-                href="<?php echo APP_URL; ?>/galery/galery-image?galeryID=<?php echo $oneGalery->id; ?>" class="main-background-color one-galery-item">
-                    <?php if ($this->watcher->id == $this->watched->id) { ?>
-                    <div class="remove-galery-item">
-                        <i class="fa fa-times modal-open" data-url="<?php echo '/galery/delete-galery?galeryID=' . $oneGalery->id; ?>"></i>
-                    </div>
-                    <?php } ?>
-                    <img src="<?php echo APP_URL . '/' . Galery::getThumbnail($oneGalery->id);?>" >
-                    <p style="position:absolute; top: 172px; left: 10px;"><?php echo $oneGalery->title; ?></p>
-                </a>
-            <?php
+        $canView = true;
+        if ($this->watcher->id != $this->watched->id) {
+          $canView = PrivacySetting::canView($this->watcher->id, $this->watched->id, PrivacySetting::PRIVACY_TYPE_GALERY);
+        }
+        if ($canView) {
+            foreach ($this->galeries as $oneGalery) {
+                ?>
+                    <a title="<?php echo $oneGalery->title; ?>"
+                    href="<?php echo APP_URL; ?>/galery/galery-image?galeryID=<?php echo $oneGalery->id; ?>" class="main-background-color one-galery-item">
+                        <?php if ($this->watcher->id == $this->watched->id) { ?>
+                        <div class="remove-galery-item">
+                            <i class="fa fa-times modal-open" data-url="<?php echo '/galery/delete-galery?galeryID=' . $oneGalery->id; ?>"></i>
+                        </div>
+                        <?php } ?>
+                        <img src="<?php echo APP_URL . '/' . Galery::getThumbnail($oneGalery->id);?>" >
+                        <p style="position:absolute; top: 172px; left: 10px;"><?php echo $oneGalery->title; ?></p>
+                    </a>
+                <?php
+            }
         }
     }
     ?>

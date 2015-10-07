@@ -151,6 +151,7 @@ class IndexController extends Main_BaseController
                 $ufl = UserFriendList::create(array(
                     'friend_id'      => $oneUser,
                     'friend_list_id' => $this->params['friendListID'],
+                    'list_owner_id'  => $this->user->id,
                 ));
                 $ufl->save();
             }
@@ -165,5 +166,14 @@ class IndexController extends Main_BaseController
                                    'message' => $message,
                                    'url'     => $url
                                    ));
+    }
+
+    public function deleteFriendFromListAction() {
+        $fl = Main::fetchRow(Main::select('UserFriendList')
+            ->where('friend_list_id = ?', $this->params['listID'])
+            ->where('friend_id = ?', $this->params['friendID'])
+            );
+        $fl->delete();
+        $this->view->friend = Main::buildObject('User', $this->params['friendID']);
     }
 }

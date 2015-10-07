@@ -6,7 +6,7 @@
                         'object'       => $this->allFriends,
                         'title'        => $this->translate->_('All friends'),
                         'personOrPage' => 'person',
-                        'translate'    => $this->translate
+                        'translate'    => $this->translate,
         ));
 
     foreach ($this->otherLists as $friendListTitle => $oneFriendList) {
@@ -16,9 +16,11 @@
                         'personOrPage' => 'person',
                         'translate'    => $this->translate,
                         'options'      => array(
-                                'is_system'    => $oneFriendList['options']['is_system'],
-                                'print_delete' => !$oneFriendList['options']['is_system'],
-                                'data-url'     => '/index/delete-friend-list?listID=' . $oneFriendList['options']['list_id']
+                                'is_system'          => $oneFriendList['options']['is_system'],
+                                'print_delete'       => !$oneFriendList['options']['is_system'],
+                                'data-url'           => '/index/delete-friend-list?listID=' . $oneFriendList['options']['list_id'],
+                                'item-delete-class'  => 'delete-from-list-data',
+                                'delete-options'     => 'data-list-id="' . $oneFriendList['options']['list_id'] . '"'
                             ),
                         'form'         => new AddFriendIntoListForm(array('listID' => $oneFriendList['options']['list_id'])),
         ));

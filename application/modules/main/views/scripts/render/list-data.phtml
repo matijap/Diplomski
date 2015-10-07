@@ -1,9 +1,11 @@
 <?php
-$object      = $this->object;
-$options     = Utils::arrayFetch($this, 'options', array());
-$printDelete = Utils::arrayFetch($options, 'print_delete', false);
-$dataUrl     = Utils::arrayFetch($options, 'data-url', false);
-$form        = Utils::arrayFetch($this, 'form', false);
+$object        = $this->object;
+$options       = Utils::arrayFetch($this, 'options', array());
+$printDelete   = Utils::arrayFetch($options, 'print_delete', false);
+$dataUrl       = Utils::arrayFetch($options, 'data-url', false);
+$form          = Utils::arrayFetch($this, 'form', false);
+$itemDelete    = Utils::arrayFetch($options, 'item-delete-class', false);
+$deleteOptions = Utils::arrayFetch($options, 'delete-options', '');
 
 ?>
 <div class="main-background-color one-personal-settings-section position-relative">
@@ -43,7 +45,14 @@ $form        = Utils::arrayFetch($this, 'form', false);
                     <?php
                 }
                     ?>
-                        <div class="m-b-10">
+                        <div class="m-b-10 position-relative">
+                            <?php
+                            if ($itemDelete) {
+                            ?>
+                            <i <?php echo $deleteOptions; ?> data-id="<?php echo $oneObject['id']; ?>" class="fa fa-times cursor-pointer <?php echo $itemDelete; ?>"></i>
+                            <?php
+                            }
+                            ?>
                             <div class="person-avatar pull-left">
                                 <img src="<?php echo APP_URL . $urlLogo ?>">
                             </div>

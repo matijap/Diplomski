@@ -32,6 +32,7 @@ class Post extends Post_Row
         } else {
             unset($data['user_id']);
         }
+        $data['date'] = time();
         $post = parent::create($data);
         if ($data['post_type'] == self::POST_TYPE_IMAGE) {
             unset($data['video']);

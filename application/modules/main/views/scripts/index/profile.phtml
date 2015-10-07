@@ -1,12 +1,18 @@
 <div id="main-panel" class="bb my">
     <?php
-        foreach ($this->posts as $onePost) {
-            echo $this->partial('render/post.phtml', array(
-              'onePost'   => $onePost,
-              'translate' => $this->translate,
-              'form'      => $this->form,
-              'watcher'   => $this->watcher,
-            ));
+        $canView = true;
+        if ($this->watcher->id != $this->watched->id) {
+          $canView = PrivacySetting::canView($this->watcher->id, $this->watched->id, PrivacySetting::PRIVACY_TYPE_POST);
+        }
+        if ($canView) {
+          foreach ($this->posts as $onePost) {
+              echo $this->partial('render/post.phtml', array(
+                'onePost'   => $onePost,
+                'translate' => $this->translate,
+                'form'      => $this->form,
+                'watcher'   => $this->watcher,
+              ));
+          }
         }
         $userInfo = $this->watched->getUserInfo();
     ?>
@@ -42,138 +48,146 @@
       ?>
         <div data-user-id="<?php echo $this->watched->id;?>" class="profile-availability"></div>
     </div>
-    <h2 class="text-align-center"><?php echo $this->translate->_('Personal Info'); ?></h2>
-    <div class="one-about-me-holder bb">
-        <p class="pull-left"><?php echo $this->translate->_('Email'); ?>:</p>
-        <p class="pull-left bold-text"><?php echo $this->watched->email; ?></p>
-        <div class="clear"></div>
-    </div>
     <?php
-    if (!empty($userInfo->date_of_birth)) {
-    ?>
-    <div class="one-about-me-holder bb">
-        <p class="pull-left"><?php echo $this->translate->_('Date Of Birth'); ?>:</p>
-        <p class="pull-left bold-text"><?php echo Utils::timestampToLocale($userInfo->date_of_birth); ?></p>
-        <div class="clear"></div>
-    </div>
-    <?php
+    $canView = true;
+    if ($this->watcher->id != $this->watched->id) {
+      $canView = PrivacySetting::canView($this->watcher->id, $this->watched->id, PrivacySetting::PRIVACY_TYPE_PROFILE);
     }
+    if ($canView) {
     ?>
-    <?php
-    if (!empty($userInfo->city)) {
-    ?>
-    <div class="one-about-me-holder bb">
-        <p class="pull-left"><?php echo $this->translate->_('City'); ?>:</p>
-        <p class="pull-left bold-text"><?php echo $userInfo->city; ?></p>
-        <div class="clear"></div>
-    </div>
-    <?php
-    }
-    ?>
-    <div class="one-about-me-holder bb">
-        <p class="pull-left"><?php echo $this->translate->_('Country'); ?>:</p>
-        <p class="pull-left bold-text"><?php echo $userInfo->getCountryName(); ?></p>
-        <div class="clear"></div>
-    </div>
-    <?php
-    if (!empty($userInfo->phone)) {
-    ?>
-    <div class="one-about-me-holder bb">
-        <p class="pull-left"><?php echo $this->translate->_('Phone'); ?>:</p>
-        <p class="pull-left bold-text"><?php echo $userInfo->phone; ?></p>
-        <div class="clear"></div>
-    </div>
-    <?php
-    }
-    ?>
-    <a href="<?php echo APP_URL; ?>/galery/index?watchedID=<?php echo $this->watched->id; ?>" class="blue-button m-t-5 width-100px">
-      <?php echo $this->translate->_('View Galery'); ?>
-    </a>
-    <hr>
-    <h2 class="text-align-center m-t-20"><?php echo $this->translate->_('Favourites'); ?></h2>
-    <?php
-    $sports = $this->watched->getFavouriteSports(true);
-    if (!empty($sports)) {
-        $sports = Sport::extractSportNamesAndMergeIntoString($sports);
-        ?>
-     <div class="one-about-me-holder bb">
-          <p class="pull-left"><?php echo $this->translate->_('Sports'); ?>:</p>
-          <p class="pull-left bold-text"><?php echo $sports; ?></p>
+      <h2 class="text-align-center"><?php echo $this->translate->_('Personal Info'); ?></h2>
+      <div class="one-about-me-holder bb">
+          <p class="pull-left"><?php echo $this->translate->_('Email'); ?>:</p>
+          <p class="pull-left bold-text"><?php echo $this->watched->email; ?></p>
           <div class="clear"></div>
       </div>
-        <?php
-    }
-    $favoritePlayers = $this->watched->getFavoritePlayersForView();
-    if (!empty($favoritePlayers)) {
-      ?>
-        <div class="one-about-me-holder bb">
-            <p class="pull-left"><?php echo $this->translate->_('Players'); ?>:</p>
-            <p class="pull-left bold-text">
-            <?php
-            foreach ($favoritePlayers as $oneFavoritePlayer) {
-              $url = isset($oneFavoritePlayer['page_id']) ?
-              APP_URL . '/page/index?pageID=' . $oneFavoritePlayer['page_id'] :
-              'javascript:void(0)'
-              ?>
-                <a href="<?php echo $url; ?>"><?php echo $oneFavoritePlayer['name']; ?></a>
-              <?php
-            }
-            ?>
-            </p>
-            <div class="clear"></div>
-        </div>
       <?php
-    }
-    $favoriteTeams = $this->watched->getFavoriteTeamsForView();
-    if (!empty($favoriteTeams)) {
+      if (!empty($userInfo->date_of_birth)) {
       ?>
-        <div class="one-about-me-holder bb">
-            <p class="pull-left"><?php echo $this->translate->_('Teams'); ?>:</p>
-            <p class="pull-left bold-text">
-            <?php
-            foreach ($favoriteTeams as $oneFavoriteTeam) {
-              $url = isset($oneFavoriteTeam['page_id']) ?
-              APP_URL . '/page/index?pageID=' . $oneFavoriteTeam['page_id'] :
-              'javascript:void(0)'
-              ?>
-                <a href="<?php echo $url; ?>"><?php echo $oneFavoriteTeam['name']; ?></a>
-              <?php
-            }
-            ?>
-            </p>
-            <div class="clear"></div>
-        </div>
+      <div class="one-about-me-holder bb">
+          <p class="pull-left"><?php echo $this->translate->_('Date Of Birth'); ?>:</p>
+          <p class="pull-left bold-text"><?php echo Utils::timestampToLocale($userInfo->date_of_birth); ?></p>
+          <div class="clear"></div>
+      </div>
       <?php
-    }
-    ?>
-    <hr>
-    <h2 class="text-align-center m-t-20"><?php echo $this->translate->_('Dream Teams'); ?></h2>
-    <?php
-    $dreamTeams = $this->watched->getDreamTeams();
-    if (!empty($dreamTeams)) {
-        foreach ($dreamTeams as $oneDreamTeam) {
+      }
+      ?>
+      <?php
+      if (!empty($userInfo->city)) {
+      ?>
+      <div class="one-about-me-holder bb">
+          <p class="pull-left"><?php echo $this->translate->_('City'); ?>:</p>
+          <p class="pull-left bold-text"><?php echo $userInfo->city; ?></p>
+          <div class="clear"></div>
+      </div>
+      <?php
+      }
+      ?>
+      <div class="one-about-me-holder bb">
+          <p class="pull-left"><?php echo $this->translate->_('Country'); ?>:</p>
+          <p class="pull-left bold-text"><?php echo $userInfo->getCountryName(); ?></p>
+          <div class="clear"></div>
+      </div>
+      <?php
+      if (!empty($userInfo->phone)) {
+      ?>
+      <div class="one-about-me-holder bb">
+          <p class="pull-left"><?php echo $this->translate->_('Phone'); ?>:</p>
+          <p class="pull-left bold-text"><?php echo $userInfo->phone; ?></p>
+          <div class="clear"></div>
+      </div>
+      <?php
+      }
+      ?>
+      <a href="<?php echo APP_URL; ?>/galery/index?watchedID=<?php echo $this->watched->id; ?>" class="blue-button m-t-5 width-100px">
+        <?php echo $this->translate->_('View Galery'); ?>
+      </a>
+      <hr>
+      <h2 class="text-align-center m-t-20"><?php echo $this->translate->_('Favourites'); ?></h2>
+      <?php
+      $sports = $this->watched->getFavouriteSports(true);
+      if (!empty($sports)) {
+          $sports = Sport::extractSportNamesAndMergeIntoString($sports);
           ?>
-            <div class="dream-team-display">
-                <div class="dream-team-sport">
-                    <p class="cursor-pointer"><?php echo $oneDreamTeam['name']; ?></p>
-                    <i class="fa fa-chevron-down cursor-pointer"></i>
-                    <i class="fa fa-chevron-up cursor-pointer" style="display:none;"></i>
-                </div>
-                <div class="dream-team-display-team" style="display:none;">
-                    <ul>
-                    <?php
-                    $decoded = Zend_Json::decode($oneDreamTeam['data']);
-                    foreach($decoded as $oneData) { ?>
-                        <li><?php echo $oneData; ?></li>
-                      <?php
-                      }
-                      ?>
-                    </ul>
-                </div>
-            </div>
+       <div class="one-about-me-holder bb">
+            <p class="pull-left"><?php echo $this->translate->_('Sports'); ?>:</p>
+            <p class="pull-left bold-text"><?php echo $sports; ?></p>
+            <div class="clear"></div>
+        </div>
           <?php
-        }
+      }
+      $favoritePlayers = $this->watched->getFavoritePlayersForView();
+      if (!empty($favoritePlayers)) {
+        ?>
+          <div class="one-about-me-holder bb">
+              <p class="pull-left"><?php echo $this->translate->_('Players'); ?>:</p>
+              <p class="pull-left bold-text">
+              <?php
+              foreach ($favoritePlayers as $oneFavoritePlayer) {
+                $url = isset($oneFavoritePlayer['page_id']) ?
+                APP_URL . '/page/index?pageID=' . $oneFavoritePlayer['page_id'] :
+                'javascript:void(0)'
+                ?>
+                  <a href="<?php echo $url; ?>"><?php echo $oneFavoritePlayer['name']; ?></a>
+                <?php
+              }
+              ?>
+              </p>
+              <div class="clear"></div>
+          </div>
+        <?php
+      }
+      $favoriteTeams = $this->watched->getFavoriteTeamsForView();
+      if (!empty($favoriteTeams)) {
+        ?>
+          <div class="one-about-me-holder bb">
+              <p class="pull-left"><?php echo $this->translate->_('Teams'); ?>:</p>
+              <p class="pull-left bold-text">
+              <?php
+              foreach ($favoriteTeams as $oneFavoriteTeam) {
+                $url = isset($oneFavoriteTeam['page_id']) ?
+                APP_URL . '/page/index?pageID=' . $oneFavoriteTeam['page_id'] :
+                'javascript:void(0)'
+                ?>
+                  <a href="<?php echo $url; ?>"><?php echo $oneFavoriteTeam['name']; ?></a>
+                <?php
+              }
+              ?>
+              </p>
+              <div class="clear"></div>
+          </div>
+        <?php
+      }
+      ?>
+      <hr>
+      <h2 class="text-align-center m-t-20"><?php echo $this->translate->_('Dream Teams'); ?></h2>
+      <?php
+      $dreamTeams = $this->watched->getDreamTeams();
+      if (!empty($dreamTeams)) {
+          foreach ($dreamTeams as $oneDreamTeam) {
+            ?>
+              <div class="dream-team-display">
+                  <div class="dream-team-sport">
+                      <p class="cursor-pointer"><?php echo $oneDreamTeam['name']; ?></p>
+                      <i class="fa fa-chevron-down cursor-pointer"></i>
+                      <i class="fa fa-chevron-up cursor-pointer" style="display:none;"></i>
+                  </div>
+                  <div class="dream-team-display-team" style="display:none;">
+                      <ul>
+                      <?php
+                      $decoded = Zend_Json::decode($oneDreamTeam['data']);
+                      foreach($decoded as $oneData) { ?>
+                          <li><?php echo $oneData; ?></li>
+                        <?php
+                        }
+                        ?>
+                      </ul>
+                  </div>
+              </div>
+            <?php
+          }
+      }
     }
-    ?>
+      ?>
 </div>
 <input type="hidden" value="<?php echo $this->watched->id; ?>" class="watched-user-id">

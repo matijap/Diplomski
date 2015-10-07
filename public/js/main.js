@@ -725,4 +725,21 @@ $( document ).ready(function() {
             }
         });
     });
+
+    $(document).on(clickOrTouchstart, '.delete-from-list-data', function(e) {
+        var element = $(this);
+        element.hide();
+        element.before('<i style="position: absolute; right: 10px;" class="fa fa-spin fa-spinner"></i>');
+        var data = element.data();
+        $.ajax({
+            url: appurl + '/index/delete-friend-from-list',
+            data: {'listID': data.listId, 'friendID' :data.id},
+            success: function(result) {
+                var select = element.closest('.one-personal-settings-section ').find('form').find('select');
+                select.append(result);
+                select.select2().trigger('change');
+                element.parent().remove();
+            }
+        });
+    });
 });

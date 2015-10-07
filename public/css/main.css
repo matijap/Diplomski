@@ -1278,6 +1278,11 @@ a.back-to-galery {
     width: 250px;
     float: left;
 }
+.delete-from-list-data {
+    position: absolute;
+    color: red;
+    right: 10px;
+}
 /* Search End */
 /* Friend List Start */
 .remove-friend-list {

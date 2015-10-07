@@ -617,26 +617,30 @@ class User extends User_Row
             $cache->remove($cacheKey);
         }
 
-        $serialized = serialize($data['personal_settings']['dream_team']);
-        $cacheKey   = 'dream_teams_' . $this->id;
-        if (!$cache->test($cacheKey)) {
-            $cache->save($serialized, $cacheKey);
-            $compared = false;
-        } else {
-            $toCompare = $cache->load($cacheKey);
-            if ($serialized != $toCompare) {
-                $compared = false;
-                $cache->remove($cacheKey);
+        if (isset($data['personal_settings']['dream_team'])) {
+            $serialized = serialize($data['personal_settings']['dream_team']);
+            $cacheKey   = 'dream_teams_' . $this->id;
+            if (!$cache->test($cacheKey)) {
                 $cache->save($serialized, $cacheKey);
+                $compared = false;
+            } else {
+                $toCompare = $cache->load($cacheKey);
+                if ($serialized != $toCompare) {
+                    $compared = false;
+                    $cache->remove($cacheKey);
+                    $cache->save($serialized, $cacheKey);
+                }
             }
-        }
-        if (!$compared) {
+            if (!$compared) {
+                Main::execQuery("DELETE FROM dream_team WHERE user_id = ?", $this->id);
+                foreach ($data['personal_settings']['dream_team'] as $key => $value) {
+                    $name = $value['name'];
+                    $data = Zend_Json::encode($value['data']);
+                    Main::execQuery("INSERT INTO `dream_team` (`user_id`, `name`, `data`) VALUES ('$this->id', '$name', '$data');");
+                }
+            }
+        } else {
             Main::execQuery("DELETE FROM dream_team WHERE user_id = ?", $this->id);
-            foreach ($data['personal_settings']['dream_team'] as $key => $value) {
-                $name = $value['name'];
-                $data = Zend_Json::encode($value['data']);
-                Main::execQuery("INSERT INTO `dream_team` (`user_id`, `name`, `data`) VALUES ('$this->id', '$name', '$data');");
-            }
         }
     }
 
@@ -980,6 +984,8 @@ class User extends User_Row
         ->from(array('FL' => 'friend_list'), '')
         ->join(array('UFL' => 'user_friend_list'), 'FL.id = UFL.friend_list_id', '')
         ->join(array('UI' => 'user_info'), 'UI.user_id = UFL.friend_id', '')
+        ->where('UFL.list_owner_id = ?', $this->id)
+        ->order('FL.id')
         ->columns(array('FL.title', 'CONCAT(UI.first_name, " ", UI.last_name) as name',
                         'UI.user_id as id', 'UI.avatar', 'FL.is_system', 'FL.id as list_id'));
         

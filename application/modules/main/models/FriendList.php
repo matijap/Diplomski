@@ -28,4 +28,15 @@ class FriendList extends FriendList_Row
         parent::delete();
         return true;
     }
+
+    public function doesUserExistsInFriendList($watcherID, $watchedID) {
+        $friendsInList = Main::select()
+                        ->from(array('UFL' => 'user_friend_list'), '')
+                        ->where('friend_id = ?', $watcherID)
+                        ->where('list_owner_id = ?', $watchedID)
+                        ->where('friend_list_id = ?', $this->id)
+                        ->columns(array('UFL.id'))
+                        ->query()->fetchAll(PDO::FETCH_COLUMN);
+        return $friendsInList;
+    }
 }
